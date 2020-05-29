@@ -15,6 +15,7 @@ class _LoopWidgetState extends State<LoopWidget> {
   Widget build(BuildContext context) {
     return Container(
       child: CircleAvatar(
+        backgroundColor: Theme.of(context).accentColor,
         radius: widget.radius,
       ),
     );

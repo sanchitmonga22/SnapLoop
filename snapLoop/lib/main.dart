@@ -18,6 +18,7 @@ class SnapLoop extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         // home: AuthScreen(),
-        home: HomeScreen());
+        home: AuthScreen(),
+        routes: {HomeScreen.routeName: (context) => HomeScreen()});
   }
 }

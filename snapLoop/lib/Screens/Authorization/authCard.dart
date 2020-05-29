@@ -1,4 +1,5 @@
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
+import 'package:SnapLoop/Screens/Home/homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'signUpWidget.dart';
 
@@ -77,6 +78,7 @@ class _AuthCardState extends State<AuthCard>
     setState(() {
       _isLoading = false;
     });
+    Navigator.of(context).pushNamed(HomeScreen.routeName);
   }
 
   // Switching between signUp/ Login
