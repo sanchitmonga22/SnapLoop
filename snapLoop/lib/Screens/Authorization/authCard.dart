@@ -152,7 +152,7 @@ class _AuthCardState extends State<AuthCard>
                     onSaved: (value) {
                       _authData['password'] = value;
                     },
-                    // TODO: Add a regex to check the password satisfies the standards and display the strength of the password
+                    // TODO: Add a regex to check the password satisfies the standards and display the strength of the password when signing up
                   ),
 
                   // Forget Password
