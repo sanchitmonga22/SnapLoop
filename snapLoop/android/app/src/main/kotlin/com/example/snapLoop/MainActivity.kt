@@ -1,4 +1,4 @@
-package com.example.snapLoop
+package com.example.SnapLoop
 
 import io.flutter.embedding.android.FlutterActivity
 

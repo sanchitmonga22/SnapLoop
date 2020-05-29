@@ -1,4 +1,4 @@
-# snapLoop
+# SnapLoop
 
 A new Flutter project.
 
