@@ -50,30 +50,32 @@ class SignUpWidget extends StatelessWidget {
                 TextFormField(
                     enabled: _authMode == AuthMode.Signup,
                     decoration: InputDecoration(labelText: 'Username'),
-                    validator: _authMode == AuthMode.Signup
-                        ? (value) {
-                            if (value != _passwordController.text) {
-                              return 'Passwords do not match!';
-                            }
-                          }
-                        : null,
+                    // validator: _authMode == AuthMode.Signup
+                    //     ? (value) {
+                    //         if (value != _passwordController.text) {
+                    //           return 'Passwords do not match!';
+                    //         }
+                    //       }
+                    //     : null,
                     onSaved: (value) {
                       _authData['username'] = value;
                     }),
+                // TODO Add an API call to check whether the username already exists or not
                 TextFormField(
                     enabled: _authMode == AuthMode.Signup,
                     decoration: InputDecoration(labelText: 'Phone'),
                     keyboardType: TextInputType.number,
-                    validator: _authMode == AuthMode.Signup
-                        ? (value) {
-                            if (value != _passwordController.text) {
-                              return 'Passwords do not match!';
-                            }
-                          }
-                        : null,
+                    // validator: _authMode == AuthMode.Signup
+                    //     ? (value) {
+                    //         if (value != _passwordController.text) {
+                    //           return 'Passwords do not match!';
+                    //         }
+                    //       }
+                    //     : null,
                     onSaved: (value) {
                       _authData['phoneNumber'] = value;
                     })
+                // TODO Add a special input for taking the phone number as the input from the user and API call if the number is already taken
               ]),
         ),
       ),

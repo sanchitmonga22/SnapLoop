@@ -1,5 +1,7 @@
+import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import './Screens/Home/homeScreen.dart';
 
 void main() {
@@ -10,15 +12,17 @@ class SnapLoop extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-          accentColor: Colors.green.shade500,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        // home: AuthScreen(),
-        home: AuthScreen(),
-        routes: {HomeScreen.routeName: (context) => HomeScreen()});
+    return MultiProvider(
+        providers: [ChangeNotifierProvider.value(value: LoopsProvider())],
+        child: MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              primarySwatch: Colors.purple,
+              accentColor: Colors.grey.shade700,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            // home: AuthScreen(),
+            home: HomeScreen(),
+            routes: {HomeScreen.routeName: (context) => HomeScreen()}));
   }
 }

@@ -197,7 +197,6 @@ class _AuthCardState extends State<AuthCard>
                       textColor:
                           Theme.of(context).primaryTextTheme.button.color,
                     ),
-
                   FlatButton(
                     child: Text(
                         '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'}'),

@@ -1,11 +1,14 @@
 import 'package:SnapLoop/Screens/Home/loopWidget.dart';
-import 'package:align_positioned/align_positioned.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:SnapLoop/Provider/LoopsProvider.dart';
+import 'package:provider/provider.dart';
 
 class LoopWidgetContainer extends StatefulWidget {
-  LoopWidgetContainer({Key key}) : super(key: key);
-  int numberOfLoops = 10;
+  final maxRadius;
+  const LoopWidgetContainer({this.maxRadius});
+  // TODO Will accept the list that will contain all the loops
+  //  that are to be rendered on the screen
   @override
   _LoopWidgetContainerState createState() => _LoopWidgetContainerState();
 }
@@ -18,18 +21,19 @@ double random(double minimum, double maximum) {
 class _LoopWidgetContainerState extends State<LoopWidgetContainer> {
   @override
   Widget build(BuildContext context) {
+    final List<Widget> loopWidgets =
+        Provider.of<LoopsProvider>(context).loopBuilder(widget.maxRadius);
+    print('LoopWidgets');
+    print(loopWidgets);
     return Container(
-      child: ListView.builder(
-          itemBuilder: (context, index) {
-            return Container(
-              height: 100,
-              child: AlignPositioned(
-                  moveByChildHeight: random(-1, 1),
-                  moveByChildWidth: random(-1, 2),
-                  child: LoopWidget(radius: random(1, 10) * 10)),
-            );
-          },
-          itemCount: widget.numberOfLoops),
+      padding: EdgeInsets.all(5),
+      child: Stack(children: [
+        ListView.builder(
+            itemBuilder: (_, index) {
+              return loopWidgets[index];
+            },
+            itemCount: loopWidgets.length),
+      ]),
     );
   }
 }
