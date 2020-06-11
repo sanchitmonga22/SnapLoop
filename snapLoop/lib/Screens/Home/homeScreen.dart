@@ -1,5 +1,7 @@
+import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Screens/CompletedLoops/completedLoops.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'loopWidgetContainer.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,7 +12,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MediaQueryData size = MediaQuery.of(context);
-
     return Scaffold(
         resizeToAvoidBottomPadding:
             false, // to avoid bottom overflow in the alert dialog box
@@ -56,24 +57,29 @@ class HomeScreen extends StatelessWidget {
                                                   labelText:
                                                       'Name of the loop'),
                                               autocorrect: false,
+                                              textAlign: TextAlign.center,
                                               autofocus: true,
+                                              // validating whether the user uses the same name for the loop
+                                              validator: (value) {
+                                                if (Provider.of<LoopsProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .loopExistsWithName(
+                                                        value)) {
+                                                  return "There exists a loop with the same name";
+                                                }
+                                                return null;
+                                              },
                                             ),
                                           )),
-                                      // TextField(
-                                      //   decoration: InputDecoration(
-                                      //       border: InputBorder.none,
-                                      //       hintText:
-                                      //           'Enter the name of the loop'),
-                                      // ),
                                       SizedBox(
                                         width: double.infinity,
                                         child: RaisedButton(
                                           onPressed: () {
-                                            //TODO
-                                            // if (_formKey.currentState
-                                            //     .validate()) {
-                                            //   _formKey.currentState.save();
-                                            // }
+                                            if (_formKey.currentState
+                                                .validate()) {
+                                              _formKey.currentState.save();
+                                            }
                                           },
                                           child: Text(
                                             "Create",

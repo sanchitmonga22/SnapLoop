@@ -90,6 +90,17 @@ class LoopsProvider with ChangeNotifier {
     return rows;
   }
 
+  // if there is already a loop with the same name in the database
+  bool loopExistsWithName(String name) {
+    bool exists = false;
+    loops.forEach((loop) {
+      if (loop.name.toLowerCase() == name.trim().toLowerCase()) {
+        exists = true;
+      }
+    });
+    return exists;
+  }
+
   // width is 4*maxRadius of the device
   List<Widget> loopBuilder(double maxRadius) {
     final loopsWithNewNotifications = getLoopsType(LoopType.NEW_NOTIFICATION);
