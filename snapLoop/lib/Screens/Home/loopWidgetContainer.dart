@@ -26,7 +26,7 @@ class _LoopWidgetContainerState extends State<LoopWidgetContainer> {
     print('LoopWidgets');
     print(loopWidgets);
     return Container(
-      padding: EdgeInsets.all(5),
+      color: Colors.grey[300],
       child: Stack(children: [
         ListView.builder(
             itemBuilder: (_, index) {

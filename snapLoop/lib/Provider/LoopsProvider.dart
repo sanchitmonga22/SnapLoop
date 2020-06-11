@@ -28,17 +28,18 @@ class LoopsProvider with ChangeNotifier {
 
   double radiusCalculator(int numberOfMember, double maxRadius) {
     double radii = 0.0;
-    double minRadius = maxRadius / 2;
+    maxRadius = maxRadius * .75;
+    double minRadius = maxRadius / 1.5;
     if (numberOfMember > 3) {
       // factor by which the loop will increase by the addition of a new member in the loop
-      double factor = (numberOfMember - 3) * 3.0;
+      double factor = (numberOfMember - 3) * 0.5;
       radii = minRadius + factor;
     } else {
       radii = minRadius;
     }
-//  if(radii > maxRadius){
-//    radii=maxRadius;
-//  }
+    if (radii > maxRadius) {
+      radii = maxRadius;
+    }
 //  if(radii <minRadius) {
 //    radii = minRadius / 2;
 //  }
@@ -59,21 +60,19 @@ class LoopsProvider with ChangeNotifier {
       List<Loop> loopTypes, double maxRadius, List<double> radiis) {
     List<Loop> deleted = [...loopTypes];
     double deviceWidth = maxRadius * 4 - maxRadius * 0.25;
-    print(maxRadius);
     List<Widget> widgetsInEachRow = [];
     double currentWidth = 0;
     List<Widget> rows = [];
     while (radiis.isNotEmpty) {
-      for (int i = 0; i <= radiis.length; i++) {
-        if (currentWidth + (radiis[i] * 2) < deviceWidth) {
+      for (int i = 0; i < radiis.length; i++) {
+        double toBeCompared = currentWidth + (radiis[i] * 2);
+        if (toBeCompared < deviceWidth) {
           widgetsInEachRow.add(LoopWidget(
             radius: radiis[i],
             numberOfMembers: deleted[i].numberOfMembers,
             text: deleted[i].name,
             type: deleted[i].type,
           ));
-          print(deleted[i].name);
-          print(deleted[i].type);
           // TODO add the paddig information if possible
           currentWidth += radiis[i] * 2;
           deleted.removeAt(i);
@@ -88,7 +87,6 @@ class LoopsProvider with ChangeNotifier {
       ));
       currentWidth = 0;
       widgetsInEachRow = [];
-      print(rows);
     }
     return rows;
   }
