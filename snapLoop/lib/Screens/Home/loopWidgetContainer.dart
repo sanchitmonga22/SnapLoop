@@ -1,30 +1,23 @@
-import 'package:SnapLoop/Screens/Home/loopWidget.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:provider/provider.dart';
 
 class LoopWidgetContainer extends StatefulWidget {
-  final maxRadius;
-  const LoopWidgetContainer({this.maxRadius});
-  // TODO Will accept the list that will contain all the loops
-  //  that are to be rendered on the screen
+  final double maxRadius;
+  final bool isInactive;
+  const LoopWidgetContainer({this.maxRadius, this.isInactive});
+
   @override
   _LoopWidgetContainerState createState() => _LoopWidgetContainerState();
-}
-
-double random(double minimum, double maximum) {
-  var rng = new Random();
-  return minimum + (rng.nextDouble() * maximum);
 }
 
 class _LoopWidgetContainerState extends State<LoopWidgetContainer> {
   @override
   Widget build(BuildContext context) {
-    final List<Widget> loopWidgets =
-        Provider.of<LoopsProvider>(context).loopBuilder(widget.maxRadius);
-    print('LoopWidgets');
-    print(loopWidgets);
+    final List<Widget> loopWidgets = widget.isInactive
+        ? Provider.of<LoopsProvider>(context)
+            .completedLoopBuilder(widget.maxRadius)
+        : Provider.of<LoopsProvider>(context).loopBuilder(widget.maxRadius);
     return Container(
       color: Colors.grey[300],
       child: Stack(children: [

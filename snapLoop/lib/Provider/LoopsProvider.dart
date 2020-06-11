@@ -65,8 +65,7 @@ class LoopsProvider with ChangeNotifier {
     List<Widget> rows = [];
     while (radiis.isNotEmpty) {
       for (int i = 0; i < radiis.length; i++) {
-        double toBeCompared = currentWidth + (radiis[i] * 2);
-        if (toBeCompared < deviceWidth) {
+        if (currentWidth + (radiis[i] * 2) < deviceWidth) {
           widgetsInEachRow.add(LoopWidget(
             radius: radiis[i],
             numberOfMembers: deleted[i].numberOfMembers,
@@ -107,6 +106,22 @@ class LoopsProvider with ChangeNotifier {
         loopsWithNewNotifications, maxRadius, loopsWithNewNotificationsRadii));
     rows.addAll(
         loopBuilderHelper(existingLoops, maxRadius, existingLoopsRadii));
+    return rows;
+  }
+
+  List<Widget> completedLoopBuilder(double maxRadius) {
+    final inactiveLoopsSuccessful =
+        getLoopsType(LoopType.INACTIVE_LOOP_SUCCESSFUL);
+    final inactiveLoopsFailed = getLoopsType(LoopType.INACTIVE_LOOP_FAILED);
+    final inactiveLoopsSuccessfulRadii =
+        radiiLoop(maxRadius, inactiveLoopsSuccessful);
+    final inactiveLoopsFailedRadii = radiiLoop(maxRadius, inactiveLoopsFailed);
+
+    List<Widget> rows = [];
+    rows.addAll(loopBuilderHelper(
+        inactiveLoopsSuccessful, maxRadius, inactiveLoopsSuccessfulRadii));
+    rows.addAll(loopBuilderHelper(
+        inactiveLoopsFailed, maxRadius, inactiveLoopsFailedRadii));
     return rows;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:SnapLoop/Screens/CompletedLoops/completedLoops.dart';
 import 'package:flutter/material.dart';
 import 'loopWidgetContainer.dart';
 
@@ -14,40 +15,81 @@ class HomeScreen extends StatelessWidget {
         body: Column(
           children: <Widget>[
             Container(
-                height: size.size.height * 0.75,
-                child: LoopWidgetContainer(maxRadius: (size.size.width) / 4)),
-            Row(
-              children: <Widget>[],
+              height: size.size.height * 0.75,
+              child: LoopWidgetContainer(
+                maxRadius: (size.size.width) / 4,
+                isInactive: false,
+              ),
             ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: FlatButton(
-                    //color: Theme.of(context).accentColor,
-                    onPressed: () {
-                      //TODO: Take to
-                    },
-                    child: Text(
-                      "Existing Loops",
-                      textAlign: TextAlign.center,
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: FlatButton(
+                      //color: Theme.of(context).accentColor,
+                      onPressed: () {
+                        //TODO:
+                      },
+                      child: Text("Start a Loop", textAlign: TextAlign.center),
                     ),
-                    padding: EdgeInsets.only(
-                        right: size.size.width / 6, left: size.size.width / 6),
                   ),
-                ),
-                FlatButton(
-                  //color: Theme.of(context).accentColor,
-                  onPressed: () {
-                    //TODO: Take to
-                  },
-                  child: Text(
-                    "New Loops",
-                    textAlign: TextAlign.center,
+                  Expanded(
+                    child: FlatButton(
+                      //color: Theme.of(context).accentColor,
+                      onPressed: () {
+                        //TODO:
+                      },
+                      child: Text(
+                        "Loops Remaining:5",
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
                   ),
-                  padding: EdgeInsets.only(
-                      right: size.size.width / 6, left: size.size.width / 6),
-                ),
-              ],
+                ],
+              ),
+            ),
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: FlatButton(
+                      //color: Theme.of(context).accentColor,
+                      onPressed: () {
+                        //TODO:
+                      },
+                      child: Text("Add Friends", textAlign: TextAlign.center),
+                      padding: EdgeInsets.only(
+                          right: size.size.width / 7,
+                          left: size.size.width / 7),
+                    ),
+                  ),
+                  Expanded(
+                    child: FlatButton(
+                        //color: Theme.of(context).accentColor,
+                        onPressed: () {
+                          //TODO:
+                        },
+                        child: Text(
+                          "Friends",
+                          textAlign: TextAlign.left,
+                        ),
+                        padding: EdgeInsets.only(
+                            right: size.size.width / 8,
+                            left: size.size.width / 8)),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: FlatButton(
+                //color: Theme.of(context).accentColor,
+                onPressed: () {
+                  Navigator.pushNamed(context, CompletedLoopsScreen.routeName);
+                },
+                child: Text("Completed Loops", textAlign: TextAlign.center),
+                padding: EdgeInsets.only(
+                    right: size.size.width / 7, left: size.size.width / 7),
+              ),
             )
           ],
         ));

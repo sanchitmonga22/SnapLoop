@@ -1,4 +1,5 @@
 import 'package:SnapLoop/Model/loop.dart';
+import 'package:SnapLoop/Screens/Home/loopWidgetContent.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 
@@ -24,52 +25,39 @@ class _LoopWidgetState extends State<LoopWidget> {
     return Colors.amber[900];
   }
 
+  bool isInactive() {
+    if (widget.type == LoopType.INACTIVE_LOOP_FAILED ||
+        widget.type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: AvatarGlow(
-          startDelay: Duration(milliseconds: 100),
-          glowColor: determineLoopColor(),
-          endRadius: widget.radius * 1.25,
-          duration: Duration(milliseconds: 1000),
-          repeat: true,
-          showTwoGlows: true,
-          repeatPauseDuration: Duration(milliseconds: 10),
-          child: Material(
-              elevation: 8.0,
-              shape: CircleBorder(),
-              child: CircleAvatar(
-                  backgroundColor: Theme.of(context).accentColor,
-                  radius: widget.radius,
-                  child: RawMaterialButton(
-                    //padding: EdgeInsets.symmetric(),
-                    elevation: 2.0,
-                    shape:
-                        CircleBorder(side: BorderSide(width: double.infinity)),
-                    onPressed: () {},
-                    child: Column(
-                      children: [
-                        Text(
-                          widget.text,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              backgroundColor: Theme.of(context).primaryColor),
-                        ),
-                        Text(
-                          "Members: ${widget.numberOfMembers}",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              backgroundColor: Theme.of(context).primaryColor),
-                        ),
-                        Text(widget.type
-                            .toString()
-                            .substring(widget.type.toString().indexOf('.') + 1)
-                            .toLowerCase())
-                      ],
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                    ),
-                  )))),
-    );
+    return Expanded(
+        child: Container(
+            padding: isInactive() ? EdgeInsets.all(5) : null,
+            child: isInactive()
+                ? LoopWidgetContent(
+                    numberOfMembers: widget.numberOfMembers,
+                    radius: widget.radius,
+                    text: widget.text,
+                    type: widget.type,
+                  )
+                : AvatarGlow(
+                    startDelay: Duration(milliseconds: 100),
+                    glowColor: determineLoopColor(),
+                    endRadius: widget.radius * 1.25,
+                    duration: Duration(milliseconds: 1000),
+                    repeat: true,
+                    showTwoGlows: true,
+                    repeatPauseDuration: Duration(milliseconds: 10),
+                    child: LoopWidgetContent(
+                      numberOfMembers: widget.numberOfMembers,
+                      radius: widget.radius,
+                      text: widget.text,
+                      type: widget.type,
+                    ))));
   }
 }

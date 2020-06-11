@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class User {
   final String username;
   final String displayName;
@@ -5,5 +7,9 @@ class User {
   final int score;
   List<String> friendsIds;
 
-  User(this.username, this.displayName, this.email, this.score);
+  User(
+      {@required this.username,
+      @required this.displayName,
+      @required this.email,
+      @required this.score});
 }
