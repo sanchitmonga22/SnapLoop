@@ -14,18 +14,25 @@ class LoopWidgetContainer extends StatefulWidget {
 class _LoopWidgetContainerState extends State<LoopWidgetContainer> {
   @override
   Widget build(BuildContext context) {
-    final List<Widget> loopWidgets = widget.isInactive
-        ? Provider.of<LoopsProvider>(context)
-            .completedLoopBuilder(widget.maxRadius)
-        : Provider.of<LoopsProvider>(context).loopBuilder(widget.maxRadius);
+    final List<Widget> inactiveLoops = Provider.of<LoopsProvider>(context)
+        .completedLoopBuilder(widget.maxRadius);
+    final List<Widget> loopWidgets =
+        Provider.of<LoopsProvider>(context).loopBuilder(widget.maxRadius);
+
     return Container(
       color: Colors.grey[300],
       child: Stack(children: [
-        ListView.builder(
-            itemBuilder: (_, index) {
-              return loopWidgets[index];
-            },
-            itemCount: loopWidgets.length),
+        widget.isInactive
+            ? ListView.builder(
+                itemBuilder: (_, index) {
+                  return inactiveLoops[index];
+                },
+                itemCount: inactiveLoops.length)
+            : ListView.builder(
+                itemBuilder: (_, index) {
+                  return loopWidgets[index];
+                },
+                itemCount: loopWidgets.length),
       ]),
     );
   }

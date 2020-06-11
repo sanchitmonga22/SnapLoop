@@ -4,11 +4,16 @@ import 'loopWidgetContainer.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/homeScreen';
+  final _formKey = GlobalKey<FormState>();
+  // TODO setup validation for the name of the loop and whether the user can start or not
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData size = MediaQuery.of(context);
 
     return Scaffold(
+        resizeToAvoidBottomPadding:
+            false, // to avoid bottom overflow in the alert dialog box
         appBar: AppBar(
           title: Text("SnapLoop"),
         ),
@@ -24,14 +29,68 @@ class HomeScreen extends StatelessWidget {
             Expanded(
               child: Row(
                 children: <Widget>[
-                  Expanded(
-                    child: FlatButton(
-                      //color: Theme.of(context).accentColor,
-                      onPressed: () {
-                        //TODO:
-                      },
-                      child: Text("Start a Loop", textAlign: TextAlign.center),
-                    ),
+                  FlatButton(
+                    //color: Theme.of(context).accentColor,
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              content: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Container(
+                                  height: 200,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Form(
+                                          key: _formKey,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: TextFormField(
+                                              decoration: InputDecoration(
+                                                  labelText:
+                                                      'Name of the loop'),
+                                              autocorrect: false,
+                                              autofocus: true,
+                                            ),
+                                          )),
+                                      // TextField(
+                                      //   decoration: InputDecoration(
+                                      //       border: InputBorder.none,
+                                      //       hintText:
+                                      //           'Enter the name of the loop'),
+                                      // ),
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: RaisedButton(
+                                          onPressed: () {
+                                            //TODO
+                                            // if (_formKey.currentState
+                                            //     .validate()) {
+                                            //   _formKey.currentState.save();
+                                            // }
+                                          },
+                                          child: Text(
+                                            "Create",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                    child: Text("Start a Loop", textAlign: TextAlign.center),
                   ),
                   Expanded(
                     child: FlatButton(
