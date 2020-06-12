@@ -28,9 +28,10 @@ class SnapLoop extends StatelessWidget {
               accentColor: Colors.grey.shade600,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: AuthScreen(),
-            //home: HomeScreen(),
-            // home: ContactScreen(),
+//            home: AuthScreen(),
+            home: HomeScreen(),
+            //  home: ContactScreen(),
+
             routes: {
               HomeScreen.routeName: (context) => HomeScreen(),
               CompletedLoopsScreen.routeName: (context) =>

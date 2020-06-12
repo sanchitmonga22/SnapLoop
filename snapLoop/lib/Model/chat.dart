@@ -7,11 +7,15 @@ class Chat {
 }
 
 class ChatInfo {
-  final String sender;
+  final String senderDisplayName;
+  final String senderID;
   //For now it is just text, and it will change as we move on
   final String content;
   final DateTime time;
 
   ChatInfo(
-      {@required this.sender, @required this.content, @required this.time});
+      {@required this.senderDisplayName,
+      @required this.senderID,
+      @required this.content,
+      @required this.time});
 }

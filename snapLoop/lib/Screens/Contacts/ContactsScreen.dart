@@ -38,20 +38,25 @@ class _ContactScreenState extends State<ContactScreen> {
               padding: EdgeInsets.all(10),
               borderRadius: BorderRadius.circular(10),
             ),
-            placeHolder: Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(contacts[index].displayName),
-                    subtitle: Text(contacts[index].email),
-                    onTap: () {
-                      Navigator.of(context).pushNamed(LoopChatScreen.routeName,
-                          arguments: [contacts[index], loopName]);
+            placeHolder: Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(contacts[index].displayName),
+                        subtitle: Text(contacts[index].email),
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                              LoopChatScreen.routeName,
+                              arguments: [contacts[index], loopName]);
+                        },
+                      );
                     },
-                  );
-                },
-                itemCount: contacts.length,
-              ),
+                    itemCount: contacts.length,
+                  ),
+                ),
+              ],
             ),
           ),
         ),

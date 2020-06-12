@@ -137,5 +137,5 @@ class LoopsProvider with ChangeNotifier {
   }
 
   // This will create the loop and send the first message to the friend
-  void createLoop(String name, String friendID) {}
+  void createLoop(String name, String friendID, Object content) {}
 }

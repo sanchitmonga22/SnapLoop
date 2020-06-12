@@ -17,5 +17,6 @@ class User {
       @required this.displayName,
       @required this.email,
       @required this.score,
-      @required this.friendsIds});
+      @required this.friendsIds,
+      @required this.loopIDs});
 }

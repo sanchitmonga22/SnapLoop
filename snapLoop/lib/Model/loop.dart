@@ -12,13 +12,16 @@ enum LoopType {
 class Loop {
   final String id;
   final String name;
+  final String creatorId;
   final int numberOfMembers;
   final LoopType type;
   final List<Object> userIDs; // will store the userIDs for all the loops
-  //final Chat chat;
+  final Chat chat;
 
   Loop(
       {@required this.id,
+      @required this.chat,
+      @required this.creatorId,
       @required this.name,
       @required this.numberOfMembers,
       @required this.type,
