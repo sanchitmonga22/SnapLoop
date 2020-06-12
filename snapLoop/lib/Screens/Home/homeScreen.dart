@@ -1,5 +1,7 @@
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
+import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/Screens/CompletedLoops/completedLoops.dart';
+import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'loopWidgetContainer.dart';
@@ -11,12 +13,33 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userDataProvider = Provider.of<UserDataProvider>(context);
+    String loopName = "";
     MediaQueryData size = MediaQuery.of(context);
     return Scaffold(
         resizeToAvoidBottomPadding:
             false, // to avoid bottom overflow in the alert dialog box
         appBar: AppBar(
-          title: Text("SnapLoop"),
+          title: Text(
+            "SnapLoop",
+            textAlign: TextAlign.center,
+          ),
+          centerTitle: true,
+          leading: Padding(
+            padding: EdgeInsets.only(left: 20, top: 10),
+            child: Text(
+              "Score: ${userDataProvider.userScore.toString()}",
+              textAlign: TextAlign.center,
+            ),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20, right: 30),
+              child: Text(
+                userDataProvider.displayName,
+              ),
+            ),
+          ],
         ),
         body: Column(
           children: <Widget>[
@@ -68,6 +91,8 @@ class HomeScreen extends StatelessWidget {
                                                         value)) {
                                                   return "There exists a loop with the same name";
                                                 }
+                                                // storing the name of the loop to pass it onto the next screen
+                                                loopName = value.trim();
                                                 return null;
                                               },
                                             ),
@@ -79,6 +104,9 @@ class HomeScreen extends StatelessWidget {
                                             if (_formKey.currentState
                                                 .validate()) {
                                               _formKey.currentState.save();
+                                              Navigator.of(context).pushNamed(
+                                                  ContactScreen.routeName,
+                                                  arguments: loopName);
                                             }
                                           },
                                           child: Text(
@@ -149,7 +177,8 @@ class HomeScreen extends StatelessWidget {
               child: FlatButton(
                 //color: Theme.of(context).accentColor,
                 onPressed: () {
-                  Navigator.pushNamed(context, CompletedLoopsScreen.routeName);
+                  Navigator.of(context)
+                      .pushNamed(CompletedLoopsScreen.routeName);
                 },
                 child: Text("Completed Loops", textAlign: TextAlign.center),
                 padding: EdgeInsets.only(

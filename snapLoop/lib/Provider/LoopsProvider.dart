@@ -135,4 +135,7 @@ class LoopsProvider with ChangeNotifier {
         inactiveLoopsFailed, maxRadius, inactiveLoopsFailedRadii));
     return rows;
   }
+
+  // This will create the loop and send the first message to the friend
+  void createLoop(String name, String friendID) {}
 }

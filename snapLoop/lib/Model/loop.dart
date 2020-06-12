@@ -1,3 +1,4 @@
+import 'package:SnapLoop/Model/chat.dart';
 import 'package:flutter/foundation.dart';
 
 enum LoopType {
@@ -9,13 +10,17 @@ enum LoopType {
 }
 
 class Loop {
+  final String id;
   final String name;
   final int numberOfMembers;
   final LoopType type;
-  List<Object> userIDs; // will store the userIDs for all the loops
+  final List<Object> userIDs; // will store the userIDs for all the loops
+  //final Chat chat;
 
   Loop(
-      {@required this.name,
+      {@required this.id,
+      @required this.name,
       @required this.numberOfMembers,
-      @required this.type});
+      @required this.type,
+      @required this.userIDs});
 }

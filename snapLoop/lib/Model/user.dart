@@ -1,3 +1,4 @@
+import 'package:SnapLoop/Model/loop.dart';
 import 'package:flutter/foundation.dart';
 
 class User {
@@ -7,6 +8,8 @@ class User {
   final String email;
   final int score;
   List<String> friendsIds;
+  // all the loops that the user is involved in
+  List<String> loopIDs;
 
   User(
       {@required this.userID,
