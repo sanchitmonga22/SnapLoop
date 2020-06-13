@@ -1,6 +1,13 @@
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
 
+// This will be sorted according to the time of the creation
+final chat = Chat(chatID: "chat", chat: [
+  ChatInfo(senderDisplayName: null, content: null, time: null, senderID: null),
+  ChatInfo(senderDisplayName: null, content: null, time: null, senderID: null),
+  ChatInfo(senderDisplayName: null, content: null, time: null, senderID: null)
+]);
+
 //Chronological order for printing the loop on the homeScreen is:
 //  NEW_LOOP
 //  NEW_NOTIFICATION
@@ -17,14 +24,7 @@ final loops = [
       numberOfMembers: 3,
       type: LoopType.EXISTING_LOOP,
       userIDs: ["1", "2", "3"],
-      chat: Chat(loopID: "Loop1", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"),
   Loop(
       creatorId: "4",
       id: "Loop2",
@@ -32,14 +32,16 @@ final loops = [
       numberOfMembers: 4,
       type: LoopType.EXISTING_LOOP,
       userIDs: ["2", "4", "5", "1"],
-      chat: Chat(loopID: "Loop2", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop2", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "5",
       id: "Loop3",
@@ -47,14 +49,16 @@ final loops = [
       numberOfMembers: 4,
       type: LoopType.EXISTING_LOOP,
       userIDs: ["2", "4", "5", "1"],
-      chat: Chat(loopID: "Loop3", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop3", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "1",
       id: "Loop4",
@@ -62,14 +66,16 @@ final loops = [
       numberOfMembers: 4,
       type: LoopType.EXISTING_LOOP,
       userIDs: ["2", "4", "5", "1"],
-      chat: Chat(loopID: "Loop4", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop4", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "5",
       id: "Loop20",
@@ -77,14 +83,16 @@ final loops = [
       numberOfMembers: 4,
       type: LoopType.EXISTING_LOOP,
       userIDs: ["2", "4", "5", "1"],
-      chat: Chat(loopID: "Loop20", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop20", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "5",
       id: "Loop5",
@@ -92,14 +100,16 @@ final loops = [
       numberOfMembers: 3,
       type: LoopType.EXISTING_LOOP,
       userIDs: ["2", "4", "5"],
-      chat: Chat(loopID: "Loop5", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop5", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "2",
       id: "Loop6",
@@ -107,14 +117,16 @@ final loops = [
       numberOfMembers: 5,
       type: LoopType.NEW_LOOP,
       userIDs: ["2", "4", "5", "1", "3"],
-      chat: Chat(loopID: "Loop6", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop6", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "4",
       id: "Loop7",
@@ -122,14 +134,16 @@ final loops = [
       numberOfMembers: 5,
       type: LoopType.NEW_LOOP,
       userIDs: ["2", "4", "5", "1", "3"],
-      chat: Chat(loopID: "Loop7", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop7", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "4",
       id: "Loop8",
@@ -137,14 +151,16 @@ final loops = [
       numberOfMembers: 5,
       type: LoopType.NEW_LOOP,
       userIDs: ["2", "4", "5", "1", "3"],
-      chat: Chat(loopID: "Loop8", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop8", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "4",
       id: "Loop9",
@@ -152,14 +168,16 @@ final loops = [
       numberOfMembers: 5,
       type: LoopType.NEW_NOTIFICATION,
       userIDs: ["2", "4", "5", "1", "3"],
-      chat: Chat(loopID: "Loop9", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop9", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "1",
       id: "Loop10",
@@ -167,14 +185,16 @@ final loops = [
       numberOfMembers: 3,
       type: LoopType.NEW_NOTIFICATION,
       userIDs: ["1", "2", "3"],
-      chat: Chat(loopID: "Loop10", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop10", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "1",
       id: "Loop11",
@@ -182,14 +202,16 @@ final loops = [
       numberOfMembers: 3,
       type: LoopType.NEW_NOTIFICATION,
       userIDs: ["1", "2", "3"],
-      chat: Chat(loopID: "Loop11", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop11", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "3",
       id: "Loop12",
@@ -197,14 +219,16 @@ final loops = [
       numberOfMembers: 3,
       type: LoopType.NEW_NOTIFICATION,
       userIDs: ["1", "2", "3"],
-      chat: Chat(loopID: "Loop12", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop12", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "2",
       id: "Loop13",
@@ -212,14 +236,16 @@ final loops = [
       numberOfMembers: 3,
       type: LoopType.INACTIVE_LOOP_FAILED,
       userIDs: ["1", "2", "3"],
-      chat: Chat(loopID: "Loop13", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop13", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "2",
       id: "Loop14",
@@ -227,14 +253,16 @@ final loops = [
       numberOfMembers: 3,
       type: LoopType.INACTIVE_LOOP_FAILED,
       userIDs: ["1", "2", "3"],
-      chat: Chat(loopID: "Loop14", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop14", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "3",
       id: "Loop15",
@@ -242,14 +270,16 @@ final loops = [
       numberOfMembers: 3,
       type: LoopType.INACTIVE_LOOP_FAILED,
       userIDs: ["1", "2", "3"],
-      chat: Chat(loopID: "Loop15", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop15", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "2",
       id: "Loop16",
@@ -257,14 +287,16 @@ final loops = [
       numberOfMembers: 5,
       type: LoopType.INACTIVE_LOOP_SUCCESSFUL,
       userIDs: ["2", "4", "5", "1", "3"],
-      chat: Chat(loopID: "Loop16", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop16", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "5",
       id: "Loop17",
@@ -272,14 +304,16 @@ final loops = [
       numberOfMembers: 4,
       type: LoopType.INACTIVE_LOOP_SUCCESSFUL,
       userIDs: ["2", "4", "5", "1"],
-      chat: Chat(loopID: "Loop17", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop17", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "2",
       id: "Loop18",
@@ -287,14 +321,16 @@ final loops = [
       numberOfMembers: 4,
       type: LoopType.INACTIVE_LOOP_SUCCESSFUL,
       userIDs: ["2", "5", "1", "3"],
-      chat: Chat(loopID: "Loop18", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      })),
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop18", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      ),
   Loop(
       creatorId: "1",
       id: "Loop19",
@@ -302,12 +338,14 @@ final loops = [
       numberOfMembers: 5,
       userIDs: ["2", "4", "5", "1", "3"],
       type: LoopType.INACTIVE_LOOP_SUCCESSFUL,
-      chat: Chat(loopID: "Loop19", chat: {
-        "m1": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m2": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null),
-        "m3": ChatInfo(
-            senderDisplayName: null, content: null, time: null, senderID: null)
-      }))
+      chatID: "chat1"
+      // chat: Chat(loopID: "Loop19", chat: {
+      //   "m1": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m2": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null),
+      //   "m3": ChatInfo(
+      //       senderDisplayName: null, content: null, time: null, senderID: null)
+      // })
+      )
 ];

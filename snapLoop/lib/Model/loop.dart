@@ -15,12 +15,12 @@ class Loop {
   final String creatorId;
   final int numberOfMembers;
   final LoopType type;
-  final List<Object> userIDs; // will store the userIDs for all the loops
-  final Chat chat;
+  final List<String> userIDs; // will store the userIDs for all the loops
+  final String chatID;
 
   Loop(
       {@required this.id,
-      @required this.chat,
+      @required this.chatID,
       @required this.creatorId,
       @required this.name,
       @required this.numberOfMembers,

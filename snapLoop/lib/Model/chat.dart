@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 
 class Chat {
-  final String loopID;
-  final Map<String, ChatInfo> chat;
-  Chat({@required this.loopID, @required this.chat});
+  final String chatID;
+  final List<ChatInfo> chat;
+  Chat({@required this.chatID, @required this.chat});
 }
 
 class ChatInfo {

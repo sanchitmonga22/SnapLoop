@@ -15,23 +15,11 @@ class LoopsProvider with ChangeNotifier {
     return _loops.length;
   }
 
-  Map<String, Chat> get chats {
-    Map<String, Chat> _chat = {};
-    _loops.forEach((loop) {
-      _chat[loop.chat.loopID] = loop.chat;
-    });
-    return _chat;
-  }
-
-  Chat getChat(String loopID) {
-    return chats[loopID];
-  }
-
 // This will create the loop and send the first message to the friend
   void createLoop(String name, String friendID, Object content) {
     Loop loop = new Loop(
         id: null,
-        chat: null,
+        chatID: null,
         creatorId: null,
         name: name,
         numberOfMembers: null,
