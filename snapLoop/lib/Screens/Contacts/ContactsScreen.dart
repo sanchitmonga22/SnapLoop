@@ -1,5 +1,5 @@
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
-import 'package:SnapLoop/Screens/Chat/loopChatScreen.dart';
+import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +48,7 @@ class _ContactScreenState extends State<ContactScreen> {
                         subtitle: Text(contacts[index].email),
                         onTap: () {
                           Navigator.of(context).pushNamed(
-                              LoopChatScreen.routeName,
+                              NewLoopChatScreen.routeName,
                               arguments: [contacts[index], loopName]);
                         },
                       );

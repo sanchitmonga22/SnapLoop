@@ -6,6 +6,7 @@ enum AuthMode { Signup, Login }
 
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
+  final SERVER_IP = "";
 
   @override
   Widget build(BuildContext context) {

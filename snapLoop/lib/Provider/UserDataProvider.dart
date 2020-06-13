@@ -32,7 +32,6 @@ class UserDataProvider with ChangeNotifier {
     List<User> friends = [];
     dummyUsers.users.forEach((user) {
       if (_user.friendsIds.contains(user.userID)) {
-        print(user.displayName);
         friends.add(user);
       }
     });
@@ -43,6 +42,9 @@ class UserDataProvider with ChangeNotifier {
   void createUser(User user) {
     dummyUsers.users.add(user);
   }
+
+  //AFTER APIs
+/**
 
   Future<bool> userWithUsernameExists(String username) async {}
 
@@ -83,4 +85,5 @@ class UserDataProvider with ChangeNotifier {
 
   // Match the email ids and phone numbers provided for each user to load the users with the given phone numbers
   Future<void> syncUserContacts() async {}
+  */
 }
