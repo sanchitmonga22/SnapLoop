@@ -1,8 +1,5 @@
-import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
-import 'package:SnapLoop/Screens/Home/homeScreen.dart';
-import 'package:SnapLoop/Screens/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'signUpWidget.dart';
@@ -67,23 +64,6 @@ class _AuthCardState extends State<AuthCard>
               ],
             ));
   }
-
-  // void _submit() async {
-  //   if (!_formKey.currentState.validate()) {
-  //     // Invalid!
-  //     return;
-  //   }
-  //   _formKey.currentState.save();
-  //   setState(() {
-  //     _isLoading = true;
-  //   });
-  //   var errorMessage = "Authenticate Failed";
-  //   _showErrorDialog(errorMessage);
-  //   setState(() {
-  //     _isLoading = false;
-  //   });
-  //   Navigator.of(context).pushNamed(HomeScreen.routeName);
-  // }
 
   void _submit() async {
     //Navigator.of(context).pushNamed(HomeScreen.routeName);
@@ -157,6 +137,15 @@ class _AuthCardState extends State<AuthCard>
     return 'Email is not valid';
   }
 
+  InputDecoration getDecoration(String text) {
+    return InputDecoration(
+        labelText: text,
+        labelStyle: TextStyle(color: Colors.white70),
+        focusColor: Colors.white70,
+        errorStyle:
+            TextStyle(color: Colors.white70, fontWeight: FontWeight.bold));
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -190,20 +179,8 @@ class _AuthCardState extends State<AuthCard>
                   TextFormField(
                     style: TextStyle(color: Colors.white70),
                     decoration: _authMode == AuthMode.Signup
-                        ? InputDecoration(
-                            labelText: 'Email',
-                            labelStyle: TextStyle(color: Colors.white70),
-                            focusColor: Colors.white70,
-                            errorStyle: TextStyle(
-                                color: Colors.white70,
-                                fontWeight: FontWeight.bold))
-                        : InputDecoration(
-                            labelText: 'Email/Username',
-                            labelStyle: TextStyle(color: Colors.white70),
-                            focusColor: Colors.white70,
-                            errorStyle: TextStyle(
-                                color: Colors.white70,
-                                fontWeight: FontWeight.bold)),
+                        ? getDecoration('Email')
+                        : getDecoration('Email/Username'),
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       //TODO: Add a regex for valid email
@@ -219,13 +196,7 @@ class _AuthCardState extends State<AuthCard>
                   // Password text field
                   TextFormField(
                     style: TextStyle(color: Colors.white70),
-                    decoration: InputDecoration(
-                        labelText: 'Password',
-                        labelStyle: TextStyle(color: Colors.white70),
-                        focusColor: Colors.white70,
-                        errorStyle: TextStyle(
-                            color: Colors.white70,
-                            fontWeight: FontWeight.bold)),
+                    decoration: getDecoration('Password'),
                     obscureText: true,
                     controller: _passwordController,
                     validator: (value) {
@@ -252,6 +223,7 @@ class _AuthCardState extends State<AuthCard>
 
                   // Animated Container that pops from below
                   SignUpWidget(
+                      getDecoration: getDecoration,
                       authMode: _authMode,
                       opacityAnimation: opacityAnimation,
                       slideAnimation: slideAnimation,

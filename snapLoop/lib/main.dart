@@ -52,7 +52,7 @@ class SnapLoop extends StatelessWidget {
                     TargetPlatform.android: CustomPageTransitionBuilder(),
                     TargetPlatform.iOS: CustomPageTransitionBuilder()
                   })),
-              home: HomeScreen(),
+              home: AuthScreen(),
               // home: authData.isAuth
               //     ? HomeScreen()
               //     : FutureBuilder(

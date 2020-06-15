@@ -9,6 +9,7 @@ class SignUpWidget extends StatefulWidget {
     @required this.slideAnimation,
     @required TextEditingController passwordController,
     @required Map<String, String> authData,
+    @required this.getDecoration,
   })  : _authMode = authMode,
         _passwordController = passwordController,
         _authData = authData,
@@ -19,7 +20,7 @@ class SignUpWidget extends StatefulWidget {
   final Animation<Offset> slideAnimation;
   final TextEditingController _passwordController;
   final Map<String, String> _authData;
-
+  final Function getDecoration;
   @override
   _SignUpWidgetState createState() => _SignUpWidgetState();
 }
@@ -43,12 +44,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 TextFormField(
                   style: TextStyle(color: Colors.white70),
                   enabled: widget._authMode == AuthMode.Signup,
-                  decoration: InputDecoration(
-                      labelText: 'Confirm Password',
-                      labelStyle: TextStyle(color: Colors.white70),
-                      focusColor: Colors.white70,
-                      errorStyle: TextStyle(
-                          color: Colors.white70, fontWeight: FontWeight.bold)),
+                  decoration: widget.getDecoration('Confirm Password'),
                   obscureText: true,
                   validator: widget._authMode == AuthMode.Signup
                       ? (value) {
@@ -61,20 +57,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 TextFormField(
                     style: TextStyle(color: Colors.white70),
                     enabled: widget._authMode == AuthMode.Signup,
-                    decoration: InputDecoration(
-                        labelText: 'Username',
-                        labelStyle: TextStyle(color: Colors.white70),
-                        focusColor: Colors.white70,
-                        errorStyle: TextStyle(
-                            color: Colors.white70,
-                            fontWeight: FontWeight.bold)),
-                    // validator: _authMode == AuthMode.Signup
-                    //     ? (value) {
-                    //         if (value != _passwordController.text) {
-                    //           return 'Passwords do not match!';
-                    //         }
-                    //       }
-                    //     : null,
+                    decoration: widget.getDecoration('Username'),
                     onSaved: (value) {
                       widget._authData['username'] = value;
                     }),
@@ -82,21 +65,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 TextFormField(
                     style: TextStyle(color: Colors.white70),
                     enabled: widget._authMode == AuthMode.Signup,
-                    decoration: InputDecoration(
-                        labelText: 'Phone',
-                        labelStyle: TextStyle(color: Colors.white70),
-                        focusColor: Colors.white70,
-                        errorStyle: TextStyle(
-                            color: Colors.white70,
-                            fontWeight: FontWeight.bold)),
+                    decoration: widget.getDecoration('Phone'),
                     keyboardType: TextInputType.number,
-                    // validator: _authMode == AuthMode.Signup
-                    //     ? (value) {
-                    //         if (value != _passwordController.text) {
-                    //           return 'Passwords do not match!';
-                    //         }
-                    //       }
-                    //     : null,
                     onSaved: (value) {
                       widget._authData['phoneNumber'] = value;
                     })
