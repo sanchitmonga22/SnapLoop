@@ -13,11 +13,14 @@ class LoopWidgetContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+        color: Colors.transparent,
         elevation: 8.0,
         shape: CircleBorder(),
+        shadowColor: Colors.white24,
         child: Container(
+          decoration: BoxDecoration(shape: BoxShape.circle),
           child: CircleAvatar(
-              backgroundColor: Theme.of(context).accentColor,
+              backgroundColor: Colors.transparent,
               radius: radius,
               child: RawMaterialButton(
                 //padding: EdgeInsets.symmetric(),
@@ -32,21 +35,27 @@ class LoopWidgetContent extends StatelessWidget {
                       text,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          backgroundColor: Theme.of(context).primaryColor),
+                        color: Colors.black87,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    Text(
-                      "Members: $numberOfMembers",
-                      overflow: TextOverflow.fade,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          backgroundColor: Theme.of(context).primaryColor),
-                    ),
+                    Text("Members: $numberOfMembers",
+                        overflow: TextOverflow.fade,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        )),
                     Text(
                         type
                             .toString()
                             .substring(type.toString().indexOf('.') + 1)
                             .toLowerCase(),
-                        overflow: TextOverflow.fade)
+                        overflow: TextOverflow.fade,
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold,
+                        ))
                   ],
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,

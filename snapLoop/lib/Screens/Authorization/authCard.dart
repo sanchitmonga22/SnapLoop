@@ -2,6 +2,7 @@ import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:SnapLoop/Screens/Home/homeScreen.dart';
+import 'package:SnapLoop/Screens/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'signUpWidget.dart';
@@ -162,10 +163,11 @@ class _AuthCardState extends State<AuthCard>
     return Container(
       // height: 350,
       child: Card(
+        color: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        elevation: 8.0,
+        //elevation: 8.0,
         child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
           child: AnimatedContainer(
@@ -186,9 +188,22 @@ class _AuthCardState extends State<AuthCard>
                 children: <Widget>[
                   // Email Text Field
                   TextFormField(
+                    style: TextStyle(color: Colors.white70),
                     decoration: _authMode == AuthMode.Signup
-                        ? InputDecoration(labelText: 'Email')
-                        : InputDecoration(labelText: 'Email/Username'),
+                        ? InputDecoration(
+                            labelText: 'Email',
+                            labelStyle: TextStyle(color: Colors.white70),
+                            focusColor: Colors.white70,
+                            errorStyle: TextStyle(
+                                color: Colors.white70,
+                                fontWeight: FontWeight.bold))
+                        : InputDecoration(
+                            labelText: 'Email/Username',
+                            labelStyle: TextStyle(color: Colors.white70),
+                            focusColor: Colors.white70,
+                            errorStyle: TextStyle(
+                                color: Colors.white70,
+                                fontWeight: FontWeight.bold)),
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       //TODO: Add a regex for valid email
@@ -203,7 +218,14 @@ class _AuthCardState extends State<AuthCard>
 
                   // Password text field
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Password'),
+                    style: TextStyle(color: Colors.white70),
+                    decoration: InputDecoration(
+                        labelText: 'Password',
+                        labelStyle: TextStyle(color: Colors.white70),
+                        focusColor: Colors.white70,
+                        errorStyle: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.bold)),
                     obscureText: true,
                     controller: _passwordController,
                     validator: (value) {
@@ -220,10 +242,9 @@ class _AuthCardState extends State<AuthCard>
                   // Forget Password
                   if (!(_authMode == AuthMode.Signup))
                     FlatButton(
-                      child: Text(
-                        'Forget password?',
-                        textAlign: TextAlign.start,
-                      ),
+                      child: Text('Forget password?',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(color: Colors.white70)),
                       padding: EdgeInsets.only(right: 185),
                       //TODO: Implement what forget password does
                       onPressed: () {},
@@ -236,13 +257,15 @@ class _AuthCardState extends State<AuthCard>
                       slideAnimation: slideAnimation,
                       passwordController: _passwordController,
                       authData: _authData),
-
-                  // SizedBox(
-                  //   height: 10,
-                  // ),
-
+                  SizedBox(
+                    height: 10,
+                  ),
                   if (_isLoading)
-                    CircularProgressIndicator()
+                    Flex(
+                      children: [CircularProgressIndicator()],
+                      direction: Axis.horizontal,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    )
                   else
                     RaisedButton(
                       child: Text(
@@ -253,19 +276,18 @@ class _AuthCardState extends State<AuthCard>
                       ),
                       padding:
                           EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                      color: Theme.of(context).primaryColor,
+                      color: Color.fromRGBO(74, 20, 140, 0.9),
                       textColor:
                           Theme.of(context).primaryTextTheme.button.color,
                     ),
                   FlatButton(
-                    child: Text(
-                        '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'}'),
-                    onPressed: _switchAuthMode,
-                    // padding:
-                    //     EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    textColor: Theme.of(context).primaryColor,
-                  ),
+                      child: Text(
+                          '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'}'),
+                      onPressed: _switchAuthMode,
+                      // padding:
+                      //     EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      textColor: Theme.of(context).textTheme.button.color),
                 ],
               ),
             ),

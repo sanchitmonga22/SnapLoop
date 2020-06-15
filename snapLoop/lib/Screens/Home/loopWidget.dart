@@ -49,6 +49,7 @@ class _LoopWidgetState extends State<LoopWidget> {
                     startDelay: Duration(milliseconds: 100),
                     glowColor: determineLoopColor(),
                     endRadius: widget.radius * 1.25,
+                    shape: BoxShape.circle,
                     duration: Duration(milliseconds: 1000),
                     repeat: true,
                     showTwoGlows: true,

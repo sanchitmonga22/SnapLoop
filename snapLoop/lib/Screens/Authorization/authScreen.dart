@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:SnapLoop/Screens/Authorization/authCard.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -24,8 +25,10 @@ class AuthScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromRGBO(150, 200, 255, 1).withOpacity(0.5),
-                  Color.fromRGBO(150, 255, 117, 1).withOpacity(0.9),
+                  Color.fromRGBO(94, 53, 177, 1).withOpacity(0.5),
+                  Color.fromRGBO(74, 20, 140, 1).withOpacity(0.9),
+                  // Color.fromRGBO(150, 200, 255, 1).withOpacity(0.5),
+                  // Color.fromRGBO(150, 255, 117, 1).withOpacity(0.9),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -46,13 +49,14 @@ class AuthScreen extends StatelessWidget {
                   Flexible(
                     flex: 3,
                     child: Container(
+                      width: deviceSize.width * 0.65,
                       margin: EdgeInsets.only(
                           bottom:
-                              20.0), // padding between the SnapLoop Logo and the Text Form
+                              15.0), // padding between the SnapLoop Logo and the Text Form
                       padding: EdgeInsets.symmetric(
-                          vertical: 8.0,
+                          vertical: 10.0,
                           horizontal:
-                              50.0), // Padding in the text container containing snapLoop
+                              20.0), // Padding in the text container containing snapLoop
                       transform: Matrix4.rotationZ(
                           -8 * pi / 180) // for turning the text container
                         ..translate(-10.0),
@@ -60,11 +64,12 @@ class AuthScreen extends StatelessWidget {
                       // decoration for the text in the background
 
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.green.shade400,
+                        borderRadius: BorderRadius.circular(15),
+                        //color: Colors.transparent,
+                        color: Color.fromRGBO(74, 20, 140, 0.9),
                         boxShadow: [
                           BoxShadow(
-                            blurRadius: 8,
+                            blurRadius: 2,
                             color: Colors.black26,
                             offset: Offset(0, 2),
                           )
@@ -72,14 +77,34 @@ class AuthScreen extends StatelessWidget {
                       ),
 
                       // Contains the text
-                      child: Text(
-                        'SnapLoop',
-                        style: TextStyle(
-                          color: Theme.of(context).accentTextTheme.title.color,
-                          fontSize: 40,
-                          fontFamily: 'Anton',
-                          fontWeight: FontWeight.normal,
-                        ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Snap',
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).accentTextTheme.title.color,
+                              fontSize: 40,
+                              fontFamily: 'Anton',
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          FaIcon(
+                            FontAwesomeIcons.infinity,
+                            color: Colors.white70,
+                          ),
+                          Text(
+                            'Loop',
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).accentTextTheme.title.color,
+                              fontSize: 40,
+                              fontFamily: 'Anton',
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

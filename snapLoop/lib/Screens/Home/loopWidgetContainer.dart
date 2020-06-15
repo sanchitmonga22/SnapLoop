@@ -20,7 +20,6 @@ class _LoopWidgetContainerState extends State<LoopWidgetContainer> {
         Provider.of<LoopsProvider>(context).loopBuilder(widget.maxRadius);
 
     return Container(
-      color: Colors.grey[300],
       child: Stack(children: [
         widget.isInactive
             ? ListView.builder(

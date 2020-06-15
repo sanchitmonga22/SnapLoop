@@ -41,8 +41,14 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               physics: const NeverScrollableScrollPhysics(),
               children: [
                 TextFormField(
+                  style: TextStyle(color: Colors.white70),
                   enabled: widget._authMode == AuthMode.Signup,
-                  decoration: InputDecoration(labelText: 'Confirm Password'),
+                  decoration: InputDecoration(
+                      labelText: 'Confirm Password',
+                      labelStyle: TextStyle(color: Colors.white70),
+                      focusColor: Colors.white70,
+                      errorStyle: TextStyle(
+                          color: Colors.white70, fontWeight: FontWeight.bold)),
                   obscureText: true,
                   validator: widget._authMode == AuthMode.Signup
                       ? (value) {
@@ -53,8 +59,15 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                       : null,
                 ),
                 TextFormField(
+                    style: TextStyle(color: Colors.white70),
                     enabled: widget._authMode == AuthMode.Signup,
-                    decoration: InputDecoration(labelText: 'Username'),
+                    decoration: InputDecoration(
+                        labelText: 'Username',
+                        labelStyle: TextStyle(color: Colors.white70),
+                        focusColor: Colors.white70,
+                        errorStyle: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.bold)),
                     // validator: _authMode == AuthMode.Signup
                     //     ? (value) {
                     //         if (value != _passwordController.text) {
@@ -67,8 +80,15 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     }),
                 // TODO Add an API call to check whether the username already exists or not
                 TextFormField(
+                    style: TextStyle(color: Colors.white70),
                     enabled: widget._authMode == AuthMode.Signup,
-                    decoration: InputDecoration(labelText: 'Phone'),
+                    decoration: InputDecoration(
+                        labelText: 'Phone',
+                        labelStyle: TextStyle(color: Colors.white70),
+                        focusColor: Colors.white70,
+                        errorStyle: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.bold)),
                     keyboardType: TextInputType.number,
                     // validator: _authMode == AuthMode.Signup
                     //     ? (value) {
