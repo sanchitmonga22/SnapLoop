@@ -8,47 +8,76 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class Auth with ChangeNotifier {
-  String _url = "";
-  static const SERVER_IP = "";
+  //String _url = "";
+  static const SERVER_IP = "http://192.168.0.37:3000/users";
   final storage = FlutterSecureStorage();
+  String _token;
 
   bool get isAuth {
+    print("ISAUTH??");
+    print(token != null);
+    print(token);
     return token != null;
   }
 
   Future<void> attemptLogIn(String username, String password) async {
-    var res = await http.post("$SERVER_IP/login",
-        body: {"username": username, "password": password});
+    http.Response res = await http.post("$SERVER_IP/login",
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({"username": username, "password": password}));
+    final response = json.decode(res.body);
     if (res.statusCode == 200) {
-      var jwt = res.body;
+      final jwt = response['token'];
       if (jwt != null) {
         storage.write(key: "jwt", value: jwt);
+        notifyListeners();
       }
     }
   }
 
-  Future<String> get token async {
-    var jwt = await storage.read(key: "jwt");
-    return jwt;
+  Future<void> logOut() async {
+    http.Response res = await http.post("$SERVER_IP/logout",
+        headers: {"Content-Type": "application/json", "Authorization": token});
+    if (res.statusCode == 200) {
+      print(res.statusCode);
+      _token = null;
+      await storage.deleteAll();
+      print("Logout Successfull");
+      notifyListeners();
+    }
+  }
+
+  String get token {
+    return _token;
   }
 
   Future<void> attemptSignUp(String username, String password,
       String phoneNumber, String email) async {
-    var res = await http.post('$SERVER_IP/signup', body: {
-      "username": username,
-      "password": password,
-      "email": email,
-      "phoneNumber": phoneNumber
-    });
+    http.Response res = await http.post('$SERVER_IP/signup',
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "username": username,
+          "password": password,
+          "email": email,
+          "phoneNumber": phoneNumber
+        }));
+    final response = json.decode(res.body);
+    print(response);
     if (res.statusCode == 201) {
-      print("The user was created successfully");
+      final token = response['token'];
+      print(token);
+      await storage.write(key: "jwt", value: token);
+      _token = token;
+      notifyListeners();
     }
   }
 
-  Future<String> tryAutoLogin() async {
-    String response = await http
-        .read('$SERVER_IP/data', headers: {"Authorization": await token});
-    print(response);
-    return response;
+  Future<bool> tryAutoLogin() async {
+    //final token1 = await storage.read(key: "jwt");
+    //String response =
+    //  await http.read('$SERVER_IP/data', headers: {"Authorization": token1});
+    //notifyListeners();
+    //print(response);
+    return true;
+    // return response;
   }
 }

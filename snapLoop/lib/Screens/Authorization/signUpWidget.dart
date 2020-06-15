@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'authScreen.dart';
 
-class SignUpWidget extends StatelessWidget {
+class SignUpWidget extends StatefulWidget {
   const SignUpWidget({
     Key key,
     @required AuthMode authMode,
@@ -21,34 +21,39 @@ class SignUpWidget extends StatelessWidget {
   final Map<String, String> _authData;
 
   @override
+  _SignUpWidgetState createState() => _SignUpWidgetState();
+}
+
+class _SignUpWidgetState extends State<SignUpWidget> {
+  @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
       constraints: BoxConstraints(
-          minHeight: _authMode == AuthMode.Signup ? 60 : 0,
-          maxHeight: _authMode == AuthMode.Signup ? 200 : 0),
+          minHeight: widget._authMode == AuthMode.Signup ? 60 : 0,
+          maxHeight: widget._authMode == AuthMode.Signup ? 200 : 0),
       curve: Curves.easeIn,
       child: FadeTransition(
-        opacity: opacityAnimation,
+        opacity: widget.opacityAnimation,
         child: SlideTransition(
-          position: slideAnimation,
+          position: widget.slideAnimation,
           child: ListView(
               physics: const NeverScrollableScrollPhysics(),
               children: [
                 TextFormField(
-                  enabled: _authMode == AuthMode.Signup,
+                  enabled: widget._authMode == AuthMode.Signup,
                   decoration: InputDecoration(labelText: 'Confirm Password'),
                   obscureText: true,
-                  validator: _authMode == AuthMode.Signup
+                  validator: widget._authMode == AuthMode.Signup
                       ? (value) {
-                          if (value != _passwordController.text) {
+                          if (value != widget._passwordController.text) {
                             return 'Passwords do not match!';
                           }
                         }
                       : null,
                 ),
                 TextFormField(
-                    enabled: _authMode == AuthMode.Signup,
+                    enabled: widget._authMode == AuthMode.Signup,
                     decoration: InputDecoration(labelText: 'Username'),
                     // validator: _authMode == AuthMode.Signup
                     //     ? (value) {
@@ -58,11 +63,11 @@ class SignUpWidget extends StatelessWidget {
                     //       }
                     //     : null,
                     onSaved: (value) {
-                      _authData['username'] = value;
+                      widget._authData['username'] = value;
                     }),
                 // TODO Add an API call to check whether the username already exists or not
                 TextFormField(
-                    enabled: _authMode == AuthMode.Signup,
+                    enabled: widget._authMode == AuthMode.Signup,
                     decoration: InputDecoration(labelText: 'Phone'),
                     keyboardType: TextInputType.number,
                     // validator: _authMode == AuthMode.Signup
@@ -73,7 +78,7 @@ class SignUpWidget extends StatelessWidget {
                     //       }
                     //     : null,
                     onSaved: (value) {
-                      _authData['phoneNumber'] = value;
+                      widget._authData['phoneNumber'] = value;
                     })
                 // TODO Add a special input for taking the phone number as the input from the user and API call if the number is already taken
               ]),

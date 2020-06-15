@@ -85,6 +85,7 @@ class _AuthCardState extends State<AuthCard>
   // }
 
   void _submit() async {
+    //Navigator.of(context).pushNamed(HomeScreen.routeName);
     if (!_formKey.currentState.validate()) {
       // Invalid!
       return;
@@ -103,22 +104,9 @@ class _AuthCardState extends State<AuthCard>
             _authData['password'],
             _authData["phoneNumber"],
             _authData["email"]);
+        print(_authData);
+        print('Attempting signUp');
       }
-    } on HttpException catch (error) {
-      print(error.toString());
-      var errorMessage = "Authenticate Failed";
-      if (error.toString().contains("EMAIL_EXISTS")) {
-        errorMessage = 'This email already exists';
-      } else if (error.toString().contains("INVALID_EMAIL")) {
-        errorMessage = "This is not a valid email";
-      } else if (error.toString().contains("WEAK_PASSWORD")) {
-        errorMessage = "Password enter is too weak";
-      } else if (error.toString().contains("EMAIL_NOT_FOUND")) {
-        errorMessage = "Could not find a user with that email";
-      } else if (error.toString().contains("INVALID_PASSWORD")) {
-        errorMessage = "Invalid password";
-      }
-      _showErrorDialog(errorMessage);
     } catch (error) {
       const errorMessage = "Could not authenticate you, Please try again later";
       _showErrorDialog(errorMessage);
@@ -126,7 +114,6 @@ class _AuthCardState extends State<AuthCard>
     setState(() {
       _isLoading = false;
     });
-    Navigator.of(context).pushNamed(HomeScreen.routeName);
   }
 
   // Switching between signUp/ Login

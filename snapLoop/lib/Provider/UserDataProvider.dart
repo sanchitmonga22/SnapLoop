@@ -38,6 +38,10 @@ class UserDataProvider with ChangeNotifier {
     return friends;
   }
 
+  User get user {
+    return _user;
+  }
+
   // for dummy users only, actual users will be stored on the database
   void createUser(User user) {
     dummyUsers.users.add(user);

@@ -2,6 +2,7 @@ import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/Screens/CompletedLoops/completedLoops.dart';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
+import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'loopWidgetContainer.dart';
@@ -34,9 +35,16 @@ class HomeScreen extends StatelessWidget {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsets.only(top: 20, right: 30),
-              child: Text(
-                userDataProvider.displayName,
+              padding: const EdgeInsets.only(top: 10, right: 30),
+              child: FlatButton(
+                textColor: Colors.white,
+                child: Text(
+                  userDataProvider.displayName,
+                ),
+                // going to the user profile
+                onPressed: () {
+                  Navigator.of(context).pushNamed(UserProfile.routeName);
+                },
               ),
             ),
           ],

@@ -1,9 +1,13 @@
+import 'package:SnapLoop/Helper/customRoute.dart';
+import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/CompletedLoops/completedLoops.dart';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
+import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
+import 'package:SnapLoop/Screens/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './Screens/Home/homeScreen.dart';
@@ -18,26 +22,51 @@ class SnapLoop extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider.value(value: LoopsProvider()),
-          ChangeNotifierProvider.value(value: UserDataProvider())
+          ChangeNotifierProvider(
+            create: (context) => Auth(),
+          ),
+          ChangeNotifierProxyProvider<Auth, LoopsProvider>(create: (context) {
+            return LoopsProvider();
+          }, update: (context, auth, previousLoopsProvider) {
+            return LoopsProvider();
+          }),
+          ChangeNotifierProxyProvider<Auth, UserDataProvider>(
+              create: (context) {
+            return UserDataProvider();
+          }, update: (context, auth, previousLoopsProvider) {
+            return UserDataProvider();
+          }),
         ],
-        child: MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              primarySwatch: Colors.purple,
-              accentColor: Colors.grey.shade600,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            home: AuthScreen(),
-            // home: HomeScreen(),
-            //  home: ContactScreen(),
-
-            routes: {
-              HomeScreen.routeName: (context) => HomeScreen(),
-              CompletedLoopsScreen.routeName: (context) =>
-                  CompletedLoopsScreen(),
-              ContactScreen.routeName: (context) => ContactScreen(),
-              NewLoopChatScreen.routeName: (context) => NewLoopChatScreen()
-            }));
+        child: Consumer<Auth>(builder: (context, authData, child) {
+          return MaterialApp(
+              title: 'SnapLoop',
+              theme: ThemeData(
+                  primarySwatch: Colors.purple,
+                  accentColor: Colors.grey.shade600,
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                  pageTransitionsTheme: PageTransitionsTheme(builders: {
+                    TargetPlatform.android: CustomPageTransitionBuilder(),
+                    TargetPlatform.iOS: CustomPageTransitionBuilder()
+                  })),
+              home: authData.isAuth
+                  ? HomeScreen()
+                  : FutureBuilder(
+                      future: authData.tryAutoLogin(),
+                      builder: (context, authResultsnapshot) {
+                        return authResultsnapshot.connectionState ==
+                                ConnectionState.waiting
+                            ? SplashScreen()
+                            : AuthScreen();
+                      },
+                    ),
+              routes: {
+                HomeScreen.routeName: (context) => HomeScreen(),
+                CompletedLoopsScreen.routeName: (context) =>
+                    CompletedLoopsScreen(),
+                ContactScreen.routeName: (context) => ContactScreen(),
+                NewLoopChatScreen.routeName: (context) => NewLoopChatScreen(),
+                UserProfile.routeName: (context) => UserProfile()
+              });
+        }));
   }
 }
