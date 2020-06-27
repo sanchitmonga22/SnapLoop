@@ -1,5 +1,6 @@
 import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
+import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'signUpWidget.dart';
@@ -112,40 +113,6 @@ class _AuthCardState extends State<AuthCard>
     }
   }
 
-  //TODO use this for our email
-  String _validateEmail(String value) {
-    if (value.isEmpty) {
-      // The form is empty
-      return "Enter email address";
-    }
-    // This is just a regular expression for email addresses
-    String p = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
-        "\\@" +
-        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-        "(" +
-        "\\." +
-        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-        ")+";
-    RegExp regExp = new RegExp(p);
-
-    if (regExp.hasMatch(value)) {
-      // So, the email is valid
-      return null;
-    }
-
-    // The pattern of the email didn't match the regex above.
-    return 'Email is not valid';
-  }
-
-  InputDecoration getDecoration(String text) {
-    return InputDecoration(
-        labelText: text,
-        labelStyle: TextStyle(color: Colors.white70),
-        focusColor: Colors.white70,
-        errorStyle:
-            TextStyle(color: Colors.white70, fontWeight: FontWeight.bold));
-  }
-
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -177,16 +144,17 @@ class _AuthCardState extends State<AuthCard>
                 children: <Widget>[
                   // Email Text Field
                   TextFormField(
-                    style: TextStyle(color: Colors.white70),
+                    style: kTextFormFieldStyle,
                     decoration: _authMode == AuthMode.Signup
-                        ? getDecoration('Email')
-                        : getDecoration('Email/Username'),
+                        ? kgetDecoration('Email')
+                        : kgetDecoration('Email/Username'),
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       //TODO: Add a regex for valid email
                       if (value.isEmpty || !value.contains('@')) {
                         return 'Invalid email!';
                       }
+                      return null;
                     },
                     onSaved: (value) {
                       _authData['email'] = value;
@@ -195,19 +163,21 @@ class _AuthCardState extends State<AuthCard>
 
                   // Password text field
                   TextFormField(
-                    style: TextStyle(color: Colors.white70),
-                    decoration: getDecoration('Password'),
+                    style: kTextFormFieldStyle,
+                    decoration: kgetDecoration('Password'),
                     obscureText: true,
                     controller: _passwordController,
                     validator: (value) {
                       if (value.isEmpty || value.length < 5) {
                         return 'Password is too short!';
                       }
+                      return null;
                     },
                     onSaved: (value) {
                       _authData['password'] = value;
                     },
-                    // TODO: Add a regex to check the password satisfies the standards and display the strength of the password when signing up
+                    // TODO: Add a regex to check the password satisfies the
+                    //standards and display the strength of the password when signing up
                   ),
 
                   // Forget Password
@@ -215,7 +185,7 @@ class _AuthCardState extends State<AuthCard>
                     FlatButton(
                       child: Text('Forget password?',
                           textAlign: TextAlign.start,
-                          style: TextStyle(color: Colors.white70)),
+                          style: kTextFormFieldStyle),
                       padding: EdgeInsets.only(right: 185),
                       //TODO: Implement what forget password does
                       onPressed: () {},
@@ -223,7 +193,6 @@ class _AuthCardState extends State<AuthCard>
 
                   // Animated Container that pops from below
                   SignUpWidget(
-                      getDecoration: getDecoration,
                       authMode: _authMode,
                       opacityAnimation: opacityAnimation,
                       slideAnimation: slideAnimation,
@@ -256,8 +225,6 @@ class _AuthCardState extends State<AuthCard>
                       child: Text(
                           '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'}'),
                       onPressed: _switchAuthMode,
-                      // padding:
-                      //     EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       textColor: Theme.of(context).textTheme.button.color),
                 ],
