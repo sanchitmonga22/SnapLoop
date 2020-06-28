@@ -23,9 +23,7 @@ class _AuthCardState extends State<AuthCard>
     'username': '',
     'phoneNumber': '',
   };
-
   var _isLoading = false; // for the Login/SignUp Button
-
   final _passwordController = TextEditingController();
 
   AnimationController _controller;
@@ -117,27 +115,26 @@ class _AuthCardState extends State<AuthCard>
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Container(
-      // height: 350,
+      padding: EdgeInsets.zero,
       child: Card(
+        elevation: 2,
         color: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        //elevation: 8.0,
         child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
           child: AnimatedContainer(
             duration: Duration(milliseconds: 500),
-            height: _authMode == AuthMode.Signup ? 700 : 280,
+            height: _authMode == AuthMode.Signup ? 530 : 340,
             curve: Curves.easeIn,
-            //height: _heightAnimation.value.height,
             constraints: BoxConstraints(
-                minHeight: _authMode == AuthMode.Signup ? 320 : 330),
+              minHeight: _authMode == AuthMode.Signup ? 510 : 350,
+            ),
             width: deviceSize.width * 0.85,
             padding: EdgeInsets.only(left: 16, right: 16, top: 4),
             child: Form(
               key: _formKey,
-
               // The form components
               child: ListView(
                 physics: const NeverScrollableScrollPhysics(),
@@ -210,23 +207,31 @@ class _AuthCardState extends State<AuthCard>
                   else
                     RaisedButton(
                       child: Text(
-                          _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
+                        _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP',
+                        style: kTextFormFieldStyle.copyWith(
+                            fontWeight: FontWeight.w900),
+                      ),
                       onPressed: _submit,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
                       padding:
                           EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                      color: Color.fromRGBO(74, 20, 140, 0.9),
-                      textColor:
-                          Theme.of(context).primaryTextTheme.button.color,
+                      //color: Color.fromRGBO(74, 20, 140, 0.9),
+                      color: Colors.white10,
+                      textColor: Colors.white,
                     ),
                   FlatButton(
-                      child: Text(
-                          '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'}'),
-                      onPressed: _switchAuthMode,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      textColor: Theme.of(context).textTheme.button.color),
+                    child: Text(
+                      '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'}',
+                      style: kTextFormFieldStyle.copyWith(
+                          fontWeight: FontWeight.w900),
+                    ),
+                    onPressed: _switchAuthMode,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    textColor: Colors.white,
+                    textTheme: ButtonTextTheme.primary,
+                  )
                 ],
               ),
             ),

@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 
 // AUTH SCREEN
 final kBoxDecoration = BoxDecoration(
+  image: DecorationImage(
+      image: AssetImage(
+        'assets/images/test5.PNG',
+      ),
+      fit: BoxFit.fill),
   gradient: LinearGradient(
     colors: [
       Color.fromRGBO(94, 53, 177, 1).withOpacity(0.5),
@@ -16,7 +21,7 @@ final kBoxDecoration = BoxDecoration(
 );
 
 final kBoxDecorationLOGO = BoxDecoration(
-  borderRadius: BorderRadius.circular(50),
+  borderRadius: BorderRadius.circular(15),
   color: Color.fromRGBO(74, 20, 140, 0.9),
   boxShadow: [
     BoxShadow(
@@ -28,22 +33,22 @@ final kBoxDecorationLOGO = BoxDecoration(
 );
 
 final kFontStyleLOGO = TextStyle(
-  color: Colors.white70,
-  fontSize: 40,
+  color: Colors.white,
+  fontSize: 30,
   fontFamily: 'Anton',
-  fontWeight: FontWeight.normal,
+  fontWeight: FontWeight.bold,
 );
 
 //AUTH CARD
 InputDecoration kgetDecoration(String text) {
   return InputDecoration(
       labelText: text,
-      labelStyle: TextStyle(color: Colors.white70),
-      focusColor: Colors.white70,
-      errorStyle:
-          TextStyle(color: Colors.white70, fontWeight: FontWeight.bold));
+      labelStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+      focusColor: Colors.white,
+      errorStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold));
 }
 
-const kTextFormFieldStyle = TextStyle(color: Colors.white70);
+const kTextFormFieldStyle =
+    TextStyle(color: Colors.white, fontWeight: FontWeight.w600);
 
 // HOME SCREEN
