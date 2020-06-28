@@ -3,23 +3,46 @@ import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 import 'package:SnapLoop/Screens/Home/homeScreen.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:persistent_bottom_nav_bar/models/persisten-bottom-nav-item.widget.dart';
 import 'package:persistent_bottom_nav_bar/models/persistent-bottom-nav-bar-styles.widget.dart';
 import 'package:persistent_bottom_nav_bar/models/persistent-nav-bar-scaffold.widget.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.widget.dart';
 
-class NavBar extends StatelessWidget {
+/// author:@sanchitmonga22
+class NavBar extends StatefulWidget {
   NavBar({Key key}) : super(key: key);
 
-  final PersistentTabController _controller =
-      PersistentTabController(initialIndex: 0);
+  @override
+  _NavBarState createState() => _NavBarState();
+}
+
+class _NavBarState extends State<NavBar> {
+  PersistentTabController _controller;
+  PageController _pageController;
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _controller = PersistentTabController(initialIndex: 0);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
+
   List<Widget> _buildScreens() {
     return [
-      HomeScreen(),
-      CompletedLoopsScreen(),
-      ContactScreen(),
-      UserProfile()
+      HomeScreen(
+        controller: _controller,
+      ),
+      CompletedLoopsScreen(controller: _controller),
+      ContactScreen(controller: _controller),
+      UserProfile(controller: _controller)
     ];
   }
 
@@ -54,20 +77,19 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(
-      controller: _controller,
-      items: _navBarsItems(),
-      screens: _buildScreens(),
-      showElevation: true,
-      navBarCurve: NavBarCurve.upperCorners,
-      confineInSafeArea: true,
-      handleAndroidBackButtonPress: true,
-      iconSize: 26.0,
-      navBarStyle:
-          NavBarStyle.style1, // Choose the nav bar style with this property
-      onItemSelected: (index) {
-        print(index);
-      },
+    return SafeArea(
+      child: PersistentTabView(
+        controller: _controller,
+        items: _navBarsItems(),
+        screens: _buildScreens(),
+        showElevation: true,
+        navBarCurve: NavBarCurve.upperCorners,
+        confineInSafeArea: true,
+        handleAndroidBackButtonPress: true,
+        iconSize: 26.0,
+        navBarStyle: NavBarStyle.style2,
+        onItemSelected: (value) {},
+      ),
     );
   }
 }

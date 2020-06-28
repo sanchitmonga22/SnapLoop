@@ -1,6 +1,4 @@
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
-import 'package:SnapLoop/Screens/Home/bottomButtonsWidget.dart';
-import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/models/persistent-nav-bar-scaffold.widget.dart';
@@ -11,10 +9,9 @@ import 'loopWidgetContainer.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/homeScreen';
+  final PersistentTabController controller;
+  HomeScreen({this.controller = null});
 
-  // TODO setup validation for the name of the loop and whether the user can start or not
-
-  @override
   Widget build(BuildContext context) {
     final userDataProvider = Provider.of<UserDataProvider>(context);
 
@@ -36,9 +33,7 @@ class HomeScreen extends StatelessWidget {
                 style: kTextFormFieldStyle.copyWith(fontSize: 25),
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed(UserProfile.routeName);
-                },
+                onTap: () {},
                 child: Container(
                   foregroundDecoration: BoxDecoration(
                       border: Border.all(style: BorderStyle.solid),
@@ -63,19 +58,27 @@ class HomeScreen extends StatelessWidget {
           // backgroundColor: Colors.blueGrey[900],
           //backgroundColor: Color.fromRGBO(74, 20, 140, 1).withOpacity(0.8),
         ),
-        body: Container(
-          decoration: kHomeScreenBoxDecoration,
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: size.size.height * 0.75,
-                child: LoopWidgetContainer(
-                  maxRadius: (size.size.width) * 0.25,
-                  isInactive: false,
+        body: GestureDetector(
+          onHorizontalDragUpdate: (details) {
+            // swiping right
+            if (details.delta.dx < -kSwipeConstant) {
+              controller.jumpToTab(1);
+            }
+          },
+          child: Container(
+            decoration: kHomeScreenBoxDecoration,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: size.size.height * 0.75,
+                  child: LoopWidgetContainer(
+                    maxRadius: (size.size.width) * 0.25,
+                    isInactive: false,
+                  ),
                 ),
-              ),
-              //BottomButtonsWidget()
-            ],
+                //BottomButtonsWidget()
+              ],
+            ),
           ),
         ));
   }

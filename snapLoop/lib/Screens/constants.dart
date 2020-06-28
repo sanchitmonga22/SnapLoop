@@ -1,9 +1,11 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:flutter/material.dart';
 
-/**
- * author: @sanchitmonga22
- */
+///author: @sanchitmonga22
+
+//COMMON
+final kSwipeConstant = 5;
+
 // AUTH SCREEN
 final kBoxDecoration = BoxDecoration(
   image: DecorationImage(

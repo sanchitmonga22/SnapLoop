@@ -4,9 +4,7 @@ import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Home/loopWidget.dart';
 import 'package:flutter/widgets.dart';
 
-/**
- * author: @sanchitmonga22
- */
+///author: @sanchitmonga22
 class LoopsProvider with ChangeNotifier {
   List<Loop> _loops = loopsies.loops;
 
@@ -89,6 +87,7 @@ class LoopsProvider with ChangeNotifier {
         }
       }
       rows.add(Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [...widgetsInEachRow],
       ));
       currentWidth = 0;
