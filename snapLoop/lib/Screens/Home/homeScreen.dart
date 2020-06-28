@@ -3,13 +3,12 @@ import 'package:SnapLoop/Screens/Home/bottomButtonsWidget.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:persistent_bottom_nav_bar/models/persistent-nav-bar-scaffold.widget.dart';
 import 'package:provider/provider.dart';
 import 'loopWidgetContainer.dart';
 
-/**
- * author: @sanchitmonga22
- */
+/// author: @sanchitmonga22
+
 class HomeScreen extends StatelessWidget {
   static const routeName = '/homeScreen';
 
@@ -75,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                   isInactive: false,
                 ),
               ),
-              BottomButtonsWidget()
+              //BottomButtonsWidget()
             ],
           ),
         ));
