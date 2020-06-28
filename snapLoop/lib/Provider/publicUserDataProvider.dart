@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class PublicUserData {
   final String username;
   final String email;

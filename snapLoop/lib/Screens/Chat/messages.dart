@@ -1,6 +1,9 @@
 import 'package:SnapLoop/Screens/Chat/messageBubble.dart';
 import 'package:flutter/material.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class Messages extends StatelessWidget {
   const Messages({Key key}) : super(key: key);
 

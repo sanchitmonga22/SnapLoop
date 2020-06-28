@@ -1,8 +1,11 @@
 import 'package:SnapLoop/Screens/CompletedLoops/completedLoops.dart';
+import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'createLoopDialog.dart';
+
+/// author: @sanchitmonga22
 
 class BottomButtonsWidget extends StatelessWidget {
   const BottomButtonsWidget({Key key}) : super(key: key);
@@ -11,9 +14,7 @@ class BottomButtonsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        decoration: BoxDecoration(
-          color: Colors.blueGrey[900],
-        ),
+        decoration: kBottomContainerDecoration,
         child: Column(
           children: [
             Expanded(
@@ -40,11 +41,6 @@ class BottomButtonsWidget extends StatelessWidget {
                           width: 4,
                         ),
                         Icon(Icons.loop)
-                        // FaIcon(
-                        //   FontAwesomeIcons.infinity,
-                        //   size: 15,
-                        //   color: Colors.white70,
-                        // ),
                       ],
                     ),
                   ),
@@ -84,13 +80,14 @@ class BottomButtonsWidget extends StatelessWidget {
                   ),
                   Expanded(
                       child: OutlineButton(
-                    textColor: Colors.white70,
                     onPressed: () {
                       //TODO:
                     },
                     child: Text(
                       "Friends",
                       textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                   )),
                 ],

@@ -5,6 +5,9 @@ import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class ContactScreen extends StatefulWidget {
   ContactScreen({Key key}) : super(key: key);
   static const routeName = "/ContactScreen";

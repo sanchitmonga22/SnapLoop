@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'signUpWidget.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class AuthCard extends StatefulWidget {
   @override
   _AuthCardState createState() => _AuthCardState();

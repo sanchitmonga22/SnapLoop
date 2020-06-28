@@ -4,12 +4,12 @@ import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/material.dart';
 
+///author: @sanchitmonga22
 class LoopWidgetContent extends StatelessWidget {
   final double radius;
   final String text;
   final int numberOfMembers;
   final LoopType type;
-
   const LoopWidgetContent(
       {this.radius, this.text, this.numberOfMembers, this.type});
 
@@ -17,125 +17,135 @@ class LoopWidgetContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
         color: Colors.transparent,
-        // elevation: 8.0,
         shape: CircleBorder(),
         shadowColor: Colors.white24,
         child: Container(
-            decoration: BoxDecoration(shape: BoxShape.circle),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+            ),
             child: CircleAvatar(
-                backgroundColor: Colors.black38,
+                backgroundColor: Colors.white,
                 radius: radius,
                 child: MemojiGenerator(
-                    numberOfMembers: numberOfMembers, radius: radius))));
+                    loopType: type,
+                    numberOfMembers: numberOfMembers,
+                    radius: radius))));
   }
 }
 
 class MemojiGenerator extends StatelessWidget {
   final int numberOfMembers;
   final double radius;
-  const MemojiGenerator({
+  final LoopType loopType;
+  MemojiGenerator({
+    this.loopType,
     this.radius,
     this.numberOfMembers,
-    Key key,
-  }) : super(key: key);
+  });
   int getRandomImageNumber() {
     return Random().nextInt(16);
+  }
+
+  final Map<dynamic, dynamic> alignmentMap = {
+    2: [Position(1, 1), Position(-1, -1)],
+    3: [
+      Position(0, -1),
+      Position(-2 / sqrt(3), 1),
+      Position(2 / sqrt(3), 1),
+    ],
+    4: [Position(1, 1), Position(-1, -1), Position(-1, 1), Position(1, -1)],
+    5: [
+      Position(1, 1),
+      Position(-1, -1),
+      Position(-1, 1),
+      Position(1, -1),
+      Position(0, 0)
+    ],
+    13: [
+      Position(0.5, 0.5),
+      Position(-0.5, -0.5),
+      Position(-0.5, 0.5),
+      Position(0.5, -0.5),
+      Position(0, 0),
+      Position(1, -1),
+      Position(-1, -1),
+      Position(0, -1.3),
+      Position(1, 1),
+      Position(-1, 1),
+      Position(0, 1.3),
+      Position(1.3, 0),
+      Position(-1.3, 0),
+    ]
+  };
+
+  List<Widget> getMemojis(int numberOfMembers) {
+    if (numberOfMembers > 13) {
+      numberOfMembers = 13;
+    }
+    List<Widget> memojis = [];
+    for (int i = 0; i < numberOfMembers; i++) {
+      memojis.add(Memoji(
+        loopType: loopType,
+        imageNumber: getRandomImageNumber(),
+        position: alignmentMap[13][i],
+      ));
+    }
+    return memojis;
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      // Align(
-      //     alignment: AlignmentDirectional(1, 1),
-      //     child: CircleAvatar(
-      //         child: Container(
-      //       decoration: BoxDecoration(
-      //           shape: BoxShape.circle,
-      //           image: DecorationImage(
-      //             fit: BoxFit.fill,
-      //             image: AssetImage(
-      //               'assets/memojis/m${getRandomImageNumber()}.jpg',
-      //             ),
-      //           )),
-      //     ))),
-      Align(
-          alignment: AlignmentDirectional(1, 0),
-          child: CircleAvatar(
-              child: Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(
-                    'assets/memojis/m${getRandomImageNumber()}.jpg',
-                  ),
-                )),
-          ))),
-      Align(
-          alignment: AlignmentDirectional(0, 1),
-          child: CircleAvatar(
-              child: Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(
-                    'assets/memojis/m${getRandomImageNumber()}.jpg',
-                  ),
-                )),
-          ))),
-      Align(
-          alignment: AlignmentDirectional(0, -1),
-          child: CircleAvatar(
-              child: Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(
-                    'assets/memojis/m${getRandomImageNumber()}.jpg',
-                  ),
-                )),
-          ))),
-      Align(
-          alignment: AlignmentDirectional(-1, 0),
-          child: CircleAvatar(
-              child: Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(
-                    'assets/memojis/m${getRandomImageNumber()}.jpg',
-                  ),
-                )),
-          ))),
-      Align(
-          alignment: AlignmentDirectional(-1, -1),
-          child: CircleAvatar(
-              child: Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(
-                    'assets/memojis/m${getRandomImageNumber()}.jpg',
-                  ),
-                )),
-          ))),
-      // Align(
-      //     alignment: AlignmentDirectional(0, 0),
-      //     child: CircleAvatar(
-      //         child: Container(
-      //       decoration: BoxDecoration(
-      //           shape: BoxShape.circle,
-      //           image: DecorationImage(
-      //             fit: BoxFit.fill,
-      //             image: AssetImage(
-      //               'assets/memojis/m${getRandomImageNumber()}.jpg',
-      //             ),
-      //           )),
-      //     )))
+      if (numberOfMembers <= 5)
+        ...alignmentMap[numberOfMembers].map((position) {
+          return Memoji(
+            loopType: loopType,
+            imageNumber: getRandomImageNumber(),
+            position: position,
+          );
+        }).toList()
+      else
+        ...getMemojis(numberOfMembers).toList()
     ]);
+  }
+}
+
+class Memoji extends StatelessWidget {
+  final Position position;
+  final imageNumber;
+  final loopType;
+  const Memoji({this.loopType, this.imageNumber, Key key, this.position})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+        alignment: AlignmentDirectional(position.x, position.y),
+        child: CircleAvatar(
+            child: Container(
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(blurRadius: 5, color: determineLoopColor(loopType))
+              ],
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                fit: BoxFit.fitHeight,
+                image: AssetImage(
+                  'assets/memojis/m$imageNumber.jpg',
+                ),
+              )),
+        )));
+  }
+}
+
+class Position {
+  final double x;
+  final double y;
+  Position(this.x, this.y);
+
+  // distance formula in coordinate geometry
+  double findDistance(Position position) {
+    return sqrt(
+        pow((position.x - this.x), 2) + (pow((position.y - this.y), 2)));
   }
 }

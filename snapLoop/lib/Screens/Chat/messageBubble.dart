@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class MessageBubble extends StatelessWidget {
   final String message;
   final bool isMe;

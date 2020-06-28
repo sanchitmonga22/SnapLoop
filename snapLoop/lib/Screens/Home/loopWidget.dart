@@ -1,8 +1,12 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Home/loopWidgetContent.dart';
+import 'package:SnapLoop/Screens/constants.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 // Represents a single loop used in the LoopWidgetContainer
 class LoopWidget extends StatefulWidget {
   final numberOfMembers;
@@ -15,16 +19,6 @@ class LoopWidget extends StatefulWidget {
 }
 
 class _LoopWidgetState extends State<LoopWidget> {
-  Color determineLoopColor() {
-    if (widget.type == LoopType.NEW_LOOP) {
-      return Colors.pink;
-    }
-    if (widget.type == LoopType.NEW_NOTIFICATION) {
-      return Colors.green;
-    }
-    return Colors.yellowAccent;
-  }
-
   bool isInactive() {
     if (widget.type == LoopType.INACTIVE_LOOP_FAILED ||
         widget.type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
@@ -47,7 +41,7 @@ class _LoopWidgetState extends State<LoopWidget> {
                   )
                 : AvatarGlow(
                     startDelay: Duration(milliseconds: 100),
-                    glowColor: determineLoopColor(),
+                    glowColor: determineLoopColor(widget.type),
                     endRadius: widget.radius * 1.25,
                     shape: BoxShape.circle,
                     duration: Duration(milliseconds: 1000),

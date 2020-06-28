@@ -2,6 +2,9 @@ import 'package:SnapLoop/Screens/Chat/messages.dart';
 import 'package:SnapLoop/Screens/Chat/newMessages.dart';
 import 'package:flutter/material.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class ExistingLoopChatScreen extends StatefulWidget {
   ExistingLoopChatScreen({Key key}) : super(key: key);
 

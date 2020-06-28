@@ -3,6 +3,9 @@ import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class CreateALoopDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

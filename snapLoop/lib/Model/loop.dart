@@ -1,6 +1,9 @@
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:flutter/foundation.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 enum LoopType {
   NEW_LOOP,
   NEW_NOTIFICATION,

@@ -1,6 +1,9 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:flutter/foundation.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class User {
   final String userID;
   final String username;

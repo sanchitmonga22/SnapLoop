@@ -1,6 +1,9 @@
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 // This will be sorted according to the time of the creation
 final chat = Chat(chatID: "chat", chat: [
   ChatInfo(senderDisplayName: null, content: null, time: null, senderID: null),
@@ -21,15 +24,15 @@ final loops = [
       id: "Loop1",
       creatorId: "1",
       name: "Loop1",
-      numberOfMembers: 3,
+      numberOfMembers: 40,
       type: LoopType.EXISTING_LOOP,
-      userIDs: ["1", "2", "3"],
+      userIDs: ["1", "2", "3", "4", "5", "6"],
       chatID: "chat1"),
   Loop(
       creatorId: "4",
       id: "Loop2",
       name: "Loop2",
-      numberOfMembers: 4,
+      numberOfMembers: 2,
       type: LoopType.EXISTING_LOOP,
       userIDs: ["2", "4", "5", "1"],
       chatID: "chat1"),

@@ -14,6 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './Screens/Home/homeScreen.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 void main() {
   runApp(SnapLoop());
 }

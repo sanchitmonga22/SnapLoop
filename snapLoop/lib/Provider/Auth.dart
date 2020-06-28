@@ -7,6 +7,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
+/// author: @sanchitmonga22
+
 class Auth with ChangeNotifier {
   //String _url = "";
   static const SERVER_IP = "http://192.168.0.37:3000/users";

@@ -2,6 +2,9 @@ import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/material.dart';
 import 'authScreen.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class SignUpWidget extends StatelessWidget {
   const SignUpWidget({
     Key key,

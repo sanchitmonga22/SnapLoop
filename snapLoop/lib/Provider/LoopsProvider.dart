@@ -4,6 +4,9 @@ import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Home/loopWidget.dart';
 import 'package:flutter/widgets.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class LoopsProvider with ChangeNotifier {
   List<Loop> _loops = loopsies.loops;
 
@@ -40,23 +43,14 @@ class LoopsProvider with ChangeNotifier {
   }
 
   double radiusCalculator(int numberOfMember, double maxRadius) {
-    double radii = 0.0;
-    maxRadius = maxRadius * .75;
-    double minRadius = maxRadius / 1.5;
-    if (numberOfMember > 3) {
-      // factor by which the loop will increase by the addition of a new member in the loop
-      double factor = (numberOfMember - 3) * 0.5;
-      radii = minRadius + factor;
-    } else {
-      radii = minRadius;
+    // KEY: Number of Members, and Value Factor by which the maxRadius has to be reduced
+    const fixedRadiusFactor = {2: 0.34, 3: 0.37, 4: 0.43, 5: 0.46};
+
+    // NOTE: DO NOT CHANGE THIS!!
+    if (numberOfMember <= 5) {
+      return maxRadius * fixedRadiusFactor[numberOfMember];
     }
-    if (radii > maxRadius) {
-      radii = maxRadius;
-    }
-//  if(radii <minRadius) {
-//    radii = minRadius / 2;
-//  }
-    return radii;
+    return maxRadius * 0.65;
   }
 
   List<Loop> getLoopsType(LoopType type) {

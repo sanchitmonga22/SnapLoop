@@ -1,6 +1,9 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:flutter/widgets.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class FriendsData {
   final String username;
   final String email;

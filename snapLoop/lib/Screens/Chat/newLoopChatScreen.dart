@@ -3,6 +3,9 @@ import 'package:SnapLoop/Screens/Chat/messages.dart';
 import 'package:SnapLoop/Screens/Chat/newMessages.dart';
 import 'package:flutter/material.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class NewLoopChatScreen extends StatefulWidget {
   NewLoopChatScreen({Key key}) : super(key: key);
   static const routeName = "/NewLoopChatScreen";

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:provider/provider.dart';
 
+/// author: @sanchitmonga22
 class LoopWidgetContainer extends StatefulWidget {
   final double maxRadius;
   final bool isInactive;
@@ -19,7 +20,6 @@ class _LoopWidgetContainerState extends State<LoopWidgetContainer> {
         .completedLoopBuilder(widget.maxRadius);
     final List<Widget> loopWidgets =
         Provider.of<LoopsProvider>(context).loopBuilder(widget.maxRadius);
-
     return Container(
       child: Stack(children: [
         widget.isInactive

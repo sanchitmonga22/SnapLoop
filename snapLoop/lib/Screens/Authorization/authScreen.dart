@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 
 enum AuthMode { Signup, Login }
 
+/**
+ * author: @sanchitmonga22
+ */
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
   //final SERVER_IP = "";

@@ -7,6 +7,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'loopWidgetContainer.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class HomeScreen extends StatelessWidget {
   static const routeName = '/homeScreen';
 
@@ -62,13 +65,13 @@ class HomeScreen extends StatelessWidget {
           //backgroundColor: Color.fromRGBO(74, 20, 140, 1).withOpacity(0.8),
         ),
         body: Container(
-          decoration: kHomeScreenBoxDecoration.copyWith(color: Colors.white),
+          decoration: kHomeScreenBoxDecoration,
           child: Column(
             children: <Widget>[
               Container(
                 height: size.size.height * 0.75,
                 child: LoopWidgetContainer(
-                  maxRadius: (size.size.width) / 4,
+                  maxRadius: (size.size.width) * 0.25,
                   isInactive: false,
                 ),
               ),

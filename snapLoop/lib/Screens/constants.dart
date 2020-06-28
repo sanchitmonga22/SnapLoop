@@ -1,5 +1,9 @@
+import 'package:SnapLoop/Model/loop.dart';
 import 'package:flutter/material.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 // AUTH SCREEN
 final kBoxDecoration = BoxDecoration(
   image: DecorationImage(
@@ -52,7 +56,7 @@ const kTextFormFieldStyle =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w600);
 
 // HOME SCREEN
-const kAppBarBackgroundColor = Colors.teal;
+const kAppBarBackgroundColor = Colors.indigo;
 const kTextStyleHomeScreen =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15);
 
@@ -68,8 +72,31 @@ final kHomeScreenBoxDecoration = BoxDecoration(
     //   end: Alignment.bottomRight,
     //   stops: [0, 1],
     // ),
-    color: Colors.teal[900]);
+    color: Colors.blueAccent);
 
 //LOOP CONTENT
+Color determineLoopColor(type) {
+  if (type == LoopType.NEW_LOOP) {
+    return Colors.red;
+  }
+  if (type == LoopType.NEW_NOTIFICATION) {
+    return Colors.yellowAccent;
+  }
+  if (type == LoopType.EXISTING_LOOP) {
+    return Colors.greenAccent;
+  }
+  if (type == LoopType.INACTIVE_LOOP_FAILED) {
+    return Colors.indigoAccent;
+  }
+  if (type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
+    return Colors.tealAccent;
+  }
+}
+
 const kTextStyleLoopContent =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 15);
+
+//BOTTOM CONTAINER
+final kBottomContainerDecoration = BoxDecoration(
+  color: Colors.white,
+);

@@ -5,6 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/**
+ * author: @sanchitmonga22
+ */
 class UserProfile extends StatelessWidget {
   static const routeName = './UserProfile';
   const UserProfile({Key key}) : super(key: key);
