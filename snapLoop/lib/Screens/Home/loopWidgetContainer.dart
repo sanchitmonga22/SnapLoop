@@ -1,3 +1,4 @@
+import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:provider/provider.dart';
@@ -22,16 +23,32 @@ class _LoopWidgetContainerState extends State<LoopWidgetContainer> {
     return Container(
       child: Stack(children: [
         widget.isInactive
-            ? ListView.builder(
-                itemBuilder: (_, index) {
-                  return inactiveLoops[index];
-                },
-                itemCount: inactiveLoops.length)
-            : ListView.builder(
-                itemBuilder: (_, index) {
-                  return loopWidgets[index];
-                },
-                itemCount: loopWidgets.length),
+            ? inactiveLoops == null || inactiveLoops.length == 0
+                ? Center(
+                    child: Text(
+                    "There are no inactive loops available yet, \n once you are part of a successfully completed loop it will show up here!",
+                    style: kTextStyleHomeScreen,
+                  ))
+                : ListView.builder(
+                    itemBuilder: (_, index) {
+                      return inactiveLoops[index];
+                    },
+                    itemCount: inactiveLoops.length)
+            : loopWidgets == null || loopWidgets.length == 0
+                ? Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        "There are currently no active loops, Please start new loops to show up here!",
+                        style: kTextStyleHomeScreen,
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    itemBuilder: (_, index) {
+                      return loopWidgets[index];
+                    },
+                    itemCount: loopWidgets.length),
       ]),
     );
   }

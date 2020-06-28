@@ -17,12 +17,12 @@ class LoopWidget extends StatefulWidget {
 class _LoopWidgetState extends State<LoopWidget> {
   Color determineLoopColor() {
     if (widget.type == LoopType.NEW_LOOP) {
-      return Colors.red[900];
+      return Colors.pink;
     }
     if (widget.type == LoopType.NEW_NOTIFICATION) {
-      return Colors.green[900];
+      return Colors.green;
     }
-    return Colors.amber[900];
+    return Colors.yellowAccent;
   }
 
   bool isInactive() {
@@ -52,8 +52,8 @@ class _LoopWidgetState extends State<LoopWidget> {
                     shape: BoxShape.circle,
                     duration: Duration(milliseconds: 1000),
                     repeat: true,
-                    showTwoGlows: true,
-                    repeatPauseDuration: Duration(milliseconds: 10),
+                    animate: true,
+                    repeatPauseDuration: Duration(milliseconds: 1),
                     child: LoopWidgetContent(
                       numberOfMembers: widget.numberOfMembers,
                       radius: widget.radius,

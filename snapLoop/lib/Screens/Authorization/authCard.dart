@@ -187,8 +187,6 @@ class _AuthCardState extends State<AuthCard>
                       //TODO: Implement what forget password does
                       onPressed: () {},
                     ),
-
-                  // Animated Container that pops from below
                   SignUpWidget(
                       authMode: _authMode,
                       opacityAnimation: opacityAnimation,
@@ -217,7 +215,6 @@ class _AuthCardState extends State<AuthCard>
                       ),
                       padding:
                           EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                      //color: Color.fromRGBO(74, 20, 140, 0.9),
                       color: Colors.white10,
                       textColor: Colors.white,
                     ),

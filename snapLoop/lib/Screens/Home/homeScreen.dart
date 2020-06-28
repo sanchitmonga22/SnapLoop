@@ -1,6 +1,7 @@
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/Screens/Home/bottomButtonsWidget.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
+import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -21,64 +22,47 @@ class HomeScreen extends StatelessWidget {
             false, // to avoid bottom overflow in the alert dialog box
         appBar: AppBar(
           title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 "Score: ${userDataProvider.userScore.toString()}",
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 15),
+                style: kTextStyleHomeScreen,
               ),
-              SizedBox(width: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Snap",
+              Text(
+                "Snap∞Loop",
+                style: kTextFormFieldStyle.copyWith(fontSize: 25),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(UserProfile.routeName);
+                },
+                child: Container(
+                  foregroundDecoration: BoxDecoration(
+                      border: Border.all(style: BorderStyle.solid),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      userDataProvider.displayName,
+                      style: kTextStyleHomeScreen,
+                    ),
                   ),
-                  Icon(Icons.loop),
-                  // FaIcon(
-                  //   FontAwesomeIcons.infinity,
-                  //   color: Colors.white70,
-                  // ),
-                  // Text(
-                  //   "Loop",
-                  // ),
-                ],
+                ),
               ),
+              // going to the user profile
+              // onPressed: () {
+              //   Navigator.of(context).pushNamed(UserProfile.routeName);
+              // },
             ],
           ),
           centerTitle: true,
-          backgroundColor: Color.fromRGBO(74, 20, 140, 1).withOpacity(0.8),
-          // leading: Container(
-          //   child:
-          // ),
-          actions: [
-            RaisedButton(
-              color: Colors.transparent,
-              textColor: Colors.white,
-              child: Text(
-                userDataProvider.displayName,
-              ),
-              // going to the user profile
-              onPressed: () {
-                Navigator.of(context).pushNamed(UserProfile.routeName);
-              },
-            )
-          ],
+          backgroundColor: kAppBarBackgroundColor,
+          // backgroundColor: Colors.blueGrey[900],
+          //backgroundColor: Color.fromRGBO(74, 20, 140, 1).withOpacity(0.8),
         ),
         body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromRGBO(94, 53, 177, 1).withOpacity(0.3),
-                Color.fromRGBO(74, 20, 140, 1).withOpacity(0.8),
-                // Color.fromRGBO(150, 200, 255, 1).withOpacity(0.5),
-                // Color.fromRGBO(150, 255, 117, 1).withOpacity(0.9),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [0, 1],
-            ),
-          ),
+          decoration: kHomeScreenBoxDecoration.copyWith(color: Colors.white),
           child: Column(
             children: <Widget>[
               Container(

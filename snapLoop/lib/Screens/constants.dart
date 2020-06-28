@@ -52,3 +52,24 @@ const kTextFormFieldStyle =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w600);
 
 // HOME SCREEN
+const kAppBarBackgroundColor = Colors.teal;
+const kTextStyleHomeScreen =
+    TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15);
+
+final kHomeScreenBoxDecoration = BoxDecoration(
+    // gradient: LinearGradient(
+    //   colors: [
+    //     Color.fromRGBO(94, 53, 177, 1).withOpacity(0.3),
+    //     Color.fromRGBO(74, 20, 140, 1).withOpacity(0.8),
+    //     // Color.fromRGBO(150, 200, 255, 1).withOpacity(0.5),
+    //     // Color.fromRGBO(150, 255, 117, 1).withOpacity(0.9),
+    //   ],
+    //   begin: Alignment.topLeft,
+    //   end: Alignment.bottomRight,
+    //   stops: [0, 1],
+    // ),
+    color: Colors.teal[900]);
+
+//LOOP CONTENT
+const kTextStyleLoopContent =
+    TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 15);

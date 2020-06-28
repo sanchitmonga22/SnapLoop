@@ -12,53 +12,56 @@ class BottomButtonsWidget extends StatelessWidget {
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
-            color: Color.fromRGBO(74, 20, 140, 1).withOpacity(0.8)),
+          color: Colors.blueGrey[900],
+        ),
         child: Column(
           children: [
-            Row(
-              children: <Widget>[
-                OutlineButton(
-                  focusColor: Colors.transparent,
-                  textColor: Colors.white70,
-                  //color: Theme.of(context).accentColor,
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return CreateALoopDialog();
-                        });
-                  },
-                  child: Row(
-                    children: [
-                      Text(
-                        "Start a Loop",
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Icon(Icons.loop)
-                      // FaIcon(
-                      //   FontAwesomeIcons.infinity,
-                      //   size: 15,
-                      //   color: Colors.white70,
-                      // ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: OutlineButton(
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  OutlineButton(
+                    focusColor: Colors.transparent,
                     textColor: Colors.white70,
+                    //color: Theme.of(context).accentColor,
                     onPressed: () {
-                      //TODO:
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CreateALoopDialog();
+                          });
                     },
-                    child: Text(
-                      "Loops Remaining: 5",
-                      textAlign: TextAlign.left,
+                    child: Row(
+                      children: [
+                        Text(
+                          "Start a Loop",
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Icon(Icons.loop)
+                        // FaIcon(
+                        //   FontAwesomeIcons.infinity,
+                        //   size: 15,
+                        //   color: Colors.white70,
+                        // ),
+                      ],
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: OutlineButton(
+                      textColor: Colors.white70,
+                      onPressed: () {
+                        //TODO:
+                      },
+                      child: Text(
+                        "Loops Remaining: 5",
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: Row(
