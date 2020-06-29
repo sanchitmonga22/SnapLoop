@@ -7,6 +7,7 @@ import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/CompletedLoops/completedLoops.dart';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
+import 'package:SnapLoop/Screens/Home/memojitTest.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ import 'package:provider/provider.dart';
 import './Screens/Home/homeScreen.dart';
 
 /// author: @sanchitmonga22
-
 void main() {
   runApp(SnapLoop());
 }
@@ -55,6 +55,9 @@ class SnapLoop extends StatelessWidget {
                     TargetPlatform.android: CustomPageTransitionBuilder(),
                     TargetPlatform.iOS: CustomPageTransitionBuilder()
                   })),
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+              ),
               home: NavBar(),
               // home: authData.isAuth
               //     ? HomeScreen()

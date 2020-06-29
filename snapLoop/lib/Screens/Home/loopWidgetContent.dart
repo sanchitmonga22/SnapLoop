@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:SnapLoop/Model/loop.dart';
+import 'package:SnapLoop/Screens/Home/bitmoji.dart';
 import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -117,6 +118,23 @@ class Memoji extends StatelessWidget {
   final loopType;
   const Memoji({this.loopType, this.imageNumber, Key key, this.position})
       : super(key: key);
+  int getRandomImageNumber(int max) {
+    return Random().nextInt(max);
+  }
+
+  NetworkImage getImage() {
+    NetworkImage image;
+    while (image == null) {
+      try {
+        image = NetworkImage(
+            URLMemojis[getRandomImageNumber(URLMemojis.length - 1)].replaceAll(
+                "%s", USERS[getRandomImageNumber(USERS.length - 1)]));
+      } catch (e) {
+        print(e);
+      }
+    }
+    return image;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,12 +147,7 @@ class Memoji extends StatelessWidget {
                 BoxShadow(blurRadius: 5, color: determineLoopColor(loopType))
               ],
               shape: BoxShape.circle,
-              image: DecorationImage(
-                fit: BoxFit.fitHeight,
-                image: AssetImage(
-                  'assets/memojis/m$imageNumber.jpg',
-                ),
-              )),
+              image: DecorationImage(fit: BoxFit.fitHeight, image: getImage())),
         )));
   }
 }

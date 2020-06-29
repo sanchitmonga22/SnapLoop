@@ -75,7 +75,7 @@ final kHomeScreenBoxDecoration = BoxDecoration(
     //   end: Alignment.bottomRight,
     //   stops: [0, 1],
     // ),
-    color: CupertinoColors.darkBackgroundGray);
+    color: CupertinoColors.systemGrey2);
 
 //LOOP CONTENT
 Color determineLoopColor(type) {
@@ -94,14 +94,15 @@ Color determineLoopColor(type) {
   if (type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
     return Colors.tealAccent;
   }
+  return null;
 }
 
-const kLoopContentBackgroundColor = CupertinoColors.lightBackgroundGray;
+const kLoopContentBackgroundColor = CupertinoColors.extraLightBackgroundGray;
 
-const kTextStyleLoopContent =
-    TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 15);
+const kTextStyleLoopContent = TextStyle(
+    color: CupertinoColors.white, fontWeight: FontWeight.w300, fontSize: 15);
 
 //BOTTOM CONTAINER
 final kBottomContainerDecoration = BoxDecoration(
-  color: Colors.white,
+  color: CupertinoColors.white,
 );
