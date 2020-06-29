@@ -3,7 +3,6 @@ import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 import 'package:SnapLoop/Screens/Home/homeScreen.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:persistent_bottom_nav_bar/models/persisten-bottom-nav-item.widget.dart';
 import 'package:persistent_bottom_nav_bar/models/persistent-bottom-nav-bar-styles.widget.dart';
 import 'package:persistent_bottom_nav_bar/models/persistent-nav-bar-scaffold.widget.dart';
@@ -18,9 +17,10 @@ class NavBar extends StatefulWidget {
   _NavBarState createState() => _NavBarState();
 }
 
-class _NavBarState extends State<NavBar> {
+class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
   PersistentTabController _controller;
   PageController _pageController;
+
   @override
   void initState() {
     super.initState();
@@ -78,17 +78,19 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: PersistentTabView(
-        controller: _controller,
-        items: _navBarsItems(),
-        screens: _buildScreens(),
-        showElevation: true,
-        navBarCurve: NavBarCurve.upperCorners,
-        confineInSafeArea: true,
-        handleAndroidBackButtonPress: true,
-        iconSize: 26.0,
-        navBarStyle: NavBarStyle.style2,
-        onItemSelected: (value) {},
+      child: Scaffold(
+        bottomNavigationBar: PersistentTabView(
+          controller: _controller,
+          items: _navBarsItems(),
+          screens: _buildScreens(),
+          showElevation: true,
+          navBarCurve: NavBarCurve.upperCorners,
+          confineInSafeArea: true,
+          handleAndroidBackButtonPress: true,
+          iconSize: 26.0,
+          navBarStyle: NavBarStyle.style2,
+          onItemSelected: (value) {},
+        ),
       ),
     );
   }

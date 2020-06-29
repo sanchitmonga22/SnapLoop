@@ -8,11 +8,10 @@ import 'package:persistent_bottom_nav_bar/models/persistent-nav-bar-scaffold.wid
 import 'package:provider/provider.dart';
 
 ///author: @sanchitmonga22
-
 class UserProfile extends StatelessWidget {
   static const routeName = './UserProfile';
   final PersistentTabController controller;
-  UserProfile({this.controller = null});
+  UserProfile({this.controller});
 
   @override
   Widget build(BuildContext context) {

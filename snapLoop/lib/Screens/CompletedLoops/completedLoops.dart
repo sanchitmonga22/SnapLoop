@@ -8,7 +8,7 @@ import 'package:persistent_bottom_nav_bar/models/persistent-nav-bar-scaffold.wid
 class CompletedLoopsScreen extends StatelessWidget {
   static const routeName = '/completedLoopsScreen';
   final PersistentTabController controller;
-  CompletedLoopsScreen({this.controller = null});
+  CompletedLoopsScreen({this.controller});
 
   @override
   Widget build(BuildContext context) {

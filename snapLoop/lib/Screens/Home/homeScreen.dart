@@ -1,68 +1,96 @@
-import 'package:SnapLoop/Provider/UserDataProvider.dart';
+import 'package:SnapLoop/Screens/Home/AppBarData.dart';
+import 'package:SnapLoop/Screens/Home/createLoopDialog.dart';
 import 'package:SnapLoop/Screens/constants.dart';
+import 'package:floating_action_bubble/floating_action_bubble.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/models/persistent-nav-bar-scaffold.widget.dart';
-import 'package:provider/provider.dart';
 import 'loopWidgetContainer.dart';
 
 /// author: @sanchitmonga22
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const routeName = '/homeScreen';
+
   final PersistentTabController controller;
-  HomeScreen({this.controller = null});
+  HomeScreen({this.controller});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  Animation<double> _animation;
+  AnimationController _animationController;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 260),
+    );
+
+    final curvedAnimation =
+        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+    _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+
+    super.initState();
+  }
 
   Widget build(BuildContext context) {
-    final userDataProvider = Provider.of<UserDataProvider>(context);
-
     MediaQueryData size = MediaQuery.of(context);
     return Scaffold(
         resizeToAvoidBottomPadding:
             false, // to avoid bottom overflow in the alert dialog box
         appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Score: ${userDataProvider.userScore.toString()}",
-                textAlign: TextAlign.left,
-                style: kTextStyleHomeScreen,
-              ),
-              Text(
-                "Snap∞Loop",
-                style: kTextFormFieldStyle.copyWith(fontSize: 25),
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  foregroundDecoration: BoxDecoration(
-                      border: Border.all(style: BorderStyle.solid),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      userDataProvider.displayName,
-                      style: kTextStyleHomeScreen,
-                    ),
-                  ),
-                ),
-              ),
-              // going to the user profile
-              // onPressed: () {
-              //   Navigator.of(context).pushNamed(UserProfile.routeName);
-              // },
-            ],
-          ),
+          title: AppBarData(),
           centerTitle: true,
           backgroundColor: kAppBarBackgroundColor,
-          // backgroundColor: Colors.blueGrey[900],
-          //backgroundColor: Color.fromRGBO(74, 20, 140, 1).withOpacity(0.8),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: FloatingActionBubble(
+          backGroundColor: Colors.deepPurple,
+          items: <Bubble>[
+            Bubble(
+              title: "New Loop",
+              iconColor: Colors.white,
+              bubbleColor: Colors.black,
+              icon: CupertinoIcons.loop,
+              titleStyle: kTextStyleHomeScreen,
+              onPress: () {
+                _animationController.reverse();
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CreateALoopDialog();
+                  },
+                );
+              },
+            ),
+            Bubble(
+              title: "Friend",
+              iconColor: Colors.white,
+              bubbleColor: Colors.black,
+              icon: CupertinoIcons.person_add,
+              titleStyle: kTextStyleHomeScreen,
+              onPress: () {
+                _animationController.reverse();
+                //TODO: To add a new friend
+              },
+            ),
+          ],
+          animation: _animation,
+          onPress: () => _animationController.isCompleted
+              ? _animationController.reverse()
+              : _animationController.forward(),
+          iconColor: Colors.green,
+          animatedIconData: AnimatedIcons.ellipsis_search,
         ),
         body: GestureDetector(
           onHorizontalDragUpdate: (details) {
             // swiping right
             if (details.delta.dx < -kSwipeConstant) {
-              controller.jumpToTab(1);
+              widget.controller.jumpToTab(1);
             }
           },
           child: Container(

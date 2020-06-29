@@ -7,14 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/models/persistent-nav-bar-scaffold.widget.dart';
 import 'package:provider/provider.dart';
 
-/**
- * author: @sanchitmonga22
- */
+/// author: @sanchitmonga22
+
 class ContactScreen extends StatefulWidget {
   static const routeName = "/ContactScreen";
 
   final PersistentTabController controller;
-  ContactScreen({this.controller = null});
+  ContactScreen({this.controller});
   @override
   _ContactScreenState createState() => _ContactScreenState();
 }
