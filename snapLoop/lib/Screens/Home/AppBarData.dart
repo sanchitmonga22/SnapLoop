@@ -1,4 +1,5 @@
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,9 +19,24 @@ class AppBarData extends StatelessWidget {
           textAlign: TextAlign.left,
           style: kTextStyleHomeScreen,
         ),
-        Text(
-          "Snap∞Loop",
-          style: kTextFormFieldStyle.copyWith(fontSize: 25),
+        SizedBox(
+          child: ColorizeAnimatedTextKit(
+            speed: Duration(seconds: 1),
+            isRepeatingAnimation: false,
+            text: ["Snap∞Loop"],
+            textStyle: TextStyle(
+                fontSize: 25.0,
+                fontFamily: "Open Sans",
+                fontWeight: FontWeight.w900),
+            colors: [
+              // Colors.purple,
+              Colors.white70,
+              Colors.yellow,
+              Colors.blueGrey,
+            ],
+            textAlign: TextAlign.center,
+            repeatForever: false,
+          ),
         ),
         GestureDetector(
           onTap: () {},

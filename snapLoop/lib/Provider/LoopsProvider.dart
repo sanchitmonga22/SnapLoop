@@ -48,7 +48,7 @@ class LoopsProvider with ChangeNotifier {
     if (numberOfMember <= 5) {
       return maxRadius * fixedRadiusFactor[numberOfMember];
     }
-    return maxRadius * 0.65;
+    return maxRadius * 0.74;
   }
 
   List<Loop> getLoopsType(LoopType type) {

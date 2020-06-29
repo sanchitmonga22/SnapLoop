@@ -1,4 +1,5 @@
 import 'package:SnapLoop/Model/loop.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 ///author: @sanchitmonga22
@@ -58,7 +59,7 @@ const kTextFormFieldStyle =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w600);
 
 // HOME SCREEN
-const kAppBarBackgroundColor = Colors.indigo;
+const kAppBarBackgroundColor = Colors.black;
 const kTextStyleHomeScreen =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15);
 
@@ -74,7 +75,7 @@ final kHomeScreenBoxDecoration = BoxDecoration(
     //   end: Alignment.bottomRight,
     //   stops: [0, 1],
     // ),
-    color: Colors.blueAccent);
+    color: CupertinoColors.darkBackgroundGray);
 
 //LOOP CONTENT
 Color determineLoopColor(type) {
@@ -94,6 +95,8 @@ Color determineLoopColor(type) {
     return Colors.tealAccent;
   }
 }
+
+const kLoopContentBackgroundColor = CupertinoColors.lightBackgroundGray;
 
 const kTextStyleLoopContent =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 15);

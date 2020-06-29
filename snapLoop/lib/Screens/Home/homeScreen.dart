@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen>
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionBubble(
-          backGroundColor: Colors.deepPurple,
+          backGroundColor: Colors.black,
           items: <Bubble>[
             Bubble(
               title: "New Loop",
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen>
           onPress: () => _animationController.isCompleted
               ? _animationController.reverse()
               : _animationController.forward(),
-          iconColor: Colors.green,
+          iconColor: Colors.white,
           animatedIconData: AnimatedIcons.ellipsis_search,
         ),
         body: GestureDetector(

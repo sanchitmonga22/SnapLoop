@@ -51,25 +51,25 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
         title: ("Home"),
-        activeColor: CupertinoColors.activeBlue,
+        activeColor: CupertinoColors.activeOrange,
         inactiveColor: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.loop),
         title: ("CompletedLoops"),
-        activeColor: CupertinoColors.activeBlue,
+        activeColor: CupertinoColors.activeOrange,
         inactiveColor: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.contacts),
         title: ("Contacts"),
-        activeColor: CupertinoColors.activeBlue,
+        activeColor: CupertinoColors.activeOrange,
         inactiveColor: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.person),
         title: ("Profile"),
-        activeColor: CupertinoColors.activeBlue,
+        activeColor: CupertinoColors.activeOrange,
         inactiveColor: CupertinoColors.systemGrey,
       ),
     ];
@@ -89,6 +89,7 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
           handleAndroidBackButtonPress: true,
           iconSize: 26.0,
           navBarStyle: NavBarStyle.style2,
+          backgroundColor: Colors.black,
           onItemSelected: (value) {},
         ),
       ),

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 ///author: @sanchitmonga22
@@ -24,7 +25,7 @@ class LoopWidgetContent extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: CircleAvatar(
-                backgroundColor: Colors.white,
+                backgroundColor: kLoopContentBackgroundColor,
                 radius: radius,
                 child: MemojiGenerator(
                     loopType: type,
