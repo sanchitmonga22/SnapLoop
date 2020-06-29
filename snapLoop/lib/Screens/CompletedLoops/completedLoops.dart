@@ -1,4 +1,4 @@
-import 'package:SnapLoop/Screens/Home/loopWidgetContainer.dart';
+import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidgetContainer.dart';
 import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/models/persistent-nav-bar-scaffold.widget.dart';

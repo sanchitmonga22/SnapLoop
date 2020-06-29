@@ -1,4 +1,4 @@
-import 'package:SnapLoop/Screens/Home/bitmoji.dart';
+import 'package:SnapLoop/Screens/Home/Bitmojis/bitmoji.dart';
 import 'package:flutter/material.dart';
 
 class MemojiTest extends StatelessWidget {

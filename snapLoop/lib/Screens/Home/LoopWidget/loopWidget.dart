@@ -1,5 +1,5 @@
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/Screens/Home/loopWidgetContent.dart';
+import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidgetContent.dart';
 import 'package:SnapLoop/Screens/constants.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';

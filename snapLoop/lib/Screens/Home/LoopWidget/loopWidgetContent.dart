@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/Screens/Home/bitmoji.dart';
+import 'package:SnapLoop/Screens/Home/Bitmojis/bitmoji.dart';
 import 'package:SnapLoop/Screens/constants.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,26 +14,52 @@ class LoopWidgetContent extends StatelessWidget {
   final String text;
   final int numberOfMembers;
   final LoopType type;
-  const LoopWidgetContent(
-      {this.radius, this.text, this.numberOfMembers, this.type});
+  LoopWidgetContent({this.radius, this.text, this.numberOfMembers, this.type});
 
   @override
   Widget build(BuildContext context) {
     return Material(
-        color: Colors.transparent,
-        shape: CircleBorder(),
-        shadowColor: Colors.white24,
-        child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-            ),
-            child: CircleAvatar(
-                backgroundColor: kLoopContentBackgroundColor,
-                radius: radius,
-                child: MemojiGenerator(
-                    loopType: type,
-                    numberOfMembers: numberOfMembers,
-                    radius: radius))));
+      color: Colors.transparent,
+      shape: CircleBorder(),
+      shadowColor: Colors.white24,
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+        ),
+        child: CircleAvatar(
+            backgroundColor: kLoopContentBackgroundColor,
+            radius: radius,
+            child: FlipCard(
+              front: MemojiGenerator(
+                  loopType: type,
+                  numberOfMembers: numberOfMembers,
+                  radius: radius),
+              back: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      CupertinoIcons.loop,
+                      color: Colors.black,
+                    ),
+                    AutoSizeText(
+                      "$text",
+                      maxLines: 1,
+                      style: kLoopDetailsTextStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    AutoSizeText(
+                      "👥 $numberOfMembers",
+                      maxLines: 1,
+                      style: kLoopDetailsTextStyle,
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                ),
+              ),
+            )),
+      ),
+    );
   }
 }
 
@@ -122,6 +150,8 @@ class Memoji extends StatelessWidget {
     return Random().nextInt(max);
   }
 
+  // generating the random network image
+  // TODO: To add this feature into the server and not here!!
   NetworkImage getImage() {
     NetworkImage image;
     while (image == null) {

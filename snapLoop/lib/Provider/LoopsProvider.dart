@@ -1,7 +1,7 @@
 import 'package:SnapLoop/Helper/loops.dart' as loopsies;
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/Screens/Home/loopWidget.dart';
+import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidget.dart';
 import 'package:flutter/widgets.dart';
 
 ///author: @sanchitmonga22
@@ -42,7 +42,7 @@ class LoopsProvider with ChangeNotifier {
 
   double radiusCalculator(int numberOfMember, double maxRadius) {
     // KEY: Number of Members, and Value Factor by which the maxRadius has to be reduced
-    const fixedRadiusFactor = {2: 0.34, 3: 0.37, 4: 0.43, 5: 0.46};
+    const fixedRadiusFactor = {2: 0.35, 3: 0.37, 4: 0.43, 5: 0.46};
 
     // NOTE: DO NOT CHANGE THIS!!
     if (numberOfMember <= 5) {

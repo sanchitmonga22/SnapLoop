@@ -101,6 +101,11 @@ const kLoopContentBackgroundColor = CupertinoColors.extraLightBackgroundGray;
 
 const kTextStyleLoopContent = TextStyle(
     color: CupertinoColors.white, fontWeight: FontWeight.w300, fontSize: 15);
+const kLoopDetailsTextStyle = TextStyle(
+  color: CupertinoColors.darkBackgroundGray,
+  fontFamily: 'Open Sans',
+  fontWeight: FontWeight.bold,
+);
 
 //BOTTOM CONTAINER
 final kBottomContainerDecoration = BoxDecoration(

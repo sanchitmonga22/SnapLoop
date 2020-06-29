@@ -5,7 +5,7 @@ import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/models/persistent-nav-bar-scaffold.widget.dart';
-import 'loopWidgetContainer.dart';
+import 'LoopWidget/loopWidgetContainer.dart';
 
 /// author: @sanchitmonga22
 class HomeScreen extends StatefulWidget {
