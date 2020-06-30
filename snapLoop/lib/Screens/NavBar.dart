@@ -1,4 +1,3 @@
-import 'package:SnapLoop/Screens/CompletedLoops/completedLoops.dart';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 import 'package:SnapLoop/Screens/Home/homeScreen.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
@@ -19,18 +18,15 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
   PersistentTabController _controller;
-  PageController _pageController;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
     _controller = PersistentTabController(initialIndex: 0);
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -38,25 +34,18 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
   List<Widget> _buildScreens() {
     return [
       HomeScreen(
-        controller: _controller,
+        persistentTabController: _controller,
       ),
-      CompletedLoopsScreen(controller: _controller),
-      ContactScreen(controller: _controller),
-      UserProfile(controller: _controller)
+      ContactScreen(),
+      UserProfile()
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.home),
-        title: ("Home"),
-        activeColor: CupertinoColors.activeOrange,
-        inactiveColor: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.loop),
-        title: ("CompletedLoops"),
+        title: ("Home"),
         activeColor: CupertinoColors.activeOrange,
         inactiveColor: CupertinoColors.systemGrey,
       ),

@@ -5,7 +5,6 @@ import 'package:SnapLoop/Provider/UserDataProvider.dart';
 
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
-import 'package:SnapLoop/Screens/CompletedLoops/completedLoops.dart';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
@@ -72,8 +71,6 @@ class SnapLoop extends StatelessWidget {
               routes: {
                 AuthScreen.routeName: (context) => AuthScreen(),
                 HomeScreen.routeName: (context) => HomeScreen(),
-                CompletedLoopsScreen.routeName: (context) =>
-                    CompletedLoopsScreen(),
                 ContactScreen.routeName: (context) => ContactScreen(),
                 NewLoopChatScreen.routeName: (context) => NewLoopChatScreen(),
                 UserProfile.routeName: (context) => UserProfile()
