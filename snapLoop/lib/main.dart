@@ -6,6 +6,7 @@ import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
+import 'package:SnapLoop/Screens/Home/FloatingActionButton.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,9 @@ class SnapLoop extends StatelessWidget {
           }, update: (context, auth, previousLoopsProvider) {
             return UserDataProvider();
           }),
+          ChangeNotifierProvider(
+            create: (context) => FloatingActionButtonDataChanges(),
+          ),
         ],
         child: Consumer<Auth>(builder: (context, authData, child) {
           return MaterialApp(
