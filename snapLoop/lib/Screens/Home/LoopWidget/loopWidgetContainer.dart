@@ -21,6 +21,7 @@ class _LoopWidgetContainerState extends State<LoopWidgetContainer> {
     final List<Widget> loopWidgets =
         Provider.of<LoopsProvider>(context).loopBuilder(widget.maxRadius);
     return Container(
+      decoration: kHomeScreenBoxDecoration,
       child: Stack(children: [
         widget.isInactive
             ? inactiveLoops == null || inactiveLoops.length == 0

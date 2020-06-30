@@ -1,7 +1,7 @@
 import 'package:SnapLoop/Helper/loops.dart' as loopsies;
-import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidget.dart';
+import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/widgets.dart';
 
 ///author: @sanchitmonga22
@@ -41,14 +41,10 @@ class LoopsProvider with ChangeNotifier {
   }
 
   double radiusCalculator(int numberOfMember, double maxRadius) {
-    // KEY: Number of Members, and Value Factor by which the maxRadius has to be reduced
-    const fixedRadiusFactor = {2: 0.35, 3: 0.37, 4: 0.43, 5: 0.46};
-
-    // NOTE: DO NOT CHANGE THIS!!
     if (numberOfMember <= 5) {
-      return maxRadius * fixedRadiusFactor[numberOfMember];
+      return maxRadius * kfixedRadiusFactor[numberOfMember];
     }
-    return maxRadius * 0.74;
+    return maxRadius * kfixedRadiusFactor["MORE"];
   }
 
   List<Loop> getLoopsType(LoopType type) {
@@ -64,13 +60,13 @@ class LoopsProvider with ChangeNotifier {
   List<Widget> loopBuilderHelper(
       List<Loop> loopTypes, double maxRadius, List<double> radiis) {
     List<Loop> deleted = [...loopTypes];
-    double deviceWidth = maxRadius * 4 - maxRadius * 0.25;
+    double deviceWidth = maxRadius * 4;
     List<Widget> widgetsInEachRow = [];
     double currentWidth = 0;
     List<Widget> rows = [];
     while (radiis.isNotEmpty) {
       for (int i = 0; i < radiis.length; i++) {
-        if (currentWidth + (radiis[i] * 2) < deviceWidth) {
+        if (currentWidth + ((radiis[i] + kAllLoopsPadding) * 2) < deviceWidth) {
           widgetsInEachRow.add(LoopWidget(
             radius: radiis[i],
             numberOfMembers: deleted[i].numberOfMembers,
@@ -78,7 +74,7 @@ class LoopsProvider with ChangeNotifier {
             type: deleted[i].type,
           ));
           // TODO add the paddig information if possible
-          currentWidth += radiis[i] * 2;
+          currentWidth += (radiis[i] + kAllLoopsPadding) * 2;
           deleted.removeAt(i);
           radiis.removeAt(i);
           if (radiis.isNotEmpty) {
@@ -87,7 +83,7 @@ class LoopsProvider with ChangeNotifier {
         }
       }
       rows.add(Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [...widgetsInEachRow],
       ));
       currentWidth = 0;

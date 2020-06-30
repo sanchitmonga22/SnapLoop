@@ -78,20 +78,18 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar: PersistentTabView(
-          controller: _controller,
-          items: _navBarsItems(),
-          screens: _buildScreens(),
-          showElevation: true,
-          navBarCurve: NavBarCurve.upperCorners,
-          confineInSafeArea: true,
-          handleAndroidBackButtonPress: true,
-          iconSize: 26.0,
-          navBarStyle: NavBarStyle.style2,
-          backgroundColor: Colors.black,
-          onItemSelected: (value) {},
-        ),
+      child: PersistentTabView(
+        controller: _controller,
+        items: _navBarsItems(),
+        screens: _buildScreens(),
+        showElevation: true,
+        navBarCurve: NavBarCurve.upperCorners,
+        confineInSafeArea: true,
+        handleAndroidBackButtonPress: true,
+        iconSize: 26.0,
+        navBarStyle: NavBarStyle.style2,
+        backgroundColor: Colors.black,
+        onItemSelected: (value) {},
       ),
     );
   }

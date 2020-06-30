@@ -2,6 +2,8 @@ import 'package:SnapLoop/Model/loop.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'Home/LoopWidget/loopWidget.dart';
+
 ///author: @sanchitmonga22
 
 //COMMON
@@ -78,6 +80,44 @@ final kHomeScreenBoxDecoration = BoxDecoration(
     color: CupertinoColors.systemGrey2);
 
 //LOOP CONTENT
+
+// KEY: Number of Members, and Value Factor by which the maxRadius has to be reduced
+// NOTE: DO NOT CHANGE THIS!!
+const kfixedRadiusFactor = {2: 0.35, 3: 0.36, 4: 0.39, 5: 0.46, "MORE": 0.65};
+
+const double kAllLoopsPadding = 15;
+const kalignmentMap = {
+  2: [Position(1, 1), Position(-1, -1)],
+  3: [
+    Position(0, -1),
+    Position(-2 / (1.732), 1),
+    Position(2 / (1.732), 1),
+  ],
+  4: [Position(1, 1), Position(-1, -1), Position(-1, 1), Position(1, -1)],
+  5: [
+    Position(1, 1),
+    Position(-1, -1),
+    Position(-1, 1),
+    Position(1, -1),
+    Position(0, 0)
+  ],
+  13: [
+    Position(0.5, 0.5),
+    Position(-0.5, -0.5),
+    Position(-0.5, 0.5),
+    Position(0.5, -0.5),
+    Position(0, 0),
+    Position(1, -1),
+    Position(-1, -1),
+    Position(0, -1.3),
+    Position(1, 1),
+    Position(-1, 1),
+    Position(0, 1.3),
+    Position(1.3, 0),
+    Position(-1.3, 0),
+  ]
+};
+
 Color determineLoopColor(type) {
   if (type == LoopType.NEW_LOOP) {
     return Colors.red;
@@ -97,7 +137,7 @@ Color determineLoopColor(type) {
   return null;
 }
 
-const kLoopContentBackgroundColor = CupertinoColors.extraLightBackgroundGray;
+const kLoopContentBackgroundColor = CupertinoColors.white;
 
 const kTextStyleLoopContent = TextStyle(
     color: CupertinoColors.white, fontWeight: FontWeight.w300, fontSize: 15);

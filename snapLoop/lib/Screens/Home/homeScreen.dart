@@ -48,65 +48,64 @@ class _HomeScreenState extends State<HomeScreen>
           backgroundColor: kAppBarBackgroundColor,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        //NOTE FloatingActionBubble modified:
+        //Line 39 crossAxisAlignment: CrossAxisAlignment.start,
+        //Line 43 Size:35
         floatingActionButton: FloatingActionBubble(
-          backGroundColor: Colors.black,
-          items: <Bubble>[
-            Bubble(
-              title: "New Loop",
-              iconColor: Colors.white,
-              bubbleColor: Colors.black,
-              icon: CupertinoIcons.loop,
-              titleStyle: kTextStyleHomeScreen,
-              onPress: () {
-                _animationController.reverse();
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return CreateALoopDialog();
-                  },
-                );
-              },
-            ),
-            Bubble(
-              title: "Friend",
-              iconColor: Colors.white,
-              bubbleColor: Colors.black,
-              icon: CupertinoIcons.person_add,
-              titleStyle: kTextStyleHomeScreen,
-              onPress: () {
-                _animationController.reverse();
-                //TODO: To add a new friend
-              },
-            ),
-          ],
-          animation: _animation,
-          onPress: () => _animationController.isCompleted
-              ? _animationController.reverse()
-              : _animationController.forward(),
-          iconColor: Colors.white,
-          animatedIconData: AnimatedIcons.ellipsis_search,
-        ),
+            backGroundColor: Colors.black,
+            items: <Bubble>[
+              Bubble(
+                title: "+",
+                iconColor: Colors.white,
+                bubbleColor: Colors.black,
+                icon: CupertinoIcons.loop,
+                titleStyle: kTextStyleHomeScreen,
+                onPress: () {
+                  _animationController.reverse();
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CreateALoopDialog();
+                    },
+                  );
+                },
+              ),
+              Bubble(
+                title: "+",
+                iconColor: Colors.white,
+                bubbleColor: Colors.black,
+                icon: CupertinoIcons.person_add,
+                titleStyle: kTextStyleHomeScreen,
+                onPress: () {
+                  _animationController.reverse();
+                  //TODO: To add a new friend
+                },
+              ),
+            ],
+            animation: _animation,
+            onPress: () {
+              _animationController.isCompleted
+                  ? _animationController.reverse()
+                  : _animationController.forward();
+            },
+            iconColor: Colors.white,
+            animatedIconData: AnimatedIcons.menu_home),
         body: GestureDetector(
+          // if the user taps on the outside of the Bubble then the bubble automatically goes away
+          onTap: () {
+            if (_animationController.isCompleted)
+              _animationController.reverse();
+          },
+          // if the user swipes horizontally to the left, the screen changes to the Completed Loops Screen
           onHorizontalDragUpdate: (details) {
             // swiping right
             if (details.delta.dx < -kSwipeConstant) {
               widget.controller.jumpToTab(1);
             }
           },
-          child: Container(
-            decoration: kHomeScreenBoxDecoration,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: size.size.height * 0.75,
-                  child: LoopWidgetContainer(
-                    maxRadius: (size.size.width) * 0.25,
-                    isInactive: false,
-                  ),
-                ),
-                //BottomButtonsWidget()
-              ],
-            ),
+          child: LoopWidgetContainer(
+            maxRadius: (size.size.width) * 0.25,
+            isInactive: false,
           ),
         ));
   }

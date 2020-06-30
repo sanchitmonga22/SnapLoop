@@ -1,5 +1,6 @@
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
+import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ class CreateALoopDialog extends StatelessWidget {
       content: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
+          decoration: kHomeScreenBoxDecoration,
           height: 200,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

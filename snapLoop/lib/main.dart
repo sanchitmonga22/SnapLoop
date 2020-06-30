@@ -54,9 +54,9 @@ class SnapLoop extends StatelessWidget {
                     TargetPlatform.android: CustomPageTransitionBuilder(),
                     TargetPlatform.iOS: CustomPageTransitionBuilder()
                   })),
-              darkTheme: ThemeData(
-                brightness: Brightness.dark,
-              ),
+              // darkTheme: ThemeData(
+              //   brightness: Brightness.dark,
+              // ),
               home: NavBar(),
               // home: authData.isAuth
               //     ? HomeScreen()
