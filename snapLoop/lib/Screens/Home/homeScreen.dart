@@ -41,6 +41,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _animationController.dispose();
+    _tabController.dispose();
+  }
+
   void _toggleTab(int index) {
     _tabController.animateTo(index);
   }

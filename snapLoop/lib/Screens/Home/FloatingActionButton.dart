@@ -63,11 +63,23 @@ class _FloatingActionButtonDataState extends State<FloatingActionButtonData> {
           ),
         ],
         animation: widget._animation,
-        onPress: () {
-          changes.toggleIsTapped();
-          widget._animationController.isCompleted
-              ? widget._animationController.reverse()
-              : widget._animationController.forward();
+        onPress: () async {
+          // Avoiding the double tap, when the user double taps this, the blur screen will still be updated!
+          if (widget._animationController.isCompleted) {
+            try {
+              changes.toggleIsTapped();
+              await widget._animationController.reverse().orCancel;
+            } on TickerCanceled {
+              changes.toggleIsTapped();
+            }
+          } else {
+            try {
+              changes.toggleIsTapped();
+              await widget._animationController.forward().orCancel;
+            } on TickerCanceled {
+              changes.toggleIsTapped();
+            }
+          }
         },
         iconColor: Colors.white,
         animatedIconData: AnimatedIcons.menu_home);
@@ -79,7 +91,7 @@ class FloatingActionButtonDataChanges with ChangeNotifier {
 
   void toggleIsTapped() {
     isTapped = !isTapped;
-
+    print(isTapped);
     notifyListeners();
   }
 }
