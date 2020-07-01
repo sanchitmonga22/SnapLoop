@@ -1,6 +1,8 @@
 import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
+import 'package:SnapLoop/Screens/NavBar.dart';
 import 'package:SnapLoop/Screens/constants.dart';
+import 'package:SnapLoop/Widget/AnimatingFlatButton.dart';
 import 'package:SnapLoop/Widget/ErrorDialog.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
@@ -62,35 +64,59 @@ class _AuthCardState extends State<AuthCard>
   }
 
   void _submit() async {
-    //Navigator.of(context).pushNamed(HomeScreen.routeName);
-    if (!_formKey.currentState.validate()) {
-      // Invalid!
-      return;
-    }
-    _formKey.currentState.save();
     setState(() {
       _isLoading = true;
     });
-    try {
-      if (_authMode == AuthMode.Login) {
-        await Provider.of<Auth>(context, listen: false)
-            .attemptLogIn(_authData['email'], _authData['password']);
-      } else {
-        await Provider.of<Auth>(context, listen: false).attemptSignUp(
-            _authData['username'],
-            _authData['password'],
-            _authData["phoneNumber"],
-            _authData["email"]);
-        print(_authData);
-        print('Attempting signUp');
-      }
-    } catch (error) {
-      const errorMessage = "Could not authenticate you, Please try again later";
-      _showErrorDialog(errorMessage);
-    }
-    setState(() {
-      _isLoading = false;
-    });
+
+    //Navigator.of(context).pushNamed(NavBar.routeName);
+    // if (!_formKey.currentState.validate()) {
+    //   // Invalid!
+    //   return;
+    // }
+    // _formKey.currentState.save();
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    // try {
+    //   if (_authMode == AuthMode.Login) {
+    //     await Provider.of<Auth>(context, listen: false)
+    //         .attemptLogIn(_authData['email'], _authData['password']);
+    //   } else {
+    //     await Provider.of<Auth>(context, listen: false).attemptSignUp(
+    //         _authData['username'],
+    //         _authData['password'],
+    //         _authData["phoneNumber"],
+    //         _authData["email"]);
+    //     print(_authData);
+    //     print('Attempting signUp');
+    //   }
+    // } catch (error) {
+    //   const errorMessage = "Could not authenticate you, Please try again later";
+    //   _showErrorDialog(errorMessage);
+    // }
+    // setState(() {
+    //   _isLoading = false;
+    // });
+  }
+
+  Widget getButton() {
+    return FlatButton(
+      child: Text(
+        _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP',
+        style: kTextFormFieldStyle.copyWith(fontWeight: FontWeight.w900),
+      ),
+      onPressed: _submit,
+      shape: _isLoading
+          ? null
+          : RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+      padding: _isLoading
+          ? EdgeInsets.zero
+          : EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      color: _isLoading ? Colors.transparent : Colors.black38,
+      textColor: Colors.white,
+    );
   }
 
   // Switching between signUp/ Login
@@ -142,11 +168,21 @@ class _AuthCardState extends State<AuthCard>
                 children: <Widget>[
                   // Email Text Field
                   TextFormField(
+                    autofocus: false,
                     style: kTextFormFieldStyle,
                     decoration: _authMode == AuthMode.Signup
-                        //Icon(CupertinoIcons.person_solid, color: Colors.white)
-                        ? kgetDecoration('Email')
-                        : kgetDecoration('Email/Username'),
+                        ? kgetDecoration('Email').copyWith(
+                            icon: Icon(
+                              CupertinoIcons.mail_solid,
+                              color: Colors.white,
+                            ),
+                          )
+                        : kgetDecoration('Email/Username').copyWith(
+                            icon: Icon(
+                              CupertinoIcons.person_solid,
+                              color: Colors.white,
+                            ),
+                          ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value.isEmpty || !value.contains('@')) {
@@ -162,7 +198,12 @@ class _AuthCardState extends State<AuthCard>
                   // Password text field
                   TextFormField(
                     style: kTextFormFieldStyle,
-                    decoration: kgetDecoration('Password'),
+                    decoration: kgetDecoration('Password').copyWith(
+                      icon: Icon(
+                        CupertinoIcons.padlock_solid,
+                        color: Colors.white,
+                      ),
+                    ),
                     obscureText: true,
                     controller: _passwordController,
                     validator: (value) {
@@ -193,27 +234,19 @@ class _AuthCardState extends State<AuthCard>
                       authData: _authData),
 
                   if (_isLoading)
-                    Flex(
-                      children: [CircularProgressIndicator()],
-                      direction: Axis.horizontal,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    // Flex(
+                    //   children: [CircularProgressIndicator()],
+                    //   direction: Axis.horizontal,
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    // )
+                    AnimatingFlatButton(
+                      isAnimating: true,
+                      labelText:
+                          _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP',
+                      onClicked: () {},
                     )
                   else
-                    RaisedButton(
-                      child: Text(
-                        _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP',
-                        style: kTextFormFieldStyle.copyWith(
-                            fontWeight: FontWeight.w900),
-                      ),
-                      onPressed: _submit,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                      color: Colors.white10,
-                      textColor: Colors.white,
-                    ),
+                    getButton(),
                   FlatButton(
                     child: Text(
                       '${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'}',

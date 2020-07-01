@@ -38,23 +38,52 @@ final kBoxDecorationLOGO = BoxDecoration(
 
 //SECTION: AUTH CARD
 
-const double kMinHeightSignUp = 510;
-const double kMinHeightLogin = 350;
+const double kMinHeightSignUp = 550;
+const double kMinHeightLogin = 370;
 
 const kTextFormFieldStyle =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w600);
 
-InputDecoration kgetDecoration(String text) {
+InputDecoration kgetDecoration(String labelText) {
   return InputDecoration(
-      labelText: text,
+      labelText: labelText,
       labelStyle: kTextFormFieldStyle,
       focusColor: Colors.white,
-      //prefixIcon:,
-
+      contentPadding: EdgeInsets.all(15),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25.0),
+        borderSide: BorderSide(color: CupertinoColors.activeOrange, width: 2),
+      ),
+      errorMaxLines: 1,
+      //helperText: , for the Phone number input
+      // icon: Icon(
+      //   Icons.email,
+      //   color: CupertinoColors.activeOrange,
+      // ),
+      helperStyle: kTextFormFieldStyle,
+      //errorText: ,
+      // counter: FOR THE PASSWORD
+      focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25.0),
+          borderSide: BorderSide(
+            color: Colors.red,
+            width: 4.0,
+          )),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25.0),
+        borderSide: BorderSide(
+          color: Colors.red,
+          width: 4.0,
+        ),
+      ),
       errorStyle: TextStyle(
           color: CupertinoColors.extraLightBackgroundGray,
           fontWeight: FontWeight.w600));
 }
+
+//SECTION: SIGNUP WIDGET:
+const double kminHeightSignUpWidget = 80;
+const double kmaxHeightSignUpWidget = 250;
 
 // SECTION: HOME SCREEN
 const kAppBarBackgroundColor = Colors.black;

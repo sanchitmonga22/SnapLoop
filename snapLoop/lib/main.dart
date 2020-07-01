@@ -73,6 +73,7 @@ class SnapLoop extends StatelessWidget {
               //         },
               //       ),
               routes: {
+                NavBar.routeName: (context) => NavBar(),
                 AuthScreen.routeName: (context) => AuthScreen(),
                 HomeScreen.routeName: (context) => HomeScreen(),
                 ContactScreen.routeName: (context) => ContactScreen(),

@@ -34,7 +34,7 @@ class _FloatingActionButtonDataState extends State<FloatingActionButtonData> {
             title: "+",
             iconColor: Colors.white,
             bubbleColor: Colors.black,
-            icon: CupertinoIcons.loop,
+            icon: CupertinoIcons.loop_thick,
             titleStyle: kTextStyleHomeScreen.copyWith(
                 fontSize: 20, fontWeight: FontWeight.w900),
             onPress: () {

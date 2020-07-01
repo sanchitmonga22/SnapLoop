@@ -22,9 +22,7 @@ class LoopWidget extends StatelessWidget {
       child: CircleAvatar(
           backgroundColor: kLoopContentBackgroundColor,
           radius: radius,
-          //NOTE: FlipCard() changed, Line 172 and 173 modified to include the long press functionality
-          //onTap: isFront ? null : toggleCard,
-          //onLongPress: isFront ? toggleCard : null,
+          //NOTE: FlipCard() changed, Line 170 and 186 modified to include the open till pressed functionality
           child: FlipCard(
             front: MemojiGenerator(
                 loopType: type,

@@ -109,6 +109,7 @@ class _AnimatingFlatButtonState extends State<AnimatingFlatButton>
 
   Widget getInnerWidget({GlobalKey<FormState> formkey}) {
     return OutlineButton(
+      padding: EdgeInsets.symmetric(vertical: 15),
       focusColor: CupertinoColors.activeOrange,
       textTheme: ButtonTextTheme.primary,
       onPressed: widget.onClicked,

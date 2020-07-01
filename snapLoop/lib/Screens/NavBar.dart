@@ -11,6 +11,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.widget.dart';
 /// author:@sanchitmonga22
 class NavBar extends StatefulWidget {
   NavBar({Key key}) : super(key: key);
+  static const routeName = "/NavBar";
 
   @override
   _NavBarState createState() => _NavBarState();
