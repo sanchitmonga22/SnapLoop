@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 
 //COMMON
 final kSwipeConstant = 5;
+const double ksigmaX = 5.0; // from 0-10
+const double ksigmaY = 5.0; // from 0-10
+const double kopacity = 0.1;
 
 // AUTH SCREEN
 final kBoxDecoration = BoxDecoration(

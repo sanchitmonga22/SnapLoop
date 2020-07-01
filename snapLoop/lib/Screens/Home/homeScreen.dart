@@ -19,13 +19,11 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<HomeScreen> {
   Animation<double> _animation;
   AnimationController _animationController;
   TabController _tabController;
-  static const double _sigmaX = 5.0; // from 0-10
-  static const double _sigmaY = 5.0; // from 0-10
-  static const double _opacity = 0.1;
 
   @override
   void initState() {
@@ -52,7 +50,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _tabController.animateTo(index);
   }
 
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     // when the user clicks on other screens and comes back to the home screen, it is always shown as the Main Screen
     if (widget.persistentTabController.index > 0) {
       _toggleTab(0);
@@ -106,9 +109,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               width: double.infinity,
                               child: BackdropFilter(
                                 filter: ImageFilter.blur(
-                                    sigmaX: _sigmaX, sigmaY: _sigmaY),
+                                    sigmaX: ksigmaX, sigmaY: ksigmaY),
                                 child: Container(
-                                  color: Colors.black.withOpacity(_opacity),
+                                  color: Colors.black.withOpacity(kopacity),
                                 ),
                               ),
                             )

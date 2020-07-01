@@ -91,7 +91,6 @@ class FloatingActionButtonDataChanges with ChangeNotifier {
 
   void toggleIsTapped() {
     isTapped = !isTapped;
-    print(isTapped);
     notifyListeners();
   }
 }

@@ -13,9 +13,14 @@ class LoopWidgetContainer extends StatefulWidget {
   _LoopWidgetContainerState createState() => _LoopWidgetContainerState();
 }
 
-class _LoopWidgetContainerState extends State<LoopWidgetContainer> {
+class _LoopWidgetContainerState extends State<LoopWidgetContainer>
+    with AutomaticKeepAliveClientMixin<LoopWidgetContainer> {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final List<Widget> inactiveLoops = Provider.of<LoopsProvider>(context)
         .completedLoopBuilder(widget.maxRadius);
     final List<Widget> loopWidgets =
