@@ -44,7 +44,7 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.loop),
+        icon: Icon(CupertinoIcons.loop_thick),
         title: ("Home"),
         activeColor: CupertinoColors.activeOrange,
         inactiveColor: CupertinoColors.systemGrey,

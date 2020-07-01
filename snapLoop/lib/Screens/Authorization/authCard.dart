@@ -1,13 +1,15 @@
 import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:SnapLoop/Screens/constants.dart';
+import 'package:SnapLoop/Widget/ErrorDialog.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'signUpWidget.dart';
 
-/**
- * author: @sanchitmonga22
- */
+/// author: @sanchitmonga22
+
 class AuthCard extends StatefulWidget {
   @override
   _AuthCardState createState() => _AuthCardState();
@@ -35,9 +37,9 @@ class _AuthCardState extends State<AuthCard>
 
   @override
   void initState() {
+    super.initState();
     _controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-    super.initState();
     slideAnimation = Tween<Offset>(begin: Offset(0, -1.5), end: Offset(0, 0))
         .animate(
             CurvedAnimation(curve: Curves.fastOutSlowIn, parent: _controller));
@@ -54,16 +56,8 @@ class _AuthCardState extends State<AuthCard>
   void _showErrorDialog(String message) {
     showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-              title: Text("An error occured"),
-              content: Text(message),
-              actions: [
-                FlatButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("okay"))
-              ],
+        builder: (context) => ErrorDialog(
+              message: message,
             ));
   }
 
@@ -129,10 +123,14 @@ class _AuthCardState extends State<AuthCard>
           physics: const NeverScrollableScrollPhysics(),
           child: AnimatedContainer(
             duration: Duration(milliseconds: 500),
-            height: _authMode == AuthMode.Signup ? 530 : 340,
+            height: _authMode == AuthMode.Signup
+                ? kMinHeightSignUp
+                : kMinHeightLogin,
             curve: Curves.easeIn,
             constraints: BoxConstraints(
-              minHeight: _authMode == AuthMode.Signup ? 510 : 350,
+              minHeight: _authMode == AuthMode.Signup
+                  ? kMinHeightSignUp
+                  : kMinHeightLogin,
             ),
             width: deviceSize.width * 0.85,
             padding: EdgeInsets.only(left: 16, right: 16, top: 4),
@@ -146,11 +144,11 @@ class _AuthCardState extends State<AuthCard>
                   TextFormField(
                     style: kTextFormFieldStyle,
                     decoration: _authMode == AuthMode.Signup
+                        //Icon(CupertinoIcons.person_solid, color: Colors.white)
                         ? kgetDecoration('Email')
                         : kgetDecoration('Email/Username'),
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
-                      //TODO: Add a regex for valid email
                       if (value.isEmpty || !value.contains('@')) {
                         return 'Invalid email!';
                       }
@@ -176,18 +174,15 @@ class _AuthCardState extends State<AuthCard>
                     onSaved: (value) {
                       _authData['password'] = value;
                     },
-                    // TODO: Add a regex to check the password satisfies the
-                    //standards and display the strength of the password when signing up
                   ),
 
                   // Forget Password
                   if (!(_authMode == AuthMode.Signup))
                     FlatButton(
-                      child: Text('Forget password?',
+                      child: Text('Forgot password?',
                           textAlign: TextAlign.start,
                           style: kTextFormFieldStyle),
                       padding: EdgeInsets.only(right: 185),
-                      //TODO: Implement what forget password does
                       onPressed: () {},
                     ),
                   SignUpWidget(
@@ -196,9 +191,7 @@ class _AuthCardState extends State<AuthCard>
                       slideAnimation: slideAnimation,
                       passwordController: _passwordController,
                       authData: _authData),
-                  SizedBox(
-                    height: 10,
-                  ),
+
                   if (_isLoading)
                     Flex(
                       children: [CircularProgressIndicator()],

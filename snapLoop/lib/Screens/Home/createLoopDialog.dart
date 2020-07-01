@@ -1,9 +1,8 @@
 import 'dart:ui';
 
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
-import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 
-import 'package:SnapLoop/Screens/Home/AnimatingFlatButton.dart';
+import 'package:SnapLoop/Widget/AnimatingFlatButton.dart';
 import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +27,7 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
       controller: _controller,
       cursorColor: CupertinoColors.activeOrange,
       decoration: InputDecoration(
+        prefixIcon: Icon(CupertinoIcons.loop_thick),
         hintText: "Enter here",
         hintStyle: kTextFormFieldStyle.copyWith(
             fontSize: 15, fontWeight: FontWeight.w500),

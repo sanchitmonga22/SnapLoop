@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../Screens/constants.dart';
 
 class AnimatingFlatButton extends StatefulWidget {
   AnimatingFlatButton(

@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 
 enum AuthMode { Signup, Login }
 
-/**
- * author: @sanchitmonga22
- */
+/// author: @sanchitmonga22
+
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
   //final SERVER_IP = "";
 
+  //TODO List: Change the background!
   @override
   Widget build(BuildContext context) {
     MediaQueryData deviceData = MediaQuery.of(context);
@@ -19,49 +19,32 @@ class AuthScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Container(decoration: kBoxDecoration),
           SingleChildScrollView(
             child: Container(
               height: deviceSize.height,
               width: deviceSize.width,
+              decoration: kHomeScreenDecoration,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Flexible(
-                    flex: 3,
-                    child: Container(
-                      width: deviceSize.width * 0.65,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            child: ColorizeAnimatedTextKit(
-                              text: ["Snap∞Loop"],
-                              textStyle: TextStyle(
-                                  fontSize: 40.0,
-                                  fontFamily: "Open Sans",
-                                  fontWeight: FontWeight.w900),
-                              colors: [
-                                // Colors.purple,
-                                Colors.white70,
-                                Colors.yellow,
-                                Colors.blueGrey,
-                              ],
-                              textAlign: TextAlign.center,
-                              repeatForever: true,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                   Container(
-                    child: Flexible(
-                      flex: 8,
-                      child: AuthCard(),
+                    padding: EdgeInsets.only(
+                        bottom: 25, left: 10, right: 10, top: 10),
+                    child: ColorizeAnimatedTextKit(
+                      text: ["Snap∞Loop"],
+                      textStyle: kLOGOTextStyle,
+                      colors: [
+                        // Colors.purple,
+                        Colors.white70,
+                        Colors.yellow,
+                        Colors.blueGrey,
+                      ],
+                      textAlign: TextAlign.center,
+                      repeatForever: true,
                     ),
                   ),
+                  AuthCard(),
                 ],
               ),
             ),

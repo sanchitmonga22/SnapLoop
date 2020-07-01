@@ -2,34 +2,27 @@ import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Home/LoopWidget/MemojiGenerator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 ///author: @sanchitmonga22
 
-//COMMON
+//SECTION: COMMON
 final kSwipeConstant = 5;
 const double ksigmaX = 5.0; // from 0-10
 const double ksigmaY = 5.0; // from 0-10
 const double kopacity = 0.1;
 
-// AUTH SCREEN
-final kBoxDecoration = BoxDecoration(
+//SECTION: AUTH SCREEN
+final kHomeScreenDecoration = BoxDecoration(
   image: DecorationImage(
       image: AssetImage(
         'assets/images/test5.PNG',
       ),
       fit: BoxFit.fill),
-  gradient: LinearGradient(
-    colors: [
-      Color.fromRGBO(94, 53, 177, 1).withOpacity(0.5),
-      Color.fromRGBO(74, 20, 140, 1).withOpacity(0.9),
-      // Color.fromRGBO(150, 200, 255, 1).withOpacity(0.5),
-      // Color.fromRGBO(150, 255, 117, 1).withOpacity(0.9),
-    ],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    stops: [0, 1],
-  ),
 );
+
+final kLOGOTextStyle = TextStyle(
+    fontSize: 50.0, fontFamily: "Open Sans", fontWeight: FontWeight.w900);
 
 final kBoxDecorationLOGO = BoxDecoration(
   borderRadius: BorderRadius.circular(15),
@@ -43,46 +36,35 @@ final kBoxDecorationLOGO = BoxDecoration(
   ],
 );
 
-final kFontStyleLOGO = TextStyle(
-  color: Colors.white,
-  fontSize: 30,
-  fontFamily: 'Anton',
-  fontWeight: FontWeight.bold,
-);
+//SECTION: AUTH CARD
 
-//AUTH CARD
-InputDecoration kgetDecoration(String text) {
-  return InputDecoration(
-      labelText: text,
-      labelStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
-      focusColor: Colors.white,
-      errorStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold));
-}
+const double kMinHeightSignUp = 510;
+const double kMinHeightLogin = 350;
 
 const kTextFormFieldStyle =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w600);
 
-// HOME SCREEN
+InputDecoration kgetDecoration(String text) {
+  return InputDecoration(
+      labelText: text,
+      labelStyle: kTextFormFieldStyle,
+      focusColor: Colors.white,
+      //prefixIcon:,
+
+      errorStyle: TextStyle(
+          color: CupertinoColors.extraLightBackgroundGray,
+          fontWeight: FontWeight.w600));
+}
+
+// SECTION: HOME SCREEN
 const kAppBarBackgroundColor = Colors.black;
 const kTextStyleHomeScreen =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15);
 
-final kHomeScreenBoxDecoration = BoxDecoration(
-    // gradient: LinearGradient(
-    //   colors: [
-    //     Color.fromRGBO(94, 53, 177, 1).withOpacity(0.3),
-    //     Color.fromRGBO(74, 20, 140, 1).withOpacity(0.8),
-    //     // Color.fromRGBO(150, 200, 255, 1).withOpacity(0.5),
-    //     // Color.fromRGBO(150, 255, 117, 1).withOpacity(0.9),
-    //   ],
-    //   begin: Alignment.topLeft,
-    //   end: Alignment.bottomRight,
-    //   stops: [0, 1],
-    // ),
-    color: CupertinoColors.systemGrey2);
+final kHomeScreenBoxDecoration =
+    BoxDecoration(color: CupertinoColors.systemGrey2);
 
-//LOOP CONTENT
-
+//: LOOP CONTENT
 // KEY: Number of Members, and Value Factor by which the maxRadius has to be reduced
 // NOTE: DO NOT CHANGE THIS!!
 const kfixedRadiusFactor = {2: 0.35, 3: 0.36, 4: 0.39, 5: 0.46, "MORE": 0.65};
@@ -149,7 +131,7 @@ const kLoopDetailsTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-//BOTTOM CONTAINER
+//SECTION:BOTTOM CONTAINER
 final kBottomContainerDecoration = BoxDecoration(
   color: CupertinoColors.white,
 );
