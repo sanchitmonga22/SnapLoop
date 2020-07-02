@@ -70,7 +70,7 @@ class LoopsProvider with ChangeNotifier {
           widgetsInEachRow.add(LoopWidget(
             radius: radiis[i],
             numberOfMembers: deleted[i].numberOfMembers,
-            text: deleted[i].name,
+            loopName: deleted[i].name,
             type: deleted[i].type,
           ));
           // TODO add the paddig information if possible

@@ -4,6 +4,7 @@ import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
 
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
+import 'package:SnapLoop/Screens/Chat/ExistingLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 import 'package:SnapLoop/Screens/Home/FloatingActionButton.dart';
@@ -73,6 +74,8 @@ class SnapLoop extends StatelessWidget {
               //         },
               //       ),
               routes: {
+                ExistingLoopChatScreen.routeName: (context) =>
+                    ExistingLoopChatScreen(),
                 NavBar.routeName: (context) => NavBar(),
                 AuthScreen.routeName: (context) => AuthScreen(),
                 HomeScreen.routeName: (context) => HomeScreen(),
