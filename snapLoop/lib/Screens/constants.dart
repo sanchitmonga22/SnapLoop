@@ -7,10 +7,12 @@ import 'package:flutter/rendering.dart';
 ///author: @sanchitmonga22
 
 //SECTION: COMMON
+const kSystemPrimaryColor = CupertinoColors.activeBlue;
 final kSwipeConstant = 5;
 const double ksigmaX = 5.0; // from 0-10
 const double ksigmaY = 5.0; // from 0-10
 const double kopacity = 0.1;
+const kTextFieldCursorColor = kSystemPrimaryColor;
 
 //SECTION: AUTH SCREEN
 final kHomeScreenDecoration = BoxDecoration(
@@ -19,6 +21,7 @@ final kHomeScreenDecoration = BoxDecoration(
         'assets/images/test5.PNG',
       ),
       fit: BoxFit.fill),
+  //color: Colors.indigo[900]
 );
 
 final kLOGOTextStyle = TextStyle(
@@ -52,7 +55,7 @@ InputDecoration kgetDecoration(String labelText) {
       contentPadding: EdgeInsets.all(15),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(25.0),
-        borderSide: BorderSide(color: CupertinoColors.activeOrange, width: 2),
+        borderSide: BorderSide(color: kSystemPrimaryColor, width: 2),
       ),
       errorMaxLines: 1,
       //helperText: , for the Phone number input
@@ -81,6 +84,10 @@ InputDecoration kgetDecoration(String labelText) {
           fontWeight: FontWeight.w600));
 }
 
+//SECTION: NAV BAR
+const kActiveNavBarIconColor = kSystemPrimaryColor;
+const kInactiveNavBarIconColor = CupertinoColors.systemGrey;
+
 //SECTION: SIGNUP WIDGET:
 const double kminHeightSignUpWidget = 80;
 const double kmaxHeightSignUpWidget = 250;
@@ -90,8 +97,7 @@ const kAppBarBackgroundColor = Colors.black;
 const kTextStyleHomeScreen =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15);
 
-final kHomeScreenBoxDecoration =
-    BoxDecoration(color: CupertinoColors.systemGrey2);
+final kHomeScreenBoxDecoration = BoxDecoration(color: CupertinoColors.white);
 
 //: LOOP CONTENT
 // KEY: Number of Members, and Value Factor by which the maxRadius has to be reduced
@@ -133,19 +139,19 @@ const kalignmentMap = {
 
 Color determineLoopColor(type) {
   if (type == LoopType.NEW_LOOP) {
-    return Colors.red;
+    return Colors.redAccent[400];
   }
   if (type == LoopType.NEW_NOTIFICATION) {
-    return Colors.yellowAccent;
+    return Colors.cyan[300];
   }
   if (type == LoopType.EXISTING_LOOP) {
     return Colors.greenAccent;
   }
   if (type == LoopType.INACTIVE_LOOP_FAILED) {
-    return Colors.indigoAccent;
+    return CupertinoColors.systemIndigo;
   }
   if (type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
-    return Colors.tealAccent;
+    return Colors.tealAccent[100];
   }
   return null;
 }

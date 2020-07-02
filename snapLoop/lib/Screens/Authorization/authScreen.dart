@@ -1,6 +1,7 @@
 import 'package:SnapLoop/Screens/Authorization/authCard.dart';
 import 'package:SnapLoop/Screens/constants.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum AuthMode { Signup, Login }
@@ -34,11 +35,14 @@ class AuthScreen extends StatelessWidget {
                     child: ColorizeAnimatedTextKit(
                       text: ["Snap∞Loop"],
                       textStyle: kLOGOTextStyle,
+                      speed: Duration(milliseconds: 1000),
+                      //isRepeatingAnimation: true,
                       colors: [
                         // Colors.purple,
                         Colors.white70,
                         Colors.yellow,
                         Colors.blueGrey,
+                        CupertinoColors.activeOrange
                       ],
                       textAlign: TextAlign.center,
                       repeatForever: true,

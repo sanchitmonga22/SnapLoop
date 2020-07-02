@@ -42,6 +42,8 @@ class _FloatingActionButtonDataState extends State<FloatingActionButtonData> {
               widget._animationController.reverse();
               showDialog(
                 context: context,
+                barrierDismissible: false,
+                useSafeArea: true,
                 builder: (context) {
                   return CreateALoopDialog();
                 },

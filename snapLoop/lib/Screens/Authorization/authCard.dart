@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
@@ -68,7 +70,10 @@ class _AuthCardState extends State<AuthCard>
       _isLoading = true;
     });
 
-    //Navigator.of(context).pushNamed(NavBar.routeName);
+    Timer(Duration(seconds: 2), () {
+      Navigator.of(context).pushNamed(NavBar.routeName);
+    });
+
     // if (!_formKey.currentState.validate()) {
     //   // Invalid!
     //   return;
@@ -141,7 +146,7 @@ class _AuthCardState extends State<AuthCard>
       padding: EdgeInsets.zero,
       child: Card(
         elevation: 2,
-        color: Colors.transparent,
+        color: Colors.deepPurpleAccent.withOpacity(0.4),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
@@ -168,6 +173,7 @@ class _AuthCardState extends State<AuthCard>
                 children: <Widget>[
                   // Email Text Field
                   TextFormField(
+                    cursorColor: kTextFieldCursorColor,
                     autofocus: false,
                     style: kTextFormFieldStyle,
                     decoration: _authMode == AuthMode.Signup
@@ -197,6 +203,7 @@ class _AuthCardState extends State<AuthCard>
 
                   // Password text field
                   TextFormField(
+                    cursorColor: kTextFieldCursorColor,
                     style: kTextFormFieldStyle,
                     decoration: kgetDecoration('Password').copyWith(
                       icon: Icon(

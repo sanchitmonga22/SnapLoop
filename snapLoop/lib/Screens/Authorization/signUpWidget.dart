@@ -56,6 +56,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               physics: const NeverScrollableScrollPhysics(),
               children: [
                 TextFormField(
+                  cursorColor: kTextFieldCursorColor,
                   scrollPadding: EdgeInsets.all(1),
                   autovalidate: true,
                   style: kTextFormFieldStyle,
@@ -79,6 +80,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   height: 10,
                 ),
                 TextFormField(
+                    cursorColor: kTextFieldCursorColor,
                     style: kTextFormFieldStyle,
                     enabled: widget._authMode == AuthMode.Signup,
                     decoration: kgetDecoration('Username').copyWith(
@@ -105,7 +107,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 //     onSaved: (value) {
                 //       _authData['phoneNumber'] = value;
                 //     })
+                //IMPORTANT: Modified to include the cursor color in the Phone textField
                 InternationalPhoneNumberInput(
+                  cursorColor: kTextFieldCursorColor,
                   onInputChanged: (PhoneNumber number) {
                     print(number.phoneNumber);
                   },
@@ -120,7 +124,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   countrySelectorScrollControlled: true,
                   selectorButtonOnErrorPadding: 100,
                   textStyle: kTextFormFieldStyle,
-                  maxLength: 11,
+                  // maxLength: 11,
                   initialValue: number,
                   textFieldController: controller,
                   inputBorder: OutlineInputBorder(),

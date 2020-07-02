@@ -1,6 +1,7 @@
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 import 'package:SnapLoop/Screens/Home/homeScreen.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
+import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/models/persisten-bottom-nav-item.widget.dart';
 import 'package:persistent_bottom_nav_bar/models/persistent-bottom-nav-bar-styles.widget.dart';
@@ -47,20 +48,20 @@ class _NavBarState extends State<NavBar> with SingleTickerProviderStateMixin {
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.loop_thick),
         title: ("Home"),
-        activeColor: CupertinoColors.activeOrange,
-        inactiveColor: CupertinoColors.systemGrey,
+        activeColor: kActiveNavBarIconColor,
+        inactiveColor: kInactiveNavBarIconColor,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.contacts),
         title: ("Contacts"),
-        activeColor: CupertinoColors.activeOrange,
-        inactiveColor: CupertinoColors.systemGrey,
+        activeColor: kActiveNavBarIconColor,
+        inactiveColor: kInactiveNavBarIconColor,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.person),
         title: ("Profile"),
-        activeColor: CupertinoColors.activeOrange,
-        inactiveColor: CupertinoColors.systemGrey,
+        activeColor: kActiveNavBarIconColor,
+        inactiveColor: kInactiveNavBarIconColor,
       ),
     ];
   }

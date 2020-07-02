@@ -20,9 +20,21 @@ class LoopWidget extends StatelessWidget {
       padding: EdgeInsets.all(kAllLoopsPadding),
       decoration: BoxDecoration(shape: BoxShape.circle),
       child: CircleAvatar(
-          backgroundColor: kLoopContentBackgroundColor,
+          //backgroundColor: kLoopContentBackgroundColor,
+          backgroundColor: determineLoopColor(type).withOpacity(0.5),
           radius: radius,
           //NOTE: FlipCard() changed, Line 170 and 186 modified to include the open till pressed functionality
+          // Replaced Gesture Detector with Listener
+          //     return Listener(
+          //   onPointerDown: (event) {
+          //     isFront ? toggleCard() : null;
+          //   },
+          //   onPointerUp: (event) {
+          //     isFront ? null : toggleCard();
+          //   },
+          //   child: child,
+          //   behavior: HitTestBehavior.translucent,
+          // );
           child: FlipCard(
             front: MemojiGenerator(
                 loopType: type,
