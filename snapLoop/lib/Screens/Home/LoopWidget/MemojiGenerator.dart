@@ -51,18 +51,22 @@ class MemojiGenerator extends StatelessWidget {
   }
 }
 
-class Memoji extends StatelessWidget {
+class Memoji extends StatefulWidget {
   final Position position;
   final imageNumber;
   final loopType;
   const Memoji({this.loopType, this.imageNumber, Key key, this.position})
       : super(key: key);
+
+  @override
+  _MemojiState createState() => _MemojiState();
+}
+
+class _MemojiState extends State<Memoji> {
   int getRandomImageNumber(int max) {
     return Random().nextInt(max);
   }
 
-  // generating the random network image
-  // TODO: To add this feature into the server and not here!!
   NetworkImage getImage() {
     NetworkImage image;
     while (image == null) {
@@ -80,12 +84,13 @@ class Memoji extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-        alignment: AlignmentDirectional(position.x, position.y),
+        alignment: AlignmentDirectional(widget.position.x, widget.position.y),
         child: CircleAvatar(
             child: Container(
           decoration: BoxDecoration(
               boxShadow: [
-                BoxShadow(blurRadius: 5, color: determineLoopColor(loopType))
+                BoxShadow(
+                    blurRadius: 5, color: determineLoopColor(widget.loopType))
               ],
               shape: BoxShape.circle,
               image: DecorationImage(fit: BoxFit.fitHeight, image: getImage())),

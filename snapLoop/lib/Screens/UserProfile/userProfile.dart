@@ -8,63 +8,71 @@ import 'package:persistent_bottom_nav_bar/models/persistent-nav-bar-scaffold.wid
 import 'package:provider/provider.dart';
 
 ///author: @sanchitmonga22
-class UserProfile extends StatelessWidget {
+class UserProfile extends StatefulWidget {
   static const routeName = './UserProfile';
 
+  const UserProfile({Key key}) : super(key: key);
+
+  @override
+  _UserProfileState createState() => _UserProfileState();
+}
+
+class _UserProfileState extends State<UserProfile>
+    with AutomaticKeepAliveClientMixin<UserProfile> {
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     User user = Provider.of<UserDataProvider>(context, listen: false).user;
 
-    return Scaffold(
-      appBar: CupertinoNavigationBar(),
-      body: Container(
-          child: Column(children: [
-        ListTile(
-          contentPadding: EdgeInsets.all(10),
-          title: Text(
-            "Username: ${user.username}",
-            textAlign: TextAlign.left,
-          ),
+    return Container(
+        child: Column(children: [
+      ListTile(
+        contentPadding: EdgeInsets.all(10),
+        title: Text(
+          "Username: ${user.username}",
+          textAlign: TextAlign.left,
         ),
-        ListTile(
-          contentPadding: EdgeInsets.all(10),
-          title: Text(
-            "Email address: ${user.email}",
-            textAlign: TextAlign.left,
-          ),
+      ),
+      ListTile(
+        contentPadding: EdgeInsets.all(10),
+        title: Text(
+          "Email address: ${user.email}",
+          textAlign: TextAlign.left,
         ),
-        ListTile(
-          contentPadding: EdgeInsets.all(10),
-          title: Text(
-            "DisplayName: ${user.displayName}",
-            textAlign: TextAlign.left,
-          ),
+      ),
+      ListTile(
+        contentPadding: EdgeInsets.all(10),
+        title: Text(
+          "DisplayName: ${user.displayName}",
+          textAlign: TextAlign.left,
         ),
-        ListTile(
-          contentPadding: EdgeInsets.all(10),
-          title: Text(
-            "Score: ${user.score}",
-            textAlign: TextAlign.left,
-          ),
+      ),
+      ListTile(
+        contentPadding: EdgeInsets.all(10),
+        title: Text(
+          "Score: ${user.score}",
+          textAlign: TextAlign.left,
         ),
-        ListTile(
-          contentPadding: EdgeInsets.all(10),
-          title: Text(
-            "UserID: ${user.userID}",
-            textAlign: TextAlign.left,
-          ),
+      ),
+      ListTile(
+        contentPadding: EdgeInsets.all(10),
+        title: Text(
+          "UserID: ${user.userID}",
+          textAlign: TextAlign.left,
         ),
-        ListTile(
-          contentPadding: EdgeInsets.all(10),
-          leading: Icon(Icons.exit_to_app),
-          onTap: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).pushReplacementNamed('/');
-            return Provider.of<Auth>(context, listen: false).logOut();
-          },
-          title: Text("Logout"),
-        )
-      ])),
-    );
+      ),
+      ListTile(
+        contentPadding: EdgeInsets.all(10),
+        leading: Icon(Icons.exit_to_app),
+        onTap: () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacementNamed('/');
+          return Provider.of<Auth>(context, listen: false).logOut();
+        },
+        title: Text("Logout"),
+      )
+    ]));
   }
 }

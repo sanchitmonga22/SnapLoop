@@ -40,67 +40,66 @@ class _LoopWidgetState extends State<LoopWidget> {
           );
         },
         tag: widget.loopName,
-        child: GestureDetector(
-          onTap: () {
-            // Navigator.of(context).pushReplacementNamed(
-            //   ExistingLoopChatScreen.routeName,
-            //   //arguments: [type, loopName]
+        child: CircleAvatar(
+            //backgroundColor: kLoopContentBackgroundColor,
+            backgroundColor: determineLoopColor(widget.type).withOpacity(0.5),
+            radius: widget.radius,
+            //NOTE: FlipCard() changed, Line 174 and 188 modified to include the open till pressed functionality
+            // Replaced Gesture Detector with Listener also added a VoidCallBack function onTapNavigator to detect the tap
+            //         var before = DateTime.now();
+            // return Listener(
+            //   onPointerDown: (event) {
+            //     if (DateTime.now().difference(before).inMilliseconds > 200)
+            //       isFront ? toggleCard() : null;
+            //   },
+            //   onPointerUp: (event) {
+            //     isFront ? null : toggleCard();
+            //     if (DateTime.now().difference(before).inMilliseconds < 200) {
+            //       widget.onTapNavigator();
+            //     }
+            //   },
+            //   child: child,
+            //   behavior: HitTestBehavior.translucent,
             // );
-            Navigator.push(
-                context,
-                new MaterialPageRoute(
-                    builder: (context) => ExistingLoopChatScreen(
-                          loopID: "",
-                          loopName: widget.loopName,
-                          loopType: widget.type,
-                        )));
-          },
-          child: CircleAvatar(
-              //backgroundColor: kLoopContentBackgroundColor,
-              backgroundColor: determineLoopColor(widget.type).withOpacity(0.5),
-              radius: widget.radius,
-              //NOTE: FlipCard() changed, Line 170 and 186 modified to include the open till pressed functionality
-              // Replaced Gesture Detector with Listener
-              //     return Listener(
-              //   onPointerDown: (event) {
-              //     isFront ? toggleCard() : null;
-              //   },
-              //   onPointerUp: (event) {
-              //     isFront ? null : toggleCard();
-              //   },
-              //   child: child,
-              //   behavior: HitTestBehavior.translucent,
-              // );
-              child: FlipCard(
-                front: MemojiGenerator(
-                    loopType: widget.type,
-                    numberOfMembers: widget.numberOfMembers,
-                    radius: widget.radius),
-                back: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        CupertinoIcons.loop,
-                        color: Colors.black,
-                      ),
-                      AutoSizeText(
-                        "${widget.loopName}",
-                        maxLines: 1,
-                        style: kLoopDetailsTextStyle,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      AutoSizeText(
-                        "👥 ${widget.numberOfMembers}",
-                        maxLines: 1,
-                        style: kLoopDetailsTextStyle,
-                        textAlign: TextAlign.start,
-                      ),
-                    ],
-                  ),
+            child: FlipCard(
+              onTapNavigator: () {
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => ExistingLoopChatScreen(
+                              loopID: "",
+                              loopName: widget.loopName,
+                              loopType: widget.type,
+                            )));
+              },
+              front: MemojiGenerator(
+                  loopType: widget.type,
+                  numberOfMembers: widget.numberOfMembers,
+                  radius: widget.radius),
+              back: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      CupertinoIcons.loop,
+                      color: Colors.black,
+                    ),
+                    AutoSizeText(
+                      "${widget.loopName}",
+                      maxLines: 1,
+                      style: kLoopDetailsTextStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    AutoSizeText(
+                      "👥 ${widget.numberOfMembers}",
+                      maxLines: 1,
+                      style: kLoopDetailsTextStyle,
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
                 ),
-              )),
-        ),
+              ),
+            )),
       ),
     );
   }
