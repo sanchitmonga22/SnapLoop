@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
-import 'package:SnapLoop/Screens/Home/CompletedLoopScreen.dart';
 import 'package:SnapLoop/Screens/Home/homeScreen.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:SnapLoop/Screens/constants.dart';
@@ -44,8 +43,12 @@ class _NavBarState extends State<NavBar>
 
   List<Widget> getChildren() {
     return [
-      HomeScreen(),
-      CompletedLoopsScreen(),
+      HomeScreen(
+        completedLoopsScreen: false,
+      ),
+      HomeScreen(
+        completedLoopsScreen: true,
+      ),
       ContactScreen(),
       UserProfile()
     ];
@@ -165,7 +168,6 @@ class _NavBarState extends State<NavBar>
             bottomNavigationBar: PersistentBottomNavBar(
               items: _navBarsItems(),
               onItemSelected: (value) {
-                print(value);
                 if (value > 0) {
                   value++;
                 }

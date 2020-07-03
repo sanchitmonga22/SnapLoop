@@ -20,7 +20,8 @@ class LoopWidget extends StatefulWidget {
   _LoopWidgetState createState() => _LoopWidgetState();
 }
 
-class _LoopWidgetState extends State<LoopWidget> {
+class _LoopWidgetState extends State<LoopWidget>
+    with AutomaticKeepAliveClientMixin<LoopWidget> {
   Widget memojiWidget;
   @override
   void initState() {
@@ -32,7 +33,11 @@ class _LoopWidgetState extends State<LoopWidget> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       padding: EdgeInsets.all(kAllLoopsPadding),
       decoration: BoxDecoration(shape: BoxShape.circle),
