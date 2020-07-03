@@ -8,23 +8,21 @@ import '../../constants.dart';
 ///author: @sanchitmonga22
 class MemojiGenerator extends StatelessWidget {
   final int numberOfMembers;
-  final double radius;
   final LoopType loopType;
   MemojiGenerator({
     this.loopType,
-    this.radius,
     this.numberOfMembers,
   });
 
   List<Widget> getMemojis(int numberOfMembers) {
-    if (numberOfMembers > 23) {
-      numberOfMembers = 23;
+    if (numberOfMembers > kMaxMembersDisplayed) {
+      numberOfMembers = kMaxMembersDisplayed;
     }
     List<Widget> memojis = [];
     for (int i = 0; i < numberOfMembers; i++) {
       memojis.add(Memoji(
         loopType: loopType,
-        position: kalignmentMap[23][i],
+        position: kalignmentMap[kMaxMembersDisplayed][i],
       ));
     }
     return memojis;
@@ -61,17 +59,8 @@ class _MemojiState extends State<Memoji> {
   }
 
   NetworkImage getImage() {
-    NetworkImage image;
-    while (image == null) {
-      try {
-        image = NetworkImage(
-            URLMemojis[getRandomImageNumber(URLMemojis.length - 1)].replaceAll(
-                "%s", USERS[getRandomImageNumber(USERS.length - 1)]));
-      } catch (e) {
-        print(e);
-      }
-    }
-    return image;
+    return NetworkImage(URLMemojis[getRandomImageNumber(URLMemojis.length - 1)]
+        .replaceAll("%s", USERS[getRandomImageNumber(USERS.length - 1)]));
   }
 
   @override

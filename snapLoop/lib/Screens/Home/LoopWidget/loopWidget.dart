@@ -21,6 +21,16 @@ class LoopWidget extends StatefulWidget {
 }
 
 class _LoopWidgetState extends State<LoopWidget> {
+  Widget memojiWidget;
+  @override
+  void initState() {
+    super.initState();
+    memojiWidget = MemojiGenerator(
+      loopType: widget.type,
+      numberOfMembers: widget.numberOfMembers,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,15 +84,13 @@ class _LoopWidgetState extends State<LoopWidget> {
                     context,
                     new MaterialPageRoute(
                         builder: (context) => ExistingLoopChatScreen(
-                              loopID: "",
-                              loopName: widget.loopName,
-                              loopType: widget.type,
-                            )));
+                            loopID: "",
+                            loopName: widget.loopName,
+                            loopType: widget.type,
+                            numberOfMembers: widget.numberOfMembers,
+                            memojiWidget: memojiWidget)));
               },
-              front: MemojiGenerator(
-                  loopType: widget.type,
-                  numberOfMembers: widget.numberOfMembers,
-                  radius: widget.radius),
+              front: memojiWidget,
               back: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

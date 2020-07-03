@@ -99,7 +99,7 @@ const kTextStyleHomeScreen =
 
 final kHomeScreenBoxDecoration = BoxDecoration(color: CupertinoColors.white);
 
-//: LOOP CONTENT
+// SECTION: LOOP CONTENT
 // KEY: Number of Members, and Value Factor by which the maxRadius has to be reduced
 // NOTE: DO NOT CHANGE THIS!!
 const kfixedRadiusFactor = {
@@ -117,7 +117,7 @@ const kfixedRadiusFactor = {
   13: 0.75,
   "MAX": 0.80
 };
-
+const kMaxMembersDisplayed = 23;
 const double kAllLoopsPadding = 20;
 const kalignmentMap = {
   2: [Position(1, 1), Position(-1, -1)],
@@ -211,7 +211,7 @@ const kalignmentMap = {
     Position(0, 1),
     Position(0.8, -1),
   ],
-  23: [
+  kMaxMembersDisplayed: [
     Position(0.5, 0.5),
     Position(-0.5, -0.5),
     Position(-0.5, 0.5),
