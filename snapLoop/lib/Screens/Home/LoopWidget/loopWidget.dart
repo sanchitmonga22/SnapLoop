@@ -44,19 +44,26 @@ class _LoopWidgetState extends State<LoopWidget> {
             //backgroundColor: kLoopContentBackgroundColor,
             backgroundColor: determineLoopColor(widget.type).withOpacity(0.5),
             radius: widget.radius,
-            //NOTE: FlipCard() changed, Line 174 and 188 modified to include the open till pressed functionality
-            // Replaced Gesture Detector with Listener also added a VoidCallBack function onTapNavigator to detect the tap
-            //         var before = DateTime.now();
-            // return Listener(
-            //   onPointerDown: (event) {
-            //     if (DateTime.now().difference(before).inMilliseconds > 200)
+            //NOTE: FlipCard() changed, Line 174 and 195 modified to include the open till pressed functionality
+            // Added a VoidCallBack function onTapNavigator to detect the tap
+            //       var before = DateTime.now();
+            // return GestureDetector(
+            //   onTapDown: (event) {
+            //     if (DateTime.now().difference(before).inMilliseconds > 100)
             //       isFront ? toggleCard() : null;
             //   },
-            //   onPointerUp: (event) {
+            //   onTapUp: (event) {
             //     isFront ? null : toggleCard();
-            //     if (DateTime.now().difference(before).inMilliseconds < 200) {
+            //   },
+            //   onTap: () {
+            //     if (DateTime.now().difference(before).inMilliseconds < 100) {
             //       widget.onTapNavigator();
             //     }
+            //   },
+            //   onTapCancel: () {
+            //     Timer(Duration(seconds: 1), () {
+            //       isFront ? null : toggleCard();
+            //     });
             //   },
             //   child: child,
             //   behavior: HitTestBehavior.translucent,

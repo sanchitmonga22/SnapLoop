@@ -15,20 +15,16 @@ class MemojiGenerator extends StatelessWidget {
     this.radius,
     this.numberOfMembers,
   });
-  int getRandomImageNumber() {
-    return Random().nextInt(16);
-  }
 
   List<Widget> getMemojis(int numberOfMembers) {
-    if (numberOfMembers > 13) {
-      numberOfMembers = 13;
+    if (numberOfMembers > 23) {
+      numberOfMembers = 23;
     }
     List<Widget> memojis = [];
     for (int i = 0; i < numberOfMembers; i++) {
       memojis.add(Memoji(
         loopType: loopType,
-        imageNumber: getRandomImageNumber(),
-        position: kalignmentMap[13][i],
+        position: kalignmentMap[23][i],
       ));
     }
     return memojis;
@@ -37,11 +33,10 @@ class MemojiGenerator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      if (numberOfMembers <= 5)
+      if (numberOfMembers <= 13)
         ...kalignmentMap[numberOfMembers].map((position) {
           return Memoji(
             loopType: loopType,
-            imageNumber: getRandomImageNumber(),
             position: position,
           );
         }).toList()
@@ -53,10 +48,8 @@ class MemojiGenerator extends StatelessWidget {
 
 class Memoji extends StatefulWidget {
   final Position position;
-  final imageNumber;
   final loopType;
-  const Memoji({this.loopType, this.imageNumber, Key key, this.position})
-      : super(key: key);
+  const Memoji({this.loopType, Key key, this.position}) : super(key: key);
 
   @override
   _MemojiState createState() => _MemojiState();

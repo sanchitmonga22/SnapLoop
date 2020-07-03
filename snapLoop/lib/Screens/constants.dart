@@ -102,9 +102,23 @@ final kHomeScreenBoxDecoration = BoxDecoration(color: CupertinoColors.white);
 //: LOOP CONTENT
 // KEY: Number of Members, and Value Factor by which the maxRadius has to be reduced
 // NOTE: DO NOT CHANGE THIS!!
-const kfixedRadiusFactor = {2: 0.35, 3: 0.36, 4: 0.39, 5: 0.46, "MORE": 0.65};
+const kfixedRadiusFactor = {
+  2: 0.35,
+  3: 0.36,
+  4: 0.39,
+  5: 0.46,
+  6: 0.49,
+  7: 0.52,
+  8: 0.59,
+  9: 0.65,
+  10: 0.67,
+  11: 0.70,
+  12: 0.73,
+  13: 0.75,
+  "MAX": 0.80
+};
 
-const double kAllLoopsPadding = 15;
+const double kAllLoopsPadding = 20;
 const kalignmentMap = {
   2: [Position(1, 1), Position(-1, -1)],
   3: [
@@ -120,21 +134,108 @@ const kalignmentMap = {
     Position(1, -1),
     Position(0, 0)
   ],
-  13: [
+  6: [
+    Position(1, 0.5),
+    Position(-0.7, -1),
+    Position(-1, 0.5),
+    Position(0.7, -1),
+    Position(0, 0),
+    Position(0, 1.4)
+  ],
+  7: [
+    Position(1, 0.5),
+    Position(-0.85, -0.7),
+    Position(-1, 0.5),
+    Position(0.85, -0.7),
+    Position(0, 0),
+    Position(0, 1.2),
+    Position(0, -1.4),
+  ],
+  8: [
+    Position(0.75, 0.3),
+    Position(-0.75, -0.65),
+    Position(-0.75, 0.3),
+    Position(0.65, -0.65),
+    Position(0, 0),
+    Position(0, 1),
+    Position(0, -1.1),
+    Position(0.9, 1.2),
+  ],
+  9: [
+    Position(0.75, 0.2),
+    Position(-0.55, -0.65),
+    Position(-0.75, 0.2),
+    Position(0.65, -0.65),
+    Position(0, 0),
+    Position(0.1, 1),
+    Position(0, -1.1),
+    Position(0.9, 1),
+    Position(-0.65, 0.9),
+  ],
+  10: [
+    Position(0.6, 0.35),
+    Position(-0.4, -0.6),
+    Position(-0.9, 0.45),
+    Position(0.4, -0.6),
+    Position(-0.1, 0.1),
+    Position(-0.35, 0.9),
+    Position(-1, -0.3),
+    Position(1.1, -0.2),
+    Position(0.4, 1.1),
+    Position(0, -1.2)
+  ],
+  11: [
     Position(0.5, 0.5),
     Position(-0.5, -0.5),
     Position(-0.5, 0.5),
     Position(0.5, -0.5),
     Position(0, 0),
+    Position(1.2, -0.4),
+    Position(-1.2, -0.4),
+    Position(0, -1),
+    Position(1.2, 0.4),
+    Position(-1.2, 0.4),
+    Position(0, 1),
+  ],
+  12: [
+    Position(0.5, 0.5),
+    Position(-0.5, -0.5),
+    Position(-0.5, 0.5),
+    Position(0.5, -0.4),
+    Position(0, 0),
+    Position(1.2, -0.4),
+    Position(-1.2, -0.4),
+    Position(0, -1),
+    Position(1.2, 0.4),
+    Position(-1.2, 0.4),
+    Position(0, 1),
+    Position(0.8, -1),
+  ],
+  23: [
+    Position(0.5, 0.5),
+    Position(-0.5, -0.5),
+    Position(-0.5, 0.5),
+    Position(0.5, -0.5),
+    Position(0, 0),
+    Position(0, -0.7),
+    Position(0, 0.7),
+    Position(1, 0),
+    Position(-1, 0),
     Position(1, -1),
     Position(-1, -1),
-    Position(0, -1.3),
     Position(1, 1),
     Position(-1, 1),
+    Position(-0.5, 1.3),
+    Position(-0.5, -1.3),
+    Position(0.5, 1.3),
+    Position(0.5, -1.3),
+    Position(-1.2, -0.5),
+    Position(1.2, -0.5),
+    Position(-1.2, 0.5),
+    Position(1.2, 0.5),
+    Position(0, -1.3),
     Position(0, 1.3),
-    Position(1.3, 0),
-    Position(-1.3, 0),
-  ]
+  ],
 };
 
 Color determineLoopColor(type) {

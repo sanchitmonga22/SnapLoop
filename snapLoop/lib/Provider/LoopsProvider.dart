@@ -41,10 +41,10 @@ class LoopsProvider with ChangeNotifier {
   }
 
   double radiusCalculator(int numberOfMember, double maxRadius) {
-    if (numberOfMember <= 5) {
+    if (numberOfMember <= 13) {
       return maxRadius * kfixedRadiusFactor[numberOfMember];
     }
-    return maxRadius * kfixedRadiusFactor["MORE"];
+    return maxRadius * kfixedRadiusFactor["MAX"];
   }
 
   List<Loop> getLoopsType(LoopType type) {

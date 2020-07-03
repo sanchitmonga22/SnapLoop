@@ -41,6 +41,7 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen> {
                 child: fromHeroContext.widget,
               );
             },
+            // will use the unique id of the loop
             tag: widget.loopName,
             child: CircleAvatar(
               backgroundColor:
