@@ -72,6 +72,7 @@ class LoopsProvider with ChangeNotifier {
             numberOfMembers: deleted[i].numberOfMembers,
             loopName: deleted[i].name,
             type: deleted[i].type,
+            isTappable: true,
           ));
           // TODO add the paddig information if possible
           currentWidth += (radiis[i] + kAllLoopsPadding) * 2;

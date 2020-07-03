@@ -6,14 +6,20 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 
 ///author: @sanchitmonga22
-class MemojiGenerator extends StatelessWidget {
+class MemojiGenerator extends StatefulWidget {
   final int numberOfMembers;
   final LoopType loopType;
-  MemojiGenerator({
-    this.loopType,
-    this.numberOfMembers,
-  });
 
+  const MemojiGenerator({Key key, this.numberOfMembers, this.loopType})
+      : super(key: key);
+
+  @override
+  _MemojiGeneratorState createState() => _MemojiGeneratorState();
+}
+
+// IMPORTANT: To keep each and every memoji image alive, we can use pageStorageBucket to store the values of each and every image along with a
+//unique key and then we can get it back by using that key
+class _MemojiGeneratorState extends State<MemojiGenerator> {
   List<Widget> getMemojis(int numberOfMembers) {
     if (numberOfMembers > kMaxMembersDisplayed) {
       numberOfMembers = kMaxMembersDisplayed;
@@ -21,7 +27,7 @@ class MemojiGenerator extends StatelessWidget {
     List<Widget> memojis = [];
     for (int i = 0; i < numberOfMembers; i++) {
       memojis.add(Memoji(
-        loopType: loopType,
+        loopType: widget.loopType,
         position: kalignmentMap[kMaxMembersDisplayed][i],
       ));
     }
@@ -31,15 +37,15 @@ class MemojiGenerator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      if (numberOfMembers <= 13)
-        ...kalignmentMap[numberOfMembers].map((position) {
+      if (widget.numberOfMembers <= 13)
+        ...kalignmentMap[widget.numberOfMembers].map((position) {
           return Memoji(
-            loopType: loopType,
+            loopType: widget.loopType,
             position: position,
           );
         }).toList()
       else
-        ...getMemojis(numberOfMembers).toList()
+        ...getMemojis(widget.numberOfMembers).toList()
     ]);
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 import 'package:SnapLoop/Screens/Home/homeScreen.dart';
@@ -10,7 +11,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import 'Home/AppBarData.dart';
-import 'Home/FloatingActionButton.dart';
+import 'FloatingActionButton.dart';
 
 /// author:@sanchitmonga22
 class NavBar extends StatefulWidget {
@@ -172,6 +173,12 @@ class _NavBarState extends State<NavBar>
                   value++;
                 }
                 setState(() {
+                  if (_floatingBubbleAnimationController.isCompleted) {
+                    Provider.of<FloatingActionButtonDataChanges>(context,
+                            listen: false)
+                        .toggleIsTapped();
+                    _floatingBubbleAnimationController.reverse();
+                  }
                   _toggleTab(value);
                 });
               },

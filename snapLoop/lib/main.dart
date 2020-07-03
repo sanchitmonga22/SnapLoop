@@ -6,7 +6,7 @@ import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:SnapLoop/Screens/Chat/ExistingLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
-import 'package:SnapLoop/Screens/Home/FloatingActionButton.dart';
+import 'package:SnapLoop/Screens/FloatingActionButton.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:SnapLoop/test.dart';
