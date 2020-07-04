@@ -33,6 +33,7 @@ class _AuthCardState extends State<AuthCard>
     'phoneNumber': '',
   };
   var _isLoading = false; // for the Login/SignUp Button
+  var _showPassword = false;
   final _passwordController = TextEditingController();
 
   AnimationController _controller;
@@ -207,11 +208,27 @@ class _AuthCardState extends State<AuthCard>
                     style: kTextFormFieldStyle,
                     decoration: kgetDecoration('Password').copyWith(
                       icon: Icon(
-                        CupertinoIcons.padlock_solid,
+                        Icons.lock,
                         color: Colors.white,
                       ),
+                      suffix: GestureDetector(
+                        child: _showPassword
+                            ? Icon(
+                                Icons.visibility,
+                                color: Colors.white,
+                              )
+                            : Icon(
+                                Icons.visibility_off,
+                                color: Colors.white,
+                              ),
+                        onTap: () {
+                          setState(() {
+                            _showPassword = !_showPassword;
+                          });
+                        },
+                      ),
                     ),
-                    obscureText: true,
+                    obscureText: _showPassword ? false : true,
                     controller: _passwordController,
                     validator: (value) {
                       if (value.isEmpty || value.length < 5) {

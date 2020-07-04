@@ -1,6 +1,4 @@
 import 'package:contacts_service/contacts_service.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
-import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -75,25 +73,8 @@ class _ContactScreenState extends State<ContactScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    // String loopName = ModalRoute.of(context).settings.arguments as String;
-    // final contacts = Provider.of<UserDataProvider>(context).contacts;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: SearchBar(
-        onItemFound: (item, index) {},
-        onSearch: (text) {},
-        //minimumChars: 5,
-        loader: Center(
-          child: Text("loading..."),
-        ),
-        //debounceDuration: Duration(milliseconds: 800),
-        icon: Icon(Icons.contacts),
-        searchBarStyle: SearchBarStyle(
-          backgroundColor: Theme.of(context).primaryColor,
-          padding: EdgeInsets.all(10),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        placeHolder: _contacts != null
+    return Container(
+        child: _contacts != null
             ? ListView.builder(
                 itemBuilder: (context, index) {
                   Contact c = _contacts?.elementAt(index);
@@ -110,24 +91,17 @@ class _ContactScreenState extends State<ContactScreen>
                           .toList()
                     ]),
                     // title: Text(contacts[index].displayName),
-                    // subtitle: Text(contacts[index].familyName),
-                    onTap: () {
-                      // Navigator.of(context).pushNamed(
-                      //     NewLoopChatScreen.routeName,
-                      //     arguments: [contacts[index], ]);
-                    },
+                    // subtitle: Text(contacts[index].familyName)
                   );
                 },
                 itemCount: _contacts?.length ?? 0,
               )
             : Center(
                 child: CircularProgressIndicator(),
-              ),
-      ),
-    );
+              ));
   }
 
-// if the user presses this to update its contacts list
+// TODO: Add a refresh button here!!
   void contactOnDeviceHasBeenUpdated(Contact contact) {
     this.setState(() {
       var id = _contacts.indexWhere((c) => c.identifier == contact.identifier);

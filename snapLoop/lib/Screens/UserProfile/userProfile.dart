@@ -1,10 +1,8 @@
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
-import 'package:SnapLoop/Screens/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/models/persistent-nav-bar-scaffold.widget.dart';
 import 'package:provider/provider.dart';
 
 ///author: @sanchitmonga22

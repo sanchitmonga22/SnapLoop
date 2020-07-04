@@ -1,8 +1,7 @@
 import 'package:SnapLoop/Model/user.dart';
 
-/**
- * author: @sanchitmonga22
- */
+/// author: @sanchitmonga22
+
 final user = User(
     userID: "1",
     displayName: "Monga",

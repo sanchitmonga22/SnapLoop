@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-/**
- * author: @sanchitmonga22
- */
+/// author: @sanchitmonga22
+
 class Chat {
   final String chatID;
   final List<ChatInfo> chat;

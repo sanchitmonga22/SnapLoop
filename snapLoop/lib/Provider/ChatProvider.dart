@@ -1,9 +1,8 @@
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:flutter/widgets.dart';
 
-/**
- * author: @sanchitmonga22
- */
+/// author: @sanchitmonga22
+
 class ChatProvider with ChangeNotifier {
   // This list will be sorted in the cloud according to the time
   // the message was sent and then stored in the cloud according to that

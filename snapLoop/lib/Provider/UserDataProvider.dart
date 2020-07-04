@@ -2,9 +2,8 @@ import 'package:SnapLoop/Model/user.dart';
 import 'package:flutter/widgets.dart';
 import '../Helper/users.dart' as dummyUsers;
 
-/**
- * author: @sanchitmonga22
- */
+/// author: @sanchitmonga22
+
 class UserDataProvider with ChangeNotifier {
   User _user = dummyUsers.user;
 

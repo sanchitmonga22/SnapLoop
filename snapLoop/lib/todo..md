@@ -10,7 +10,7 @@ TO BE FIXED:
 AUTH Screen:
 
 -   Change the background
--   Password hide, show button
+-   ~~Password hide, show button~~
 -   password strength indicator
 -   valid and unique username check
 -   valid phone number check

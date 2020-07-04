@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-/**
- * author: @sanchitmonga22
- */
+/// author: @sanchitmonga22
+
 class MessageBubble extends StatelessWidget {
   final String message;
   final bool isMe;
@@ -50,7 +49,10 @@ class MessageBubble extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: isMe
                               ? Colors.black
-                              : Theme.of(context).accentTextTheme.title.color),
+                              : Theme.of(context)
+                                  .accentTextTheme
+                                  .headline6
+                                  .color),
                       textAlign: isMe ? TextAlign.end : TextAlign.start,
                     ),
                     Text(
@@ -58,7 +60,10 @@ class MessageBubble extends StatelessWidget {
                       style: TextStyle(
                           color: isMe
                               ? Colors.black
-                              : Theme.of(context).accentTextTheme.title.color),
+                              : Theme.of(context)
+                                  .accentTextTheme
+                                  .headline6
+                                  .color),
                     ),
                   ],
                 )),

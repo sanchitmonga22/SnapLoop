@@ -9,7 +9,6 @@ import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 import 'package:SnapLoop/Screens/FloatingActionButton.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
-import 'package:SnapLoop/test.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './Screens/Home/homeScreen.dart';

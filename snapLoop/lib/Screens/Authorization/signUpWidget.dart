@@ -63,7 +63,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   enabled: widget._authMode == AuthMode.Signup,
                   decoration: kgetDecoration('Confirm Password').copyWith(
                     icon: Icon(
-                      CupertinoIcons.padlock_solid,
+                      Icons.lock,
                       color: Colors.white,
                     ),
                   ),

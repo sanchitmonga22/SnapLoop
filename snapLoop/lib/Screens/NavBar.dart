@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:ui';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 import 'package:SnapLoop/Screens/Home/homeScreen.dart';

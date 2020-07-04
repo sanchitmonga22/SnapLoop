@@ -1,9 +1,8 @@
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
 
-/**
- * author: @sanchitmonga22
- */
+/// author: @sanchitmonga22
+
 // This will be sorted according to the time of the creation
 final chat = Chat(chatID: "chat", chat: [
   ChatInfo(senderDisplayName: null, content: null, time: null, senderID: null),
