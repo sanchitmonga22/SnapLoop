@@ -5,7 +5,6 @@ import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:SnapLoop/Screens/Chat/ExistingLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
-import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
 import 'package:SnapLoop/Screens/Contacts/friendsScreen.dart';
 import 'package:SnapLoop/Screens/FloatingActionButton.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
@@ -61,7 +60,7 @@ class SnapLoop extends StatelessWidget {
               // darkTheme: ThemeData(
               //   brightness: Brightness.dark,
               // ),
-              home: AuthScreen(),
+              home: NavBar(),
               // home: authData.isAuth
               //     ? HomeScreen()
               //     : FutureBuilder(
@@ -80,7 +79,6 @@ class SnapLoop extends StatelessWidget {
                 NavBar.routeName: (context) => NavBar(),
                 AuthScreen.routeName: (context) => AuthScreen(),
                 HomeScreen.routeName: (context) => HomeScreen(),
-                ContactScreen.routeName: (context) => ContactScreen(),
                 NewLoopChatScreen.routeName: (context) => NewLoopChatScreen(),
                 UserProfile.routeName: (context) => UserProfile()
               });
