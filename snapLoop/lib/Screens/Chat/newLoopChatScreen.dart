@@ -1,5 +1,4 @@
 import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Screens/Chat/messages.dart';
 import 'package:SnapLoop/Screens/Chat/newMessages.dart';
 import 'package:flutter/material.dart';
 

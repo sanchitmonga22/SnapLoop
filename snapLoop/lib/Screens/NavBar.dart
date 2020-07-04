@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:SnapLoop/Screens/Contacts/ContactsScreen.dart';
+import 'package:SnapLoop/Screens/Contacts/friendsScreen.dart';
 import 'package:SnapLoop/Screens/Home/homeScreen.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:SnapLoop/Screens/constants.dart';
@@ -49,7 +50,7 @@ class _NavBarState extends State<NavBar>
       HomeScreen(
         completedLoopsScreen: true,
       ),
-      ContactScreen(),
+      FriendsScreen(),
       UserProfile()
     ];
   }
