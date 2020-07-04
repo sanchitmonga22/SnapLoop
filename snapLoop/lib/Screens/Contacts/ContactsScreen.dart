@@ -98,7 +98,12 @@ class _ContactScreenState extends State<ContactScreen>
                 itemBuilder: (context, index) {
                   Contact c = _contacts?.elementAt(index);
                   return ListTile(
-                    title: Text(c.displayName ?? ""),
+                    leading: Text(c.displayName ?? ""),
+                    title: Row(children: [
+                      ...c.emails
+                          .map((e) => Text("${e.value.toString()} "))
+                          .toList()
+                    ]),
                     subtitle: Row(children: [
                       ...c.phones
                           .map((e) => Text("${e.value.toString()} "))

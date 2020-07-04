@@ -52,18 +52,6 @@ class _LoopWidgetState extends State<LoopWidget>
       padding: EdgeInsets.all(kAllLoopsPadding),
       decoration: BoxDecoration(shape: BoxShape.circle),
       child: Hero(
-        // to avoid pixel overflow
-        flightShuttleBuilder: (
-          BuildContext flightContext,
-          Animation<double> animation,
-          HeroFlightDirection flightDirection,
-          BuildContext fromHeroContext,
-          BuildContext toHeroContext,
-        ) {
-          return SingleChildScrollView(
-            child: fromHeroContext.widget,
-          );
-        },
         tag: widget.loopName,
         child: CircleAvatar(
             //backgroundColor: kLoopContentBackgroundColor,
