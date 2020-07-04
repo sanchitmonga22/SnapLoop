@@ -61,7 +61,7 @@ class SnapLoop extends StatelessWidget {
               // darkTheme: ThemeData(
               //   brightness: Brightness.dark,
               // ),
-              home: NavBar(),
+              home: AuthScreen(),
               // home: authData.isAuth
               //     ? HomeScreen()
               //     : FutureBuilder(

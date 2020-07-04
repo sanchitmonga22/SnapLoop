@@ -34,7 +34,6 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
 
   @override
   Widget build(BuildContext context) {
-    print(widget.radius);
     super.build(context);
     return SafeArea(
       child: Scaffold(

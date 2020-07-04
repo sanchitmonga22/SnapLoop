@@ -71,7 +71,7 @@ class _AuthCardState extends State<AuthCard>
     });
 
     Timer(Duration(seconds: 2), () {
-      Navigator.of(context).pushNamed(NavBar.routeName);
+      Navigator.of(context).pushReplacementNamed(NavBar.routeName);
     });
 
     // if (!_formKey.currentState.validate()) {
@@ -146,7 +146,7 @@ class _AuthCardState extends State<AuthCard>
       padding: EdgeInsets.zero,
       child: Card(
         elevation: 2,
-        color: Colors.deepPurpleAccent.withOpacity(0.4),
+        color: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),

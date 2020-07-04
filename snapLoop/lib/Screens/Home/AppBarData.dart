@@ -38,18 +38,15 @@ class AppBarData extends StatelessWidget {
             repeatForever: false,
           ),
         ),
-        GestureDetector(
-          onTap: () {},
-          child: Container(
-            foregroundDecoration: BoxDecoration(
-                border: Border.all(style: BorderStyle.solid),
-                borderRadius: BorderRadius.circular(10)),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                userDataProvider.displayName,
-                style: kTextStyleHomeScreen,
-              ),
+        Container(
+          foregroundDecoration: BoxDecoration(
+              border: Border.all(style: BorderStyle.solid),
+              borderRadius: BorderRadius.circular(10)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              userDataProvider.displayName,
+              style: kTextStyleHomeScreen,
             ),
           ),
         ),
