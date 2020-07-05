@@ -23,7 +23,7 @@ final loops = [
       id: "1",
       chatID: "1",
       creatorId: "1",
-      name: "Fuck Trump",
+      name: "Trump",
       numberOfMembers: 5,
       type: LoopType.NEW_LOOP,
       userIDs: ["1", "2", "3", "4", "5"]),

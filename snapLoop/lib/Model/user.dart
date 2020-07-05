@@ -1,5 +1,6 @@
 import 'dart:ui';
-import 'package:flutter/foundation.dart';
+
+import 'package:flutter/material.dart';
 
 /// author: @sanchitmonga22
 
@@ -36,7 +37,9 @@ class FriendsData {
   final int score;
   final String status;
   final List<String> commonLoops;
+  final List<String> mutualFriendsIDs;
   final Image avatar;
+  final String phone;
 
   FriendsData(
       {@required this.username,
@@ -46,7 +49,9 @@ class FriendsData {
       @required this.userID,
       @required this.score,
       @required this.status,
-      @required this.commonLoops});
+      @required this.commonLoops,
+      this.phone,
+      @required this.mutualFriendsIDs});
 }
 
 class PublicUserData {

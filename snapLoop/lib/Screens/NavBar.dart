@@ -39,7 +39,11 @@ class _NavBarState extends State<NavBar>
         curve: Curves.easeInOut, parent: _floatingBubbleAnimationController);
     _floatingBubbleAnimation =
         Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
-    _tabController = TabController(vsync: this, length: 4);
+    _tabController = TabController(
+      vsync: this,
+      length: 4,
+      initialIndex: 0,
+    );
   }
 
   List<Widget> getChildren() {
@@ -94,8 +98,6 @@ class _NavBarState extends State<NavBar>
 
   @override
   Widget build(BuildContext context) {
-    if (_tabController.index > 1) {}
-
     super.build(context);
     return SafeArea(
         child: Scaffold(

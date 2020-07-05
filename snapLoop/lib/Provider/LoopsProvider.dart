@@ -30,6 +30,18 @@ class LoopsProvider with ChangeNotifier {
     return _loops.firstWhere((loop) => loop.name == name);
   }
 
+  List<Loop> getLoopInforById(List<String> id) {
+    List<Loop> friendsLoops = [];
+    id.forEach((e) {
+      _loops.forEach((element) {
+        if (e == element.id) {
+          friendsLoops.add(element);
+        }
+      });
+    });
+    return friendsLoops;
+  }
+
   // if there is already a loop with the same name in the database
   bool loopExistsWithName(String name) {
     bool exists = false;

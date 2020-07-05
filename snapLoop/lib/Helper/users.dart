@@ -19,7 +19,8 @@ final friends = [
       email: "aahishbali@gmail.com",
       score: 563,
       username: "Aahish",
-      commonLoops: ["1", "2", "3", "4", "5"]),
+      commonLoops: ["1", "2", "3", "4", "5"],
+      mutualFriendsIDs: ['4', '5']),
   FriendsData(
       displayName: "Gotti",
       status: "Online",
@@ -27,7 +28,8 @@ final friends = [
       email: "gottii@gmail.com",
       score: 753,
       username: "Gnandeep",
-      commonLoops: ["1", "2", "3", "4", "5"]),
+      commonLoops: ["1", "2", "3", "4", "5"],
+      mutualFriendsIDs: ["2", "5"]),
   FriendsData(
       status: "Online",
       userID: "4",
@@ -35,7 +37,8 @@ final friends = [
       email: "anushm@gmail.com",
       score: 143,
       username: "Anush",
-      commonLoops: ["1", "2", "3", "4", "5"]),
+      commonLoops: [],
+      mutualFriendsIDs: ['2', '3']),
   FriendsData(
       status: "Busy",
       userID: "5",
@@ -43,7 +46,8 @@ final friends = [
       email: "aprekki@gmail.com",
       score: 53,
       username: "Aditya",
-      commonLoops: ["1", "2", "3", "4", "5"]),
+      commonLoops: ["1", "2", "3", "4", "5"],
+      mutualFriendsIDs: []),
 ];
 
 // final users = [
