@@ -47,6 +47,29 @@ dependencies:
     permission_handler: ^5.0.1+1
     pull_to_refresh: ^1.6.0
     flutter_slidable: ^0.5.4
+    google_fonts: ^1.1.0
+    flutter_launcher_icons: ^0.7.5
+    rxdart: ^0.24.1
+    cached_network_image: ^2.2.0+1
+    share: ^0.6.4+3
+    flutter_cache_manager: ^1.4.1
+    flutter_blurhash: ^0.5.0
+    shimmer: ^1.1.1
+    simple_animations: ^2.2.1
+    wakelock: ^0.1.4+2
+    flutter_typeahead: ^1.8.5
+    logger: ^0.9.1
+    badges: ^1.1.1
+    animations: ^1.1.1
+    progress_dialog: ^1.2.4
+    intro_slider: ^2.3.1
+    introduction_screen: ^1.0.9
+    flutter_image_compress: ^0.7.0
+    sticky_headers: ^0.1.8+1
+    flutter_keyboard_visibility: ^3.2.1
+    email_validator: ^1.0.4
+    flutter_form_builder: ^3.11.3 # might replace it with the existing auth form
+    mask_text_input_formatter: ^1.0.7
 
     # The following adds the Cupertino Icons font to your application.
     # Use with the CupertinoIcons class for iOS style icons.

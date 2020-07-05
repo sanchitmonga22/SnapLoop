@@ -61,17 +61,18 @@ class _LoopWidgetState extends State<LoopWidget>
             //NOTE: FlipCard() changed, Line 174 and 195 modified to include the open till pressed functionality
             // Added a VoidCallBack function onTapNavigator to detect the tap, onTapNavigator
             //       var before = DateTime.now();
-            // return GestureDetector(
+            //       return GestureDetector(
             //   onTapDown: (event) {
-            //     if (DateTime.now().difference(before).inMilliseconds > 150)
-            //       isFront ? toggleCard() : null;
+            //     before = DateTime.now();
+            //     isFront ? toggleCard() : null;
             //   },
             //   onTapUp: (event) {
-            //     isFront ? null : toggleCard();
-            //   },
-            //   onTap: () {
-            //     if (DateTime.now().difference(before).inMilliseconds < 150) {
+            //     var diff = DateTime.now().difference(before).inMilliseconds;
+            //     print(diff);
+            //     if (diff < 100) {
             //       widget.onTapNavigator();
+            //     } else {
+            //       isFront ? null : toggleCard();
             //     }
             //   },
             //   onTapCancel: () {
