@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Home/Bitmojis/bitmoji.dart';
 import 'package:flutter/material.dart';
-import '../../constants.dart';
+import '../../../constants.dart';
 
 ///author: @sanchitmonga22
 class MemojiGenerator extends StatefulWidget {

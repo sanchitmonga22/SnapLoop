@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:SnapLoop/Screens/Contacts/ContactsDialog.dart';
 import 'package:SnapLoop/Screens/Contacts/FriendRequestDialog.dart';
-import 'package:SnapLoop/Screens/constants.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';

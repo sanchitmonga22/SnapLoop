@@ -3,7 +3,7 @@ import 'package:SnapLoop/Screens/Contacts/ContactsDialog.dart';
 import 'package:SnapLoop/Screens/Contacts/FriendsScreen.dart';
 import 'package:SnapLoop/Screens/Home/homeScreen.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
-import 'package:SnapLoop/Screens/constants.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/models/persisten-bottom-nav-item.widget.dart';
 import 'package:persistent_bottom_nav_bar/models/persistent-bottom-nav-bar-styles.widget.dart';
@@ -11,7 +11,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import 'Home/AppBarData.dart';
-import 'FloatingActionButton.dart';
+import '../Widget/FloatingActionButton.dart';
 
 /// author:@sanchitmonga22
 class NavBar extends StatefulWidget {

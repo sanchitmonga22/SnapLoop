@@ -1,7 +1,7 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Chat/ExistingLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Home/LoopWidget/MemojiGenerator.dart';
-import 'package:SnapLoop/Screens/constants.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';

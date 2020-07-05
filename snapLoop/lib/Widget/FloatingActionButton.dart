@@ -1,10 +1,10 @@
-import 'package:SnapLoop/Screens/createLoopDialog.dart';
+import 'package:SnapLoop/Widget/createLoopDialog.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
-import 'constants.dart';
+import '../constants.dart';
 
 class FloatingActionButtonData extends StatefulWidget {
   const FloatingActionButtonData({

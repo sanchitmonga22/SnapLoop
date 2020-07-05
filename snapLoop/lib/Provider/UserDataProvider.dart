@@ -8,9 +8,9 @@ class UserDataProvider with ChangeNotifier {
   User _user = dummyUsers.user;
 
   // getting information about the friends
-  List<User> get friends {
-    List<User> friends = [];
-    dummyUsers.users.forEach((user) {
+  List<FriendsData> get friends {
+    List<FriendsData> friends = [];
+    dummyUsers.friends.forEach((user) {
       if (_user.friendsIds.contains(user.userID)) {
         friends.add(user);
       }
@@ -30,23 +30,20 @@ class UserDataProvider with ChangeNotifier {
     return _user.displayName;
   }
 
-  List<User> get contacts {
-    List<User> friends = [];
-    dummyUsers.users.forEach((user) {
-      if (_user.friendsIds.contains(user.userID)) {
-        friends.add(user);
-      }
-    });
-    return friends;
-  }
+// will use the PublicUserData
+
+  // List<User> get contacts {
+  //   List<User> friends = [];
+  //   dummyUsers.users.forEach((user) {
+  //     if (_user.friendsIds.contains(user.userID)) {
+  //       friends.add(user);
+  //     }
+  //   });
+  //   return friends;
+  // }
 
   User get user {
     return _user;
-  }
-
-  // for dummy users only, actual users will be stored on the database
-  void createUser(User user) {
-    dummyUsers.users.add(user);
   }
 
   //AFTER APIs

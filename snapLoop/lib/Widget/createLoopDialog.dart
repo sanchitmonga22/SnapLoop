@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 
 import 'package:SnapLoop/Widget/AnimatingFlatButton.dart';
-import 'package:SnapLoop/Screens/constants.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

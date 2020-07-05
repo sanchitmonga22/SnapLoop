@@ -1,4 +1,4 @@
-import 'package:SnapLoop/Screens/constants.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
