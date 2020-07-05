@@ -76,38 +76,25 @@ class _ContactsDialogState extends State<ContactsDialog>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return SafeArea(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: ksigmaX, sigmaY: ksigmaY),
-        child: AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          backgroundColor: Colors.black45,
-          content: Container(
-              height: MediaQuery.of(context).size.height * .65,
-              width: MediaQuery.of(context).size.width,
-              child: _contacts != null
-                  ? ListView.builder(
-                      itemBuilder: (context, index) {
-                        return ContactWidget(
-                          c: _contacts?.elementAt(index),
-                          key: ValueKey(index),
-                          isLoading: activeIndex == index,
-                          onPressed: () {
-                            setState(() {
-                              activeIndex = index;
-                            });
-                          },
-                        );
-                      },
-                      itemCount: _contacts?.length ?? 0,
-                    )
-                  : Center(
-                      child: CircularProgressIndicator(),
-                    )),
-        ),
-      ),
-    );
+    return _contacts != null
+        ? ListView.builder(
+            itemBuilder: (context, index) {
+              return ContactWidget(
+                c: _contacts?.elementAt(index),
+                key: ValueKey(index),
+                isLoading: activeIndex == index,
+                onPressed: () {
+                  setState(() {
+                    activeIndex = index;
+                  });
+                },
+              );
+            },
+            itemCount: _contacts?.length ?? 0,
+          )
+        : Center(
+            child: CircularProgressIndicator(),
+          );
   }
 
 // TODO: Add a refresh button here!!

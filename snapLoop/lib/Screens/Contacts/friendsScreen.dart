@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:SnapLoop/Screens/Contacts/ContactsDialog.dart';
 import 'package:SnapLoop/Screens/Contacts/FriendRequestDialog.dart';
 import 'package:SnapLoop/Screens/constants.dart';
@@ -13,6 +15,26 @@ class FriendsScreen extends StatefulWidget {
   _FriendsScreenState createState() => _FriendsScreenState();
 }
 
+void createADialog(BuildContext context, bool requests) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return SafeArea(
+          child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: ksigmaX, sigmaY: ksigmaY),
+              child: AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  backgroundColor: Colors.black45,
+                  content: Container(
+                    height: MediaQuery.of(context).size.height * .65,
+                    width: MediaQuery.of(context).size.width,
+                    child: requests ? FriendRequestsDialog() : ContactsDialog(),
+                  ))));
+    },
+  );
+}
+
 class _FriendsScreenState extends State<FriendsScreen> {
   SearchBarController _controller = SearchBarController();
   @override
@@ -26,12 +48,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
               alignment: Alignment(1.05, -0.95),
               child: GestureDetector(
                 onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return FriendRequestsDialog();
-                    },
-                  );
+                  createADialog(context, true);
                 },
                 child: CircleAvatar(
                   backgroundColor: Colors.black,
@@ -64,12 +81,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
               child: SearchBar(
                 suffix: GestureDetector(
                   onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return ContactsDialog();
-                      },
-                    );
+                    createADialog(context, false);
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
