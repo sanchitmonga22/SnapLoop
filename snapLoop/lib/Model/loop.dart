@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 
 /// author: @sanchitmonga22
@@ -18,6 +20,8 @@ class Loop {
   final LoopType type;
   final List<String> userIDs; // will store the userIDs for all the loops
   final String chatID;
+  final Map<String, Image>
+      avatars; // user id with their randomly generated avatar which is stored in the server
 
   Loop(
       {@required this.id,
@@ -26,5 +30,6 @@ class Loop {
       @required this.name,
       @required this.numberOfMembers,
       @required this.type,
+      this.avatars,
       @required this.userIDs});
 }
