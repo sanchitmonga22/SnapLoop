@@ -8,7 +8,6 @@ import 'package:SnapLoop/Screens/Contacts/ContactDetails/ContactsDetailsWidget.d
 import 'package:SnapLoop/Screens/Contacts/ContactsDialog.dart';
 import 'package:SnapLoop/Screens/Contacts/FriendRequestDialog.dart';
 import 'package:SnapLoop/constants.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/cupertino.dart';
@@ -78,7 +77,10 @@ class _FriendsScreenState extends State<FriendsScreen> {
                         child: CircleAvatar(
                           radius: 11,
                           // add the number of current requests received
-                          child: Text("15"),
+                          child: Text(Provider.of<UserDataProvider>(context)
+                              .requests
+                              .length
+                              .toString()),
                         ),
                       )
                     ],

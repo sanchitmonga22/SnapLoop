@@ -11,7 +11,7 @@ final user = User(
     friendsIds: ["2", "3", "5", "4"],
     loopIDs: ["1", "2", "3", "4", "5"]);
 
-final friends = [
+var friends = [
   FriendsData(
       displayName: "Baali",
       status: "Busy",
@@ -48,6 +48,20 @@ final friends = [
       username: "Aditya",
       commonLoops: ["1", "2", "3", "4", "5"],
       mutualFriendsIDs: []),
+];
+
+var requests = [
+  PublicUserData(username: "Saksham", email: "sm4343@gmail.com", userID: "6"),
+  PublicUserData(username: "Bhuvish", email: "bm3232@gmail.com", userID: "7"),
+  PublicUserData(username: "Dhruv", email: "dr3232@gmail.com", userID: "8")
+];
+
+var users = [
+  PublicUserData(username: "Saksham", email: "sm4343@gmail.com", userID: "6"),
+  PublicUserData(username: "Bhuvish", email: "bm3232@gmail.com", userID: "7"),
+  PublicUserData(username: "Dhruv", email: "dr3232@gmail.com", userID: "8"),
+  PublicUserData(username: "Aman", email: "ag5454@gmail.com", userID: "9"),
+  PublicUserData(username: "Varnit", email: "vt4454@gmail.com", userID: "10")
 ];
 
 // final users = [

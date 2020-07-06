@@ -1,10 +1,11 @@
-import 'dart:ui';
-
+import 'package:SnapLoop/Model/user.dart';
+import 'package:SnapLoop/Provider/UserDataProvider.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
-
+import 'package:provider/provider.dart';
 import '../../constants.dart';
 
 /// author: @sanchitmonga22
@@ -19,7 +20,8 @@ class ContactsDialog extends StatefulWidget {
 
 class _ContactsDialogState extends State<ContactsDialog>
     with AutomaticKeepAliveClientMixin<ContactsDialog> {
-  List<Contact> _contacts;
+  List<Contact> _contacts = [];
+  List<PublicUserData> users = [];
   int activeIndex;
 
   Future<void> refreshContacts() async {
@@ -75,12 +77,15 @@ class _ContactsDialogState extends State<ContactsDialog>
   bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
+    // both will be asynchronous calls
+    Provider.of<UserDataProvider>(context).syncContacts(_contacts);
+    users = Provider.of<UserDataProvider>(context).userContacts;
     super.build(context);
-    return _contacts != null
+    return users != null && users.length != 0
         ? ListView.builder(
             itemBuilder: (context, index) {
               return ContactWidget(
-                c: _contacts?.elementAt(index),
+                c: users?.elementAt(index),
                 key: ValueKey(index),
                 isLoading: activeIndex == index,
                 onPressed: () {
@@ -90,14 +95,23 @@ class _ContactsDialogState extends State<ContactsDialog>
                 },
               );
             },
-            itemCount: _contacts?.length ?? 0,
+            itemCount: users?.length ?? 0,
           )
         : Center(
-            child: CircularProgressIndicator(),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: 2),
+                  borderRadius: BorderRadius.circular(5)),
+              padding: EdgeInsets.all(10),
+              child: AutoSizeText(
+                "There are currently no users available to add from the contacts, Hit the refresh button or try back again later",
+                style: kTextFormFieldStyle.copyWith(color: kSystemPrimaryColor),
+              ),
+            ),
           );
   }
 
-// TODO: Add a refresh button here!!
+  // TODO: Add a refresh button here!!
   void contactOnDeviceHasBeenUpdated(Contact contact) {
     this.setState(() {
       var id = _contacts.indexWhere((c) => c.identifier == contact.identifier);
@@ -111,7 +125,7 @@ class ContactWidget extends StatelessWidget {
       : super(key: key);
 
   final onPressed;
-  final Contact c;
+  final PublicUserData c;
   final isLoading;
 
   @override
@@ -126,7 +140,7 @@ class ContactWidget extends StatelessWidget {
         ),
       ),
       title: Text(
-        c.displayName ?? "",
+        c.username ?? "",
         style: kTextFormFieldStyle,
       ),
       trailing: RaisedButton(

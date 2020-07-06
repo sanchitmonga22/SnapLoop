@@ -1,21 +1,24 @@
 import 'package:SnapLoop/Model/user.dart';
+import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/widgets.dart';
 import '../Helper/users.dart' as dummyUsers;
 
 /// author: @sanchitmonga22
 
 class UserDataProvider with ChangeNotifier {
+  List<Contact> _contacts = [];
+  List<PublicUserData> _requests = dummyUsers.requests;
+  List<PublicUserData> allUsers = dummyUsers.users;
+  List<FriendsData> _friends = dummyUsers.friends;
   User _user = dummyUsers.user;
 
   // getting information about the friends
   List<FriendsData> get friends {
-    List<FriendsData> friends = [];
-    dummyUsers.friends.forEach((user) {
-      if (_user.friendsIds.contains(user.userID)) {
-        friends.add(user);
-      }
-    });
-    return friends;
+    return _friends;
+  }
+
+  List<PublicUserData> get requests {
+    return _requests;
   }
 
   int get userScore {
@@ -28,6 +31,50 @@ class UserDataProvider with ChangeNotifier {
 
   String get displayName {
     return _user.displayName;
+  }
+
+  void syncContacts(List<Contact> contacts) {
+    if (contacts != null && contacts.length != 0) _contacts.addAll(contacts);
+  }
+
+  List<PublicUserData> get userContacts {
+    List<PublicUserData> userContacts = [];
+    if (_contacts == null || _contacts.isEmpty) return [];
+
+    _contacts.forEach((e) {
+      dummyUsers.users.forEach((element) {
+        if (e.emails.contains(element.email)) {
+          userContacts.add(element);
+        }
+      });
+    });
+    return userContacts;
+  }
+
+  void acceptRequest(String email) {
+    PublicUserData user;
+    allUsers.forEach((element) {
+      if (element.email == email) {
+        user = element;
+      }
+    });
+    _friends.add(FriendsData(
+      commonLoops: [],
+      displayName: user.username,
+      email: user.email,
+      mutualFriendsIDs: [],
+      score: 478,
+      userID: user.userID,
+      status: "Lol",
+      username: user.username,
+    ));
+    removeRequest(email);
+    notifyListeners();
+  }
+
+  void removeRequest(String email) {
+    _requests.removeWhere((element) => element.email == email);
+    notifyListeners();
   }
 
 // will use the PublicUserData

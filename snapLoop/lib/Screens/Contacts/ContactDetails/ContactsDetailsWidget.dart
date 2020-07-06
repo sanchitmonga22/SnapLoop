@@ -38,7 +38,7 @@ class ContactsDetailsWidget extends StatelessWidget {
       ),
       subtitle: AutoSizeText(
         friend.email,
-        style: kTextFormFieldStyle.copyWith(),
+        style: kTextFormFieldStyle.copyWith(color: kSystemPrimaryColor),
       ),
       children: [
         Container(
