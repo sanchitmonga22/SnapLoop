@@ -1,6 +1,6 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Chat/messages.dart';
-import 'package:SnapLoop/Screens/Chat/newMessages.dart';
+import 'package:SnapLoop/Screens/Chat/newMessage.dart';
 import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidget.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
@@ -53,50 +53,6 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
               ),
             ),
             preferredSize: Size.fromHeight(widget.radius * 3),
-            // appBar: PreferredSize(
-            //   preferredSize: Size(
-            //     MediaQuery.of(context).size.width * 0.25,
-            //     MediaQuery.of(context).size.width,
-            //   ),
-            //   child: Center(
-            //     child: Text("HELLO"),
-            //   ),
-            // child: Container(
-            //     decoration: BoxDecoration(color: Colors.black),
-            //     // width: (MediaQuery.of(context).size.width / 4) *
-            //     //             widget.numberOfMembers >
-            //     //         13
-            //     //     ? (kfixedRadiusFactor["MAX"] + 400)
-            //     //     : (kfixedRadiusFactor[widget.numberOfMembers]),
-            //     // height: (MediaQuery.of(context).size.width / 4) *
-            //     //             widget.numberOfMembers >
-            //     //         13
-            //     //     ? (kfixedRadiusFactor["MAX"] + 450)
-            //     //     : (kfixedRadiusFactor[widget.numberOfMembers]),
-
-            //     // margin: EdgeInsets.all(80),
-            //     child: Hero(
-            //       tag: widget.loopName,
-            //       child: SafeArea(
-            //         child: Container(
-            //           child: Center(
-            //             child: widget.memojiWidget,
-            //           ),
-            //         ),
-            //       ),
-            //     )),
-            //Expanded(child: Messages()),
-            //NewMessage(),
-            // AppBar(
-            //   centerTitle: true,
-            //   backgroundColor: Colors.black,
-            //   title: Container(
-            //     decoration: BoxDecoration(
-            //         shape: BoxShape.circle,
-            //         boxShadow: [BoxShadow(offset: Offset(1, 1))]),
-            //     child: CircleAvatar(),
-            //   ),
-            // ),
           ),
           body: Stack(
             children: [

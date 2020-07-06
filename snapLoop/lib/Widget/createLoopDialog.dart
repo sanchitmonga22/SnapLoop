@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
+import 'package:SnapLoop/Screens/Contacts/FriendsScreen.dart';
 
 import 'package:SnapLoop/Widget/AnimatingFlatButton.dart';
 import 'package:SnapLoop/constants.dart';
@@ -19,6 +20,8 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
   TextEditingController _controller = TextEditingController();
   bool startAnimation = false;
   bool isSubmitted = false;
+  final _formKey = GlobalKey<FormState>();
+  String loopName = "";
 
   // The form field to enter the loop name
   Widget getTextFormField(String loopName, BuildContext context) {
@@ -54,16 +57,21 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
           return "Empty field!";
         }
         // storing the name of the loop to pass it onto the next screen
-        loopName = value.trim();
-        return null;
+      },
+      onChanged: (value) {
+        loopName = value;
       },
     );
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    String loopName = "";
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: ksigmaX, sigmaY: ksigmaY),
       child: AlertDialog(
@@ -108,6 +116,7 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
                           : () {
                               if (_formKey.currentState.validate()) {
                                 _formKey.currentState.save();
+                                loopName = _controller.text;
                                 // to remove the focus
                                 FocusScope.of(context)
                                     .requestFocus(new FocusNode());
@@ -115,9 +124,10 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
                                   isSubmitted = true;
                                   startAnimation = !startAnimation;
                                 });
-                                // Navigator.of(context).pushNamed(
-                                //     ContactScreen.routeName,
-                                //     arguments: loopName);
+                                Navigator.of(context).pushReplacementNamed(
+                                  FriendsScreen.routeName,
+                                  arguments: loopName,
+                                );
                               }
                             },
                       child: Text(
