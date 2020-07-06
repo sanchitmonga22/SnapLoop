@@ -24,7 +24,7 @@ final loops = [
       chatID: "1",
       creatorId: "1",
       name: "Trump",
-      numberOfMembers: 5,
+      numberOfMembers: 40,
       type: LoopType.NEW_LOOP,
       userIDs: ["1", "2", "3", "4", "5"]),
   Loop(

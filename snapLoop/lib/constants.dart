@@ -114,7 +114,6 @@ const kfixedRadiusFactor = {
   10: 0.67,
   11: 0.70,
   12: 0.73,
-  13: 0.75,
   "MAX": 0.80
 };
 const kMaxMembersDisplayed = 23;

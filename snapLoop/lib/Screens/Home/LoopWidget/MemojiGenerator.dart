@@ -37,7 +37,7 @@ class _MemojiGeneratorState extends State<MemojiGenerator> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      if (widget.numberOfMembers <= 13)
+      if (widget.numberOfMembers < 13)
         ...kalignmentMap[widget.numberOfMembers].map((position) {
           return Memoji(
             loopType: widget.loopType,

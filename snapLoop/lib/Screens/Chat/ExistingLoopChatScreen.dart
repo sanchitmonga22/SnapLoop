@@ -1,9 +1,11 @@
 import 'package:SnapLoop/Model/loop.dart';
+import 'package:SnapLoop/Screens/Chat/LoopDetailsScreen.dart';
 import 'package:SnapLoop/Screens/Chat/messages.dart';
 import 'package:SnapLoop/Screens/Chat/newMessage.dart';
 import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidget.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 /// author: @sanchitmonga22
 
@@ -32,40 +34,34 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
   @override
   bool get wantKeepAlive => true;
 
+  Widget getChatWidget(Color backgroundColor) {
+    return Container(
+        decoration: BoxDecoration(color: backgroundColor.withOpacity(0.4)),
+        child: Stack(
+          children: [
+            Column(
+              children: [Messages(), NewMessage()],
+            )
+          ],
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
+    Color backgroundColor = determineLoopColor(widget.loopType);
+    LoopWidget loopWidget = LoopWidget(
+      isTappable: false,
+      loopName: widget.loopName,
+      numberOfMembers: widget.numberOfMembers,
+      radius: widget.radius,
+      type: widget.loopType,
+      flipOnTouch: false,
+    );
     super.build(context);
-    return SafeArea(
-      child: Scaffold(
-          appBar: PreferredSize(
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  LoopWidget(
-                    isTappable: false,
-                    loopName: widget.loopName,
-                    numberOfMembers: widget.numberOfMembers,
-                    radius: widget.radius,
-                    type: widget.loopType,
-                  ),
-                ],
-              ),
-            ),
-            preferredSize: Size.fromHeight(widget.radius * 3),
-          ),
-          body: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    color:
-                        determineLoopColor(widget.loopType).withOpacity(0.4)),
-              ),
-              Column(
-                children: [Messages(), NewMessage()],
-              ),
-            ],
-          )),
+    return LoopsDetailsScreen(
+      backgroundColor: backgroundColor,
+      chatWidget: getChatWidget(backgroundColor),
+      loopWidget: loopWidget,
     );
   }
 }

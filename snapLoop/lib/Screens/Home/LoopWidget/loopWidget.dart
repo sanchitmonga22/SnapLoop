@@ -15,7 +15,8 @@ class LoopWidget extends StatefulWidget {
   final String loopName;
   final int numberOfMembers;
   final LoopType type;
-  final isTappable;
+  final bool isTappable;
+  final bool flipOnTouch;
 
   const LoopWidget(
       {Key key,
@@ -23,7 +24,8 @@ class LoopWidget extends StatefulWidget {
       this.loopName,
       this.numberOfMembers,
       this.type,
-      this.isTappable})
+      this.isTappable,
+      this.flipOnTouch = true})
       : super(key: key);
 
   @override
@@ -84,6 +86,7 @@ class _LoopWidgetState extends State<LoopWidget>
             //   behavior: HitTestBehavior.translucent,
             // );
             child: FlipCard(
+              flipOnTouch: widget.flipOnTouch,
               onTapNavigator: () {
                 if (widget.isTappable)
                   Navigator.push(
@@ -101,23 +104,29 @@ class _LoopWidgetState extends State<LoopWidget>
               front: memojiWidget,
               back: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      CupertinoIcons.loop,
-                      color: Colors.black,
+                    Expanded(
+                      child: Icon(
+                        CupertinoIcons.loop,
+                        color: Colors.black,
+                      ),
                     ),
-                    AutoSizeText(
-                      "${widget.loopName}",
-                      maxLines: 1,
-                      style: kLoopDetailsTextStyle,
-                      overflow: TextOverflow.ellipsis,
+                    Expanded(
+                      child: AutoSizeText(
+                        "${widget.loopName}",
+                        maxLines: 1,
+                        style: kLoopDetailsTextStyle.copyWith(fontSize: 15),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                    AutoSizeText(
-                      "👥 ${widget.numberOfMembers}",
-                      maxLines: 1,
-                      style: kLoopDetailsTextStyle,
-                      textAlign: TextAlign.start,
+                    Expanded(
+                      child: AutoSizeText(
+                        "👥 ${widget.numberOfMembers}",
+                        maxLines: 1,
+                        style: kLoopDetailsTextStyle.copyWith(fontSize: 15),
+                        textAlign: TextAlign.start,
+                      ),
                     ),
                   ],
                 ),

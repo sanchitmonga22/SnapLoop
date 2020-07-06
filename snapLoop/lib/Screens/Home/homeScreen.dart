@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen>
   List<Loop> loops = [];
 
   double radiusCalculator(int numberOfMember, double maxRadius) {
-    if (numberOfMember <= 13) {
+    if (numberOfMember < 13) {
       return maxRadius * kfixedRadiusFactor[numberOfMember];
     }
     return maxRadius * kfixedRadiusFactor["MAX"];
@@ -65,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen>
             loopName: deleted[i].name,
             type: deleted[i].type,
             isTappable: true,
+            flipOnTouch: true,
           ));
           // TODO add the paddig information if possible
           currentWidth += (radiis[i] + kAllLoopsPadding) * 2;
