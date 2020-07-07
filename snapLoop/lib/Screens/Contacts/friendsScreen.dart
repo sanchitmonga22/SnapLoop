@@ -75,30 +75,34 @@ class _FriendsScreenState extends State<FriendsScreen>
                             onTap: () {
                               createADialog(context, true);
                             },
-                            child: CircleAvatar(
-                              backgroundColor: Colors.black,
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment(0, 0),
-                                    child: Icon(
-                                      Icons.person,
-                                      color: Colors.white,
+                            child: Container(
+                              padding: EdgeInsets.only(top: 10),
+                              child: CircleAvatar(
+                                backgroundColor: Colors.black,
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment(0, 0),
+                                      child: Icon(
+                                        Icons.person,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment(1, -1.5),
-                                    child: CircleAvatar(
-                                      radius: 11,
-                                      // add the number of current requests received
-                                      child: Text(
-                                          Provider.of<UserDataProvider>(context)
-                                              .requests
-                                              .length
-                                              .toString()),
-                                    ),
-                                  )
-                                ],
+                                    Align(
+                                      alignment: Alignment(1, -1.5),
+                                      child: CircleAvatar(
+                                        radius: 11,
+                                        // add the number of current requests received
+                                        child: Text(
+                                            Provider.of<UserDataProvider>(
+                                                    context)
+                                                .requests
+                                                .length
+                                                .toString()),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
