@@ -30,7 +30,7 @@ class _LoopsDetailsScreenState extends State<LoopsDetailsScreen> {
           } else if (Navigator.of(context).canPop()) {
             Navigator.of(context).pop();
           } else {
-            Navigator.of(context).pushNamed(NavBar.routeName);
+            Navigator.of(context).pushReplacementNamed(NavBar.routeName);
           }
         },
         child: SafeArea(
@@ -65,7 +65,7 @@ class _LoopsDetailsScreenState extends State<LoopsDetailsScreen> {
                                   if (Navigator.of(context).canPop())
                                     Navigator.of(context).pop();
                                   else
-                                    Navigator.pushNamed(
+                                    Navigator.pushReplacementNamed(
                                         context, NavBar.routeName);
                                 }
                               },
