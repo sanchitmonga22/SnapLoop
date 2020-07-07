@@ -40,7 +40,7 @@ final loops = [
       chatID: "3",
       creatorId: "3",
       name: "RIT students",
-      numberOfMembers: 5,
+      numberOfMembers: 8,
       type: LoopType.INACTIVE_LOOP_SUCCESSFUL,
       userIDs: ["1", "2", "3", "4", "5"]),
   Loop(

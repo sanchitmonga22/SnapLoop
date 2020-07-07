@@ -166,6 +166,7 @@ class _FriendsScreenState extends State<FriendsScreen>
                     friends: friends,
                     friendsLoops: friendsLoops,
                     newLoop: newLoop,
+                    key: ValueKey(index),
                   );
                 },
               ),

@@ -29,7 +29,6 @@ class _FriendRequestsDialogState extends State<FriendRequestsDialog> {
               caption: 'Accept',
               color: Colors.green,
               icon: Icons.add,
-              onTap: () {},
             ),
           ],
           secondaryActions: <Widget>[
@@ -37,7 +36,6 @@ class _FriendRequestsDialogState extends State<FriendRequestsDialog> {
               caption: 'Delete',
               color: Colors.red,
               icon: Icons.delete,
-              onTap: () {},
             ),
           ],
           dismissal: SlidableDismissal(
@@ -57,25 +55,23 @@ class _FriendRequestsDialogState extends State<FriendRequestsDialog> {
               }
             },
           ),
-          child: Container(
-            child: ListTile(
-              subtitle: Text(
-                requests[index].email,
-                style: kTextFormFieldStyle.copyWith(
-                    color: Colors.white70, fontSize: 10),
+          child: ListTile(
+            subtitle: Text(
+              requests[index].email,
+              style: kTextFormFieldStyle.copyWith(
+                  color: Colors.white70, fontSize: 10),
+            ),
+            leading: CircleAvatar(
+              radius: 20,
+              child: Icon(
+                Icons.person,
+                color: Colors.white,
+                size: 20,
               ),
-              leading: CircleAvatar(
-                radius: 20,
-                child: Icon(
-                  Icons.person,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
-              title: Text(
-                requests[index].username,
-                style: kTextFormFieldStyle.copyWith(fontSize: 15),
-              ),
+            ),
+            title: Text(
+              requests[index].username,
+              style: kTextFormFieldStyle.copyWith(fontSize: 15),
             ),
           ),
         );

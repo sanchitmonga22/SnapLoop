@@ -110,15 +110,16 @@ class _LoopWidgetState extends State<LoopWidget>
                       child: Icon(
                         CupertinoIcons.loop,
                         color: Colors.black,
+                        size: widget.numberOfMembers > 12
+                            ? kfixedRadiusFactor["MAX"] * 70
+                            : kfixedRadiusFactor[widget.numberOfMembers] * 70,
                       ),
                     ),
-                    Expanded(
-                      child: AutoSizeText(
-                        "${widget.loopName}",
-                        maxLines: 1,
-                        style: kLoopDetailsTextStyle.copyWith(fontSize: 15),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                    AutoSizeText(
+                      "${widget.loopName}",
+                      maxLines: 1,
+                      style: kLoopDetailsTextStyle.copyWith(fontSize: 15),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Expanded(
                       child: AutoSizeText(

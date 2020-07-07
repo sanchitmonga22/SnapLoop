@@ -1,5 +1,7 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
+import 'package:SnapLoop/Screens/Chat/ExistingLoopChatScreen.dart';
+import 'package:SnapLoop/Widget/createLoopDialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,15 @@ class CommonsLoopsTile extends StatelessWidget {
 
   final List<Loop> friendsLoops;
   final FriendsData friend;
+  double getRadius(int numberOfMembers, BuildContext context) {
+    double radius = 0.0;
+    radius = MediaQuery.of(context).size.width *
+        0.25 *
+        (numberOfMembers > 12
+            ? kfixedRadiusFactor["MAX"]
+            : kfixedRadiusFactor[numberOfMembers]);
+    return radius;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +52,17 @@ class CommonsLoopsTile extends StatelessWidget {
                         fontWeight: FontWeight.w100),
                   ),
                   trailing: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) {
+                          return CreateALoopDialog(
+                            friend: friend,
+                          );
+                        },
+                      );
+                    },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -64,6 +86,22 @@ class CommonsLoopsTile extends StatelessWidget {
                         color: determineLoopColor(friendsLoops[index].type)
                             .withOpacity(0.7)),
                     child: ListTile(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => ExistingLoopChatScreen(
+                                        key: ValueKey(index),
+                                        loopID: "",
+                                        loopName: friendsLoops[index].name,
+                                        loopType: friendsLoops[index].type,
+                                        numberOfMembers:
+                                            friendsLoops[index].numberOfMembers,
+                                        radius: getRadius(
+                                            friendsLoops[index].numberOfMembers,
+                                            context),
+                                      )));
+                        },
                         dense: true,
                         title: Text(friendsLoops[index].name,
                             style: kTextFormFieldStyle)),

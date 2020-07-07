@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
+import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Contacts/FriendsScreen.dart';
 
 import 'package:SnapLoop/Widget/AnimatingFlatButton.dart';
@@ -12,6 +14,9 @@ import 'package:provider/provider.dart';
 /// author: @sanchitmonga22
 
 class CreateALoopDialog extends StatefulWidget {
+  final FriendsData friend;
+
+  const CreateALoopDialog({Key key, this.friend}) : super(key: key);
   @override
   _CreateALoopDialogState createState() => _CreateALoopDialogState();
 }
@@ -124,10 +129,19 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
                                   isSubmitted = true;
                                   startAnimation = !startAnimation;
                                 });
-                                Navigator.of(context).pushReplacementNamed(
-                                  FriendsScreen.routeName,
-                                  arguments: loopName,
-                                );
+                                if (widget.friend == null) {
+                                  Navigator.of(context).pushReplacementNamed(
+                                    FriendsScreen.routeName,
+                                    arguments: loopName,
+                                  );
+                                } else {
+                                  Navigator.of(context).pushReplacementNamed(
+                                      NewLoopChatScreen.routeName,
+                                      arguments: {
+                                        "friend": widget.friend,
+                                        "loopName": loopName
+                                      });
+                                }
                               }
                             },
                       child: Text(

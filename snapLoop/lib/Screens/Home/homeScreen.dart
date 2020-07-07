@@ -13,7 +13,8 @@ class HomeScreen extends StatefulWidget {
   static const routeName = '/homeScreen';
   final bool completedLoopsScreen;
 
-  const HomeScreen({Key key, this.completedLoopsScreen}) : super(key: key);
+  const HomeScreen({Key key, this.completedLoopsScreen = false})
+      : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -67,7 +68,6 @@ class _HomeScreenState extends State<HomeScreen>
             isTappable: true,
             flipOnTouch: true,
           ));
-          // TODO add the paddig information if possible
           currentWidth += (radiis[i] + kAllLoopsPadding) * 2;
           deleted.removeAt(i);
           radiis.removeAt(i);

@@ -1,7 +1,10 @@
 import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidget.dart';
+import 'package:SnapLoop/Screens/NavBar.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// author: @sanchitmonga22
 class LoopsDetailsScreen extends StatefulWidget {
   LoopsDetailsScreen(
       {Key key, this.loopWidget, this.backgroundColor, this.chatWidget})
@@ -24,56 +27,73 @@ class _LoopsDetailsScreenState extends State<LoopsDetailsScreen> {
             setState(() {
               details = false;
             });
-          } else {
+          } else if (Navigator.of(context).canPop()) {
             Navigator.of(context).pop();
+          } else {
+            Navigator.of(context).pushNamed(NavBar.routeName);
           }
         },
         child: SafeArea(
           child: Scaffold(
             body: Stack(children: [
               Container(
-                color: Colors.black.withOpacity(0.4),
+                color: Colors.black.withOpacity(0.7),
               ),
               Container(
                   alignment: Alignment.topCenter,
                   decoration: BoxDecoration(
                       color: widget.backgroundColor.withOpacity(0.4)),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: CupertinoButton(
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: CupertinoButton(
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                if (details) {
+                                  setState(() {
+                                    details = false;
+                                  });
+                                } else {
+                                  if (Navigator.of(context).canPop())
+                                    Navigator.of(context).pop();
+                                  else
+                                    Navigator.pushNamed(
+                                        context, NavBar.routeName);
+                                }
+                              },
+                            ),
                           ),
-                          onPressed: () {
-                            if (details) {
-                              setState(() {
-                                details = false;
-                              });
-                            } else {
-                              Navigator.of(context).pop();
-                            }
-                          },
-                        ),
+                          widget.loopWidget,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: CupertinoButton(
+                              child: Icon(
+                                CupertinoIcons.info,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  details = !details;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                      widget.loopWidget,
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: CupertinoButton(
-                          child: Icon(
-                            CupertinoIcons.info,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              details = !details;
-                            });
-                          },
-                        ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Number of Member:  ",
+                        style: kTextFormFieldStyle,
                       ),
                     ],
                   )),
