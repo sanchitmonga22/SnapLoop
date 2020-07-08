@@ -25,37 +25,44 @@ class _UserProfileState extends State<UserProfile>
     User user = Provider.of<UserDataProvider>(context, listen: false).user;
 
     return Container(
-        child: Column(children: [
+        child: ListView(children: [
       ListTile(
-        contentPadding: EdgeInsets.all(10),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+        title: CircleAvatar(
+          radius: 40,
+          child: Icon(Icons.person, size: 50),
+        ),
+      ),
+      ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 10),
         title: Text(
           "Username: ${user.username}",
           textAlign: TextAlign.left,
         ),
       ),
       ListTile(
-        contentPadding: EdgeInsets.all(10),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10),
         title: Text(
           "Email address: ${user.email}",
           textAlign: TextAlign.left,
         ),
       ),
       ListTile(
-        contentPadding: EdgeInsets.all(10),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10),
         title: Text(
           "DisplayName: ${user.displayName}",
           textAlign: TextAlign.left,
         ),
       ),
       ListTile(
-        contentPadding: EdgeInsets.all(10),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10),
         title: Text(
           "Score: ${user.score}",
           textAlign: TextAlign.left,
         ),
       ),
       ListTile(
-        contentPadding: EdgeInsets.all(10),
+        contentPadding: EdgeInsets.symmetric(horizontal: 10),
         title: Text(
           "UserID: ${user.userID}",
           textAlign: TextAlign.left,

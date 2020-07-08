@@ -11,18 +11,13 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class ExistingLoopChatScreen extends StatefulWidget {
   static const routeName = "/ExisitingLoop";
-  ExistingLoopChatScreen(
-      {Key key,
-      this.loopID = "",
-      this.radius,
-      this.loopType = LoopType.EXISTING_LOOP,
-      this.numberOfMembers,
-      this.loopName = ""})
-      : super(key: key);
-  final String loopID;
-  final loopType;
-  final int numberOfMembers;
-  final String loopName;
+  ExistingLoopChatScreen({
+    Key key,
+    this.radius,
+    this.loop,
+  }) : super(key: key);
+
+  final Loop loop;
   final double radius;
 
   @override
@@ -48,17 +43,16 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
 
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor = determineLoopColor(widget.loopType);
+    Color backgroundColor = determineLoopColor(widget.loop.type);
     LoopWidget loopWidget = LoopWidget(
       isTappable: false,
-      loopName: widget.loopName,
-      numberOfMembers: widget.numberOfMembers,
+      loop: widget.loop,
       radius: widget.radius,
-      type: widget.loopType,
       flipOnTouch: false,
     );
     super.build(context);
     return LoopsDetailsScreen(
+      loop: widget.loop,
       backgroundColor: backgroundColor,
       chatWidget: getChatWidget(backgroundColor),
       loopWidget: loopWidget,

@@ -92,11 +92,7 @@ class CommonsLoopsTile extends StatelessWidget {
                               new MaterialPageRoute(
                                   builder: (context) => ExistingLoopChatScreen(
                                         key: ValueKey(index),
-                                        loopID: "",
-                                        loopName: friendsLoops[index].name,
-                                        loopType: friendsLoops[index].type,
-                                        numberOfMembers:
-                                            friendsLoops[index].numberOfMembers,
+                                        loop: friendsLoops[index],
                                         radius: getRadius(
                                             friendsLoops[index].numberOfMembers,
                                             context),

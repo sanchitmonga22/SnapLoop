@@ -1,3 +1,4 @@
+import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidget.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
 import 'package:SnapLoop/constants.dart';
@@ -7,9 +8,14 @@ import 'package:flutter/material.dart';
 /// author: @sanchitmonga22
 class LoopsDetailsScreen extends StatefulWidget {
   LoopsDetailsScreen(
-      {Key key, this.loopWidget, this.backgroundColor, this.chatWidget})
+      {Key key,
+      this.loop,
+      this.loopWidget,
+      this.backgroundColor,
+      this.chatWidget})
       : super(key: key);
   final LoopWidget loopWidget;
+  final Loop loop;
   final Color backgroundColor;
   final Widget chatWidget;
 

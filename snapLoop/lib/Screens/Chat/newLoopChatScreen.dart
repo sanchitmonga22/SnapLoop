@@ -26,13 +26,19 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     final loopName = args["loopName"] as String;
     final userData = args["friend"] as FriendsData;
+    Loop loop = new Loop(
+        chatID: "",
+        creatorId: "",
+        id: "",
+        name: loopName,
+        numberOfMembers: 2,
+        type: LoopType.NEW_LOOP,
+        userIDs: ["", ""]);
     LoopWidget loopWidget = LoopWidget(
       isTappable: false,
-      loopName: loopName,
-      numberOfMembers: 2,
       radius: radius,
       flipOnTouch: false,
-      type: LoopType.EXISTING_LOOP,
+      loop: loop,
     );
 
     Widget chatWidget = Container(

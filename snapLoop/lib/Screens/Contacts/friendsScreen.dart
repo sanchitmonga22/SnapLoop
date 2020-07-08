@@ -119,19 +119,22 @@ class _FriendsScreenState extends State<FriendsScreen>
                       onTap: () {
                         createADialog(context, false);
                       },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(
-                            Icons.add,
-                            color: Colors.white,
-                          ),
-                          Icon(
-                            Icons.people,
-                            color: Colors.white,
-                          )
-                        ],
+                      child: Container(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
+                            Icon(
+                              Icons.people,
+                              color: Colors.white,
+                            )
+                          ],
+                        ),
                       ),
                     ),
               cursorColor: Colors.white,

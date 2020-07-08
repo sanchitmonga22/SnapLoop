@@ -25,17 +25,10 @@ class _HomeScreenState extends State<HomeScreen>
   bool get wantKeepAlive => true;
   List<Loop> loops = [];
 
-  double radiusCalculator(int numberOfMember, double maxRadius) {
-    if (numberOfMember < 13) {
-      return maxRadius * kfixedRadiusFactor[numberOfMember];
-    }
-    return maxRadius * kfixedRadiusFactor["MAX"];
-  }
-
   List<double> radiiLoop(double maxRadius, List<Loop> loopsies) {
     List<double> loopRadii = [];
     loopsies.forEach((loop) {
-      loopRadii.add(radiusCalculator(loop.numberOfMembers, maxRadius));
+      loopRadii.add(kradiusCalculator(loop.numberOfMembers, maxRadius));
     });
     return loopRadii;
   }
@@ -62,9 +55,7 @@ class _HomeScreenState extends State<HomeScreen>
         if (currentWidth + ((radiis[i] + kAllLoopsPadding) * 2) < deviceWidth) {
           widgetsInEachRow.add(LoopWidget(
             radius: radiis[i],
-            numberOfMembers: deleted[i].numberOfMembers,
-            loopName: deleted[i].name,
-            type: deleted[i].type,
+            loop: deleted[i],
             isTappable: true,
             flipOnTouch: true,
           ));

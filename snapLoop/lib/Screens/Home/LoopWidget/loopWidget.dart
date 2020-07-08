@@ -12,18 +12,14 @@ import 'package:flutter/rendering.dart';
 /// Will add the loop ID to this to differentiate between the loops
 class LoopWidget extends StatefulWidget {
   final double radius;
-  final String loopName;
-  final int numberOfMembers;
-  final LoopType type;
   final bool isTappable;
   final bool flipOnTouch;
+  final Loop loop;
 
   const LoopWidget(
       {Key key,
       this.radius,
-      this.loopName,
-      this.numberOfMembers,
-      this.type,
+      this.loop,
       this.isTappable,
       this.flipOnTouch = true})
       : super(key: key);
@@ -39,8 +35,8 @@ class _LoopWidgetState extends State<LoopWidget>
   void initState() {
     super.initState();
     memojiWidget = MemojiGenerator(
-      loopType: widget.type,
-      numberOfMembers: widget.numberOfMembers,
+      loopType: widget.loop.type,
+      numberOfMembers: widget.loop.numberOfMembers,
     );
   }
 
@@ -54,10 +50,10 @@ class _LoopWidgetState extends State<LoopWidget>
       padding: EdgeInsets.all(kAllLoopsPadding),
       decoration: BoxDecoration(shape: BoxShape.circle),
       child: Hero(
-        tag: widget.loopName,
+        tag: widget.loop.name,
         child: CircleAvatar(
             //backgroundColor: kLoopContentBackgroundColor,
-            backgroundColor: determineLoopColor(widget.type)
+            backgroundColor: determineLoopColor(widget.loop.type)
                 .withOpacity(widget.isTappable ? 0.5 : 1),
             radius: widget.radius,
             //NOTE: FlipCard() changed, Line 174 and 195 modified to include the open till pressed functionality
@@ -94,10 +90,7 @@ class _LoopWidgetState extends State<LoopWidget>
                       new MaterialPageRoute(
                           builder: (context) => ExistingLoopChatScreen(
                                 key: widget.key,
-                                loopID: "",
-                                loopName: widget.loopName,
-                                loopType: widget.type,
-                                numberOfMembers: widget.numberOfMembers,
+                                loop: widget.loop,
                                 radius: widget.radius,
                               )));
               },
@@ -110,20 +103,21 @@ class _LoopWidgetState extends State<LoopWidget>
                       child: Icon(
                         CupertinoIcons.loop,
                         color: Colors.black,
-                        size: widget.numberOfMembers > 12
+                        size: widget.loop.numberOfMembers > 12
                             ? kfixedRadiusFactor["MAX"] * 70
-                            : kfixedRadiusFactor[widget.numberOfMembers] * 70,
+                            : kfixedRadiusFactor[widget.loop.numberOfMembers] *
+                                70,
                       ),
                     ),
                     AutoSizeText(
-                      "${widget.loopName}",
+                      "${widget.loop.name}",
                       maxLines: 1,
                       style: kLoopDetailsTextStyle.copyWith(fontSize: 15),
                       overflow: TextOverflow.ellipsis,
                     ),
                     Expanded(
                       child: AutoSizeText(
-                        "👥 ${widget.numberOfMembers}",
+                        "👥 ${widget.loop.numberOfMembers}",
                         maxLines: 1,
                         style: kLoopDetailsTextStyle.copyWith(fontSize: 15),
                         textAlign: TextAlign.start,

@@ -14,6 +14,13 @@ const double ksigmaY = 5.0; // from 0-10
 const double kopacity = 0.1;
 const kTextFieldCursorColor = kSystemPrimaryColor;
 
+double kradiusCalculator(int numberOfMember, double maxRadius) {
+  if (numberOfMember < 13) {
+    return maxRadius * kfixedRadiusFactor[numberOfMember];
+  }
+  return maxRadius * kfixedRadiusFactor["MAX"];
+}
+
 //SECTION: AUTH SCREEN
 final kHomeScreenDecoration = BoxDecoration(
   image: DecorationImage(

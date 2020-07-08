@@ -68,13 +68,15 @@ class _NavBarState extends State<NavBar>
         inactiveColor: kInactiveNavBarIconColor,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.contacts),
-        title: ("Contacts"),
+        //Icons.people
+        //.person_add
+        icon: Icon(Icons.people),
+        title: ("People"),
         activeColor: kActiveNavBarIconColor,
         inactiveColor: kInactiveNavBarIconColor,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.person),
+        icon: Icon(Icons.account_circle),
         title: ("Profile"),
         activeColor: kActiveNavBarIconColor,
         inactiveColor: kInactiveNavBarIconColor,
