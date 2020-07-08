@@ -1,4 +1,8 @@
+import 'package:SnapLoop/Model/loop.dart';
+import 'package:SnapLoop/Screens/Home/Bitmojis/bitmoji.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 /// author: @sanchitmonga22
 
@@ -8,8 +12,10 @@ class MessageBubble extends StatelessWidget {
   final Key key;
   final String username;
   final String userRandomMemoji;
+  final DateTime sent;
 
   const MessageBubble({
+    this.sent,
     this.message,
     this.isMe = false,
     this.key,
@@ -19,67 +25,76 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Row(
+      mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment:
-              isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-          children: [
-            Container(
-                width: 140,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                decoration: BoxDecoration(
-                    color:
-                        isMe ? Colors.grey[300] : Theme.of(context).accentColor,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12),
-                        bottomLeft:
-                            !isMe ? Radius.circular(0) : Radius.circular(12),
-                        bottomRight:
-                            isMe ? Radius.circular(0) : Radius.circular(12))),
-                margin: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-                child: Column(
+        Container(
+            padding: EdgeInsets.only(top: 10),
+            constraints:
+                BoxConstraints(maxWidth: MediaQuery.of(context).size.width / 2),
+            child: Stack(
+              children: [
+                Column(
                   crossAxisAlignment:
-                      isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                      isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      username,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: isMe
-                              ? Colors.black
-                              : Theme.of(context)
-                                  .accentTextTheme
-                                  .headline6
-                                  .color),
-                      textAlign: isMe ? TextAlign.end : TextAlign.start,
+                    Padding(
+                      padding: isMe
+                          ? const EdgeInsets.only(left: 10)
+                          : const EdgeInsets.only(right: 10),
+                      child: CircleAvatar(
+                          child: Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                blurRadius: 5,
+                                color: determineLoopColor(LoopType.NEW_LOOP))
+                          ],
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              fit: BoxFit.fitHeight,
+                              image: NetworkImage(userRandomMemoji == ""
+                                  ? URLMemojis[0].replaceAll("%s", USERS[0])
+                                  : userRandomMemoji)),
+                        ),
+                      )),
                     ),
-                    Text(
-                      message,
-                      style: TextStyle(
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
                           color: isMe
-                              ? Colors.black
-                              : Theme.of(context)
-                                  .accentTextTheme
-                                  .headline6
-                                  .color),
+                              ? kSystemPrimaryColor
+                              : Colors.black.withOpacity(0.7),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15),
+                              bottomLeft: !isMe
+                                  ? Radius.circular(0)
+                                  : Radius.circular(15),
+                              bottomRight: isMe
+                                  ? Radius.circular(0)
+                                  : Radius.circular(15))),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            message,
+                            style: kTextFormFieldStyle,
+                          ),
+                          Text(
+                            "${DateFormat('kk:mm').format(DateTime.now())}",
+                            style: kTextFormFieldStyle.copyWith(fontSize: 10),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
-                )),
-          ],
-        ),
-        // TODO: Add a random memoji for the user
-        // Positioned(
-        //   top: 0,
-        //   left: isMe ? null : 140,
-        //   right: isMe ? 120 : null,
-        //   child: CircleAvatar(
-        //     backgroundImage: NetworkImage(userRandomMemoji),
-        //   ),
-        // ),
+                ),
+              ],
+            )),
       ],
-      overflow: Overflow.visible,
     );
   }
 }
