@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
 import 'package:SnapLoop/constants.dart';
@@ -6,6 +7,7 @@ import 'package:SnapLoop/Widget/AnimatingFlatButton.dart';
 import 'package:SnapLoop/Widget/ErrorDialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'signUpWidget.dart';
 
 /// author: @sanchitmonga22
@@ -67,38 +69,34 @@ class _AuthCardState extends State<AuthCard>
       _isLoading = true;
     });
 
-    Timer(Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacementNamed(NavBar.routeName);
-    });
+    // Timer(Duration(seconds: 2), () {
+    //   Navigator.of(context).pushReplacementNamed(NavBar.routeName);
+    // });
 
     // if (!_formKey.currentState.validate()) {
+    //   print('hello');
     //   // Invalid!
     //   return;
     // }
-    // _formKey.currentState.save();
-    // setState(() {
-    //   _isLoading = true;
-    // });
-    // try {
-    //   if (_authMode == AuthMode.Login) {
-    //     await Provider.of<Auth>(context, listen: false)
-    //         .attemptLogIn(_authData['email'], _authData['password']);
-    //   } else {
-    //     await Provider.of<Auth>(context, listen: false).attemptSignUp(
-    //         _authData['username'],
-    //         _authData['password'],
-    //         _authData["phoneNumber"],
-    //         _authData["email"]);
-    //     print(_authData);
-    //     print('Attempting signUp');
-    //   }
-    // } catch (error) {
-    //   const errorMessage = "Could not authenticate you, Please try again later";
-    //   _showErrorDialog(errorMessage);
-    // }
-    // setState(() {
-    //   _isLoading = false;
-    // });
+    _formKey.currentState.save();
+    try {
+      if (_authMode == AuthMode.Login) {
+        await Provider.of<Auth>(context, listen: false)
+            .attemptLogIn(_authData['email'], _authData['password']);
+      } else {
+        await Provider.of<Auth>(context, listen: false).attemptSignUp(
+            _authData['username'],
+            _authData['password'],
+            _authData["phoneNumber"],
+            _authData["email"]);
+      }
+    } catch (error) {
+      const errorMessage = "Could not authenticate you, Please try again later";
+      _showErrorDialog(errorMessage);
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   Widget getButton() {
@@ -254,11 +252,6 @@ class _AuthCardState extends State<AuthCard>
                       authData: _authData),
 
                   if (_isLoading)
-                    // Flex(
-                    //   children: [CircularProgressIndicator()],
-                    //   direction: Axis.horizontal,
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    // )
                     AnimatingFlatButton(
                       isAnimating: true,
                       labelText:

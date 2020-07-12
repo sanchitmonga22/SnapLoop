@@ -1,4 +1,5 @@
 import 'package:SnapLoop/Helper/customRoute.dart';
+import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
@@ -27,15 +28,38 @@ class SnapLoop extends StatelessWidget {
             create: (context) => Auth(),
           ),
           ChangeNotifierProxyProvider<Auth, LoopsProvider>(create: (context) {
-            return LoopsProvider();
+            return LoopsProvider("", [], "");
           }, update: (context, auth, previousLoopsProvider) {
-            return LoopsProvider();
+            return LoopsProvider(
+              auth.token,
+              previousLoopsProvider.loops == null
+                  ? []
+                  : previousLoopsProvider.loops,
+              auth.userId,
+            );
           }),
           ChangeNotifierProxyProvider<Auth, UserDataProvider>(
               create: (context) {
-            return UserDataProvider();
-          }, update: (context, auth, previousLoopsProvider) {
-            return UserDataProvider();
+            return UserDataProvider(
+                token: "",
+                userId: "",
+                user: User(
+                  loopsData: [],
+                  contacts: [],
+                  userID: "",
+                  username: "",
+                  displayName: "",
+                  email: "",
+                  score: 0,
+                  friendsIds: [],
+                  requests: [],
+                ));
+          }, update: (context, auth, previousUserDataProvider) {
+            return UserDataProvider(
+              userId: auth.userId,
+              token: auth.token,
+              user: auth.user,
+            );
           }),
           ChangeNotifierProvider(
             create: (context) => FloatingActionButtonDataChanges(),
@@ -60,7 +84,8 @@ class SnapLoop extends StatelessWidget {
               // darkTheme: ThemeData(
               //   brightness: Brightness.dark,
               // ),
-              home: NavBar(),
+              home: AuthScreen(),
+              //NavBar(),
               // home: authData.isAuth
               //     ? HomeScreen()
               //     : FutureBuilder(

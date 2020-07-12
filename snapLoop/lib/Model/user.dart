@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:SnapLoop/Model/loop.dart';
 import 'package:flutter/material.dart';
 
 /// author: @sanchitmonga22
@@ -12,20 +13,26 @@ class User {
   final int score;
   List<String> friendsIds;
   // all the loops that the user is involved in
-  List<String> loopIDs;
+  List<Loop> loopsData;
   final String phone;
   final Image avatar;
+  List<String> requests;
+  // people who are in the user's contacts and are part of the snaploop
+  List<String> contacts;
 
-  User(
-      {@required this.userID,
-      this.avatar,
-      @required this.username,
-      @required this.displayName,
-      @required this.email,
-      @required this.score,
-      @required this.friendsIds,
-      this.phone,
-      @required this.loopIDs});
+  User({
+    @required this.userID,
+    @required this.contacts,
+    @required this.requests,
+    @required this.loopsData,
+    this.avatar,
+    @required this.username,
+    @required this.displayName,
+    @required this.email,
+    @required this.score,
+    @required this.friendsIds,
+    this.phone,
+  });
 }
 
 class FriendsData {

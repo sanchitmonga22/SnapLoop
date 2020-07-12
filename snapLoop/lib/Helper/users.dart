@@ -3,13 +3,14 @@ import 'package:SnapLoop/Model/user.dart';
 /// author: @sanchitmonga22
 
 final user = User(
-    userID: "1",
-    displayName: "Monga",
-    email: "sanchitmonga22@gmail.com",
-    score: 783,
-    username: "sanchitmonga22",
-    friendsIds: ["2", "3", "5", "4"],
-    loopIDs: ["1", "2", "3", "4", "5"]);
+  userID: "1",
+  displayName: "Monga",
+  email: "sanchitmonga22@gmail.com",
+  score: 783,
+  username: "sanchitmonga22",
+  friendsIds: ["2", "3", "5", "4"],
+);
+//loopIDs: ["1", "2", "3", "4", "5"]);
 
 var friends = [
   FriendsData(

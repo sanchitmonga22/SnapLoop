@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 ///author: @sanchitmonga22
 
 //SECTION: COMMON
+const SERVER_IP = "http://192.168.0.37:3000";
 const kSystemPrimaryColor = CupertinoColors.activeBlue;
 final kSwipeConstant = 5;
 const double ksigmaX = 5.0; // from 0-10

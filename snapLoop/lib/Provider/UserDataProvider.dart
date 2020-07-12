@@ -6,42 +6,40 @@ import '../Helper/users.dart' as dummyUsers;
 /// author: @sanchitmonga22
 
 class UserDataProvider with ChangeNotifier {
-  List<Contact> _contacts = [];
-  List<PublicUserData> _requests = dummyUsers.requests;
-  List<PublicUserData> allUsers = dummyUsers.users;
-  List<FriendsData> _friends = dummyUsers.friends;
-  User _user = dummyUsers.user;
+  List<Contact> contacts = [];
+  List<PublicUserData> requests = [];
+  List<FriendsData> friends = [];
+  final User user;
+  final String token;
+  final String userId;
 
-  // getting information about the friends
-  List<FriendsData> get friends {
-    return _friends;
-  }
-
-  List<PublicUserData> get requests {
-    return _requests;
-  }
+  UserDataProvider({
+    this.user,
+    this.token,
+    this.userId,
+  });
 
   int get userScore {
-    return _user.score;
+    return user.score;
   }
 
   String get username {
-    return _user.username;
+    return user.username;
   }
 
   String get displayName {
-    return _user.displayName;
+    return user.displayName;
   }
 
   void syncContacts(List<Contact> contacts) {
-    if (contacts != null && contacts.length != 0) _contacts.addAll(contacts);
+    if (contacts != null && contacts.length != 0) contacts.addAll(contacts);
   }
 
   List<PublicUserData> get userContacts {
     List<PublicUserData> userContacts = [];
-    if (_contacts == null || _contacts.isEmpty) return [];
+    if (contacts == null || contacts.isEmpty) return [];
 
-    _contacts.forEach((e) {
+    contacts.forEach((e) {
       dummyUsers.users.forEach((element) {
         if (e.emails.contains(element.email)) {
           userContacts.add(element);
@@ -53,12 +51,12 @@ class UserDataProvider with ChangeNotifier {
 
   void acceptRequest(String email) {
     PublicUserData user;
-    allUsers.forEach((element) {
-      if (element.email == email) {
-        user = element;
-      }
-    });
-    _friends.add(FriendsData(
+    // allUsers.forEach((element) {
+    //   if (element.email == email) {
+    //     user = element;
+    //   }
+    // });
+    friends.add(FriendsData(
       commonLoops: [],
       displayName: user.username,
       email: user.email,
@@ -73,7 +71,7 @@ class UserDataProvider with ChangeNotifier {
   }
 
   void removeRequest(String email) {
-    _requests.removeWhere((element) => element.email == email);
+    requests.removeWhere((element) => element.email == email);
     notifyListeners();
   }
 
@@ -88,10 +86,6 @@ class UserDataProvider with ChangeNotifier {
   //   });
   //   return friends;
   // }
-
-  User get user {
-    return _user;
-  }
 
   //AFTER APIs
 /**

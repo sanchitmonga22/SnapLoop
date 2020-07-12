@@ -94,7 +94,6 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 SizedBox(
                   height: 10,
                 ),
-                // TODO Add an API call to check whether the username already exists or not
                 // TextFormField(
                 //     style: kTextFormFieldStyle,
                 //     enabled: _authMode == AuthMode.Signup,
@@ -111,11 +110,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 InternationalPhoneNumberInput(
                   cursorColor: kTextFieldCursorColor,
                   onInputChanged: (PhoneNumber number) {
-                    print(number.phoneNumber);
+                    widget._authData['phoneNumber'] = number.toString();
                   },
-                  onInputValidated: (bool value) {
-                    print(value);
-                  },
+                  onInputValidated: (bool value) {},
                   ignoreBlank: false,
                   selectorTextStyle: kTextFormFieldStyle,
                   selectorType: PhoneInputSelectorType.DIALOG,

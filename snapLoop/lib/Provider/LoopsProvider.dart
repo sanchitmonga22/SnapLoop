@@ -1,10 +1,16 @@
 import 'package:SnapLoop/Helper/loops.dart' as loopsies;
 import 'package:SnapLoop/Model/loop.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
 
 ///author: @sanchitmonga22
 class LoopsProvider with ChangeNotifier {
-  List<Loop> _loops = loopsies.loops;
+  final String authToken;
+  final String userId;
+  List<Loop> _loops = [];
+
+  LoopsProvider(this.authToken, this._loops, this.userId);
 
   List<Loop> get loops {
     return [..._loops];
@@ -12,6 +18,10 @@ class LoopsProvider with ChangeNotifier {
 
   int get loopCount {
     return _loops.length;
+  }
+
+  Future<void> fetchAndSetProducts() async {
+    http.Response res = await http.get('$SERVER_IP//');
   }
 
 // This will create the loop and send the first message to the friend

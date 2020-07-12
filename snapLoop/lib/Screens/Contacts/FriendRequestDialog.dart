@@ -42,7 +42,6 @@ class _FriendRequestsDialogState extends State<FriendRequestsDialog> {
             child: SlidableDrawerDismissal(),
             onDismissed: (actionType) {
               String email = requests[index].email;
-              print(index);
               setState(() {
                 requests.removeAt(index);
               });
