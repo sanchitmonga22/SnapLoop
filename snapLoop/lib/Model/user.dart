@@ -16,14 +16,16 @@ class User {
   List<Loop> loopsData;
   final String phone;
   final Image avatar;
-  List<String> requests;
+  List<String> requestsSent;
+  List<String> requestsReceived;
   // people who are in the user's contacts and are part of the snaploop
   List<String> contacts;
 
   User({
     @required this.userID,
     @required this.contacts,
-    @required this.requests,
+    @required this.requestsSent,
+    @required this.requestsReceived,
     @required this.loopsData,
     this.avatar,
     @required this.username,

@@ -13,6 +13,7 @@ import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './Screens/Home/homeScreen.dart';
+import 'Screens/splashScreen.dart';
 
 /// author: @sanchitmonga22
 void main() {
@@ -44,16 +45,16 @@ class SnapLoop extends StatelessWidget {
                 token: "",
                 userId: "",
                 user: User(
-                  loopsData: [],
-                  contacts: [],
-                  userID: "",
-                  username: "",
-                  displayName: "",
-                  email: "",
-                  score: 0,
-                  friendsIds: [],
-                  requests: [],
-                ));
+                    loopsData: [],
+                    contacts: [],
+                    userID: "",
+                    username: "",
+                    displayName: "",
+                    email: "",
+                    score: 0,
+                    friendsIds: [],
+                    requestsSent: [],
+                    requestsReceived: []));
           }, update: (context, auth, previousUserDataProvider) {
             return UserDataProvider(
               userId: auth.userId,
@@ -84,19 +85,18 @@ class SnapLoop extends StatelessWidget {
               // darkTheme: ThemeData(
               //   brightness: Brightness.dark,
               // ),
-              home: AuthScreen(),
-              //NavBar(),
-              // home: authData.isAuth
-              //     ? HomeScreen()
-              //     : FutureBuilder(
-              //         future: authData.tryAutoLogin(),
-              //         builder: (context, authResultsnapshot) {
-              //           return authResultsnapshot.connectionState ==
-              //                   ConnectionState.waiting
-              //               ? SplashScreen()
-              //               : AuthScreen();
-              //         },
-              //       ),
+              // home: AuthScreen(),
+              home: authData.isAuth
+                  ? NavBar()
+                  : FutureBuilder(
+                      future: authData.tryAutoLogin(),
+                      builder: (context, authResultsnapshot) {
+                        return authResultsnapshot.connectionState ==
+                                ConnectionState.waiting
+                            ? SplashScreen()
+                            : AuthScreen();
+                      },
+                    ),
               routes: {
                 FriendsScreen.routeName: (context) => FriendsScreen(),
                 ExistingLoopChatScreen.routeName: (context) =>

@@ -15,7 +15,7 @@ class Auth with ChangeNotifier {
   //String _url = "";
   final storage = FlutterSecureStorage();
   String _token;
-  User user;
+  var user;
   String _userId;
 
   bool get isAuth {
@@ -27,60 +27,80 @@ class Auth with ChangeNotifier {
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"email": email, "password": password}));
     final response = json.decode(res.body);
-    print(response);
     if (res.statusCode == 200) {
       final jwt = response['token'];
       if (jwt != null) {
         storage.write(key: "jwt", value: jwt);
+        storage.write(key: "userId", value: response['userId']);
         _token = jwt;
-        _userId = response['userId'];
-        user = new User(
-            contacts: response['contacts'],
-            userID: _userId,
-            username: response['username'],
-            displayName: response['displayName'] == ""
-                ? response['username']
-                : response['displayName'],
-            email: email,
-            loopsData: getLoopsFromResponse(response['loopsData']),
-            score: response['score'],
-            friendsIds: response['friendsIds'],
-            requests: response['requests']);
+        _userId = response['userId'] as String;
+        print(response);
+        user = parseUser(response, email);
+        print(user.username);
         notifyListeners();
       }
     }
   }
 
+  User parseUser(dynamic response, String email) {
+    List<String> contacts =
+        response["contacts"].length == 0 ? [] : response["contacts"];
+    String username = response['username'] as String ?? "";
+    String displayName = response['displayName'] as String == ""
+        ? response['username'] as String ?? ""
+        : response['displayName'] as String ?? "";
+    String emailfield = email == "" ? response['email'] as String : email;
+    int score = response['score'] as int;
+    List<String> friendsIds =
+        response['friendsIds'].length == 0 ? [] : response['friendsIds'];
+    List<String> requestsSent = response['requests']['sent'].length == 0
+        ? []
+        : response['requests']['sent'];
+    List<String> requestsReceived = response['requests']['received'].length == 0
+        ? []
+        : response['requests']['received'];
+    print(userId);
+    return User(
+        contacts: contacts,
+        userID: userId,
+        username: username,
+        displayName: displayName,
+        email: emailfield,
+        loopsData: getLoopsFromResponse(response['loopsData']),
+        score: score,
+        friendsIds: friendsIds,
+        requestsSent: requestsSent,
+        requestsReceived: requestsReceived);
+  }
+
   List<Loop> getLoopsFromResponse(dynamic response) {
     List<Loop> newLoops;
-    for (dynamic loop in response) {
-      newLoops.add(new Loop(
-          name: loop['name'],
-          type: getLoopsType(loop['type']),
-          numberOfMembers: loop['users'].length,
-          avatars: getImagesMap(loop['users']),
-          chatID: loop['chat'],
-          creatorId: loop['creatorId'],
-          id: loop._id,
-          userIDs: getUserIds(loop['users'])));
+    response = response as List<dynamic>;
+    for (int i = 0; i < response.length; i++) {
+      newLoops.add(parseLoop(response[i]));
     }
     return newLoops;
   }
 
-  List<String> getUserIds(dynamic users) {
-    List<String> userIds = [];
-    for (String user in users) {
-      userIds.add(user);
-    }
-    return userIds;
+  Loop parseLoop(dynamic loop) {
+    return Loop(
+        name: loop['name'] as String,
+        type: getLoopsType(loop['type'] as String),
+        numberOfMembers: getImagesMap(loop['users'] as List<String>).length,
+        avatars: getImagesMap(loop['users'] as List<String>),
+        chatID: loop['chat'] as String,
+        creatorId: loop['creatorId'] as String,
+        id: loop._id,
+        userIDs: loop['users']);
   }
 
   Map<String, Image> getImagesMap(dynamic users) {
     Map<String, Image> images = {};
+    users = users;
     for (int i = 0; i < users.length; i++) {
-      images[users[i]['user']] =
+      images[users[i]['user'] as String] =
           // TODO:add an image returned when a image url is not correct
-          Image(image: NetworkImage(users[i]['avatarLink']));
+          Image(image: NetworkImage(users[i]['avatarLink'] as String));
     }
     return images;
   }
@@ -102,8 +122,13 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> logOut() async {
-    http.Response res = await http.post("$SERVER_IP/users/logout",
-        headers: {"Content-Type": "application/json", "Authorization": token});
+    http.Response res = await http.post(
+      "$SERVER_IP/users/logout",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     if (res.statusCode == 200) {
       _token = null;
       await storage.deleteAll();
@@ -112,6 +137,7 @@ class Auth with ChangeNotifier {
   }
 
   String get token {
+    if (_token == null) return null;
     return _token;
   }
 
@@ -132,12 +158,13 @@ class Auth with ChangeNotifier {
     final response = json.decode(res.body);
     if (res.statusCode == 201) {
       final jwt = response['token'];
-      await storage.write(key: "jwt", value: token);
+      await storage.write(key: "jwt", value: "Bearer $token");
       _token = jwt;
       _userId = response['userId'];
       user = new User(
           contacts: [],
-          requests: [],
+          requestsSent: [],
+          requestsReceived: [],
           userID: _userId,
           username: username,
           displayName: username,
@@ -150,12 +177,41 @@ class Auth with ChangeNotifier {
   }
 
   Future<bool> tryAutoLogin() async {
-    //final token1 = await storage.read(key: "jwt");
-    //String response =
-    //  await http.read('$SERVER_IP/data', headers: {"Authorization": token1});
-    //notifyListeners();
-    //print(response);
-    return true;
-    // return response;
+    //TODO: add a validation for the token whether or not if it has expired!
+    final token1 = await storage.read(key: "jwt");
+    _userId = await storage.read(key: "userId");
+
+    if (token1 == null) {
+      return false;
+    }
+    _token = token1;
+    // getting the userData from the server using the _token, add the API to the server
+    http.Response res = await http.get(
+      "$SERVER_IP/users/data",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token,
+        "userId": _userId
+      },
+    );
+    final response = json.decode(res.body);
+    if (res.statusCode == 200) {
+      // user = new User(
+      //   contacts: [],
+      //   displayName: "hello",
+      //   email: "nvoirnv",
+      //   friendsIds: [],
+      //   loopsData: [],
+      //   requestsReceived: [],
+      //   requestsSent: [],
+      //   score: 4545,
+      //   userID: "",
+      //   username: "noienrvoc",
+      // );
+      user = parseUser(response, "");
+      notifyListeners();
+      return true;
+    }
+    return false;
   }
 }
