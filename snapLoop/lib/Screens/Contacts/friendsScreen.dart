@@ -49,11 +49,19 @@ class _FriendsScreenState extends State<FriendsScreen>
   bool contactOpened = false;
   bool newLoop = false;
   String loopName = "";
+  int activeIndex;
+  int requestSentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<UserDataProvider>(context, listen: false).initializeRequests();
+  }
 
   @override
   bool get wantKeepAlive => true;
 
-  Future<List<dynamic>> getUsers(String email) {
+  Future<List<dynamic>> getUsersByEmail(String email) {
     return Provider.of<UserDataProvider>(context, listen: false)
         .searchByEmail(email);
   }
@@ -156,7 +164,6 @@ class _FriendsScreenState extends State<FriendsScreen>
               //searchBarPadding: EdgeInsets.all(10),
               hintText: "Enter here",
               iconActiveColor: Colors.white,
-
               // check this
               buildSuggestion: (item, index) {
                 print("Hellgersgo");
@@ -169,22 +176,39 @@ class _FriendsScreenState extends State<FriendsScreen>
                 );
               },
               onItemFound: (userData, int index) {
-                print("Hello");
                 return Container(
-                  color: Colors.blue,
-                  child: ListTile(
-                    key: ValueKey(index),
-                    title: Text(userData.username),
-                  ),
-                );
+                    color: Colors.blue,
+                    child: ContactWidget(
+                      c: userData,
+                      isLoading: activeIndex == index,
+                      requestSent: requestSentIndex == index,
+                      key: ValueKey(index),
+                      onPressed: () async {
+                        setState(() {
+                          activeIndex = index;
+                        });
+                        await Provider.of<UserDataProvider>(context,
+                                listen: false)
+                            .sendFriendRequest(userData.userID);
+                        setState(() {
+                          activeIndex = -1;
+                          requestSentIndex = index;
+                        });
+                      },
+                    ));
               },
-              loader: CircularProgressIndicator(),
+              loader: Center(
+                  child: Container(
+                      height: 30,
+                      width: 30,
+                      child: CircularProgressIndicator())),
               emptyWidget: Text(
                   "No items found, Please try searching with a different name"),
               onError: (error) {
                 print(error);
+                return Text("Error");
               },
-              onSearch: getUsers,
+              onSearch: getUsersByEmail,
               placeHolder: friends.length == 0
                   ? Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -203,7 +227,6 @@ class _FriendsScreenState extends State<FriendsScreen>
                         friendsLoops =
                             Provider.of<LoopsProvider>(context, listen: false)
                                 .getLoopInforById(friend.commonLoops);
-
                         return ContactsDetailsWidget(
                           onTap: () {
                             Navigator.pushReplacementNamed(

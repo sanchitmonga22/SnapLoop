@@ -73,7 +73,7 @@ class _UserProfileState extends State<UserProfile>
         leading: Icon(Icons.exit_to_app),
         onTap: () {
           Navigator.of(context).pop();
-          Navigator.of(context).pushReplacementNamed('/');
+          Navigator.of(context).pushNamed('/');
           return Provider.of<Auth>(context, listen: false).logOut();
         },
         title: Text("Logout"),

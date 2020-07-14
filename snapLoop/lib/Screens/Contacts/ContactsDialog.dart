@@ -121,12 +121,18 @@ class _ContactsDialogState extends State<ContactsDialog>
 }
 
 class ContactWidget extends StatelessWidget {
-  const ContactWidget({Key key, this.onPressed, this.c, this.isLoading = false})
+  const ContactWidget(
+      {Key key,
+      this.onPressed,
+      this.c,
+      this.isLoading = false,
+      this.requestSent = false})
       : super(key: key);
 
   final onPressed;
   final PublicUserData c;
   final isLoading;
+  final requestSent;
 
   @override
   Widget build(BuildContext context) {
@@ -150,22 +156,28 @@ class ContactWidget extends StatelessWidget {
         onPressed: onPressed,
         child: isLoading
             ? CircularProgressIndicator()
-            : Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 15,
-                  ),
-                  Text(
-                    "Add",
-                    style: kTextFormFieldStyle.copyWith(fontSize: 14),
+            : requestSent
+                ? Container(
+                    child: Text(
+                      "Sent",
+                      style: kTextFormFieldStyle.copyWith(fontSize: 14),
+                    ),
                   )
-                ],
-              ),
+                : Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 15,
+                      ),
+                      Text(
+                        "Add",
+                        style: kTextFormFieldStyle.copyWith(fontSize: 14),
+                      )
+                    ],
+                  ),
       ),
-      //subtitle: Text(contacts[index].familyName)
     );
   }
 }

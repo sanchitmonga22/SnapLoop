@@ -80,9 +80,6 @@ class _FloatingActionButtonDataState extends State<FloatingActionButtonData> {
         onPress: () async {
           // Avoiding the double tap, when the user double taps this, the blur screen will still be updated!
           // FIXME: There still exists an issue if you tap is 4 times very fast, then it breaks!!!
-
-          await Provider.of<UserDataProvider>(context, listen: false)
-              .searchByEmail("san");
           if (widget._animationController.isCompleted) {
             try {
               changes.toggleIsTapped();

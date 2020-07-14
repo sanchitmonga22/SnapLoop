@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen>
                       widget.completedLoopsScreen
                           ? "There are no inactive loops available yet, \n once you are part of a successfully completed loop it will show up here!"
                           : "There are currently no active loops, Please start new loops to show up here!",
-                      style: kTextStyleHomeScreen,
+                      style: kTextStyleHomeScreen.copyWith(color: Colors.black),
                     ),
                   ),
                 )

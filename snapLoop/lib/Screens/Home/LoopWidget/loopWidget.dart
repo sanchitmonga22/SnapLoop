@@ -66,7 +66,6 @@ class _LoopWidgetState extends State<LoopWidget>
             //   },
             //   onTapUp: (event) {
             //     var diff = DateTime.now().difference(before).inMilliseconds;
-            //     print(diff);
             //     if (diff < 100) {
             //       widget.onTapNavigator();
             //     } else {

@@ -74,7 +74,6 @@ class _AuthCardState extends State<AuthCard>
     // });
 
     // if (!_formKey.currentState.validate()) {
-    //   print('hello');
     //   // Invalid!
     //   return;
     // }
@@ -94,9 +93,9 @@ class _AuthCardState extends State<AuthCard>
       const errorMessage = "Could not authenticate you, Please try again later";
       _showErrorDialog(errorMessage);
     }
-    setState(() {
-      _isLoading = false;
-    });
+    // setState(() {
+    //   _isLoading = false;
+    // });
   }
 
   Widget getButton() {

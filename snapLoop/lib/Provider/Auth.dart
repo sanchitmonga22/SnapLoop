@@ -30,48 +30,31 @@ class Auth with ChangeNotifier {
     if (res.statusCode == 200) {
       final jwt = response['token'];
       if (jwt != null) {
-        storage.write(key: "jwt", value: jwt);
-        storage.write(key: "userId", value: response['userId']);
         _token = jwt;
         _userId = response['userId'] as String;
-        print(response);
         user = parseUser(response, email);
-        print(user.username);
         notifyListeners();
+        await storage.write(key: "jwt", value: jwt);
+        await storage.write(key: "userId", value: response['userId']);
       }
     }
   }
 
   User parseUser(dynamic response, String email) {
-    List<String> contacts =
-        response["contacts"].length == 0 ? [] : response["contacts"].toList();
-    String username = response['username'] as String ?? "";
-    String displayName = response['displayName'] as String == ""
-        ? response['username'] as String ?? ""
-        : response['displayName'] as String ?? "";
-    String emailfield = email == "" ? response['email'] as String : email;
-    int score = response['score'] as int;
-    List<String> friendsIds = response['friendsIds'].length == 0
-        ? []
-        : response['friendsIds'].toList();
-    List<String> requestsSent = response['requests']['sent'].length == 0
-        ? []
-        : response['requests']['sent'].toList();
-    List<String> requestsReceived = response['requests']['received'].length == 0
-        ? []
-        : response['requests']['received'].toList();
-    print(userId);
     return User(
-        contacts: contacts,
+        contacts: (response["contacts"] as List).cast<String>().toList(),
         userID: userId,
-        username: username,
-        displayName: displayName,
-        email: emailfield,
+        username: response['username'] as String ?? "",
+        displayName: response['displayName'] == ""
+            ? response['username']
+            : response['displayName'],
+        email: email == "" ? response['email'] : email,
         loopsData: getLoopsFromResponse(response['loopsData']),
-        score: score,
-        friendsIds: friendsIds,
-        requestsSent: requestsSent,
-        requestsReceived: requestsReceived);
+        score: response['score'] as int,
+        friendsIds: (response['friendsIds'] as List).cast<String>().toList(),
+        requestsSent: response['requests']['sent'].cast<String>().toList(),
+        requestsReceived:
+            response['requests']['received'].cast<String>().toList());
   }
 
   List<Loop> getLoopsFromResponse(dynamic response) {
@@ -84,12 +67,12 @@ class Auth with ChangeNotifier {
   }
 
   Loop parseLoop(dynamic loop) {
+    List<dynamic> loopUsers = (loop['users'] as List).cast<dynamic>().toList();
     return Loop(
-        name: loop['name'] as String,
-        type: getLoopsType(loop['type'] as String),
-        numberOfMembers:
-            getImagesMap(loop['users'].toList() as List<String>).length,
-        avatars: getImagesMap(loop['users'].toList() as List<String>),
+        name: loop['name'],
+        type: getLoopsType(loop['type']),
+        numberOfMembers: loopUsers.length,
+        avatars: getImagesMap(loopUsers),
         chatID: loop['chat'] as String,
         creatorId: loop['creatorId'] as String,
         id: loop._id,
@@ -100,9 +83,9 @@ class Auth with ChangeNotifier {
     Map<String, Image> images = {};
     users = users;
     for (int i = 0; i < users.length; i++) {
-      images[users[i]['user'] as String] =
+      images[users[i]['user']] =
           // TODO:add an image returned when a image url is not correct
-          Image(image: NetworkImage(users[i]['avatarLink'] as String));
+          Image(image: NetworkImage(users[i]['avatarLink']));
     }
     return images;
   }
@@ -133,7 +116,7 @@ class Auth with ChangeNotifier {
     );
     if (res.statusCode == 200) {
       _token = null;
-      await storage.deleteAll();
+      await storage.delete(key: "jwt");
       notifyListeners();
     }
   }
@@ -193,23 +176,10 @@ class Auth with ChangeNotifier {
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + token,
-        "userId": _userId
       },
     );
     final response = json.decode(res.body);
     if (res.statusCode == 200) {
-      // user = new User(
-      //   contacts: [],
-      //   displayName: "hello",
-      //   email: "nvoirnv",
-      //   friendsIds: [],
-      //   loopsData: [],
-      //   requestsReceived: [],
-      //   requestsSent: [],
-      //   score: 4545,
-      //   userID: "",
-      //   username: "noienrvoc",
-      // );
       user = parseUser(response, "");
       notifyListeners();
       return true;
