@@ -44,21 +44,22 @@ class Auth with ChangeNotifier {
 
   User parseUser(dynamic response, String email) {
     List<String> contacts =
-        response["contacts"].length == 0 ? [] : response["contacts"];
+        response["contacts"].length == 0 ? [] : response["contacts"].toList();
     String username = response['username'] as String ?? "";
     String displayName = response['displayName'] as String == ""
         ? response['username'] as String ?? ""
         : response['displayName'] as String ?? "";
     String emailfield = email == "" ? response['email'] as String : email;
     int score = response['score'] as int;
-    List<String> friendsIds =
-        response['friendsIds'].length == 0 ? [] : response['friendsIds'];
+    List<String> friendsIds = response['friendsIds'].length == 0
+        ? []
+        : response['friendsIds'].toList();
     List<String> requestsSent = response['requests']['sent'].length == 0
         ? []
-        : response['requests']['sent'];
+        : response['requests']['sent'].toList();
     List<String> requestsReceived = response['requests']['received'].length == 0
         ? []
-        : response['requests']['received'];
+        : response['requests']['received'].toList();
     print(userId);
     return User(
         contacts: contacts,
@@ -86,8 +87,9 @@ class Auth with ChangeNotifier {
     return Loop(
         name: loop['name'] as String,
         type: getLoopsType(loop['type'] as String),
-        numberOfMembers: getImagesMap(loop['users'] as List<String>).length,
-        avatars: getImagesMap(loop['users'] as List<String>),
+        numberOfMembers:
+            getImagesMap(loop['users'].toList() as List<String>).length,
+        avatars: getImagesMap(loop['users'].toList() as List<String>),
         chatID: loop['chat'] as String,
         creatorId: loop['creatorId'] as String,
         id: loop._id,

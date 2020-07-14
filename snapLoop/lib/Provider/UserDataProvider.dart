@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:SnapLoop/Model/user.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/widgets.dart';
-import '../Helper/users.dart' as dummyUsers;
+import 'package:http/http.dart' as http;
 
 /// author: @sanchitmonga22
 
@@ -40,13 +43,34 @@ class UserDataProvider with ChangeNotifier {
     if (contacts == null || contacts.isEmpty) return [];
 
     contacts.forEach((e) {
-      dummyUsers.users.forEach((element) {
-        if (e.emails.contains(element.email)) {
-          userContacts.add(element);
-        }
-      });
+      // dummyUsers.users.forEach((element) {
+      //   if (e.emails.contains(element.email)) {
+      //     userContacts.add(element);
+      //   }
+      // });
     });
     return userContacts;
+  }
+
+  Future<List<PublicUserData>> searchByEmail(String email) async {
+    List<PublicUserData> users = [];
+    http.Response res = await http.get(
+      '$SERVER_IP/users/getPublicData',
+      headers: {
+        "Content-Type": "application/json",
+        'email': email,
+        'userId': userId
+      },
+    );
+    final response = json.decode(res.body).toList();
+    response.forEach((element) {
+      users.add(PublicUserData(
+          email: element['email'],
+          userID: element['_id'],
+          username: element['username']));
+    });
+    print(users[0].username);
+    return users;
   }
 
   void acceptRequest(String email) {

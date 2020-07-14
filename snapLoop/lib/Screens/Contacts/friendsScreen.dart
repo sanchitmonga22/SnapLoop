@@ -53,6 +53,11 @@ class _FriendsScreenState extends State<FriendsScreen>
   @override
   bool get wantKeepAlive => true;
 
+  Future<List<dynamic>> getUsers(String email) {
+    return Provider.of<UserDataProvider>(context, listen: false)
+        .searchByEmail(email);
+  }
+
   @override
   Widget build(BuildContext context) {
     loopName = ModalRoute.of(context).settings.arguments;
@@ -108,6 +113,7 @@ class _FriendsScreenState extends State<FriendsScreen>
                           ),
                   ),
             SearchBar(
+              minimumChars: 3,
               searchBarPadding: newLoop
                   ? EdgeInsets.only(top: 50)
                   : EdgeInsets.only(right: 35),
@@ -150,33 +156,73 @@ class _FriendsScreenState extends State<FriendsScreen>
               //searchBarPadding: EdgeInsets.all(10),
               hintText: "Enter here",
               iconActiveColor: Colors.white,
-              buildSuggestion: (item, index) {},
-              onItemFound: (item, index) {},
-              onSearch: (text) {},
-              placeHolder: ListView.builder(
-                itemCount: friends.length,
-                itemBuilder: (context, index) {
-                  FriendsData friend = friends[index];
-                  friendsLoops =
-                      Provider.of<LoopsProvider>(context, listen: false)
-                          .getLoopInforById(friend.commonLoops);
 
-                  return ContactsDetailsWidget(
-                    onTap: () {
-                      Navigator.pushReplacementNamed(
-                        context,
-                        NewLoopChatScreen.routeName,
-                        arguments: {"friend": friend, "loopName": loopName},
-                      );
-                    },
-                    friend: friend,
-                    friends: friends,
-                    friendsLoops: friendsLoops,
-                    newLoop: newLoop,
+              // check this
+              buildSuggestion: (item, index) {
+                print("Hellgersgo");
+                return Container(
+                  color: Colors.blue,
+                  child: ListTile(
                     key: ValueKey(index),
-                  );
-                },
-              ),
+                    title: item.username,
+                  ),
+                );
+              },
+              onItemFound: (userData, int index) {
+                print("Hello");
+                return Container(
+                  color: Colors.blue,
+                  child: ListTile(
+                    key: ValueKey(index),
+                    title: Text(userData.username),
+                  ),
+                );
+              },
+              loader: CircularProgressIndicator(),
+              emptyWidget: Text(
+                  "No items found, Please try searching with a different name"),
+              onError: (error) {
+                print(error);
+              },
+              onSearch: getUsers,
+              placeHolder: friends.length == 0
+                  ? Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Center(
+                        child: Text(
+                          "You don't currently have any friends! please search users above to add them as friend",
+                          style:
+                              kTextFormFieldStyle.copyWith(color: Colors.black),
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: friends.length,
+                      itemBuilder: (context, index) {
+                        FriendsData friend = friends[index];
+                        friendsLoops =
+                            Provider.of<LoopsProvider>(context, listen: false)
+                                .getLoopInforById(friend.commonLoops);
+
+                        return ContactsDetailsWidget(
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              NewLoopChatScreen.routeName,
+                              arguments: {
+                                "friend": friend,
+                                "loopName": loopName
+                              },
+                            );
+                          },
+                          friend: friend,
+                          friends: friends,
+                          friendsLoops: friendsLoops,
+                          newLoop: newLoop,
+                          key: ValueKey(index),
+                        );
+                      },
+                    ),
             ),
           ],
         ),

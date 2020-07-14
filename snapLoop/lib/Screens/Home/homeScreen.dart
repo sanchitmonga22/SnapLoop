@@ -1,5 +1,6 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
+import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
