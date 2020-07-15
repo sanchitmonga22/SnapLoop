@@ -35,8 +35,8 @@ class _LoopWidgetState extends State<LoopWidget>
   void initState() {
     super.initState();
     memojiWidget = MemojiGenerator(
+      loop: widget.loop,
       loopType: widget.loop.type,
-      numberOfMembers: widget.loop.numberOfMembers,
     );
   }
 

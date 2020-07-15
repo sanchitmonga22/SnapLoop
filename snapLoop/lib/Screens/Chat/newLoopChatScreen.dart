@@ -27,6 +27,7 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
     final loopName = args["loopName"] as String;
     final userData = args["friend"] as FriendsData;
     Loop loop = new Loop(
+        currentUserId: "",
         chatID: "",
         creatorId: "",
         id: "",

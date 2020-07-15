@@ -11,6 +11,7 @@ class User {
   String displayName; // can be set to the same as username
   final String email;
   final int score;
+  final int numberOfLoopsRemaining;
   List<String> friendsIds;
   // all the loops that the user is involved in
   List<Loop> loopsData;
@@ -23,6 +24,7 @@ class User {
 
   User({
     @required this.userID,
+    @required this.numberOfLoopsRemaining,
     @required this.contacts,
     @required this.requestsSent,
     @required this.requestsReceived,

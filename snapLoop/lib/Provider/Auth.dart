@@ -33,30 +33,12 @@ class Auth with ChangeNotifier {
       if (jwt != null) {
         _token = jwt;
         _userId = response['userId'] as String;
-        user = parseUser(response, email);
+        user = ResponseParsingHelper.parseUser(response, email, _userId);
         notifyListeners();
         await storage.write(key: "jwt", value: jwt);
         await storage.write(key: "userId", value: response['userId']);
       }
     }
-  }
-
-  User parseUser(dynamic response, String email) {
-    return User(
-        contacts: (response["contacts"] as List).cast<String>().toList(),
-        userID: userId,
-        username: response['username'] as String ?? "",
-        displayName: response['displayName'] == ""
-            ? response['username']
-            : response['displayName'],
-        email: email == "" ? response['email'] : email,
-        loopsData:
-            ResponseParsingHelper.getLoopsFromResponse(response['loopsData']),
-        score: response['score'] as int,
-        friendsIds: (response['friendsIds'] as List).cast<String>().toList(),
-        requestsSent: response['requests']['sent'].cast<String>().toList(),
-        requestsReceived:
-            response['requests']['received'].cast<String>().toList());
   }
 
   Future<void> logOut() async {
@@ -100,6 +82,7 @@ class Auth with ChangeNotifier {
       _token = jwt;
       _userId = response['userId'];
       user = new User(
+          numberOfLoopsRemaining: 5,
           contacts: [],
           requestsSent: [],
           requestsReceived: [],
@@ -133,7 +116,7 @@ class Auth with ChangeNotifier {
     );
     final response = json.decode(res.body);
     if (res.statusCode == 200) {
-      user = parseUser(response, "");
+      user = ResponseParsingHelper.parseUser(response, "", userId);
       notifyListeners();
       return true;
     }

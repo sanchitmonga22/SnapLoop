@@ -7,11 +7,10 @@ import '../../../constants.dart';
 
 ///author: @sanchitmonga22
 class MemojiGenerator extends StatefulWidget {
-  final int numberOfMembers;
+  final Loop loop;
   final LoopType loopType;
 
-  const MemojiGenerator({Key key, this.numberOfMembers, this.loopType})
-      : super(key: key);
+  const MemojiGenerator({Key key, this.loopType, this.loop}) : super(key: key);
 
   @override
   _MemojiGeneratorState createState() => _MemojiGeneratorState();
@@ -36,24 +35,29 @@ class _MemojiGeneratorState extends State<MemojiGenerator> {
 
   @override
   Widget build(BuildContext context) {
+    List<Image> images = widget.loop.avatars.values.toList();
+    int i = 0;
     return Stack(children: [
-      if (widget.numberOfMembers < 13)
-        ...kalignmentMap[widget.numberOfMembers].map((position) {
+      if (widget.loop.numberOfMembers < 13)
+        ...kalignmentMap[widget.loop.numberOfMembers].map((position) {
           return Memoji(
+            image: images[i],
             loopType: widget.loopType,
             position: position,
           );
         }).toList()
       else
-        ...getMemojis(widget.numberOfMembers).toList()
+        ...getMemojis(widget.loop.numberOfMembers).toList()
     ]);
   }
 }
 
 class Memoji extends StatefulWidget {
+  final Image image;
   final Position position;
   final loopType;
-  const Memoji({this.loopType, Key key, this.position}) : super(key: key);
+  const Memoji({this.loopType, Key key, this.position, this.image})
+      : super(key: key);
 
   @override
   _MemojiState createState() => _MemojiState();
@@ -65,8 +69,10 @@ class _MemojiState extends State<Memoji> {
   }
 
   NetworkImage getImage() {
-    return NetworkImage(URLMemojis[getRandomImageNumber(URLMemojis.length - 1)]
-        .replaceAll("%s", USERS[getRandomImageNumber(USERS.length - 1)]));
+    return widget.image == null
+        ? NetworkImage(URLMemojis[getRandomImageNumber(URLMemojis.length - 1)]
+            .replaceAll("%s", USERS[getRandomImageNumber(USERS.length - 1)]))
+        : widget.image;
   }
 
   @override

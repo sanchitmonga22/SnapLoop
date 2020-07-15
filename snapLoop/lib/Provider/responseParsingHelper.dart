@@ -1,7 +1,27 @@
 import 'package:SnapLoop/Model/loop.dart';
+import 'package:SnapLoop/Model/user.dart';
 import 'package:flutter/cupertino.dart';
 
 class ResponseParsingHelper {
+  static User parseUser(dynamic response, String email, String userId) {
+    return User(
+        numberOfLoopsRemaining: response['numberOfLoopsRemaining'],
+        contacts: (response["contacts"] as List).cast<String>().toList(),
+        userID: userId,
+        username: response['username'] as String ?? "",
+        displayName: response['displayName'] == ""
+            ? response['username']
+            : response['displayName'],
+        email: email == "" ? response['email'] : email,
+        loopsData:
+            ResponseParsingHelper.getLoopsFromResponse(response['loopsData']),
+        score: response['score'] as int,
+        friendsIds: (response['friendsIds'] as List).cast<String>().toList(),
+        requestsSent: response['requests']['sent'].cast<String>().toList(),
+        requestsReceived:
+            response['requests']['received'].cast<String>().toList());
+  }
+
   static List<Loop> getLoopsFromResponse(dynamic response) {
     List<Loop> newLoops;
     response = response as List<dynamic>;
@@ -14,6 +34,7 @@ class ResponseParsingHelper {
   static Loop parseLoop(dynamic loop) {
     List<dynamic> loopUsers = (loop['users'] as List).cast<dynamic>().toList();
     return Loop(
+        currentUserId: loop['currentUserId'],
         name: loop['name'],
         type: getLoopsType(loop['type']),
         numberOfMembers: loopUsers.length,

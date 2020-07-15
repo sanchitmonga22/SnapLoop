@@ -1,5 +1,6 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
+import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Screens/Chat/ExistingLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Contacts/ContactDetails/CommonsLoopsTile.dart';
 import 'package:SnapLoop/Screens/Contacts/ContactDetails/MutualFriendsTile.dart';
@@ -8,20 +9,15 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
 class ContactsDetailsWidget extends StatelessWidget {
   const ContactsDetailsWidget(
-      {Key key,
-      this.friend,
-      this.friendsLoops,
-      this.friends,
-      this.newLoop,
-      this.onTap})
+      {Key key, this.friend, this.friends, this.newLoop, this.onTap})
       : super(key: key);
   // represents a single friend created by this widget
   final FriendsData friend;
-  final List<Loop> friendsLoops;
   // list of all the friends of the users
   final List<FriendsData> friends;
   final bool newLoop;
@@ -29,6 +25,8 @@ class ContactsDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final friendsLoops = Provider.of<LoopsProvider>(context, listen: false)
+        .getLoopInforById(friend.commonLoops);
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
       actions: <Widget>[

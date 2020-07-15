@@ -1,4 +1,5 @@
 import 'package:SnapLoop/Helper/customRoute.dart';
+import 'package:SnapLoop/Helper/users.dart';
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
@@ -29,15 +30,30 @@ class SnapLoop extends StatelessWidget {
             create: (context) => Auth(),
           ),
           ChangeNotifierProxyProvider<Auth, LoopsProvider>(create: (context) {
-            return LoopsProvider("", [], "");
+            return LoopsProvider(
+                "",
+                [],
+                "",
+                User(
+                    numberOfLoopsRemaining: 5,
+                    loopsData: [],
+                    contacts: [],
+                    userID: "",
+                    username: "",
+                    displayName: "",
+                    email: "",
+                    score: 0,
+                    friendsIds: [],
+                    requestsSent: [],
+                    requestsReceived: []));
           }, update: (context, auth, previousLoopsProvider) {
             return LoopsProvider(
-              auth.token,
-              previousLoopsProvider.loops == null
-                  ? []
-                  : previousLoopsProvider.loops,
-              auth.userId,
-            );
+                auth.token,
+                previousLoopsProvider.loops == null
+                    ? []
+                    : previousLoopsProvider.loops,
+                auth.userId,
+                auth.user);
           }),
           ChangeNotifierProxyProvider<Auth, UserDataProvider>(
               create: (context) {
@@ -45,6 +61,7 @@ class SnapLoop extends StatelessWidget {
                 token: "",
                 userId: "",
                 user: User(
+                    numberOfLoopsRemaining: 5,
                     loopsData: [],
                     contacts: [],
                     userID: "",

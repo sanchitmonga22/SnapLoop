@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Model/user.dart';
+import 'package:SnapLoop/Provider/responseParsingHelper.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/widgets.dart';
@@ -13,7 +14,7 @@ class UserDataProvider with ChangeNotifier {
   List<Contact> contacts = [];
   List<PublicUserData> requests = [];
   List<FriendsData> friends = [];
-  final User user;
+  User user;
   final String token;
   final String userId;
 
@@ -25,6 +26,10 @@ class UserDataProvider with ChangeNotifier {
 
   int get userScore {
     return user.score;
+  }
+
+  User get userData {
+    return user;
   }
 
   List<FriendsData> get friendsData {
@@ -109,16 +114,75 @@ class UserDataProvider with ChangeNotifier {
     }
   }
 
-  Future<void> initializeRequests() async {
-    user.requestsReceived.forEach((element) async {
-      requests.add(await getUserDataById(element));
-    });
+  Future<bool> updateUserData() async {
+    try {
+      http.Response res = await http.get(
+        "$SERVER_IP/users/data",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+      );
+      final response = json.decode(res.body);
+      if (res.statusCode == 200) {
+        user = ResponseParsingHelper.parseUser(response, "", userId);
+        notifyListeners();
+        return true;
+      }
+      return false;
+    } catch (err) {
+      print(err);
+      return false;
+    }
   }
 
-  Future<void> initializeFriends() async {
-    user.friendsIds.forEach((friend) async {
-      friends.add(await getFriendsDataById(friend));
-    });
+  Future<bool> updateRequests() async {
+    try {
+      // checking for new users
+      List<String> newUsers = [];
+      newUsers.addAll(user.requestsReceived);
+      requests.forEach((element) {
+        if (newUsers.contains(element.userID)) {
+          newUsers.remove(element.userID);
+        }
+      });
+      if (newUsers.isEmpty) {
+        return true;
+      } else {
+        for (int i = 0; i < newUsers.length; i++) {
+          requests.add(await getUserDataById(newUsers[i]));
+        }
+        return true;
+      }
+    } catch (err) {
+      print(err);
+      return false;
+    }
+  }
+
+  Future<bool> updateFriends() async {
+    try {
+      // checking for new friends (comparing the data)
+      List<String> newFriends = [];
+      newFriends.addAll(user.friendsIds);
+      friends.forEach((element) {
+        if (newFriends.contains(element.userID)) {
+          newFriends.remove(element.userID);
+        }
+      });
+      print(newFriends);
+      if (newFriends.isEmpty) {
+        return true;
+      } else {
+        for (int i = 0; i < newFriends.length; i++) {
+          friends.add(await getFriendsDataById(newFriends[i]));
+        }
+        return true;
+      }
+    } catch (err) {
+      print(err);
+      return false;
+    }
   }
 
   Future<List<PublicUserData>> searchByEmail(String email) async {

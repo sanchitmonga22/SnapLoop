@@ -33,7 +33,10 @@ class _FloatingActionButtonDataState extends State<FloatingActionButtonData> {
           0: CircleAvatar(
             backgroundColor: kSystemPrimaryColor,
             child: Text(
-              "5",
+              Provider.of<UserDataProvider>(context)
+                  .userData
+                  .numberOfLoopsRemaining
+                  .toString(),
               style:
                   kTextFormFieldStyle.copyWith(fontWeight: FontWeight.normal),
             ),
