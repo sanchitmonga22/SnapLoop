@@ -41,16 +41,16 @@ class _FriendRequestsDialogState extends State<FriendRequestsDialog> {
           dismissal: SlidableDismissal(
             child: SlidableDrawerDismissal(),
             onDismissed: (actionType) {
-              String email = requests[index].email;
+              String userID = requests[index].userID;
               setState(() {
                 requests.removeAt(index);
               });
               if (actionType == SlideActionType.primary) {
                 Provider.of<UserDataProvider>(context, listen: false)
-                    .acceptRequest(email);
+                    .acceptRequest(userID);
               } else if (actionType == SlideActionType.secondary) {
                 Provider.of<UserDataProvider>(context, listen: false)
-                    .removeRequest(email);
+                    .removeRequest(userID);
               }
             },
           ),

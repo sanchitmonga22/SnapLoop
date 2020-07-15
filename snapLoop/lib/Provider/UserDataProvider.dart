@@ -27,6 +27,10 @@ class UserDataProvider with ChangeNotifier {
     return user.score;
   }
 
+  List<FriendsData> get friendsData {
+    return [...friends];
+  }
+
   String get username {
     return user.username;
   }
@@ -53,6 +57,36 @@ class UserDataProvider with ChangeNotifier {
     return userContacts;
   }
 
+  Future<FriendsData> getFriendsDataById(String userId) async {
+    try {
+      http.Response res =
+          await http.get('$SERVER_IP/users/friendsData', headers: {
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json",
+        'friendId': userId,
+      });
+      if (res.statusCode == 200) {
+        final response = json.decode(res.body);
+        notifyListeners();
+        return FriendsData(
+            username: response['username'],
+            displayName: (response['displayName'] ?? "") == ""
+                ? response['username']
+                : response['displayName'],
+            email: response['email'],
+            userID: response['_id'],
+            score: response['score'] as int,
+            status: response['status'],
+            commonLoops:
+                (response['commonLoops'] as List).cast<String>().toList(),
+            mutualFriendsIDs:
+                (response['mutualFriends'] as List).cast<String>().toList());
+      }
+    } catch (err) {
+      print(err);
+    }
+  }
+
   Future<PublicUserData> getUserDataById(String userId) async {
     try {
       http.Response res =
@@ -60,6 +94,7 @@ class UserDataProvider with ChangeNotifier {
         "Content-Type": "application/json",
         'userId': userId,
       });
+
       if (res.statusCode == 200) {
         final response = json.decode(res.body);
         return PublicUserData(
@@ -67,7 +102,6 @@ class UserDataProvider with ChangeNotifier {
             userID: response['_id'],
             username: response['username']);
       } else {
-        print(res.body);
         throw new HttpException("User not found with id:$userId");
       }
     } catch (err) {
@@ -78,6 +112,12 @@ class UserDataProvider with ChangeNotifier {
   Future<void> initializeRequests() async {
     user.requestsReceived.forEach((element) async {
       requests.add(await getUserDataById(element));
+    });
+  }
+
+  Future<void> initializeFriends() async {
+    user.friendsIds.forEach((friend) async {
+      friends.add(await getFriendsDataById(friend));
     });
   }
 
@@ -107,7 +147,6 @@ class UserDataProvider with ChangeNotifier {
   }
 
   Future<void> sendFriendRequest(String sendToId) async {
-    print(sendToId);
     try {
       http.Response res = await http.put(
         '$SERVER_IP/users/sendRequest',
@@ -117,9 +156,7 @@ class UserDataProvider with ChangeNotifier {
           "sendToId": sendToId,
         },
       );
-      print(res.body);
       if (res.statusCode == 200) {
-        print("request sent successfully");
         return;
       } else {
         throw new HttpException("Request not sent");
@@ -129,30 +166,40 @@ class UserDataProvider with ChangeNotifier {
     }
   }
 
-  void acceptRequest(String email) {
-    PublicUserData user;
-    // allUsers.forEach((element) {
-    //   if (element.email == email) {
-    //     user = element;
-    //   }
-    // });
-    friends.add(FriendsData(
-      commonLoops: [],
-      displayName: user.username,
-      email: user.email,
-      mutualFriendsIDs: [],
-      score: 478,
-      userID: user.userID,
-      status: "Lol",
-      username: user.username,
-    ));
-    removeRequest(email);
-    notifyListeners();
+  Future<void> acceptRequest(String userID) async {
+    try {
+      http.Response res = await http.post(
+        '$SERVER_IP/users/acceptRequest',
+        headers: {
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json",
+          "senderId": userID,
+        },
+      );
+      if (res.statusCode == 200) {
+        return;
+      } else {
+        throw new HttpException("Request not sent");
+      }
+    } catch (err) {}
   }
 
-  void removeRequest(String email) {
-    requests.removeWhere((element) => element.email == email);
-    notifyListeners();
+  Future<void> removeRequest(String userID) async {
+    try {
+      http.Response res = await http.post(
+        '$SERVER_IP/users/deleteRequest',
+        headers: {
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json",
+          "senderId": userID,
+        },
+      );
+      if (res.statusCode == 200) {
+        return;
+      } else {
+        throw new HttpException("Request not removed");
+      }
+    } catch (err) {}
   }
 
 // will use the PublicUserData

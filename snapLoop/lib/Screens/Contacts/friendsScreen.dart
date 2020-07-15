@@ -51,11 +51,13 @@ class _FriendsScreenState extends State<FriendsScreen>
   String loopName = "";
   int activeIndex;
   int requestSentIndex;
+  List<FriendsData> friends = [];
 
   @override
   void initState() {
     super.initState();
     Provider.of<UserDataProvider>(context, listen: false).initializeRequests();
+    Provider.of<UserDataProvider>(context, listen: false).initializeFriends();
   }
 
   @override
@@ -68,11 +70,12 @@ class _FriendsScreenState extends State<FriendsScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     loopName = ModalRoute.of(context).settings.arguments;
     if (loopName != "" && loopName != null) newLoop = true;
-    super.build(context);
     List<Loop> friendsLoops = [];
-    List<FriendsData> friends = Provider.of<UserDataProvider>(context).friends;
+    friends = Provider.of<UserDataProvider>(context).friendsData;
+
     return Material(
       child: Padding(
         padding: const EdgeInsets.only(right: 10.0, left: 5),
@@ -166,7 +169,6 @@ class _FriendsScreenState extends State<FriendsScreen>
               iconActiveColor: Colors.white,
               // check this
               buildSuggestion: (item, index) {
-                print("Hellgersgo");
                 return Container(
                   color: Colors.blue,
                   child: ListTile(

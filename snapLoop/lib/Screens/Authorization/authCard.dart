@@ -57,6 +57,9 @@ class _AuthCardState extends State<AuthCard>
   }
 
   void _showErrorDialog(String message) {
+    setState(() {
+      _isLoading = false;
+    });
     showDialog(
         context: context,
         builder: (context) => ErrorDialog(
@@ -252,7 +255,7 @@ class _AuthCardState extends State<AuthCard>
 
                   if (_isLoading)
                     AnimatingFlatButton(
-                      isAnimating: true,
+                      isAnimating: _isLoading,
                       labelText:
                           _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP',
                       onClicked: () {},
