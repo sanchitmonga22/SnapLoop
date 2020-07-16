@@ -26,7 +26,7 @@ class ContactsDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final friendsLoops = Provider.of<LoopsProvider>(context, listen: false)
-        .getLoopInforById(friend.commonLoops);
+        .getLoopInforByIds(friend.commonLoops);
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
       actions: <Widget>[

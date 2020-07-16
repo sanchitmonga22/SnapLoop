@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:SnapLoop/Helper/loops.dart' as loopsies;
 import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
@@ -69,7 +68,7 @@ class LoopsProvider with ChangeNotifier {
     }
   }
 
-  Future<Map<String, String>> createLoop(String name, String friendId,
+  Future<Map<String, dynamic>> createLoop(String name, String friendId,
       String content, String friendAvatar, String myAvatar) async {
     try {
       http.Response res = await http.post('$SERVER_IP/loops/create',
@@ -85,9 +84,7 @@ class LoopsProvider with ChangeNotifier {
             "senderAvatar": myAvatar,
           }));
       final response = json.decode(res.body);
-      print(response);
       if (res.statusCode == 200) {
-        print("loop created successfully");
         notifyListeners();
         return response;
       } else {
@@ -103,7 +100,11 @@ class LoopsProvider with ChangeNotifier {
     return _loops.firstWhere((loop) => loop.name == name);
   }
 
-  List<Loop> getLoopInforById(List<String> id) {
+  Loop findById(String id) {
+    return _loops.firstWhere((element) => element.id == id);
+  }
+
+  List<Loop> getLoopInforByIds(List<String> id) {
     List<Loop> friendsLoops = [];
     id.forEach((e) {
       _loops.forEach((element) {

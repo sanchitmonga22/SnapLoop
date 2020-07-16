@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 /// author: @sanchitmonga22
 
@@ -9,14 +10,14 @@ class Chat {
 }
 
 class ChatInfo {
-  final String senderDisplayName;
+  final String senderUsername;
   final String senderID;
   //For now it is just text, and it will change as we move on
   final String content;
   final DateTime time;
 
   ChatInfo(
-      {@required this.senderDisplayName,
+      {@required this.senderUsername,
       @required this.senderID,
       @required this.content,
       @required this.time});

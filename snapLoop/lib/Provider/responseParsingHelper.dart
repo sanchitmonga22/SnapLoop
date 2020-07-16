@@ -3,6 +3,28 @@ import 'package:SnapLoop/Model/user.dart';
 import 'package:flutter/cupertino.dart';
 
 class ResponseParsingHelper {
+  static FriendsData parseFriend(dynamic response) {
+    return FriendsData(
+        username: response['username'],
+        displayName: (response['displayName'] ?? "") == ""
+            ? response['username']
+            : response['displayName'],
+        email: response['email'],
+        userID: response['_id'],
+        score: response['score'] as int,
+        status: response['status'],
+        commonLoops: (response['commonLoops'] as List).cast<String>().toList(),
+        mutualFriendsIDs:
+            (response['mutualFriends'] as List).cast<String>().toList());
+  }
+
+  static PublicUserData parsePublicUserData(dynamic response) {
+    return PublicUserData(
+        email: response['email'],
+        userID: response['_id'],
+        username: response['username']);
+  }
+
   static User parseUser(dynamic response, String email, String userId) {
     return User(
         numberOfLoopsRemaining: response['numberOfLoopsRemaining'],

@@ -5,9 +5,9 @@ import 'package:SnapLoop/Model/loop.dart';
 
 // This will be sorted according to the time of the creation
 final chat = Chat(chatID: "chat", chat: [
-  ChatInfo(senderDisplayName: null, content: null, time: null, senderID: null),
-  ChatInfo(senderDisplayName: null, content: null, time: null, senderID: null),
-  ChatInfo(senderDisplayName: null, content: null, time: null, senderID: null)
+  // ChatInfo(senderDisplayName: null, content: null, time: null, senderID: null),
+  // ChatInfo(senderDisplayName: null, content: null, time: null, senderID: null),
+  // ChatInfo(senderDisplayName: null, content: null, time: null, senderID: null)
 ]);
 
 //Chronological order for printing the loop on the homeScreen is:

@@ -5,6 +5,7 @@ import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/Screens/Chat/LoopDetailsScreen.dart';
+import 'package:SnapLoop/Screens/Chat/messages.dart';
 import 'package:SnapLoop/Screens/Chat/newMessage.dart';
 import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidget.dart';
 import 'package:SnapLoop/constants.dart';
@@ -31,6 +32,7 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
   Map<String, dynamic> images;
   Future future;
   bool first = true;
+  String loopId = "";
 
   Future<bool> initializeScreen() async {
     myId = Provider.of<UserDataProvider>(context).userData.userID;
@@ -61,28 +63,28 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
   }
 
   Future<void> sendMessage(String enteredMessage) async {
-    print(enteredMessage);
-    Map<String, String> result =
-        await Provider.of<LoopsProvider>(context, listen: false).createLoop(
-            loopName,
-            userData.userID,
-            enteredMessage,
-            images[userData.userID],
-            images[myId]);
+    var result = await Provider.of<LoopsProvider>(context, listen: false)
+        .createLoop(loopName, userData.userID, enteredMessage,
+            images[userData.userID], images[myId]);
     if (result != null) {
       loop.chatID = result["chatId"];
       loop.id = result['_id'];
-      chat.chatID = result["chatId"];
+      chat.chatID = result['chatId'];
       chat.chat.add(ChatInfo(
-          senderDisplayName:
-              Provider.of<UserDataProvider>(context, listen: false).displayName,
+          senderUsername:
+              Provider.of<UserDataProvider>(context, listen: false).username,
           senderID: myId,
           content: enteredMessage,
-          time: DateTime.parse(result["sentTime"])));
+          time:
+              DateTime.fromMicrosecondsSinceEpoch(result["sentTime"] as int)));
       Provider.of<LoopsProvider>(context, listen: false).addNewLoop(loop);
       Provider.of<ChatProvider>(context, listen: false).addNewChat(chat);
+      // rebuilding the widget once the chat has been saved in the chats array in the chat provider
+      setState(() {
+        loopId = result['_id'];
+      });
     } else {
-      print("result not found");
+      print("result not found and loop not created");
     }
   }
 
@@ -91,7 +93,9 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
       decoration: BoxDecoration(color: backgroundColor),
       child: Column(
         children: [
-          Expanded(child: Container()),
+          Messages(
+            loopId: loopId,
+          ),
           NewMessage(sendMessage: sendMessage),
         ],
       ),

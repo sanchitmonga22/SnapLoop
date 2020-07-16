@@ -73,19 +73,7 @@ class UserDataProvider with ChangeNotifier {
       if (res.statusCode == 200) {
         final response = json.decode(res.body);
         notifyListeners();
-        return FriendsData(
-            username: response['username'],
-            displayName: (response['displayName'] ?? "") == ""
-                ? response['username']
-                : response['displayName'],
-            email: response['email'],
-            userID: response['_id'],
-            score: response['score'] as int,
-            status: response['status'],
-            commonLoops:
-                (response['commonLoops'] as List).cast<String>().toList(),
-            mutualFriendsIDs:
-                (response['mutualFriends'] as List).cast<String>().toList());
+        return ResponseParsingHelper.parseFriend(response);
       }
     } catch (err) {
       print(err);
@@ -102,10 +90,7 @@ class UserDataProvider with ChangeNotifier {
 
       if (res.statusCode == 200) {
         final response = json.decode(res.body);
-        return PublicUserData(
-            email: response['email'],
-            userID: response['_id'],
-            username: response['username']);
+        return ResponseParsingHelper.parsePublicUserData(response);
       } else {
         throw new HttpException("User not found with id:$userId");
       }
@@ -170,7 +155,6 @@ class UserDataProvider with ChangeNotifier {
           newFriends.remove(element.userID);
         }
       });
-      print(newFriends);
       if (newFriends.isEmpty) {
         return true;
       } else {
