@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/Screens/Home/Bitmojis/bitmoji.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import '../../../constants.dart';
 
 ///author: @sanchitmonga22
@@ -35,13 +35,14 @@ class _MemojiGeneratorState extends State<MemojiGenerator> {
 
   @override
   Widget build(BuildContext context) {
-    List<Image> images = widget.loop.avatars.values.toList();
+    List<String> images = widget.loop.avatars.values.toList();
     int i = 0;
     return Stack(children: [
       if (widget.loop.numberOfMembers < 13)
         ...kalignmentMap[widget.loop.numberOfMembers].map((position) {
+          i++;
           return Memoji(
-            image: images[i],
+            imageUrl: images[i - 1],
             loopType: widget.loopType,
             position: position,
           );
@@ -53,10 +54,10 @@ class _MemojiGeneratorState extends State<MemojiGenerator> {
 }
 
 class Memoji extends StatefulWidget {
-  final Image image;
+  final String imageUrl;
   final Position position;
   final loopType;
-  const Memoji({this.loopType, Key key, this.position, this.image})
+  const Memoji({this.loopType, Key key, this.position, this.imageUrl})
       : super(key: key);
 
   @override
@@ -64,15 +65,8 @@ class Memoji extends StatefulWidget {
 }
 
 class _MemojiState extends State<Memoji> {
-  int getRandomImageNumber(int max) {
-    return Random().nextInt(max);
-  }
-
   NetworkImage getImage() {
-    return widget.image == null
-        ? NetworkImage(URLMemojis[getRandomImageNumber(URLMemojis.length - 1)]
-            .replaceAll("%s", USERS[getRandomImageNumber(USERS.length - 1)]))
-        : widget.image;
+    return NetworkImage(widget.imageUrl);
   }
 
   @override

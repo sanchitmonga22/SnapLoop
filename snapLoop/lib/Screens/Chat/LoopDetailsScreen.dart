@@ -77,6 +77,7 @@ class _LoopsDetailsScreenState extends State<LoopsDetailsScreen> {
                               },
                             ),
                           ),
+                          // LOOP WIDGET here
                           widget.loopWidget,
                           Padding(
                             padding: const EdgeInsets.only(top: 10),

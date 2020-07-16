@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 /// author: @sanchitmonga22
 
 class Chat {
-  final String chatID;
+  String chatID;
   final List<ChatInfo> chat;
   Chat({@required this.chatID, @required this.chat});
 }

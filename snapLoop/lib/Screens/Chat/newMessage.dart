@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 /// author: @sanchitmonga22
 class NewMessage extends StatefulWidget {
-  final String loopID;
+  final Function sendMessage;
 
-  const NewMessage({Key key, this.loopID = ""}) : super(key: key);
+  const NewMessage({Key key, this.sendMessage}) : super(key: key);
 
   @override
   _NewMessageState createState() => _NewMessageState();
@@ -14,15 +14,13 @@ class NewMessage extends StatefulWidget {
 class _NewMessageState extends State<NewMessage> {
   var enteredMessage = "";
   final controller = new TextEditingController();
-  void sendMessage() async {
-    FocusScope.of(context).unfocus();
-    //If the loopID is not provided that means that the user is trying to create a new loop
-    //entered message contains the message
-    // make an API call and send the message
-    //enteredMessage contains the actual message and it will be displayed after making the API call and
-    // making sure that the message was delivered
-    controller.clear();
-  }
+  // void sendMessage() async {
+  //If the loopID is not provided that means that the user is trying to create a new loop
+  //entered message contains the message
+  // make an API call and send the message
+  //enteredMessage contains the actual message and it will be displayed after making the API call and
+  // making sure that the message was delivered
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +78,13 @@ class _NewMessageState extends State<NewMessage> {
                       size: 25,
                       color: Colors.white,
                     ),
-                    onPressed:
-                        enteredMessage.trim().isEmpty ? null : sendMessage,
+                    onPressed: enteredMessage.trim().isEmpty
+                        ? null
+                        : () {
+                            FocusScope.of(context).unfocus();
+                            widget.sendMessage(enteredMessage);
+                            controller.clear();
+                          },
                   )
                 : Container(
                     height: 0,

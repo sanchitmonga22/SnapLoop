@@ -20,6 +20,11 @@ class LoopsProvider with ChangeNotifier {
     return [..._loops];
   }
 
+  void addNewLoop(Loop loop) {
+    _loops.add(loop);
+    notifyListeners();
+  }
+
   int get loopCount {
     return _loops.length;
   }
@@ -41,27 +46,31 @@ class LoopsProvider with ChangeNotifier {
   //       userIDs: null);
   // }
 
-  Future<Object> checkLoopAvailability(String name) async {
+  Future<Map<String, String>> getRandomURL(String friendId) async {
     try {
       http.Response res =
-          await http.get('$SERVER_IP/loops/checkAvailability', headers: {
+          await http.get('$SERVER_IP/loops/getRandomUrls', headers: {
         "Authorization": "Bearer " + authToken,
         "Content-Type": "application/json",
-        "loopName": name
       });
       if (res.statusCode == 200) {
         final response = json.decode(res.body);
-        return {"myUrl": response['url1'], "friendUrl": response['url2']};
+        return {
+          // TODO : add a predefined image if the network image fails
+          "$userId": response['url1'],
+          "$friendId": response['url2'],
+        };
+      } else {
+        throw new HttpException("could not generate random emojies");
       }
-      return null;
     } catch (err) {
       print(err);
       throw new HttpException(err);
     }
   }
 
-  Future<void> createLoop(String name, String friendId, String content,
-      String friendAvatar, String myAvatar) async {
+  Future<Map<String, String>> createLoop(String name, String friendId,
+      String content, String friendAvatar, String myAvatar) async {
     try {
       http.Response res = await http.post('$SERVER_IP/loops/create', headers: {
         "Authorization": "Bearer " + authToken,
@@ -73,12 +82,18 @@ class LoopsProvider with ChangeNotifier {
         "forwardedToAvatar": friendAvatar,
         "senderAvatar": myAvatar,
       });
+      final response = json.decode(res.body);
+      print(response);
       if (res.statusCode == 200) {
         print("loop created successfully");
+        notifyListeners();
+        return response;
+      } else {
+        return null;
       }
-      notifyListeners();
     } catch (err) {
       print(err);
+      throw new HttpException("loop creation failed due to :$err");
     }
   }
 
@@ -98,14 +113,14 @@ class LoopsProvider with ChangeNotifier {
     return friendsLoops;
   }
 
-  // if there is already a loop with the same name in the database
+  // TODO : make an API call
   bool loopExistsWithName(String name) {
     bool exists = false;
-    loops.forEach((loop) {
-      if (loop.name.toLowerCase() == name.trim().toLowerCase()) {
-        exists = true;
-      }
-    });
+    // loops.forEach((loop) {
+    //   if (loop.name.toLowerCase() == name.trim().toLowerCase()) {
+    //     exists = true;
+    //   }
+    // });
     return exists;
   }
 }

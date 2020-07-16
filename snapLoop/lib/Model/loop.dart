@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
@@ -14,16 +12,16 @@ enum LoopType {
 }
 
 class Loop {
-  final String id;
+  String id;
   final String name;
   final String creatorId;
-  final String currentUserId;
-  final DateTime timeSent;
-  final int numberOfMembers;
-  final LoopType type;
+  String currentUserId;
+  DateTime timeSent;
+  int numberOfMembers;
+  LoopType type;
   final List<String> userIDs; // will store the userIDs for all the loops
-  final String chatID;
-  final Map<String, Image>
+  String chatID;
+  Map<String, String>
       avatars; // user id with their randomly generated avatar which is stored in the server
 
   Loop(

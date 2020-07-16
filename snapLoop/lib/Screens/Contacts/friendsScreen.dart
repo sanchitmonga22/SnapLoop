@@ -56,12 +56,11 @@ class _FriendsScreenState extends State<FriendsScreen>
   @override
   void initState() {
     super.initState();
+    Provider.of<UserDataProvider>(context, listen: false).updateUserData();
   }
 
   Future<bool> initializeScreen() async {
     try {
-      await Provider.of<UserDataProvider>(context, listen: false)
-          .updateUserData();
       await Provider.of<UserDataProvider>(context, listen: false)
           .updateFriends();
       await Provider.of<UserDataProvider>(context, listen: false)

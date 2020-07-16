@@ -2,6 +2,7 @@ import 'package:SnapLoop/Helper/customRoute.dart';
 import 'package:SnapLoop/Helper/users.dart';
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/Auth.dart';
+import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
@@ -79,6 +80,19 @@ class SnapLoop extends StatelessWidget {
               user: auth.user,
             );
           }),
+          ChangeNotifierProxyProvider<Auth, ChatProvider>(
+            create: (context) {
+              return ChatProvider("", "", []);
+            },
+            update: (context, auth, previousChatProvider) {
+              return ChatProvider(
+                  auth.token,
+                  auth.userId,
+                  previousChatProvider.chats == null
+                      ? []
+                      : previousChatProvider.chats);
+            },
+          ),
           ChangeNotifierProvider(
             create: (context) => FloatingActionButtonDataChanges(),
           ),

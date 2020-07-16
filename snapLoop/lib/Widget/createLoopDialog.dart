@@ -130,11 +130,13 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
                                   startAnimation = !startAnimation;
                                 });
                                 if (widget.friend == null) {
+                                  // going to the contacts screen and then selecting a friend
                                   Navigator.of(context).pushReplacementNamed(
                                     FriendsScreen.routeName,
                                     arguments: loopName,
                                   );
                                 } else {
+                                  // going to the chat screen directly
                                   Navigator.of(context).pushReplacementNamed(
                                       NewLoopChatScreen.routeName,
                                       arguments: {

@@ -1,5 +1,4 @@
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/Screens/Home/Bitmojis/bitmoji.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -53,9 +52,7 @@ class MessageBubble extends StatelessWidget {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.fitHeight,
-                              image: NetworkImage(userRandomMemoji == ""
-                                  ? URLMemojis[0].replaceAll("%s", USERS[0])
-                                  : userRandomMemoji)),
+                              image: NetworkImage(userRandomMemoji)),
                         ),
                       )),
                     ),

@@ -45,13 +45,12 @@ class ResponseParsingHelper {
         userIDs: loop['users']);
   }
 
-  static Map<String, Image> getImagesMap(dynamic users) {
-    Map<String, Image> images = {};
+  static Map<String, String> getImagesMap(dynamic users) {
+    Map<String, String> images = {};
     users = users;
     for (int i = 0; i < users.length; i++) {
-      images[users[i]['user']] =
-          // TODO:add an image returned when a image url is not correct
-          Image(image: NetworkImage(users[i]['avatarLink']));
+      // TODO:add an image returned when a image url is not correct
+      images[users[i]['user']] = users[i]['avatarLink'];
     }
     return images;
   }
