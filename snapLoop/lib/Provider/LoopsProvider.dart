@@ -72,16 +72,18 @@ class LoopsProvider with ChangeNotifier {
   Future<Map<String, String>> createLoop(String name, String friendId,
       String content, String friendAvatar, String myAvatar) async {
     try {
-      http.Response res = await http.post('$SERVER_IP/loops/create', headers: {
-        "Authorization": "Bearer " + authToken,
-        "Content-Type": "application/json",
-      }, body: {
-        "content": content,
-        "name": name,
-        "forwardedToId": friendId,
-        "forwardedToAvatar": friendAvatar,
-        "senderAvatar": myAvatar,
-      });
+      http.Response res = await http.post('$SERVER_IP/loops/create',
+          headers: {
+            "Authorization": "Bearer " + authToken,
+            "Content-Type": "application/json",
+          },
+          body: jsonEncode({
+            "content": content,
+            "name": name,
+            "forwardedToId": friendId,
+            "forwardedToAvatar": friendAvatar,
+            "senderAvatar": myAvatar,
+          }));
       final response = json.decode(res.body);
       print(response);
       if (res.statusCode == 200) {

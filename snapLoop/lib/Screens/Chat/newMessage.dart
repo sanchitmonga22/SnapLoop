@@ -80,7 +80,7 @@ class _NewMessageState extends State<NewMessage> {
                     ),
                     onPressed: enteredMessage.trim().isEmpty
                         ? null
-                        : () {
+                        : () async {
                             FocusScope.of(context).unfocus();
                             widget.sendMessage(enteredMessage);
                             controller.clear();
