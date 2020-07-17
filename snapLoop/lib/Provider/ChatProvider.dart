@@ -1,5 +1,12 @@
+import 'dart:convert';
+
+import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Model/chat.dart';
+import 'package:SnapLoop/Provider/responseParsingHelper.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
+
+import '../constants.dart';
 
 /// author: @sanchitmonga22
 
@@ -20,17 +27,35 @@ class ChatProvider with ChangeNotifier {
   }
 
   Chat getChatById(String chatId) {
-    print(chatId);
-    return _chats.firstWhere((element) => element.chatID == chatId);
-    // _chats.forEach((element) {
-    //   if (element.chatID == chatId) {
-    //     return element;
-    //   }
-    // });
-    // return getChatByIdFromNetwork(chatId);
+    return _chats.firstWhere((element) {
+      return element.chatID == chatId;
+    });
   }
 
-  Chat getChatByIdFromNetwork(String chatId) {}
+  Future<void> initializeChatByIdFromNetwork(String chatId) async {
+    try {
+      http.Response res = await http.get(
+        '$SERVER_IP/chats/getData',
+        headers: {
+          "Authorization": "Bearer " + authToken,
+          "Content-Type": "application/json",
+          "chatId": chatId,
+        },
+      );
+      final response = json.decode(res.body);
+      if (res.statusCode == 200) {
+        if (_chats.isNotEmpty) {
+          _chats.removeWhere(
+              (element) => element.chatID == response['chatId'] as String);
+        }
+        _chats.add(ResponseParsingHelper.parseChat(response));
+      } else {
+        throw new HttpException("Could not get the chat from the server");
+      }
+    } catch (err) {
+      throw new HttpException(err);
+    }
+  }
 
   // either get the chat from the server or get the chat from the
 }

@@ -52,6 +52,8 @@ class _FriendsScreenState extends State<FriendsScreen>
   int activeIndex;
   int requestSentIndex;
   List<FriendsData> friends = [];
+  bool init = true;
+  Future future;
 
   @override
   void initState() {
@@ -77,6 +79,15 @@ class _FriendsScreenState extends State<FriendsScreen>
   @override
   bool get wantKeepAlive => true;
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (init) {
+      future = initializeScreen();
+      init = false;
+    }
+  }
+
   Future<List<dynamic>> getUsersByEmail(String email) {
     return Provider.of<UserDataProvider>(context, listen: false)
         .searchByEmail(email);
@@ -88,7 +99,7 @@ class _FriendsScreenState extends State<FriendsScreen>
     loopName = ModalRoute.of(context).settings.arguments;
     if (loopName != "" && loopName != null) newLoop = true;
     return FutureBuilder(
-      future: initializeScreen(),
+      future: future,
       builder: (context, snapshot) {
         return snapshot.connectionState == ConnectionState.waiting
             ? Material(

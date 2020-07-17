@@ -44,6 +44,10 @@ class UserDataProvider with ChangeNotifier {
     return user.displayName;
   }
 
+  bool canStartANewLoop() {
+    return user.numberOfLoopsRemaining > 0;
+  }
+
   void syncContacts(List<Contact> contacts) {
     if (contacts != null && contacts.length != 0) contacts.addAll(contacts);
   }
@@ -262,21 +266,9 @@ class UserDataProvider with ChangeNotifier {
   //   return friends;
   // }
 
-  //AFTER APIs
-/**
-  //for actual Users
-  // A call to the server to create a new user
-  Future<void> createNewUser(User user) async {}
+  // Future<bool> updateDisplayName(String value) async {}
 
-  Future<List<User>> universalSearchFriend() {}
-
-  Future<bool> updateDisplayName(String value) async {}
-
-  Future<bool> resetPassword(String value) async {}
-  List<User> universalSearch(String value) {
-  }
-
-  // Match the email ids and phone numbers provided for each user to load the users with the given phone numbers
-  Future<void> syncUserContacts() async {}
-  */
+  // Future<bool> resetPassword(String value) async {}
+  // List<User> universalSearch(String value) {
+  // }
 }

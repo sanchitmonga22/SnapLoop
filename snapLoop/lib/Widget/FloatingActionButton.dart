@@ -1,4 +1,5 @@
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
+import 'package:SnapLoop/Widget/ErrorDialog.dart';
 import 'package:SnapLoop/Widget/createLoopDialog.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
@@ -27,16 +28,16 @@ class FloatingActionButtonData extends StatefulWidget {
 class _FloatingActionButtonDataState extends State<FloatingActionButtonData> {
   @override
   Widget build(BuildContext context) {
+    int numberOfloops =
+        Provider.of<UserDataProvider>(context).userData.numberOfLoopsRemaining;
+
     final changes = Provider.of<FloatingActionButtonDataChanges>(context);
     return FloatingActionBubble(
         circleAvatar: {
           0: CircleAvatar(
             backgroundColor: kSystemPrimaryColor,
             child: Text(
-              Provider.of<UserDataProvider>(context)
-                  .userData
-                  .numberOfLoopsRemaining
-                  .toString(),
+              numberOfloops.toString(),
               style:
                   kTextFormFieldStyle.copyWith(fontWeight: FontWeight.normal),
             ),
@@ -46,25 +47,30 @@ class _FloatingActionButtonDataState extends State<FloatingActionButtonData> {
         backGroundColor: Colors.black,
         items: <Bubble>[
           Bubble(
-            title: "+",
-            iconColor: Colors.white,
-            bubbleColor: Colors.black,
-            icon: CupertinoIcons.loop_thick,
-            titleStyle: kTextStyleHomeScreen.copyWith(
-                fontSize: 20, fontWeight: FontWeight.w900),
-            onPress: () {
-              changes.toggleIsTapped();
-              widget._animationController.reverse();
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                useSafeArea: true,
-                builder: (context) {
-                  return CreateALoopDialog();
-                },
-              );
-            },
-          ),
+              title: "+",
+              iconColor: Colors.white,
+              bubbleColor: Colors.black,
+              icon: CupertinoIcons.loop_thick,
+              titleStyle: kTextStyleHomeScreen.copyWith(
+                  fontSize: 20, fontWeight: FontWeight.w900),
+              onPress: () {
+                changes.toggleIsTapped();
+                widget._animationController.reverse();
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  useSafeArea: true,
+                  builder: (context) {
+                    if (numberOfloops > 0) {
+                      return CreateALoopDialog();
+                    } else {
+                      return ErrorDialog(
+                          message:
+                              "You have used the maximum number of loops available for the day. It resets after every ");
+                    }
+                  },
+                );
+              }),
           Bubble(
             title: "+",
             iconColor: Colors.white,

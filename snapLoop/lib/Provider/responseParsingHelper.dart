@@ -1,8 +1,23 @@
+import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
-import 'package:flutter/cupertino.dart';
 
 class ResponseParsingHelper {
+  static Chat parseChat(dynamic response) {
+    List<ChatInfo> messages = [];
+    String chatId = response['_id'];
+    List<dynamic> res = response['messages'];
+    for (int i = 0; i < res.length; i++) {
+      var message = res[i];
+      messages.add(ChatInfo(
+        content: message['content'],
+        senderID: message['sender'],
+        time: DateTime.parse(message['sentTime']),
+      ));
+    }
+    return Chat(chat: messages, chatID: chatId);
+  }
+
   static FriendsData parseFriend(dynamic response) {
     return FriendsData(
         username: response['username'],
@@ -45,7 +60,7 @@ class ResponseParsingHelper {
   }
 
   static List<Loop> getLoopsFromResponse(dynamic response) {
-    List<Loop> newLoops;
+    List<Loop> newLoops = [];
     response = response as List<dynamic>;
     for (int i = 0; i < response.length; i++) {
       newLoops.add(parseLoop(response[i]));
@@ -58,21 +73,28 @@ class ResponseParsingHelper {
     return Loop(
         currentUserId: loop['currentUserId'],
         name: loop['name'],
-        type: getLoopsType(loop['type']),
+        type: getLoopsType(loop['loopType']),
         numberOfMembers: loopUsers.length,
         avatars: getImagesMap(loopUsers),
         chatID: loop['chat'] as String,
         creatorId: loop['creatorId'] as String,
-        id: loop._id,
-        userIDs: loop['users']);
+        id: loop['_id'],
+        userIDs: parseLoopUsers(loopUsers));
+  }
+
+  static List<String> parseLoopUsers(dynamic users) {
+    List<String> loopUsers = [];
+    for (int i = 0; i < users.length; i++) {
+      loopUsers.add(users[i]['user'] as String);
+    }
+    return loopUsers;
   }
 
   static Map<String, String> getImagesMap(dynamic users) {
     Map<String, String> images = {};
-    users = users;
     for (int i = 0; i < users.length; i++) {
       // TODO:add an image returned when a image url is not correct
-      images[users[i]['user']] = users[i]['avatarLink'];
+      images[users[i]['user']] = users[i]['avatarLink'] as String;
     }
     return images;
   }
@@ -89,7 +111,7 @@ class ResponseParsingHelper {
     } else if (type == "INACTIVE_LOOP_FAILED") {
       return LoopType.INACTIVE_LOOP_FAILED;
     } else {
-      return null;
+      return LoopType.NEW_LOOP;
     }
   }
 }

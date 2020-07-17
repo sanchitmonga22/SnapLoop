@@ -34,8 +34,8 @@ class Auth with ChangeNotifier {
         _token = jwt;
         _userId = response['userId'] as String;
         user = ResponseParsingHelper.parseUser(response, email, _userId);
-        notifyListeners();
         await storage.write(key: "jwt", value: jwt);
+        notifyListeners();
         await storage.write(key: "userId", value: response['userId']);
       }
     }

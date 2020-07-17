@@ -71,14 +71,13 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
       loop.id = result['_id'];
       chat.chatID = result['chatId'];
       chat.chat.add(ChatInfo(
-          senderUsername:
-              Provider.of<UserDataProvider>(context, listen: false).username,
           senderID: myId,
           content: enteredMessage,
           time:
               DateTime.fromMicrosecondsSinceEpoch(result["sentTime"] as int)));
       Provider.of<LoopsProvider>(context, listen: false).addNewLoop(loop);
-      Provider.of<ChatProvider>(context, listen: false).addNewChat(chat);
+      await Provider.of<ChatProvider>(context, listen: false)
+          .initializeChatByIdFromNetwork(loop.chatID);
       // rebuilding the widget once the chat has been saved in the chats array in the chat provider
       setState(() {
         loopId = result['_id'];
@@ -95,6 +94,7 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
         children: [
           Messages(
             loopId: loopId,
+            newLoop: true,
           ),
           NewMessage(sendMessage: sendMessage),
         ],

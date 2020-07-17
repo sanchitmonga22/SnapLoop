@@ -10,15 +10,11 @@ class Chat {
 }
 
 class ChatInfo {
-  final String senderUsername;
   final String senderID;
   //For now it is just text, and it will change as we move on
   final String content;
   final DateTime time;
 
   ChatInfo(
-      {@required this.senderUsername,
-      @required this.senderID,
-      @required this.content,
-      @required this.time});
+      {@required this.senderID, @required this.content, @required this.time});
 }

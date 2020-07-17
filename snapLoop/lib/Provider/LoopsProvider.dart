@@ -11,12 +11,19 @@ class LoopsProvider with ChangeNotifier {
   final String authToken;
   final String userId;
   List<Loop> _loops = [];
-  final user;
+  final User user;
 
   LoopsProvider(this.authToken, this._loops, this.userId, this.user);
 
   List<Loop> get loops {
     return [..._loops];
+  }
+
+  void initializeLoopsFromUserData() {
+    _loops = user.loopsData;
+    if (_loops == null) {
+      _loops = [];
+    }
   }
 
   void addNewLoop(Loop loop) {
@@ -27,23 +34,6 @@ class LoopsProvider with ChangeNotifier {
   int get loopCount {
     return _loops.length;
   }
-
-  // Future<void> fetchAndSetProducts() async {
-  //   //http.Response res = await http.get('$SERVER_IP//');
-  // }
-
-// This will create the loop and send the first message to the friend
-  // void createLoop(String name, String friendID, Object content) {
-  //   Loop loop = new Loop(
-  //       currentUserId: null,
-  //       id: null,
-  //       chatID: null,
-  //       creatorId: null,
-  //       name: name,
-  //       numberOfMembers: null,
-  //       type: null,
-  //       userIDs: null);
-  // }
 
   Future<Map<String, String>> getRandomURL(String friendId) async {
     try {
@@ -116,14 +106,13 @@ class LoopsProvider with ChangeNotifier {
     return friendsLoops;
   }
 
-  // TODO : make an API call
   bool loopExistsWithName(String name) {
     bool exists = false;
-    // loops.forEach((loop) {
-    //   if (loop.name.toLowerCase() == name.trim().toLowerCase()) {
-    //     exists = true;
-    //   }
-    // });
+    loops.forEach((loop) {
+      if (loop.name.toLowerCase() == name.trim().toLowerCase()) {
+        exists = true;
+      }
+    });
     return exists;
   }
 }

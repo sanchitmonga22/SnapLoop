@@ -9,9 +9,10 @@ class MessageBubble extends StatelessWidget {
   final String message;
   final bool isMe;
   final Key key;
-  final String username;
   final String userRandomMemoji;
   final DateTime sent;
+  // will create a check later whether the loop has been successfully completed or not
+  final String username;
 
   const MessageBubble({
     this.sent,
