@@ -9,22 +9,34 @@ import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:SnapLoop/Screens/Chat/ExistingLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Contacts/FriendsScreen.dart';
+import 'package:SnapLoop/Socket.io/appInitializer.dart';
+import 'package:SnapLoop/Socket.io/dependencyInjection.dart';
 import 'package:SnapLoop/Widget/FloatingActionButton.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:provider/provider.dart';
 import './Screens/Home/homeScreen.dart';
 import 'Screens/splashScreen.dart';
+import 'Socket.io/socketService.dart';
+
+Injector injector;
 
 /// author: @sanchitmonga22
-void main() {
+void main() async {
+  DependencyInjection().initialise(Injector.getInjector());
+  injector = Injector.getInjector();
+  await AppInitializer().initialise(injector);
   runApp(SnapLoop());
 }
 
 class SnapLoop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final SocketService socketService = injector.get<SocketService>();
+    socketService.createSocketConnection();
+
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(

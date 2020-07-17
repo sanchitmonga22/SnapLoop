@@ -82,7 +82,7 @@ class MessageBubble extends StatelessWidget {
                             style: kTextFormFieldStyle,
                           ),
                           Text(
-                            "${DateFormat('kk:mm').format(DateTime.now())}",
+                            "${DateFormat('kk:mm').format(sent)}",
                             style: kTextFormFieldStyle.copyWith(fontSize: 10),
                           ),
                         ],

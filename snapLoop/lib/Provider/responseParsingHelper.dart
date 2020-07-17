@@ -93,7 +93,6 @@ class ResponseParsingHelper {
   static Map<String, String> getImagesMap(dynamic users) {
     Map<String, String> images = {};
     for (int i = 0; i < users.length; i++) {
-      // TODO:add an image returned when a image url is not correct
       images[users[i]['user']] = users[i]['avatarLink'] as String;
     }
     return images;
