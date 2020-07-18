@@ -4,6 +4,7 @@ import 'package:SnapLoop/Model/loop.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import '../../../constants.dart';
+import 'package:http/http.dart' as http;
 
 ///author: @sanchitmonga22
 class MemojiGenerator extends StatefulWidget {
@@ -65,24 +66,50 @@ class Memoji extends StatefulWidget {
 }
 
 class _MemojiState extends State<Memoji> {
-  NetworkImage getImage() {
-    return NetworkImage(widget.imageUrl);
+  Future future;
+  DecorationImage image;
+  @override
+  void initState() {
+    super.initState();
+    future = getImage();
+  }
+
+  // checking whether the image throws an error
+  Future<bool> getImage() async {
+    http.Response res = await http.get(widget.imageUrl);
+    if (res.statusCode >= 400) {
+      image = DecorationImage(
+          fit: BoxFit.fitHeight, image: AssetImage("assets/memojis/m10.jpg"));
+    } else {
+      image = DecorationImage(
+          fit: BoxFit.fitHeight, image: NetworkImage(widget.imageUrl));
+    }
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-        alignment: AlignmentDirectional(widget.position.x, widget.position.y),
-        child: CircleAvatar(
-            child: Container(
-          decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                    blurRadius: 5, color: determineLoopColor(widget.loopType))
-              ],
-              shape: BoxShape.circle,
-              image: DecorationImage(fit: BoxFit.fitHeight, image: getImage())),
-        )));
+    return FutureBuilder(
+      future: future,
+      builder: (context, snapshot) {
+        return snapshot.connectionState == ConnectionState.waiting
+            ? Container()
+            : Align(
+                alignment:
+                    AlignmentDirectional(widget.position.x, widget.position.y),
+                child: CircleAvatar(
+                    child: Container(
+                        decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 5,
+                        color: determineLoopColor(widget.loopType))
+                  ],
+                  shape: BoxShape.circle,
+                  image: image,
+                ))));
+      },
+    );
   }
 }
 

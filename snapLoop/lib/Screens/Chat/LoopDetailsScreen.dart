@@ -1,6 +1,7 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidget.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
+import 'package:SnapLoop/Widget/timer.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,6 +96,12 @@ class _LoopsDetailsScreenState extends State<LoopsDetailsScreen> {
                           ),
                         ],
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      if (widget.loop != null &&
+                          widget.loop.atTimeEnding != null)
+                        LoopTimer(atTimeEnding: widget.loop.atTimeEnding),
                       SizedBox(
                         height: 10,
                       ),

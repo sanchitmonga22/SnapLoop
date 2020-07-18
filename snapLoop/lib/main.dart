@@ -36,7 +36,6 @@ class SnapLoop extends StatelessWidget {
   Widget build(BuildContext context) {
     final SocketService socketService = injector.get<SocketService>();
     socketService.createSocketConnection();
-
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(

@@ -1,6 +1,7 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Chat/ExistingLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Home/LoopWidget/MemojiGenerator.dart';
+import 'package:SnapLoop/Widget/timer.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flip_card/flip_card.dart';
@@ -99,14 +100,19 @@ class _LoopWidgetState extends State<LoopWidget>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Expanded(
-                      child: Icon(
-                        CupertinoIcons.loop,
-                        color: Colors.black,
-                        size: widget.loop.numberOfMembers > 12
-                            ? kfixedRadiusFactor["MAX"] * 70
-                            : kfixedRadiusFactor[widget.loop.numberOfMembers] *
-                                70,
-                      ),
+                      child: widget.loop.atTimeEnding != null
+                          ? LoopTimer(
+                              atTimeEnding: widget.loop.atTimeEnding,
+                            )
+                          : Icon(
+                              CupertinoIcons.loop,
+                              color: Colors.black,
+                              size: widget.loop.numberOfMembers > 12
+                                  ? kfixedRadiusFactor["MAX"] * 70
+                                  : kfixedRadiusFactor[
+                                          widget.loop.numberOfMembers] *
+                                      70,
+                            ),
                     ),
                     AutoSizeText(
                       "${widget.loop.name}",

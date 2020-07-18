@@ -11,7 +11,7 @@ class LoopsProvider with ChangeNotifier {
   final String authToken;
   final String userId;
   List<Loop> _loops = [];
-  final User user;
+  User user;
 
   LoopsProvider(this.authToken, this._loops, this.userId, this.user);
 

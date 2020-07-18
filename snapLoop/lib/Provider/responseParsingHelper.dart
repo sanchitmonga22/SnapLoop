@@ -1,18 +1,21 @@
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
+import 'package:SnapLoop/Widget/timezones.dart';
 
 class ResponseParsingHelper {
-  static Chat parseChat(dynamic response) {
+  static Future<Chat> parseChat(dynamic response) async {
     List<ChatInfo> messages = [];
     String chatId = response['_id'];
     List<dynamic> res = response['messages'];
     for (int i = 0; i < res.length; i++) {
       var message = res[i];
+      print(message['sentTime']);
       messages.add(ChatInfo(
         content: message['content'],
         senderID: message['sender'],
-        time: DateTime.parse(message['sentTime']),
+        time: await TimeHelperService.convertToLocal(
+            DateTime.parse(message['sentTime'])),
       ));
     }
     return Chat(chat: messages, chatID: chatId);
@@ -63,7 +66,11 @@ class ResponseParsingHelper {
     List<Loop> newLoops = [];
     response = response as List<dynamic>;
     for (int i = 0; i < response.length; i++) {
-      newLoops.add(parseLoop(response[i]));
+      print(response[i]);
+
+      Loop loop = parseLoop(response[i]['loop']);
+      loop.type = getLoopsType(response[i]['loopType']);
+      newLoops.add(loop);
     }
     return newLoops;
   }
@@ -71,9 +78,10 @@ class ResponseParsingHelper {
   static Loop parseLoop(dynamic loop) {
     List<dynamic> loopUsers = (loop['users'] as List).cast<dynamic>().toList();
     return Loop(
+        atTimeEnding: DateTime.parse(loop['atTimeEnding']),
         currentUserId: loop['currentUserId'],
         name: loop['name'],
-        type: getLoopsType(loop['loopType']),
+        type: LoopType.UNIDENTIFIED,
         numberOfMembers: loopUsers.length,
         avatars: getImagesMap(loopUsers),
         chatID: loop['chat'] as String,

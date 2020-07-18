@@ -48,7 +48,7 @@ class ChatProvider with ChangeNotifier {
           _chats.removeWhere(
               (element) => element.chatID == response['chatId'] as String);
         }
-        _chats.add(ResponseParsingHelper.parseChat(response));
+        _chats.add(await ResponseParsingHelper.parseChat(response));
       } else {
         throw new HttpException("Could not get the chat from the server");
       }
