@@ -3,7 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
 
 class LoopTimer extends StatefulWidget {
   final DateTime atTimeEnding;
@@ -14,7 +14,6 @@ class LoopTimer extends StatefulWidget {
 }
 
 class _LoopTimerState extends State<LoopTimer> {
-
   @override
   Widget build(BuildContext context) {
     int timeEnding = widget.atTimeEnding.millisecondsSinceEpoch;

@@ -35,26 +35,50 @@ class LoopsProvider with ChangeNotifier {
     return _loops.length;
   }
 
-  Future<Map<String, String>> getRandomURL(String friendId) async {
+  Future<List<dynamic>> getRandomAvatarURL(int count) async {
     try {
       http.Response res =
           await http.get('$SERVER_IP/loops/getRandomUrls', headers: {
         "Authorization": "Bearer " + authToken,
         "Content-Type": "application/json",
+        "count": count.toString(),
       });
       if (res.statusCode == 200) {
         final response = json.decode(res.body);
-        return {
-          // TODO : add a predefined image if the network image fails
-          "$userId": response['url1'],
-          "$friendId": response['url2'],
-        };
+        return response;
       } else {
         throw new HttpException("could not generate random emojies");
       }
     } catch (err) {
       print(err);
       throw new HttpException(err);
+    }
+  }
+
+  Future<void> forwardLoop(String friendId, String content, String friendAvatar,
+      String chatId, String loopId) async {
+    try {
+      http.Response res = await http.post('$SERVER_IP/loops/forwardLoop',
+          headers: {
+            "Authorization": "Bearer " + authToken,
+            "Content-Type": "application/json",
+          },
+          body: jsonEncode({
+            "content": content,
+            "forwardedToId": friendId,
+            "forwardedToAvatar": friendAvatar,
+            "chatId": chatId,
+            "loopId": loopId
+          }));
+      print(res.statusCode);
+      if (res.statusCode == 200) {
+        notifyListeners();
+      } else {
+        throw new HttpException(res.body);
+      }
+      return;
+    } catch (err) {
+      throw new HttpException(err.toString());
     }
   }
 

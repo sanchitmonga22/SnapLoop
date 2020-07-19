@@ -53,6 +53,7 @@ class _FriendsScreenState extends State<FriendsScreen>
   int requestSentIndex;
   List<FriendsData> friends = [];
   bool init = true;
+  bool loopForwarding = false;
   Future future;
 
   @override
@@ -96,7 +97,12 @@ class _FriendsScreenState extends State<FriendsScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    loopName = ModalRoute.of(context).settings.arguments;
+    final args =
+        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+    if (args != null) {
+      loopName = args['loopName'] as String;
+      loopForwarding = args['loopForwarding'] as bool;
+    }
     if (loopName != "" && loopName != null) newLoop = true;
     return FutureBuilder(
       future: future,
@@ -262,14 +268,17 @@ class _FriendsScreenState extends State<FriendsScreen>
                                     FriendsData friend = friends[index];
                                     return ContactsDetailsWidget(
                                       onTap: () {
-                                        Navigator.pushReplacementNamed(
-                                          context,
-                                          NewLoopChatScreen.routeName,
-                                          arguments: {
-                                            "friend": friend,
-                                            "loopName": loopName
-                                          },
-                                        );
+                                        if (!loopForwarding)
+                                          Navigator.pushReplacementNamed(
+                                            context,
+                                            NewLoopChatScreen.routeName,
+                                            arguments: {
+                                              "friend": friend,
+                                              "loopName": loopName
+                                            },
+                                          );
+                                        else
+                                          Navigator.of(context).pop(friend);
                                       },
                                       friend: friend,
                                       friends: friends,

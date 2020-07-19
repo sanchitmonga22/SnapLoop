@@ -29,7 +29,7 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
   String myId;
   String loopName;
   FriendsData userData;
-  Map<String, dynamic> images;
+  List<dynamic> images;
   Future future;
   bool first = true;
   String loopId = "";
@@ -40,14 +40,13 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     loopName = args["loopName"] as String;
     userData = args["friend"] as FriendsData;
-    images =
-        await Provider.of<LoopsProvider>(context).getRandomURL(userData.userID);
+    images = await Provider.of<LoopsProvider>(context).getRandomAvatarURL(2);
     loop = new Loop(
         currentUserId: userData.userID,
         chatID: "",
         creatorId: myId,
         id: "",
-        avatars: {myId: images[myId], userData.userID: images[userData.userID]},
+        avatars: {myId: images[0], userData.userID: images[1]},
         name: loopName,
         numberOfMembers: 2,
         type: LoopType.NEW_LOOP,
@@ -62,10 +61,11 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
     return true;
   }
 
+  // TODO: optimize the build by not creating a loop locally and instead creating a loop after sending the message
   Future<void> sendMessage(String enteredMessage) async {
     var result = await Provider.of<LoopsProvider>(context, listen: false)
-        .createLoop(loopName, userData.userID, enteredMessage,
-            images[userData.userID], images[myId]);
+        .createLoop(
+            loopName, userData.userID, enteredMessage, images[1], images[0]);
     if (result != null) {
       loop.chatID = result["chatId"];
       loop.id = result['_id'];

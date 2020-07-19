@@ -1,7 +1,7 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidget.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
-import 'package:SnapLoop/Widget/timer.dart';
+import 'package:SnapLoop/Widget/time/timer.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

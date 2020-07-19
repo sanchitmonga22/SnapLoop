@@ -7,9 +7,8 @@ class TimeHelperService {
     initializeTimeZones();
     String _timezone = await FlutterNativeTimezone.getLocalTimezone();
     if (_timezone == time.timeZoneName) {
-      print("here");
       return time;
     }
-    return TZDateTime.from(time, getLocation('America/Detroit'));
+    return TZDateTime.from(time, getLocation(_timezone));
   }
 }

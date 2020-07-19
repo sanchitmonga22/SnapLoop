@@ -22,7 +22,6 @@ class _MessagesState extends State<Messages> {
   Loop loop;
   Chat chat;
   String myId;
-  Future chatFuture;
 
   @override
   Widget build(BuildContext context) {

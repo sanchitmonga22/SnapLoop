@@ -1,8 +1,12 @@
 import 'package:SnapLoop/Model/loop.dart';
+import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/ChatProvider.dart';
+import 'package:SnapLoop/Provider/LoopsProvider.dart';
+import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/Screens/Chat/LoopDetailsScreen.dart';
 import 'package:SnapLoop/Screens/Chat/messages.dart';
 import 'package:SnapLoop/Screens/Chat/newMessage.dart';
+import 'package:SnapLoop/Screens/Contacts/FriendsScreen.dart';
 import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidget.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +37,8 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
 
   Future future;
   bool init = true;
+  LoopType loopType;
+  String loopId;
 
   Future<bool> initializeChat() async {
     await Provider.of<ChatProvider>(context, listen: false)
@@ -51,7 +57,35 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
     }
   }
 
+  Future<void> sendMessage(String enteredMessage) async {
+    var friend = await Navigator.of(context).pushNamed(
+      FriendsScreen.routeName,
+      arguments: {"loopName": widget.loop.name, "loopForwarding": true},
+    ) as FriendsData;
+    //= ModalRoute.of(context).settings.arguments as FriendsData;
+    print(friend.username);
+    List<dynamic> imageUrl =
+        await Provider.of<LoopsProvider>(context, listen: false)
+            .getRandomAvatarURL(1);
+    await Provider.of<LoopsProvider>(context, listen: false).forwardLoop(
+        friend.userID,
+        enteredMessage,
+        imageUrl[0],
+        widget.loop.chatID,
+        widget.loop.id);
+    await Provider.of<ChatProvider>(context, listen: false)
+        .initializeChatByIdFromNetwork(widget.loop.chatID);
+    await Provider.of<UserDataProvider>(context, listen: false)
+        .updateUserData();
+    // Provider.of<LoopsProvider>(context, listen: false)
+    //     .initializeLoopsFromUserData();
+    setState(() {
+      loopId = widget.loop.id;
+    });
+  }
+
   Widget getChatWidget(Color backgroundColor) {
+    loopId = widget.loop.id;
     return Container(
         decoration: BoxDecoration(color: backgroundColor.withOpacity(0.4)),
         child: Stack(
@@ -59,10 +93,14 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
             Column(
               children: [
                 Messages(
-                  loopId: widget.loop.id,
+                  loopId: loopId,
                   newLoop: false,
                 ),
-                NewMessage()
+                if (loopType == LoopType.INACTIVE_LOOP_SUCCESSFUL ||
+                    loopType == LoopType.NEW_LOOP)
+                  NewMessage(
+                    sendMessage: sendMessage,
+                  )
               ],
             )
           ],
@@ -71,6 +109,7 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
 
   @override
   Widget build(BuildContext context) {
+    loopType = widget.loop.type;
     Color backgroundColor = determineLoopColor(widget.loop.type);
     LoopWidget loopWidget = LoopWidget(
       isTappable: false,

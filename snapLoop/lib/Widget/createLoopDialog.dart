@@ -133,7 +133,10 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
                                   // going to the contacts screen and then selecting a friend
                                   Navigator.of(context).pushReplacementNamed(
                                     FriendsScreen.routeName,
-                                    arguments: loopName,
+                                    arguments: {
+                                      "loopName": loopName,
+                                      "loopForwarding": false
+                                    },
                                   );
                                 } else {
                                   // going to the chat screen directly

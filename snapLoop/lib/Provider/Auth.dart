@@ -78,7 +78,7 @@ class Auth with ChangeNotifier {
     final response = json.decode(res.body);
     if (res.statusCode == 201) {
       final jwt = response['token'];
-      await storage.write(key: "jwt", value: "Bearer $token");
+      await storage.write(key: "jwt", value: token);
       _token = jwt;
       _userId = response['userId'];
       user = new User(

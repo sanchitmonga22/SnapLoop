@@ -1,7 +1,7 @@
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Widget/timezones.dart';
+import 'package:SnapLoop/Widget/time/timezones.dart';
 
 class ResponseParsingHelper {
   static Future<Chat> parseChat(dynamic response) async {
@@ -10,7 +10,6 @@ class ResponseParsingHelper {
     List<dynamic> res = response['messages'];
     for (int i = 0; i < res.length; i++) {
       var message = res[i];
-      print(message['sentTime']);
       messages.add(ChatInfo(
         content: message['content'],
         senderID: message['sender'],
@@ -66,8 +65,6 @@ class ResponseParsingHelper {
     List<Loop> newLoops = [];
     response = response as List<dynamic>;
     for (int i = 0; i < response.length; i++) {
-      print(response[i]);
-
       Loop loop = parseLoop(response[i]['loop']);
       loop.type = getLoopsType(response[i]['loopType']);
       newLoops.add(loop);

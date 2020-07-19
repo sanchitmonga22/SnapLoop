@@ -100,11 +100,7 @@ class _MemojiState extends State<Memoji> {
                 child: CircleAvatar(
                     child: Container(
                         decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 5,
-                        color: determineLoopColor(widget.loopType))
-                  ],
+                  boxShadow: [BoxShadow(blurRadius: 5, color: Colors.white)],
                   shape: BoxShape.circle,
                   image: image,
                 ))));
