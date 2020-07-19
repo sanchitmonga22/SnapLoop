@@ -36,7 +36,6 @@ class _MessagesState extends State<Messages> {
         child: widget.loopId == "" && chat == null
             ? Container()
             : ListView.builder(
-                reverse: true,
                 itemBuilder: (context, index) {
                   ChatInfo message = chat.chat[index];
                   return MessageBubble(

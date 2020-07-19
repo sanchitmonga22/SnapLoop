@@ -1,43 +1,52 @@
 import 'dart:convert';
 
-import 'package:SnapLoop/Model/HttpException.dart';
-import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Provider/responseParsingHelper.dart';
-import 'package:SnapLoop/constants.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:SnapLoop/Model/HttpException.dart';
+import 'package:SnapLoop/Model/user.dart';
+import 'package:SnapLoop/Provider/responseParsingHelper.dart';
+import 'package:SnapLoop/constants.dart';
+
 /// author: @sanchitmonga22
 
 class UserDataProvider with ChangeNotifier {
-  List<Contact> contacts = [];
-  List<PublicUserData> requests = [];
-  List<FriendsData> friends = [];
-  User user;
-  final String token;
-  final String userId;
+  List<Contact> _contacts = [];
+  List<PublicUserData> _requests = [];
+  List<FriendsData> _friends = [];
+  User _user;
+  String _token = "";
+  String _userId = "";
 
-  UserDataProvider({
-    this.user,
-    this.token,
-    this.userId,
-  });
+  UserDataProvider(this._user, this._userId, this._token);
 
   int get userScore {
-    return user.score;
+    return _user.score;
   }
 
-  User get userData {
-    return user;
+  List<PublicUserData> get requests {
+    return [..._requests];
   }
 
-  List<FriendsData> get friendsData {
-    return [...friends];
+  List<Contact> get contacts {
+    return [..._contacts];
+  }
+
+  List<FriendsData> get friends {
+    return [..._friends];
+  }
+
+  String get userId {
+    return _userId;
+  }
+
+  User get user {
+    return _user;
   }
 
   String get username {
-    return user.username;
+    return _user.username;
   }
 
   String get displayName {
@@ -45,42 +54,23 @@ class UserDataProvider with ChangeNotifier {
   }
 
   bool canStartANewLoop() {
-    return user.numberOfLoopsRemaining > 0;
-  }
-
-  void syncContacts(List<Contact> contacts) {
-    if (contacts != null && contacts.length != 0) contacts.addAll(contacts);
-  }
-
-  List<PublicUserData> get userContacts {
-    List<PublicUserData> userContacts = [];
-    if (contacts == null || contacts.isEmpty) return [];
-
-    contacts.forEach((e) {
-      // dummyUsers.users.forEach((element) {
-      //   if (e.emails.contains(element.email)) {
-      //     userContacts.add(element);
-      //   }
-      // });
-    });
-    return userContacts;
+    return _user.numberOfLoopsRemaining > 0;
   }
 
   Future<FriendsData> getFriendsDataById(String userId) async {
     try {
       http.Response res =
           await http.get('$SERVER_IP/users/friendsData', headers: {
-        "Authorization": "Bearer " + token,
+        "Authorization": "Bearer " + _token,
         "Content-Type": "application/json",
         'friendId': userId,
       });
       if (res.statusCode == 200) {
         final response = json.decode(res.body);
-        notifyListeners();
         return ResponseParsingHelper.parseFriend(response);
       }
     } catch (err) {
-      print(err);
+      throw new HttpException(err);
     }
   }
 
@@ -99,77 +89,7 @@ class UserDataProvider with ChangeNotifier {
         throw new HttpException("User not found with id:$userId");
       }
     } catch (err) {
-      print(err);
-    }
-  }
-
-  Future<bool> updateUserData() async {
-    try {
-      http.Response res = await http.get(
-        "$SERVER_IP/users/data",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
-        },
-      );
-      final response = json.decode(res.body);
-      if (res.statusCode == 200) {
-        user = ResponseParsingHelper.parseUser(response, "", userId);
-        notifyListeners();
-        return true;
-      }
-      return false;
-    } catch (err) {
-      print(err);
-      return false;
-    }
-  }
-
-  Future<bool> updateRequests() async {
-    try {
-      // checking for new users
-      List<String> newUsers = [];
-      newUsers.addAll(user.requestsReceived);
-      requests.forEach((element) {
-        if (newUsers.contains(element.userID)) {
-          newUsers.remove(element.userID);
-        }
-      });
-      if (newUsers.isEmpty) {
-        return true;
-      } else {
-        for (int i = 0; i < newUsers.length; i++) {
-          requests.add(await getUserDataById(newUsers[i]));
-        }
-        return true;
-      }
-    } catch (err) {
-      print(err);
-      return false;
-    }
-  }
-
-  Future<bool> updateFriends() async {
-    try {
-      // checking for new friends (comparing the data)
-      List<String> newFriends = [];
-      newFriends.addAll(user.friendsIds);
-      friends.forEach((element) {
-        if (newFriends.contains(element.userID)) {
-          newFriends.remove(element.userID);
-        }
-      });
-      if (newFriends.isEmpty) {
-        return true;
-      } else {
-        for (int i = 0; i < newFriends.length; i++) {
-          friends.add(await getFriendsDataById(newFriends[i]));
-        }
-        return true;
-      }
-    } catch (err) {
-      print(err);
-      return false;
+      throw new HttpException(err);
     }
   }
 
@@ -191,11 +111,81 @@ class UserDataProvider with ChangeNotifier {
               userID: element['_id'],
               username: element['username']));
         });
+        notifyListeners();
       }
     } catch (err) {
-      print(err);
+      throw new HttpException(err);
     }
     return users;
+  }
+
+  Future<bool> updateUserData() async {
+    try {
+      http.Response res = await http.get(
+        "$SERVER_IP/users/data",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + _token,
+        },
+      );
+      final response = json.decode(res.body);
+      if (res.statusCode == 200) {
+        _user = ResponseParsingHelper.parseUser(response, "", userId);
+        notifyListeners();
+        return true;
+      }
+      return false;
+    } catch (err) {
+      throw new HttpException(err);
+    }
+  }
+
+  Future<bool> updateRequests() async {
+    try {
+      // checking for new users
+      List<String> newUsers = [];
+      newUsers.addAll(user.requestsReceived);
+      _requests.forEach((element) {
+        if (newUsers.contains(element.userID)) {
+          newUsers.remove(element.userID);
+        }
+      });
+      if (newUsers.isEmpty) {
+        return true;
+      } else {
+        for (int i = 0; i < newUsers.length; i++) {
+          _requests.add(await getUserDataById(newUsers[i]));
+        }
+        notifyListeners();
+        return true;
+      }
+    } catch (err) {
+      throw new HttpException(err);
+    }
+  }
+
+  Future<bool> updateFriends() async {
+    try {
+      // checking for new friends (comparing the data)
+      List<String> newFriends = [];
+      newFriends.addAll(user.friendsIds);
+      _friends.forEach((element) {
+        if (newFriends.contains(element.userID)) {
+          newFriends.remove(element.userID);
+        }
+      });
+      if (newFriends.isEmpty) {
+        return true;
+      } else {
+        for (int i = 0; i < newFriends.length; i++) {
+          _friends.add(await getFriendsDataById(newFriends[i]));
+        }
+        notifyListeners();
+        return true;
+      }
+    } catch (err) {
+      throw new HttpException(err);
+    }
   }
 
   Future<void> sendFriendRequest(String sendToId) async {
@@ -203,18 +193,19 @@ class UserDataProvider with ChangeNotifier {
       http.Response res = await http.put(
         '$SERVER_IP/users/sendRequest',
         headers: {
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer " + _token,
           "Content-Type": "application/json",
           "sendToId": sendToId,
         },
       );
       if (res.statusCode == 200) {
+        notifyListeners();
         return;
       } else {
         throw new HttpException("Request not sent");
       }
     } catch (err) {
-      print(err);
+      throw new HttpException(err);
     }
   }
 
@@ -223,17 +214,20 @@ class UserDataProvider with ChangeNotifier {
       http.Response res = await http.post(
         '$SERVER_IP/users/acceptRequest',
         headers: {
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer " + _token,
           "Content-Type": "application/json",
           "senderId": userID,
         },
       );
       if (res.statusCode == 200) {
+        notifyListeners();
         return;
       } else {
         throw new HttpException("Request not sent");
       }
-    } catch (err) {}
+    } catch (err) {
+      throw new HttpException(err);
+    }
   }
 
   Future<void> removeRequest(String userID) async {
@@ -241,17 +235,20 @@ class UserDataProvider with ChangeNotifier {
       http.Response res = await http.post(
         '$SERVER_IP/users/deleteRequest',
         headers: {
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer " + _token,
           "Content-Type": "application/json",
           "senderId": userID,
         },
       );
       if (res.statusCode == 200) {
+        notifyListeners();
         return;
       } else {
         throw new HttpException("Request not removed");
       }
-    } catch (err) {}
+    } catch (err) {
+      throw new HttpException(err);
+    }
   }
 
 // will use the PublicUserData
@@ -271,4 +268,22 @@ class UserDataProvider with ChangeNotifier {
   // Future<bool> resetPassword(String value) async {}
   // List<User> universalSearch(String value) {
   // }
+  // void syncContacts(List<Contact> contacts) {
+  //   if (contacts != null && contacts.length != 0) contacts.addAll(contacts);
+  // }
+
+  // List<PublicUserData> get userContacts {
+  //   List<PublicUserData> userContacts = [];
+  //   if (contacts == null || contacts.isEmpty) return [];
+
+  //   contacts.forEach((e) {
+  //     // dummyUsers.users.forEach((element) {
+  //     //   if (e.emails.contains(element.email)) {
+  //     //     userContacts.add(element);
+  //     //   }
+  //     // });
+  //   });
+  //   return userContacts;
+  // }
+
 }

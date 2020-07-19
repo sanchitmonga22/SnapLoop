@@ -63,7 +63,6 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
       arguments: {"loopName": widget.loop.name, "loopForwarding": true},
     ) as FriendsData;
     //= ModalRoute.of(context).settings.arguments as FriendsData;
-    print(friend.username);
     List<dynamic> imageUrl =
         await Provider.of<LoopsProvider>(context, listen: false)
             .getRandomAvatarURL(1);
@@ -77,8 +76,9 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
         .initializeChatByIdFromNetwork(widget.loop.chatID);
     await Provider.of<UserDataProvider>(context, listen: false)
         .updateUserData();
-    // Provider.of<LoopsProvider>(context, listen: false)
-    //     .initializeLoopsFromUserData();
+    Provider.of<LoopsProvider>(context, listen: false)
+        .initializeLoopsFromUserData();
+    Loop newLoop = Provider.of<LoopsProvider>(context).findById(widget.loop.id);
     setState(() {
       loopId = widget.loop.id;
     });

@@ -38,6 +38,11 @@ class SnapLoop extends StatelessWidget {
     socketService.createSocketConnection();
     return MultiProvider(
         providers: [
+          // using with socket.io
+          // StreamProvider(
+          //   create: (context) {},
+          //   builder: (context, child) {},
+          // ),
           ChangeNotifierProvider(
             create: (context) => Auth(),
           ),
@@ -70,25 +75,26 @@ class SnapLoop extends StatelessWidget {
           ChangeNotifierProxyProvider<Auth, UserDataProvider>(
               create: (context) {
             return UserDataProvider(
-                token: "",
-                userId: "",
-                user: User(
-                    numberOfLoopsRemaining: 5,
-                    loopsData: [],
-                    contacts: [],
-                    userID: "",
-                    username: "",
-                    displayName: "",
-                    email: "",
-                    score: 0,
-                    friendsIds: [],
-                    requestsSent: [],
-                    requestsReceived: []));
+              User(
+                  numberOfLoopsRemaining: 5,
+                  loopsData: [],
+                  contacts: [],
+                  userID: "",
+                  username: "",
+                  displayName: "",
+                  email: "",
+                  score: 0,
+                  friendsIds: [],
+                  requestsSent: [],
+                  requestsReceived: []),
+              "",
+              "",
+            );
           }, update: (context, auth, previousUserDataProvider) {
             return UserDataProvider(
-              userId: auth.userId,
-              token: auth.token,
-              user: auth.user,
+              auth.user,
+              auth.userId,
+              auth.token,
             );
           }),
           ChangeNotifierProxyProvider<Auth, ChatProvider>(

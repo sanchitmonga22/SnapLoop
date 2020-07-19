@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
@@ -51,30 +52,22 @@ class _FriendsScreenState extends State<FriendsScreen>
   String loopName = "";
   int activeIndex;
   int requestSentIndex;
-  List<FriendsData> friends = [];
   bool init = true;
   bool loopForwarding = false;
   Future future;
+  List<FriendsData> friends = [];
 
   @override
   void initState() {
     super.initState();
-    Provider.of<UserDataProvider>(context, listen: false).updateUserData();
+    future = initializeScreen();
   }
 
-  Future<bool> initializeScreen() async {
-    try {
-      await Provider.of<UserDataProvider>(context, listen: false)
-          .updateFriends();
-      await Provider.of<UserDataProvider>(context, listen: false)
-          .updateRequests();
-      friends =
-          Provider.of<UserDataProvider>(context, listen: false).friendsData;
-      return true;
-    } catch (err) {
-      print(err);
-      return false;
-    }
+  Future<void> initializeScreen() async {
+    await Provider.of<UserDataProvider>(context, listen: false).updateFriends();
+    await Provider.of<UserDataProvider>(context, listen: false)
+        .updateRequests();
+    friends = Provider.of<UserDataProvider>(context, listen: false).friends;
   }
 
   @override
@@ -83,10 +76,6 @@ class _FriendsScreenState extends State<FriendsScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (init) {
-      future = initializeScreen();
-      init = false;
-    }
   }
 
   Future<List<dynamic>> getUsersByEmail(String email) {
@@ -104,194 +93,205 @@ class _FriendsScreenState extends State<FriendsScreen>
       loopForwarding = args['loopForwarding'] as bool;
     }
     if (loopName != "" && loopName != null) newLoop = true;
-    return FutureBuilder(
-      future: future,
-      builder: (context, snapshot) {
-        return snapshot.connectionState == ConnectionState.waiting
-            ? Material(
-                child: Center(
-                  child: Container(
-                    height: 30,
-                    width: 30,
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-              )
-            : Material(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 5),
-                  child: Stack(
-                    children: [
-                      newLoop
-                          ? Container()
-                          : Align(
-                              alignment: Alignment(1.05, -0.95),
-                              child: GestureDetector(
-                                onTap: () {
-                                  createADialog(context, true);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.black,
-                                    child: Stack(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment(0, 0),
-                                          child: Icon(
-                                            Icons.person,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: Alignment(1, -1.5),
-                                          child: CircleAvatar(
-                                            radius: 11,
-                                            // add the number of current requests received
-                                            child: Text(
-                                                Provider.of<UserDataProvider>(
-                                                        context)
-                                                    .requests
-                                                    .length
-                                                    .toString()),
-                                          ),
-                                        )
-                                      ],
+    return Material(
+        child: Padding(
+            padding: const EdgeInsets.only(right: 10.0, left: 5),
+            child: Stack(
+              children: [
+                newLoop
+                    ? Container()
+                    : Align(
+                        alignment: Alignment(1.05, -0.95),
+                        child: GestureDetector(
+                          onTap: () {
+                            createADialog(context, true);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(top: 10),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.black,
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment(0, 0),
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.white,
                                     ),
                                   ),
-                                ),
+                                  Align(
+                                    alignment: Alignment(1, -1.5),
+                                    child: CircleAvatar(
+                                      radius: 11,
+                                      // add the number of current requests received
+                                      child: Text(
+                                          Provider.of<UserDataProvider>(context)
+                                              .requests
+                                              .length
+                                              .toString()),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                      SearchBar(
-                          minimumChars: 3,
-                          searchBarPadding: newLoop
-                              ? EdgeInsets.only(top: 50)
-                              : EdgeInsets.only(right: 35),
-                          suffix: newLoop
-                              ? Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                )
-                              : GestureDetector(
-                                  onTap: () {
-                                    createADialog(context, false);
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.only(right: 10),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Icon(
-                                          Icons.add,
-                                          color: Colors.white,
-                                        ),
-                                        Icon(
-                                          Icons.people,
-                                          color: Colors.white,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                          cursorColor: Colors.white,
-                          searchBarStyle: SearchBarStyle(
-                            padding: EdgeInsets.only(left: 25),
-                            backgroundColor: kSystemPrimaryColor,
-                            borderRadius: BorderRadius.circular(15),
                           ),
-                          icon: Icon(Icons.search),
-                          hintStyle: kTextFormFieldStyle.copyWith(
-                              color: Colors.white70),
-                          textStyle: kTextFormFieldStyle,
-                          searchBarController: _controller,
-                          //searchBarPadding: EdgeInsets.all(10),
-                          hintText: "Enter here",
-                          iconActiveColor: Colors.white,
-                          // check this
-                          buildSuggestion: (item, index) {
-                            return Container(
-                              color: Colors.blue,
-                              child: ListTile(
-                                key: ValueKey(index),
-                                title: item.username,
-                              ),
-                            );
-                          },
-                          onItemFound: (userData, int index) {
-                            return Container(
-                                color: Colors.blue,
-                                child: ContactWidget(
-                                  c: userData,
-                                  isLoading: activeIndex == index,
-                                  requestSent: requestSentIndex == index,
-                                  key: ValueKey(index),
-                                  onPressed: () async {
-                                    setState(() {
-                                      activeIndex = index;
-                                    });
-                                    await Provider.of<UserDataProvider>(context,
-                                            listen: false)
-                                        .sendFriendRequest(userData.userID);
-                                    setState(() {
-                                      activeIndex = -1;
-                                      requestSentIndex = index;
-                                    });
-                                  },
-                                ));
-                          },
-                          loader: Center(
-                              child: Container(
-                                  height: 30,
-                                  width: 30,
-                                  child: CircularProgressIndicator())),
-                          emptyWidget: Text(
-                              "No items found, Please try searching with a different name"),
-                          onError: (error) {
-                            print(error);
-                            return Text("Error");
-                          },
-                          onSearch: getUsersByEmail,
-                          placeHolder: friends.length == 0
-                              ? Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Center(
-                                    child: Text(
-                                      "You don't currently have any friends! please search users above to add them as friend",
-                                      style: kTextFormFieldStyle.copyWith(
-                                          color: Colors.black),
-                                    ),
+                        ),
+                      ),
+                SearchBar(
+                    minimumChars: 3,
+                    searchBarPadding: newLoop
+                        ? EdgeInsets.only(top: 50)
+                        : EdgeInsets.only(right: 35),
+                    suffix: newLoop
+                        ? Row(
+                            mainAxisSize: MainAxisSize.min,
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              createADialog(context, false);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Icon(
+                                    Icons.add,
+                                    color: Colors.white,
                                   ),
-                                )
-                              : ListView.builder(
-                                  itemCount: friends.length,
-                                  itemBuilder: (context, index) {
-                                    FriendsData friend = friends[index];
-                                    return ContactsDetailsWidget(
-                                      onTap: () {
-                                        if (!loopForwarding)
-                                          Navigator.pushReplacementNamed(
-                                            context,
-                                            NewLoopChatScreen.routeName,
-                                            arguments: {
-                                              "friend": friend,
-                                              "loopName": loopName
-                                            },
-                                          );
-                                        else
-                                          Navigator.of(context).pop(friend);
-                                      },
-                                      friend: friend,
-                                      friends: friends,
-                                      newLoop: newLoop,
-                                      key: ValueKey(index),
-                                    );
-                                  },
-                                ))
-                    ],
-                  ),
-                ),
-              );
-      },
-    );
+                                  Icon(
+                                    Icons.people,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                    cursorColor: Colors.white,
+                    searchBarStyle: SearchBarStyle(
+                      padding: EdgeInsets.only(left: 25),
+                      backgroundColor: kSystemPrimaryColor,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    icon: Icon(Icons.search),
+                    hintStyle:
+                        kTextFormFieldStyle.copyWith(color: Colors.white70),
+                    textStyle: kTextFormFieldStyle,
+                    searchBarController: _controller,
+                    //searchBarPadding: EdgeInsets.all(10),
+                    hintText: "Enter here",
+                    iconActiveColor: Colors.white,
+                    // check this
+                    buildSuggestion: (item, index) {
+                      return Container(
+                        color: Colors.blue,
+                        child: ListTile(
+                          key: ValueKey(index),
+                          title: item.username,
+                        ),
+                      );
+                    },
+                    onItemFound: (userData, int index) {
+                      return Container(
+                          color: Colors.blue,
+                          child: ContactWidget(
+                            c: userData,
+                            isLoading: activeIndex == index,
+                            // FIXME: requestSentIndex causes to show the request sent at the same index
+                            requestSent: requestSentIndex == index,
+                            key: ValueKey(index),
+                            onPressed: () async {
+                              setState(() {
+                                activeIndex = index;
+                              });
+                              await Provider.of<UserDataProvider>(context,
+                                      listen: false)
+                                  .sendFriendRequest(userData.userID);
+                              setState(() {
+                                activeIndex = -1;
+                                requestSentIndex = index;
+                              });
+                            },
+                          ));
+                    },
+                    loader: Center(
+                        child: Container(
+                            height: 30,
+                            width: 30,
+                            child: CircularProgressIndicator())),
+                    emptyWidget: Text(
+                        "No items found, Please try searching with a different name"),
+                    onError: (error) {
+                      print(error);
+                      return Text("Error");
+                    },
+                    onSearch: getUsersByEmail,
+                    placeHolder: Consumer<UserDataProvider>(
+                      builder: (context, value, child) {
+                        // should update when a new friend is added
+                        if (!init) {
+                          print("built");
+                          friends = value.friends;
+                          init = false;
+                        }
+                        return FutureBuilder(
+                            future: future,
+                            builder: (context, snapshot) {
+                              return snapshot.connectionState ==
+                                      ConnectionState.waiting
+                                  ? Material(
+                                      child: Center(
+                                        child: Container(
+                                          height: 30,
+                                          width: 30,
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      ),
+                                    )
+                                  : friends.length == 0
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(20.0),
+                                          child: Center(
+                                            child: Text(
+                                              "You don't currently have any friends! please search users above to add them as friend",
+                                              style:
+                                                  kTextFormFieldStyle.copyWith(
+                                                      color: Colors.black),
+                                            ),
+                                          ),
+                                        )
+                                      : ListView.builder(
+                                          itemCount: friends.length,
+                                          itemBuilder: (context, index) {
+                                            FriendsData friend = friends[index];
+                                            return ContactsDetailsWidget(
+                                              onTap: () {
+                                                if (!loopForwarding)
+                                                  Navigator
+                                                      .pushReplacementNamed(
+                                                    context,
+                                                    NewLoopChatScreen.routeName,
+                                                    arguments: {
+                                                      "friend": friend,
+                                                      "loopName": loopName
+                                                    },
+                                                  );
+                                                else
+                                                  Navigator.of(context)
+                                                      .pop(friend);
+                                              },
+                                              friend: friend,
+                                              friends: friends,
+                                              newLoop: newLoop,
+                                              key: ValueKey(index),
+                                            );
+                                          },
+                                        );
+                            });
+                      },
+                    ))
+              ],
+            )));
   }
 }

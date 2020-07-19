@@ -35,7 +35,7 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
   String loopId = "";
 
   Future<bool> initializeScreen() async {
-    myId = Provider.of<UserDataProvider>(context).userData.userID;
+    myId = Provider.of<UserDataProvider>(context).user.userID;
     final args =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
     loopName = args["loopName"] as String;

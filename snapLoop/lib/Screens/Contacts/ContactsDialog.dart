@@ -78,8 +78,8 @@ class _ContactsDialogState extends State<ContactsDialog>
   @override
   Widget build(BuildContext context) {
     // both will be asynchronous calls
-    Provider.of<UserDataProvider>(context).syncContacts(_contacts);
-    users = Provider.of<UserDataProvider>(context).userContacts;
+    // Provider.of<UserDataProvider>(context, listen:false).syncContacts(_contacts);
+    // users = Provider.of<UserDataProvider>(context).userContacts;
     super.build(context);
     return users != null && users.length != 0
         ? ListView.builder(

@@ -22,7 +22,7 @@ class _UserProfileState extends State<UserProfile>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    User user = Provider.of<UserDataProvider>(context, listen: false).user;
+    User user = Provider.of<UserDataProvider>(context).user;
 
     return Container(
         child: ListView(children: [

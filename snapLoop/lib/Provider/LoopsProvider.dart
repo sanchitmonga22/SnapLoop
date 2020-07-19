@@ -50,7 +50,6 @@ class LoopsProvider with ChangeNotifier {
         throw new HttpException("could not generate random emojies");
       }
     } catch (err) {
-      print(err);
       throw new HttpException(err);
     }
   }
@@ -70,7 +69,6 @@ class LoopsProvider with ChangeNotifier {
             "chatId": chatId,
             "loopId": loopId
           }));
-      print(res.statusCode);
       if (res.statusCode == 200) {
         notifyListeners();
       } else {
@@ -105,7 +103,6 @@ class LoopsProvider with ChangeNotifier {
         return null;
       }
     } catch (err) {
-      print(err);
       throw new HttpException("loop creation failed due to :$err");
     }
   }

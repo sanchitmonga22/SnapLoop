@@ -29,7 +29,7 @@ class _FloatingActionButtonDataState extends State<FloatingActionButtonData> {
   @override
   Widget build(BuildContext context) {
     int numberOfloops =
-        Provider.of<UserDataProvider>(context).userData.numberOfLoopsRemaining;
+        Provider.of<UserDataProvider>(context).user.numberOfLoopsRemaining;
 
     final changes = Provider.of<FloatingActionButtonDataChanges>(context);
     return FloatingActionBubble(
