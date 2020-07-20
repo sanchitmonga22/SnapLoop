@@ -115,10 +115,10 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<LoopsProvider>(context, listen: false)
-        .initializeLoopsFromUserData();
+    Provider.of<LoopsProvider>(context).initializeLoopsFromUserData();
     super.build(context);
     MediaQueryData size = MediaQuery.of(context);
+
     // getting the loops from the provider
     loops = Provider.of<LoopsProvider>(context).loops;
 

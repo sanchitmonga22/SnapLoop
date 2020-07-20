@@ -36,6 +36,7 @@ class SnapLoop extends StatelessWidget {
   Widget build(BuildContext context) {
     final SocketService socketService = injector.get<SocketService>();
     socketService.createSocketConnection();
+
     return MultiProvider(
         providers: [
           // using with socket.io
@@ -50,7 +51,6 @@ class SnapLoop extends StatelessWidget {
             return LoopsProvider(
                 "",
                 [],
-                "",
                 User(
                     numberOfLoopsRemaining: 5,
                     loopsData: [],
@@ -69,7 +69,6 @@ class SnapLoop extends StatelessWidget {
                 previousLoopsProvider.loops == null
                     ? []
                     : previousLoopsProvider.loops,
-                auth.userId,
                 auth.user);
           }),
           ChangeNotifierProxyProvider<Auth, UserDataProvider>(

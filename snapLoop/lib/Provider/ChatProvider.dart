@@ -52,6 +52,7 @@ class ChatProvider with ChangeNotifier {
       } else {
         throw new HttpException("Could not get the chat from the server");
       }
+      notifyListeners();
     } catch (err) {
       throw new HttpException(err);
     }

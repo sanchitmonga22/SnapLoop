@@ -49,6 +49,10 @@ dependencies:
     flutter_simple_dependency_injection: ^1.0.2+1
     timezone: ^0.5.7
     flutter_native_timezone: ^1.0.4
+    connectivity: ^0.4.9
+    stacked: ^1.7.4
+    auto_route: ^0.6.5
+    stacked_services: ^0.4.4+3
 
     pull_to_refresh: ^1.6.0
     flutter_slidable: ^0.5.4
@@ -83,7 +87,8 @@ dependencies:
 dev_dependencies:
     flutter_test:
         sdk: flutter
-
+    auto_route_generator: ^0.6.5
+    build_runner: ^1.10.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

@@ -52,7 +52,6 @@ class _FriendsScreenState extends State<FriendsScreen>
   String loopName = "";
   int activeIndex;
   int requestSentIndex;
-  bool init = true;
   bool loopForwarding = false;
   Future future;
   List<FriendsData> friends = [];
@@ -230,11 +229,7 @@ class _FriendsScreenState extends State<FriendsScreen>
                     placeHolder: Consumer<UserDataProvider>(
                       builder: (context, value, child) {
                         // should update when a new friend is added
-                        if (!init) {
-                          print("built");
-                          friends = value.friends;
-                          init = false;
-                        }
+                        friends = value.friends;
                         return FutureBuilder(
                             future: future,
                             builder: (context, snapshot) {

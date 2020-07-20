@@ -210,6 +210,14 @@ class UserDataProvider with ChangeNotifier {
   }
 
   Future<void> acceptRequest(String userID) async {
+    PublicUserData req;
+    _requests.removeWhere((element) {
+      if (element.userID == userID) {
+        req = element;
+        return true;
+      }
+      return false;
+    });
     try {
       http.Response res = await http.post(
         '$SERVER_IP/users/acceptRequest',
@@ -223,6 +231,8 @@ class UserDataProvider with ChangeNotifier {
         notifyListeners();
         return;
       } else {
+        // if request not send add the request back to the list
+        _requests.add(req);
         throw new HttpException("Request not sent");
       }
     } catch (err) {

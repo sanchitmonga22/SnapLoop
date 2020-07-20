@@ -8,22 +8,22 @@ import 'package:http/http.dart' as http;
 
 ///author: @sanchitmonga22
 class LoopsProvider with ChangeNotifier {
-  final String authToken;
-  final String userId;
+  final String _authToken;
   List<Loop> _loops = [];
-  User user;
+  User _user;
 
-  LoopsProvider(this.authToken, this._loops, this.userId, this.user);
+  LoopsProvider(this._authToken, this._loops, this._user);
 
   List<Loop> get loops {
     return [..._loops];
   }
 
   void initializeLoopsFromUserData() {
-    _loops = user.loopsData;
+    _loops = _user.loopsData;
     if (_loops == null) {
       _loops = [];
     }
+    notifyListeners();
   }
 
   void addNewLoop(Loop loop) {
@@ -39,7 +39,7 @@ class LoopsProvider with ChangeNotifier {
     try {
       http.Response res =
           await http.get('$SERVER_IP/loops/getRandomUrls', headers: {
-        "Authorization": "Bearer " + authToken,
+        "Authorization": "Bearer " + _authToken,
         "Content-Type": "application/json",
         "count": count.toString(),
       });
@@ -59,7 +59,7 @@ class LoopsProvider with ChangeNotifier {
     try {
       http.Response res = await http.post('$SERVER_IP/loops/forwardLoop',
           headers: {
-            "Authorization": "Bearer " + authToken,
+            "Authorization": "Bearer " + _authToken,
             "Content-Type": "application/json",
           },
           body: jsonEncode({
@@ -69,12 +69,12 @@ class LoopsProvider with ChangeNotifier {
             "chatId": chatId,
             "loopId": loopId
           }));
+      notifyListeners();
       if (res.statusCode == 200) {
-        notifyListeners();
+        return;
       } else {
         throw new HttpException(res.body);
       }
-      return;
     } catch (err) {
       throw new HttpException(err.toString());
     }
@@ -85,7 +85,7 @@ class LoopsProvider with ChangeNotifier {
     try {
       http.Response res = await http.post('$SERVER_IP/loops/create',
           headers: {
-            "Authorization": "Bearer " + authToken,
+            "Authorization": "Bearer " + _authToken,
             "Content-Type": "application/json",
           },
           body: jsonEncode({
@@ -96,8 +96,8 @@ class LoopsProvider with ChangeNotifier {
             "senderAvatar": myAvatar,
           }));
       final response = json.decode(res.body);
+      notifyListeners();
       if (res.statusCode == 200) {
-        notifyListeners();
         return response;
       } else {
         return null;
