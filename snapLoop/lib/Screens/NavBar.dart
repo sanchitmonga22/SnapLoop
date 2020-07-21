@@ -4,10 +4,12 @@ import 'package:SnapLoop/Screens/Contacts/FriendsScreen.dart';
 import 'package:SnapLoop/Screens/Home/homeScreen.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:SnapLoop/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/models/persisten-bottom-nav-item.widget.dart';
-import 'package:persistent_bottom_nav_bar/models/persistent-bottom-nav-bar-styles.widget.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+// import 'package:persistent_bottom_nav_bar/models/persisten-bottom-nav-item.widget.dart';
+// import 'package:persistent_bottom_nav_bar/models/persistent-bottom-nav-bar-styles.widget.dart';
+// import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import 'Home/AppBarData.dart';
@@ -171,6 +173,10 @@ class _NavBarState extends State<NavBar>
               ),
             ),
             bottomNavigationBar: PersistentBottomNavBar(
+              decoration: NavBarDecoration(
+                borderRadius: BorderRadius.circular(10),
+                //border: Border.all(width: 4, color: kSystemPrimaryColor)
+              ),
               items: _navBarsItems(),
               onItemSelected: (value) {
                 if (value > 0) {
@@ -193,7 +199,7 @@ class _NavBarState extends State<NavBar>
                   _tabController.index > 0 ? _tabController.index - 1 : 0,
               backgroundColor: Colors.black,
               popScreensOnTapOfSelectedTab: false,
-              showElevation: true,
+              //showElevation: true,
             )));
   }
 }

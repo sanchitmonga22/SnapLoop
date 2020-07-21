@@ -5,7 +5,7 @@ import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
-import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
+//import 'package:SnapLoop/Screens/Authorization/authScreen.dart';
 import 'package:SnapLoop/Screens/Chat/ExistingLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
 import 'package:SnapLoop/Screens/Contacts/FriendsScreen.dart';
@@ -14,6 +14,7 @@ import 'package:SnapLoop/Socket.io/dependencyInjection.dart';
 import 'package:SnapLoop/Widget/FloatingActionButton.dart';
 import 'package:SnapLoop/Screens/NavBar.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
+import 'package:SnapLoop/ui/views/Auth/AuthView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,7 @@ void main() async {
   DependencyInjection().initialise(Injector.getInjector());
   injector = Injector.getInjector();
   await AppInitializer().initialise(injector);
+  // device preview
   runApp(SnapLoop());
 }
 
@@ -114,6 +116,7 @@ class SnapLoop extends StatelessWidget {
           ),
         ],
         child: Consumer<Auth>(builder: (context, authData, child) {
+          var routeName;
           return MaterialApp(
               title: 'SnapLoop',
               theme: ThemeData(
@@ -144,6 +147,7 @@ class SnapLoop extends StatelessWidget {
                             : AuthScreen();
                       },
                     ),
+              //onGenerateRoute: ,
               routes: {
                 FriendsScreen.routeName: (context) => FriendsScreen(),
                 ExistingLoopChatScreen.routeName: (context) =>
