@@ -3,7 +3,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../constants.dart';
+import '../../../constants.dart';
 
 class AppBarData extends StatelessWidget {
   const AppBarData({Key key}) : super(key: key);

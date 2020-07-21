@@ -1,6 +1,5 @@
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/Screens/Chat/ExistingLoopChatScreen.dart';
-import 'package:SnapLoop/Screens/Home/LoopWidget/MemojiGenerator.dart';
+import 'package:SnapLoop/ui/views/chat/ExistingLoopChatScreen.dart';
 import 'package:SnapLoop/Widget/time/timer.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/MemojiGeneratorView.dart';

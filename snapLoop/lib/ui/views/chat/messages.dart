@@ -3,7 +3,7 @@ import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
-import 'package:SnapLoop/Screens/Chat/messageBubble.dart';
+import 'package:SnapLoop/ui/views/chat/messageBubble.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

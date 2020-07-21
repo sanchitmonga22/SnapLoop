@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import '../../constants.dart';
+import '../../../constants.dart';
 
 /// author: @sanchitmonga22
 

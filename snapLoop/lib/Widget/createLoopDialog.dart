@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
-import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
+import 'package:SnapLoop/ui/views/chat/newLoopChatScreen.dart';
 
 import 'package:SnapLoop/Widget/AnimatingFlatButton.dart';
 import 'package:SnapLoop/constants.dart';

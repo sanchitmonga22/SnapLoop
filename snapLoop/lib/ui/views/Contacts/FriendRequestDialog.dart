@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
-import '../../constants.dart';
+import '../../../constants.dart';
 
 class FriendRequestsDialog extends StatefulWidget {
   FriendRequestsDialog({Key key}) : super(key: key);

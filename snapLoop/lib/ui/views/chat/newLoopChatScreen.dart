@@ -4,11 +4,11 @@ import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
-import 'package:SnapLoop/Screens/Chat/LoopDetailsScreen.dart';
-import 'package:SnapLoop/Screens/Chat/messages.dart';
-import 'package:SnapLoop/Screens/Chat/newMessage.dart';
-import 'package:SnapLoop/Screens/Home/LoopWidget/loopWidget.dart';
+import 'package:SnapLoop/ui/views/chat/LoopDetailsScreen.dart';
+import 'package:SnapLoop/ui/views/chat/messages.dart';
+import 'package:SnapLoop/ui/views/chat/newMessage.dart';
 import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
