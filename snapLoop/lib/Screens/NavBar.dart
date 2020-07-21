@@ -1,9 +1,9 @@
 import 'dart:ui';
 import 'package:SnapLoop/Screens/Contacts/ContactsDialog.dart';
-import 'package:SnapLoop/Screens/Contacts/FriendsScreen.dart';
 import 'package:SnapLoop/Screens/Home/homeScreen.dart';
 import 'package:SnapLoop/Screens/UserProfile/userProfile.dart';
 import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/ui/views/Contacts/ContactsView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';

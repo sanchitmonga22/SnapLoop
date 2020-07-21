@@ -23,7 +23,7 @@ class LoopsProvider with ChangeNotifier {
     if (_loops == null) {
       _loops = [];
     }
-    notifyListeners();
+    //notifyListeners();
   }
 
   void addNewLoop(Loop loop) {

@@ -3,10 +3,10 @@ import 'dart:ui';
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Screens/Chat/newLoopChatScreen.dart';
-import 'package:SnapLoop/Screens/Contacts/FriendsScreen.dart';
 
 import 'package:SnapLoop/Widget/AnimatingFlatButton.dart';
 import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/ui/views/Contacts/ContactsView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
