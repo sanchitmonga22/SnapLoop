@@ -14,8 +14,6 @@ import 'package:stacked/stacked.dart';
 ///author: @sanchitmonga22
 /// Will add the loop ID to this to differentiate between the loops
 class LoopWidget extends StatefulWidget {
-  // routing such that all the arguments go to the model!
-
   final double radius;
   final bool isTappable;
   final bool flipOnTouch;

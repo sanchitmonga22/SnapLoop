@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
+import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/ui/views/chat/ExistingLoopChatScreen.dart';
 import 'package:SnapLoop/ui/views/chat/newLoopChatScreen.dart';
 import 'package:SnapLoop/ui/views/Contacts/ContactsDialog.dart';
@@ -19,8 +20,10 @@ import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class FriendsScreen extends StatefulWidget {
-  FriendsScreen({Key key}) : super(key: key);
-  static const routeName = "/FriendsScreen";
+  final String loopName;
+  final bool loopForwarding;
+  FriendsScreen({Key key, this.loopName = "", this.loopForwarding = false})
+      : super(key: key);
 
   @override
   _FriendsScreenState createState() => _FriendsScreenState();
@@ -34,10 +37,6 @@ class _FriendsScreenState extends State<FriendsScreen>
   Future future;
   List<FriendsData> friends = [];
   bool newLoop = false;
-
-  String loopName = "";
-
-  bool loopForwarding = false;
 
   @override
   void initState() {
@@ -55,13 +54,7 @@ class _FriendsScreenState extends State<FriendsScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final args =
-        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    if (args != null) {
-      loopName = args['loopName'] as String;
-      loopForwarding = args['loopForwarding'] as bool;
-    }
-    if (loopName != "" && loopName != null) newLoop = true;
+    if (widget.loopName != "") newLoop = true;
 
     return ViewModelBuilder.reactive(
         viewModelBuilder: () => ContactsViewModel(),
@@ -263,18 +256,18 @@ class _FriendsScreenState extends State<FriendsScreen>
                                                       onExpansionChanged:
                                                           (value) {
                                                         if (value && newLoop) {
-                                                          if (!loopForwarding)
+                                                          if (!widget
+                                                              .loopForwarding)
                                                             Navigator
                                                                 .pushReplacementNamed(
                                                               context,
-                                                              NewLoopChatScreen
-                                                                  .routeName,
-                                                              arguments: {
-                                                                "friend":
-                                                                    friend,
-                                                                "loopName":
-                                                                    loopName
-                                                              },
+                                                              Routes
+                                                                  .newLoopChatScreen,
+                                                              arguments: NewLoopChatScreenArguments(
+                                                                  loopName: widget
+                                                                      .loopName,
+                                                                  userData:
+                                                                      friend),
                                                             );
                                                           else
                                                             Navigator.of(

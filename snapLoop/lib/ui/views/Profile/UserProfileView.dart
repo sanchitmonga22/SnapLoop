@@ -9,8 +9,6 @@ import 'package:stacked/stacked.dart';
 
 ///author: @sanchitmonga22
 class UserProfile extends StatefulWidget {
-  static const routeName = './UserProfile';
-
   const UserProfile({Key key}) : super(key: key);
 
   @override

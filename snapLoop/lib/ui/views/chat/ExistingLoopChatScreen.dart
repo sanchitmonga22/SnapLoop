@@ -3,11 +3,12 @@ import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
+import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/ui/views/chat/LoopDetailsScreen.dart';
 import 'package:SnapLoop/ui/views/chat/messages.dart';
 import 'package:SnapLoop/ui/views/chat/newMessage.dart';
 import 'package:SnapLoop/constants.dart';
-import 'package:SnapLoop/ui/views/Contacts/ContactsView.dart';
+import 'package:SnapLoop/ui/views/Contacts/FriendsView.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -16,7 +17,6 @@ import 'package:provider/provider.dart';
 /// author: @sanchitmonga22
 
 class ExistingLoopChatScreen extends StatefulWidget {
-  static const routeName = "/ExisitingLoop";
   ExistingLoopChatScreen({
     Key key,
     this.radius,
@@ -59,10 +59,10 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
 
   Future<void> sendMessage(String enteredMessage) async {
     var friend = await Navigator.of(context).pushNamed(
-      FriendsScreen.routeName,
-      arguments: {"loopName": widget.loop.name, "loopForwarding": true},
+      Routes.friendsScreen,
+      arguments: FriendsScreenArguments(
+          loopName: widget.loop.name, loopForwarding: true),
     ) as FriendsData;
-    //= ModalRoute.of(context).settings.arguments as FriendsData;
     List<dynamic> imageUrl =
         await Provider.of<LoopsProvider>(context, listen: false)
             .getRandomAvatarURL(1);

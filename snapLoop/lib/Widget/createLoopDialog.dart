@@ -2,11 +2,12 @@ import 'dart:ui';
 
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
+import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/ui/views/chat/newLoopChatScreen.dart';
 
 import 'package:SnapLoop/Widget/AnimatingFlatButton.dart';
 import 'package:SnapLoop/constants.dart';
-import 'package:SnapLoop/ui/views/Contacts/ContactsView.dart';
+import 'package:SnapLoop/ui/views/Contacts/FriendsView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -132,20 +133,17 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
                                 if (widget.friend == null) {
                                   // going to the contacts screen and then selecting a friend
                                   Navigator.of(context).pushReplacementNamed(
-                                    FriendsScreen.routeName,
-                                    arguments: {
-                                      "loopName": loopName,
-                                      "loopForwarding": false
-                                    },
-                                  );
+                                      Routes.friendsScreen,
+                                      arguments: FriendsScreenArguments(
+                                          loopName: loopName,
+                                          loopForwarding: false));
                                 } else {
                                   // going to the chat screen directly
                                   Navigator.of(context).pushReplacementNamed(
-                                      NewLoopChatScreen.routeName,
-                                      arguments: {
-                                        "friend": widget.friend,
-                                        "loopName": loopName
-                                      });
+                                      Routes.newLoopChatScreen,
+                                      arguments: NewLoopChatScreenArguments(
+                                          loopName: loopName,
+                                          userData: widget.friend));
                                 }
                               }
                             },

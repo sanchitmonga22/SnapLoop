@@ -15,8 +15,10 @@ import 'package:provider/provider.dart';
 /// author: @sanchitmonga22
 
 class NewLoopChatScreen extends StatefulWidget {
-  NewLoopChatScreen({Key key}) : super(key: key);
-  static const routeName = "/NewLoopChatScreen";
+  final String loopName;
+  final FriendsData userData;
+  NewLoopChatScreen({Key key, @required this.loopName, @required this.userData})
+      : super(key: key);
   @override
   _NewLoopChatScreenState createState() => _NewLoopChatScreenState();
 }
@@ -27,8 +29,7 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
   LoopWidget loopWidget;
   Chat chat;
   String myId;
-  String loopName;
-  FriendsData userData;
+
   List<dynamic> images;
   Future future;
   bool first = true;
@@ -36,21 +37,17 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
 
   Future<bool> initializeScreen() async {
     myId = Provider.of<UserDataProvider>(context).user.userID;
-    final args =
-        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    loopName = args["loopName"] as String;
-    userData = args["friend"] as FriendsData;
     images = await Provider.of<LoopsProvider>(context).getRandomAvatarURL(2);
     loop = new Loop(
-        currentUserId: userData.userID,
+        currentUserId: widget.userData.userID,
         chatID: "",
         creatorId: myId,
         id: "",
-        avatars: {myId: images[0], userData.userID: images[1]},
-        name: loopName,
+        avatars: {myId: images[0], widget.userData.userID: images[1]},
+        name: widget.loopName,
         numberOfMembers: 2,
         type: LoopType.NEW_LOOP,
-        userIDs: [myId, userData.userID]);
+        userIDs: [myId, widget.userData.userID]);
     chat = new Chat(chatID: "", chat: []);
     loopWidget = LoopWidget(
       isTappable: false,
@@ -64,8 +61,8 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
   // TODO: optimize the build by not creating a loop locally and instead creating a loop after sending the message
   Future<void> sendMessage(String enteredMessage) async {
     var result = await Provider.of<LoopsProvider>(context, listen: false)
-        .createLoop(
-            loopName, userData.userID, enteredMessage, images[1], images[0]);
+        .createLoop(widget.loopName, widget.userData.userID, enteredMessage,
+            images[1], images[0]);
     if (result != null) {
       loop.chatID = result["chatId"];
       loop.id = result['_id'];

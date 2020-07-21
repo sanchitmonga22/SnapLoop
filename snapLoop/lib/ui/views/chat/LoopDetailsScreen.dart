@@ -1,4 +1,5 @@
 import 'package:SnapLoop/Model/loop.dart';
+import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/ui/views/NavBar/NavBar.dart';
 import 'package:SnapLoop/Widget/time/timer.dart';
 import 'package:SnapLoop/constants.dart';
@@ -37,7 +38,7 @@ class _LoopsDetailsScreenState extends State<LoopsDetailsScreen> {
           } else if (Navigator.of(context).canPop()) {
             Navigator.of(context).pop();
           } else {
-            Navigator.of(context).pushReplacementNamed(NavBar.routeName);
+            Navigator.of(context).pushReplacementNamed(Routes.navBar);
           }
         },
         child: SafeArea(
@@ -73,7 +74,7 @@ class _LoopsDetailsScreenState extends State<LoopsDetailsScreen> {
                                     Navigator.of(context).pop();
                                   else
                                     Navigator.pushReplacementNamed(
-                                        context, NavBar.routeName);
+                                        context, Routes.navBar);
                                 }
                               },
                             ),

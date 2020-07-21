@@ -10,7 +10,6 @@ import 'package:stacked/stacked.dart';
 
 /// author: @sanchitmonga22
 class HomeScreen extends StatefulWidget {
-  static const routeName = '/homeScreen';
   final bool completedLoopsScreen;
 
   const HomeScreen({Key key, this.completedLoopsScreen = false})

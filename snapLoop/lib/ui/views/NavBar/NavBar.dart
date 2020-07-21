@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:SnapLoop/ui/views/Contacts/ContactsDialog.dart';
 import 'package:SnapLoop/constants.dart';
-import 'package:SnapLoop/ui/views/Contacts/ContactsView.dart';
+import 'package:SnapLoop/ui/views/Contacts/FriendsView.dart';
 import 'package:SnapLoop/ui/views/Home/homeView.dart';
 import 'package:SnapLoop/ui/views/Profile/UserProfileView.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +18,6 @@ import '../../../Widget/FloatingActionButton.dart';
 /// author:@sanchitmonga22
 class NavBar extends StatefulWidget {
   NavBar({Key key}) : super(key: key);
-  static const routeName = "/NavBar";
 
   @override
   _NavBarState createState() => _NavBarState();
@@ -56,7 +55,10 @@ class _NavBarState extends State<NavBar>
       HomeScreen(
         completedLoopsScreen: true,
       ),
-      FriendsScreen(),
+      FriendsScreen(
+        loopForwarding: false,
+        loopName: "",
+      ),
       UserProfile()
     ];
   }
