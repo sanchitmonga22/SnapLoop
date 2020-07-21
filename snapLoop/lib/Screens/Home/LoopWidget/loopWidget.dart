@@ -35,10 +35,10 @@ class _LoopWidgetState extends State<LoopWidget>
   @override
   void initState() {
     super.initState();
-    memojiWidget = MemojiGenerator(
-      loop: widget.loop,
-      loopType: widget.loop.type,
-    );
+    // memojiWidget = MemojiGenerator(
+    //   loop: widget.loop,
+    //   loopType: widget.loop.type,
+    // );
   }
 
   @override

@@ -418,7 +418,7 @@ class _FriendsScreenState extends State<FriendsScreen>
                                                                                                     builder: (context) => ExistingLoopChatScreen(
                                                                                                           key: ValueKey(index),
                                                                                                           loop: friendsLoops[index],
-                                                                                                          radius: model.getRadius(friendsLoops[index].numberOfMembers, context),
+                                                                                                          radius: kradiusCalculator(friendsLoops[index].numberOfMembers, MediaQuery.of(context).size.width * 0.25),
                                                                                                         )));
                                                                                           },
                                                                                           dense: true,

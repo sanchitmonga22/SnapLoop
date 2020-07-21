@@ -1,5 +1,6 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Screens/Home/LoopWidget/MemojiGenerator.dart';
+import 'package:SnapLoop/ui/views/Home/LoopWidget/MemojiGeneratorView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

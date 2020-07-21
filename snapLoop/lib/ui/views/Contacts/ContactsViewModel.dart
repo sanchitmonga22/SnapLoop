@@ -84,14 +84,4 @@ class ContactsViewModel extends BaseViewModel {
       },
     );
   }
-
-  double getRadius(int numberOfMembers, BuildContext context) {
-    double radius = 0.0;
-    radius = MediaQuery.of(context).size.width *
-        0.25 *
-        (numberOfMembers > 12
-            ? kfixedRadiusFactor["MAX"]
-            : kfixedRadiusFactor[numberOfMembers]);
-    return radius;
-  }
 }
