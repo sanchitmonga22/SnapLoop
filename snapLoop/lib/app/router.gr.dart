@@ -119,7 +119,7 @@ class Router extends RouterBase {
         builder: (context) => NewLoopChatView(
           key: args.key,
           loopName: args.loopName,
-          userData: args.userData,
+          friend: args.friend,
         ),
         settings: data,
         cupertinoTitle: 'Chat',
@@ -179,7 +179,7 @@ class AuthViewArguments {
 class NewLoopChatViewArguments {
   final Key key;
   final String loopName;
-  final FriendsData userData;
+  final FriendsData friend;
   NewLoopChatViewArguments(
-      {this.key, @required this.loopName, @required this.userData});
+      {this.key, @required this.loopName, @required this.friend});
 }

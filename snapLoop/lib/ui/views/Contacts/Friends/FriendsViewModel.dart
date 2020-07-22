@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/app/locator.dart';
+import 'package:SnapLoop/services/LoopsDataService.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,22 +12,41 @@ import 'package:stacked/stacked.dart';
 
 import '../../../../constants.dart';
 
-class ContactsViewModel extends BaseViewModel {
+class FriendsViewModel extends BaseViewModel {
   final _userData = locator<UserDataService>();
+  final _loopData = locator<LoopsDataService>();
   SearchBarController _controller = SearchBarController();
   SearchBarController get controller => _controller;
+
+  String _loopName;
+  String get loopName => _loopName;
+
+  bool _loopForwarding;
+  bool get loopForwarding => _loopForwarding;
 
   bool _contactOpened = false;
   bool get contactOpened => _contactOpened;
 
-  // bool _newLoop = false;
-  // bool get newLoop => _newLoop;
+  bool get newLoop {
+    if (_loopName == "") {
+      return false;
+    }
+    return true;
+  }
 
-  // String _loopName = "";
-  // String get loopName => _loopName;
+  List<FriendsData> _friends = [];
+  List<FriendsData> get friends => _friends;
 
-  // bool _loopForwarding = false;
-  // bool get loopForwarding => _loopForwarding;
+  void initialize(String loopName, bool loopForwarding) {
+    _loopName = loopName;
+    _loopForwarding = loopForwarding;
+  }
+
+  Future<void> initializeScreen() async {
+    await _userData.updateFriends();
+    await _userData.updateRequests();
+    _friends = _userData.friends;
+  }
 
   int _activeIndex;
   int get activeIndex => _activeIndex;
@@ -41,11 +62,10 @@ class ContactsViewModel extends BaseViewModel {
     return _userData.searchByEmail(email);
   }
 
-  List<FriendsData> getMutualFriendsData(
-      List<FriendsData> allFriends, List<String> mutualFriendsIDs) {
+  List<FriendsData> getMutualFriendsData(List<String> mutualFriendsIDs) {
     List<FriendsData> mutualFriendsData = [];
     mutualFriendsIDs.forEach((e) {
-      allFriends.forEach((element) {
+      _friends.forEach((element) {
         if (element.userID == e) {
           mutualFriendsData.add(element);
         }
@@ -61,6 +81,10 @@ class ContactsViewModel extends BaseViewModel {
     _activeIndex = -1;
     _requestSentIndex = index;
     notifyListeners();
+  }
+
+  List<Loop> getLoopInfoByIds(List<String> commonLoops) {
+    return _loopData.getLoopInforByIds(commonLoops);
   }
 
   void createADialog(BuildContext context, Widget widget) {

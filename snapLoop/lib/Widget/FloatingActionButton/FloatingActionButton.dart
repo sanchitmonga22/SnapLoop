@@ -4,7 +4,6 @@ import 'package:SnapLoop/Widget/CreateANewLoopDialog/createLoopDialog.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../constants.dart';
@@ -29,7 +28,6 @@ class FloatingActionButtonView extends StatefulWidget {
 class _FloatingActionButtonViewState extends State<FloatingActionButtonView> {
   @override
   Widget build(BuildContext context) {
-    final changes = Provider.of<FloatingActionButtonDataChanges>(context);
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => FloatingActionButtonModel(),
       builder: (context, model, child) {
@@ -55,7 +53,7 @@ class _FloatingActionButtonViewState extends State<FloatingActionButtonView> {
                   titleStyle: kTextStyleHomeScreen.copyWith(
                       fontSize: 20, fontWeight: FontWeight.w900),
                   onPress: () {
-                    changes.toggleIsTapped();
+                    model.toggleIsTapped();
                     widget._animationController.reverse();
                     showDialog(
                       context: context,
@@ -80,7 +78,7 @@ class _FloatingActionButtonViewState extends State<FloatingActionButtonView> {
                 titleStyle: kTextStyleHomeScreen.copyWith(
                     fontSize: 20, fontWeight: FontWeight.w900),
                 onPress: () {
-                  changes.toggleIsTapped();
+                  model.toggleIsTapped();
                   widget._animationController.reverse();
                   //TODO: To add a new friend
                 },
@@ -92,17 +90,17 @@ class _FloatingActionButtonViewState extends State<FloatingActionButtonView> {
               // FIXME: There still exists an issue if you tap is 4 times very fast, then it breaks!!!
               if (widget._animationController.isCompleted) {
                 try {
-                  changes.toggleIsTapped();
+                  model.toggleIsTapped();
                   await widget._animationController.reverse().orCancel;
                 } on TickerCanceled {
-                  changes.toggleIsTapped();
+                  model.toggleIsTapped();
                 }
               } else {
                 try {
-                  changes.toggleIsTapped();
+                  model.toggleIsTapped();
                   await widget._animationController.forward().orCancel;
                 } on TickerCanceled {
-                  changes.toggleIsTapped();
+                  model.toggleIsTapped();
                 }
               }
             },
@@ -110,16 +108,6 @@ class _FloatingActionButtonViewState extends State<FloatingActionButtonView> {
             animatedIconData: AnimatedIcons.menu_home);
       },
     );
-  }
-}
-
-//TODO convert this into a service
-class FloatingActionButtonDataChanges with ChangeNotifier {
-  bool isTapped = false;
-
-  void toggleIsTapped() {
-    isTapped = !isTapped;
-    notifyListeners();
   }
 }
 

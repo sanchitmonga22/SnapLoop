@@ -1,10 +1,8 @@
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/Home/homeViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 import 'LoopWidget/loopWidgetView.dart';
@@ -101,12 +99,12 @@ class _HomeViewState extends State<HomeView>
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<LoopsProvider>(context).initializeLoopsFromUserData();
     double maxR = MediaQuery.of(context).size.width * 0.25;
     super.build(context);
 
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => HomeViewModel(),
+      onModelReady: (model) => model.initializeLoops(),
       builder: (context, model, child) {
         model.setLoops(context);
         return Container(

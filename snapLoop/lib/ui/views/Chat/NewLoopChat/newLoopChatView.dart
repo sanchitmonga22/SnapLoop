@@ -1,130 +1,48 @@
-import 'package:SnapLoop/Model/chat.dart';
-import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Provider/ChatProvider.dart';
-import 'package:SnapLoop/Provider/LoopsProvider.dart';
-import 'package:SnapLoop/app/locator.dart';
-import 'package:SnapLoop/services/UserDataService.dart';
-import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
 import 'package:SnapLoop/ui/views/chat/LoopDetailsWidget/LoopDetailsView.dart';
 import 'package:SnapLoop/ui/views/chat/NewLoopChat/NewLoopChatViewModel.dart';
 import 'package:SnapLoop/ui/views/chat/Messages/messagesView.dart';
 import 'package:SnapLoop/ui/views/chat/NewMessage/newMessageView.dart';
-import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 /// author: @sanchitmonga22
 
 class NewLoopChatView extends StatefulWidget {
   final String loopName;
-  final FriendsData userData;
-  NewLoopChatView({Key key, @required this.loopName, @required this.userData})
+  final FriendsData friend;
+  NewLoopChatView({Key key, @required this.loopName, @required this.friend})
       : super(key: key);
   @override
   _NewLoopChatViewState createState() => _NewLoopChatViewState();
 }
 
 class _NewLoopChatViewState extends State<NewLoopChatView> {
-  final _userData = locator<UserDataService>();
-  double radius = 0;
-  Loop loop;
-  LoopWidgetView loopWidget;
-  Chat chat;
-  String myId;
-
-  List<dynamic> images;
-  Future future;
-  bool first = true;
-  String loopId = "";
-
-  Future<bool> initializeScreen() async {
-    myId = _userData.userId;
-    images = await Provider.of<LoopsProvider>(context).getRandomAvatarURL(2);
-    loop = new Loop(
-        currentUserId: widget.userData.userID,
-        chatID: "",
-        creatorId: myId,
-        id: "",
-        avatars: {myId: images[0], widget.userData.userID: images[1]},
-        name: widget.loopName,
-        numberOfMembers: 2,
-        type: LoopType.NEW_LOOP,
-        userIDs: [myId, widget.userData.userID]);
-    chat = new Chat(chatID: "", chat: []);
-    loopWidget = LoopWidgetView(
-      isTappable: false,
-      radius: radius,
-      flipOnTouch: false,
-      loop: loop,
-    );
-    return true;
-  }
-
-  // TODO: optimize the build by not creating a loop locally and instead creating a loop after sending the message
-  Future<void> sendMessage(String enteredMessage) async {
-    var result = await Provider.of<LoopsProvider>(context, listen: false)
-        .createLoop(widget.loopName, widget.userData.userID, enteredMessage,
-            images[1], images[0]);
-    if (result != null) {
-      loop.chatID = result["chatId"];
-      loop.id = result['_id'];
-      chat.chatID = result['chatId'];
-      chat.chat.add(ChatInfo(
-          senderID: myId,
-          content: enteredMessage,
-          time:
-              DateTime.fromMicrosecondsSinceEpoch(result["sentTime"] as int)));
-      Provider.of<LoopsProvider>(context, listen: false).addNewLoop(loop);
-      await Provider.of<ChatProvider>(context, listen: false)
-          .initializeChatByIdFromNetwork(loop.chatID);
-      await _userData.updateUserData();
-      Provider.of<LoopsProvider>(context, listen: false)
-          .initializeLoopsFromUserData();
-      // rebuilding the widget once the chat has been saved in the chats array in the chat provider
-      setState(() {
-        loopId = result['_id'];
-      });
-    } else {
-      print("result not found and loop not created");
-    }
-  }
-
-  Widget getChatWidget(Color backgroundColor) {
+  Widget getChatWidget(model) {
     return Container(
-      decoration: BoxDecoration(color: backgroundColor),
+      decoration: BoxDecoration(color: model.backgroundColor),
       child: Column(
         children: [
           MessagesView(
-            loopId: loopId,
+            loopId: model.loopId,
             newLoop: true,
           ),
-          NewMessageView(sendMessage: sendMessage),
+          NewMessageView(sendMessage: model.sendMessage),
         ],
       ),
     );
   }
 
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    if (first) {
-      future = initializeScreen();
-      first = false;
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    radius = MediaQuery.of(context).size.width * 0.25 * kfixedRadiusFactor[2];
-    Color backgroundColor = determineLoopColor(LoopType.EXISTING_LOOP);
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => NewLoopChatViewModel(),
+      createNewModelOnInsert: true,
+      onModelReady: (model) =>
+          model.initialize(context, widget.loopName, widget.friend),
       builder: (context, model, child) {
         return FutureBuilder(
-            future: future,
+            future: model.initializeScreen(),
             builder: (context, snapshot) {
               return snapshot.connectionState == ConnectionState.waiting
                   ? Material(
@@ -136,9 +54,9 @@ class _NewLoopChatViewState extends State<NewLoopChatView> {
                       ),
                     ))
                   : LoopsDetailsView(
-                      backgroundColor: backgroundColor,
-                      chatWidget: getChatWidget(backgroundColor),
-                      loopWidget: loopWidget,
+                      backgroundColor: model.backgroundColor,
+                      chatWidget: getChatWidget(model),
+                      loopWidget: model.loopWidget,
                     );
             });
       },

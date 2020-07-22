@@ -1,22 +1,18 @@
 import 'dart:ui';
 import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/ui/views/Chat/ExistingLoopChat/ExistingLoopChatView.dart';
-import 'package:SnapLoop/app/locator.dart';
-import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:SnapLoop/ui/views/Contacts/ContactsDialog/ContactsDialogView.dart';
 import 'package:SnapLoop/ui/views/Contacts/FriendsRequestDialog/FriendRequestDialog.dart';
 import 'package:SnapLoop/Widget/CreateANewLoopDialog/createLoopDialog.dart';
 import 'package:SnapLoop/constants.dart';
-import 'package:SnapLoop/ui/views/Contacts/Contacts/ContactsViewModel.dart';
+import 'package:SnapLoop/ui/views/Contacts/Friends/FriendsViewModel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class FriendsView extends StatefulWidget {
@@ -34,37 +30,22 @@ class _FriendsViewState extends State<FriendsView>
   @override
   bool get wantKeepAlive => true;
 
-  Future future;
-  List<FriendsData> friends = [];
-  bool newLoop = false;
-  final _userData = locator<UserDataService>();
-
-  @override
-  void initState() {
-    super.initState();
-    future = initializeScreen();
-  }
-
-  Future<void> initializeScreen() async {
-    await _userData.updateFriends();
-    await _userData.updateRequests();
-    friends = _userData.friends;
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (widget.loopName != "") newLoop = true;
 
     return ViewModelBuilder.reactive(
-        viewModelBuilder: () => ContactsViewModel(),
+        viewModelBuilder: () => FriendsViewModel(),
+        createNewModelOnInsert: true,
+        onModelReady: (model) =>
+            model.initialize(widget.loopName, widget.loopForwarding),
         builder: (context, model, child) {
           return Material(
               child: Padding(
                   padding: const EdgeInsets.only(right: 10.0, left: 5),
                   child: Stack(
                     children: [
-                      newLoop
+                      model.newLoop
                           ? Container()
                           : Align(
                               alignment: Alignment(1.05, -0.95),
@@ -104,10 +85,10 @@ class _FriendsViewState extends State<FriendsView>
                             ),
                       SearchBar(
                           minimumChars: 3,
-                          searchBarPadding: newLoop
+                          searchBarPadding: model.newLoop
                               ? EdgeInsets.only(top: 50)
                               : EdgeInsets.only(right: 35),
-                          suffix: newLoop
+                          suffix: model.newLoop
                               ? Row(
                                   mainAxisSize: MainAxisSize.min,
                                 )
@@ -185,7 +166,7 @@ class _FriendsViewState extends State<FriendsView>
                           onSearch: (String email) =>
                               model.getUsersByEmail(email, context),
                           placeHolder: FutureBuilder(
-                              future: future,
+                              future: model.initializeScreen(),
                               builder: (context, snapshot) {
                                 return snapshot.connectionState ==
                                         ConnectionState.waiting
@@ -198,7 +179,7 @@ class _FriendsViewState extends State<FriendsView>
                                           ),
                                         ),
                                       )
-                                    : friends.length == 0
+                                    : model.friends.length == 0
                                         ? Padding(
                                             padding: const EdgeInsets.all(20.0),
                                             child: Center(
@@ -211,16 +192,13 @@ class _FriendsViewState extends State<FriendsView>
                                             ),
                                           )
                                         : ListView.builder(
-                                            itemCount: friends.length,
+                                            itemCount: model.friends.length,
                                             itemBuilder: (context, index) {
                                               FriendsData friend =
-                                                  friends[index];
+                                                  model.friends[index];
                                               final friendsLoops =
-                                                  Provider.of<LoopsProvider>(
-                                                          context,
-                                                          listen: false)
-                                                      .getLoopInforByIds(
-                                                          friend.commonLoops);
+                                                  model.getLoopInfoByIds(
+                                                      friend.commonLoops);
                                               return Slidable(
                                                 actionPane:
                                                     SlidableDrawerActionPane(),
@@ -244,9 +222,9 @@ class _FriendsViewState extends State<FriendsView>
                                                 ],
                                                 child: ExpansionTile(
                                                   onExpansionChanged: (value) {
-                                                    if (value && newLoop) {
-                                                      if (!widget
-                                                          .loopForwarding)
+                                                    if (value &&
+                                                        model.newLoop) {
+                                                      if (!model.loopForwarding)
                                                         Navigator
                                                             .pushReplacementNamed(
                                                           context,
@@ -254,9 +232,9 @@ class _FriendsViewState extends State<FriendsView>
                                                               .newLoopChatView,
                                                           arguments:
                                                               NewLoopChatViewArguments(
-                                                                  loopName: widget
+                                                                  loopName: model
                                                                       .loopName,
-                                                                  userData:
+                                                                  friend:
                                                                       friend),
                                                         );
                                                       else
@@ -296,7 +274,7 @@ class _FriendsViewState extends State<FriendsView>
                                                                 kSystemPrimaryColor),
                                                   ),
                                                   children: [
-                                                    newLoop
+                                                    model.newLoop
                                                         ? Container()
                                                         : Container(
                                                             padding:
@@ -463,7 +441,7 @@ class _FriendsViewState extends State<FriendsView>
                                                                               scrollDirection: Axis.vertical,
                                                                               shrinkWrap: true,
                                                                               itemBuilder: (context, index) {
-                                                                                List<FriendsData> mutualFriends = model.getMutualFriendsData(friends, friend.mutualFriendsIDs);
+                                                                                List<FriendsData> mutualFriends = model.getMutualFriendsData(friend.mutualFriendsIDs);
                                                                                 return ListTile(
                                                                                   dense: true,
                                                                                   title: AutoSizeText(mutualFriends[index].displayName, style: kTextFormFieldStyle.copyWith(fontSize: 15, fontWeight: FontWeight.normal)),

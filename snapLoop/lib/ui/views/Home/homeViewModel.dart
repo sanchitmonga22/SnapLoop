@@ -1,17 +1,22 @@
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/Provider/LoopsProvider.dart';
+import 'package:SnapLoop/app/locator.dart';
+import 'package:SnapLoop/services/LoopsDataService.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../../constants.dart';
 
 class HomeViewModel extends BaseViewModel {
+  final _loopDataService = locator<LoopsDataService>();
+
   List<Loop> _loops = [];
   List<Loop> get loops => _loops;
 
+  void initializeLoops() {
+    _loopDataService.initializeLoopsFromUserData();
+  }
+
   void setLoops(BuildContext context) {
-    _loops = Provider.of<LoopsProvider>(context).loops;
+    _loops = _loopDataService.loops;
   }
 
   List<double> radiiLoop(double maxRadius, List<Loop> loopsies) {

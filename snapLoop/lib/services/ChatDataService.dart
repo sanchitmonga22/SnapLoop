@@ -3,19 +3,19 @@ import 'dart:convert';
 import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/responseParsingHelper.dart';
-import 'package:flutter/widgets.dart';
+import 'package:SnapLoop/app/locator.dart';
+import 'package:SnapLoop/services/Auth.dart';
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
 import '../constants.dart';
 
 /// author: @sanchitmonga22
 
-class ChatProvider with ChangeNotifier {
+@lazySingleton
+class ChatDataService {
+  final _auth = locator<Auth>();
   List<Chat> _chats = [];
-  final String authToken;
-  final String userId;
-
-  ChatProvider(this.authToken, this.userId);
 
   List<Chat> get chats {
     return [..._chats];
@@ -23,7 +23,6 @@ class ChatProvider with ChangeNotifier {
 
   void addNewChat(Chat chat) {
     _chats.add(chat);
-    notifyListeners();
   }
 
   Chat getChatById(String chatId) {
@@ -37,7 +36,7 @@ class ChatProvider with ChangeNotifier {
       http.Response res = await http.get(
         '$SERVER_IP/chats/getData',
         headers: {
-          "Authorization": "Bearer " + authToken,
+          "Authorization": "Bearer " + _auth.token,
           "Content-Type": "application/json",
           "chatId": chatId,
         },
@@ -52,7 +51,6 @@ class ChatProvider with ChangeNotifier {
       } else {
         throw new HttpException("Could not get the chat from the server");
       }
-      notifyListeners();
     } catch (err) {
       throw new HttpException(err);
     }

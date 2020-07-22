@@ -1,12 +1,12 @@
 import 'dart:ui';
 import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Widget/AnimatingFlatButton/AnimatingFlatButton.dart';
+import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/services/LoopsDataService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 /// author: @sanchitmonga22
 
@@ -52,8 +52,9 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
       textAlign: TextAlign.center,
       // validating whether the user uses the same name for the loop
       validator: (value) {
-        if (Provider.of<LoopsProvider>(context, listen: false)
-            .loopExistsWithName(value)) {
+        // TODO: make a create a loop dialog VIEW MODEL AND MODEL
+        final _loopDataService = locator<LoopsDataService>();
+        if (_loopDataService.loopExistsWithName(value)) {
           return "Please choose a different name, a loop with this name already exists";
         } else if (value.isEmpty) {
           return "Empty field!";
@@ -139,7 +140,7 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
                                       Routes.newLoopChatView,
                                       arguments: NewLoopChatViewArguments(
                                           loopName: loopName,
-                                          userData: widget.friend));
+                                          friend: widget.friend));
                                 }
                               }
                             },
