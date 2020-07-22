@@ -1,10 +1,10 @@
 import 'dart:ui';
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
-import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/app/router.gr.dart';
+import 'package:SnapLoop/ui/views/Chat/ExistingLoopChat/ExistingLoopChatView.dart';
+import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
-import 'package:SnapLoop/ui/views/chat/ExistingLoopChat/ExistingLoopChatView.dart';
 import 'package:SnapLoop/ui/views/Contacts/ContactsDialog/ContactsDialogView.dart';
 import 'package:SnapLoop/ui/views/Contacts/FriendsRequestDialog/FriendRequestDialog.dart';
 import 'package:SnapLoop/Widget/CreateANewLoopDialog/createLoopDialog.dart';
@@ -251,9 +251,9 @@ class _FriendsViewState extends State<FriendsView>
                                                             .pushReplacementNamed(
                                                           context,
                                                           Routes
-                                                              .newLoopChatScreen,
+                                                              .newLoopChatView,
                                                           arguments:
-                                                              NewLoopChatScreenArguments(
+                                                              NewLoopChatViewArguments(
                                                                   loopName: widget
                                                                       .loopName,
                                                                   userData:

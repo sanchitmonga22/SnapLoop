@@ -1,6 +1,7 @@
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/app/router.gr.dart';
+
 import 'package:SnapLoop/Widget/time/timer.dart';
+import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,7 +38,7 @@ class _LoopsDetailsViewState extends State<LoopsDetailsView> {
           } else if (Navigator.of(context).canPop()) {
             Navigator.of(context).pop();
           } else {
-            Navigator.of(context).pushReplacementNamed(Routes.navBar);
+            Navigator.of(context).pushReplacementNamed(Routes.navBarView);
           }
         },
         child: SafeArea(
@@ -72,8 +73,9 @@ class _LoopsDetailsViewState extends State<LoopsDetailsView> {
                                   if (Navigator.of(context).canPop())
                                     Navigator.of(context).pop();
                                   else
-                                    Navigator.pushReplacementNamed(
-                                        context, Routes.navBar);
+                                    return;
+                                  Navigator.pushReplacementNamed(
+                                      context, Routes.navBarView);
                                 }
                               },
                             ),

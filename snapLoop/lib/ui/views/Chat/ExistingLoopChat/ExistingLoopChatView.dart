@@ -3,7 +3,6 @@ import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/app/locator.dart';
-import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
 import 'package:SnapLoop/ui/views/chat/ExistingLoopChat/ExistingLoopChatViewModel.dart';
@@ -14,6 +13,7 @@ import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
+import '../../../../app/router.gr.dart';
 
 /// author: @sanchitmonga22
 
@@ -61,8 +61,8 @@ class _ExistingLoopChatViewState extends State<ExistingLoopChatView>
 
   Future<void> sendMessage(String enteredMessage) async {
     var friend = await Navigator.of(context).pushNamed(
-      Routes.friendsScreen,
-      arguments: FriendsScreenArguments(
+      Routes.friendsView,
+      arguments: FriendsViewArguments(
           loopName: widget.loop.name, loopForwarding: true),
     ) as FriendsData;
     List<dynamic> imageUrl =

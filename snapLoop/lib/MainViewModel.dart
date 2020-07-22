@@ -3,7 +3,7 @@ import 'package:stacked/stacked.dart';
 
 import 'app/locator.dart';
 
-class MainModel extends BaseViewModel {
+class MainViewModel extends BaseViewModel {
   final _auth = locator<Auth>();
 
   bool _isAuth = false;

@@ -12,29 +12,29 @@ import 'package:flutter/cupertino.dart';
 import '../Model/loop.dart';
 import '../Model/user.dart';
 import '../ui/views/Auth/AuthView.dart';
+import '../ui/views/Chat/ExistingLoopChat/ExistingLoopChatView.dart';
+import '../ui/views/Chat/NewLoopChat/newLoopChatView.dart';
 import '../ui/views/Contacts/Friends/FriendsView.dart';
 import '../ui/views/Home/homeView.dart';
 import '../ui/views/NavBar/NavBarView.dart';
 import '../ui/views/Profile/UserProfileView.dart';
-import '../ui/views/chat/ExistingLoopChat/ExistingLoopChatView.dart';
-import '../ui/views/chat/NewLoopChat/newLoopChatView.dart';
 
 class Routes {
-  static const String navBar = '/';
-  static const String homeScreen = '/home-screen';
-  static const String friendsScreen = '/friends-screen';
-  static const String existingLoopChatScreen = '/existing-loop-chat-screen';
-  static const String authScreen = '/auth-screen';
-  static const String newLoopChatScreen = '/new-loop-chat-screen';
-  static const String userProfile = '/user-profile';
+  static const String navBarView = '/';
+  static const String homeView = '/home-view';
+  static const String friendsView = '/friends-view';
+  static const String existingLoopChatView = '/existing-loop-chat-view';
+  static const String authView = '/auth-view';
+  static const String newLoopChatView = '/new-loop-chat-view';
+  static const String userProfileView = '/user-profile-view';
   static const all = <String>{
-    navBar,
-    homeScreen,
-    friendsScreen,
-    existingLoopChatScreen,
-    authScreen,
-    newLoopChatScreen,
-    userProfile,
+    navBarView,
+    homeView,
+    friendsView,
+    existingLoopChatView,
+    authView,
+    newLoopChatView,
+    userProfileView,
   };
 }
 
@@ -42,29 +42,29 @@ class Router extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
-    RouteDef(Routes.navBar, page: NavBar),
-    RouteDef(Routes.homeScreen, page: HomeView),
-    RouteDef(Routes.friendsScreen, page: FriendsView),
-    RouteDef(Routes.existingLoopChatScreen, page: ExistingLoopChatView),
-    RouteDef(Routes.authScreen, page: AuthView),
-    RouteDef(Routes.newLoopChatScreen, page: NewLoopChatView),
-    RouteDef(Routes.userProfile, page: UserProfileView),
+    RouteDef(Routes.navBarView, page: NavBarView),
+    RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes.friendsView, page: FriendsView),
+    RouteDef(Routes.existingLoopChatView, page: ExistingLoopChatView),
+    RouteDef(Routes.authView, page: AuthView),
+    RouteDef(Routes.newLoopChatView, page: NewLoopChatView),
+    RouteDef(Routes.userProfileView, page: UserProfileView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, AutoRouteFactory>{
-    NavBar: (data) {
-      var args = data.getArgs<NavBarArguments>(
-        orElse: () => NavBarArguments(),
+    NavBarView: (data) {
+      var args = data.getArgs<NavBarViewArguments>(
+        orElse: () => NavBarViewArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => NavBar(key: args.key),
+        builder: (context) => NavBarView(key: args.key),
         settings: data,
       );
     },
     HomeView: (data) {
-      var args = data.getArgs<HomeScreenArguments>(
-        orElse: () => HomeScreenArguments(),
+      var args = data.getArgs<HomeViewArguments>(
+        orElse: () => HomeViewArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => HomeView(
@@ -76,8 +76,8 @@ class Router extends RouterBase {
       );
     },
     FriendsView: (data) {
-      var args = data.getArgs<FriendsScreenArguments>(
-        orElse: () => FriendsScreenArguments(),
+      var args = data.getArgs<FriendsViewArguments>(
+        orElse: () => FriendsViewArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => FriendsView(
@@ -90,8 +90,8 @@ class Router extends RouterBase {
       );
     },
     ExistingLoopChatView: (data) {
-      var args = data.getArgs<ExistingLoopChatScreenArguments>(
-        orElse: () => ExistingLoopChatScreenArguments(),
+      var args = data.getArgs<ExistingLoopChatViewArguments>(
+        orElse: () => ExistingLoopChatViewArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => ExistingLoopChatView(
@@ -104,8 +104,8 @@ class Router extends RouterBase {
       );
     },
     AuthView: (data) {
-      var args = data.getArgs<AuthScreenArguments>(
-        orElse: () => AuthScreenArguments(),
+      var args = data.getArgs<AuthViewArguments>(
+        orElse: () => AuthViewArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => AuthView(key: args.key),
@@ -114,7 +114,7 @@ class Router extends RouterBase {
       );
     },
     NewLoopChatView: (data) {
-      var args = data.getArgs<NewLoopChatScreenArguments>(nullOk: false);
+      var args = data.getArgs<NewLoopChatViewArguments>(nullOk: false);
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => NewLoopChatView(
           key: args.key,
@@ -139,47 +139,47 @@ class Router extends RouterBase {
 /// Arguments holder classes
 /// *************************************************************************
 
-/// NavBar arguments holder class
-class NavBarArguments {
+/// NavBarView arguments holder class
+class NavBarViewArguments {
   final Key key;
-  NavBarArguments({this.key});
+  NavBarViewArguments({this.key});
 }
 
-/// HomeScreen arguments holder class
-class HomeScreenArguments {
+/// HomeView arguments holder class
+class HomeViewArguments {
   final Key key;
   final bool completedLoopsScreen;
-  HomeScreenArguments({this.key, this.completedLoopsScreen = false});
+  HomeViewArguments({this.key, this.completedLoopsScreen = false});
 }
 
-/// FriendsScreen arguments holder class
-class FriendsScreenArguments {
+/// FriendsView arguments holder class
+class FriendsViewArguments {
   final Key key;
   final String loopName;
   final bool loopForwarding;
-  FriendsScreenArguments(
+  FriendsViewArguments(
       {this.key, this.loopName = "", this.loopForwarding = false});
 }
 
-/// ExistingLoopChatScreen arguments holder class
-class ExistingLoopChatScreenArguments {
+/// ExistingLoopChatView arguments holder class
+class ExistingLoopChatViewArguments {
   final Key key;
   final double radius;
   final Loop loop;
-  ExistingLoopChatScreenArguments({this.key, this.radius, this.loop});
+  ExistingLoopChatViewArguments({this.key, this.radius, this.loop});
 }
 
-/// AuthScreen arguments holder class
-class AuthScreenArguments {
+/// AuthView arguments holder class
+class AuthViewArguments {
   final Key key;
-  AuthScreenArguments({this.key});
+  AuthViewArguments({this.key});
 }
 
-/// NewLoopChatScreen arguments holder class
-class NewLoopChatScreenArguments {
+/// NewLoopChatView arguments holder class
+class NewLoopChatViewArguments {
   final Key key;
   final String loopName;
   final FriendsData userData;
-  NewLoopChatScreenArguments(
+  NewLoopChatViewArguments(
       {this.key, @required this.loopName, @required this.userData});
 }

@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
-import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/Widget/AnimatingFlatButton/AnimatingFlatButton.dart';
+import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -129,15 +129,15 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
                                 if (widget.friend == null) {
                                   // going to the contacts screen and then selecting a friend
                                   Navigator.of(context).pushReplacementNamed(
-                                      Routes.friendsScreen,
-                                      arguments: FriendsScreenArguments(
+                                      Routes.friendsView,
+                                      arguments: FriendsViewArguments(
                                           loopName: loopName,
                                           loopForwarding: false));
                                 } else {
-                                  // going to the chat screen directly
+                                  //going to the chat screen directly
                                   Navigator.of(context).pushReplacementNamed(
-                                      Routes.newLoopChatScreen,
-                                      arguments: NewLoopChatScreenArguments(
+                                      Routes.newLoopChatView,
+                                      arguments: NewLoopChatViewArguments(
                                           loopName: loopName,
                                           userData: widget.friend));
                                 }

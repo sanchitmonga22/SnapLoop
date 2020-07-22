@@ -51,7 +51,7 @@ dependencies:
     flutter_native_timezone: ^1.0.4
     device_preview: ^0.4.7
     stacked: ^1.7.4
-    auto_route: ^0.6.5
+    auto_route: ^0.6.6
     stacked_services: ^0.4.4+3
     get_it: ^4.0.2
     injectable: ^1.0.0+1
@@ -89,7 +89,7 @@ dependencies:
 dev_dependencies:
     flutter_test:
         sdk: flutter
-    auto_route_generator: ^0.6.5
+    auto_route_generator: ^0.6.6
     injectable_generator: ^1.0.1
     build_runner: ^1.10.0
 # For information on the generic Dart part of this file, see the

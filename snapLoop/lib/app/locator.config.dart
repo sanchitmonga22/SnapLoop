@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/get_it_helper.dart';
 
 import '../services/Auth.dart';
+import '../services/UserDataService.dart';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance
@@ -15,4 +16,5 @@ import '../services/Auth.dart';
 void $initGetIt(GetIt g, {String environment}) {
   final gh = GetItHelper(g, environment);
   gh.lazySingleton<Auth>(() => Auth());
+  gh.lazySingleton<UserDataService>(() => UserDataService());
 }

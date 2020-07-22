@@ -5,8 +5,7 @@ import 'package:SnapLoop/Socket.io/appInitializer.dart';
 import 'package:SnapLoop/Socket.io/dependencyInjection.dart';
 import 'package:SnapLoop/Widget/FloatingActionButton/FloatingActionButton.dart';
 import 'package:SnapLoop/app/locator.dart';
-import 'package:SnapLoop/app/router.gr.dart';
-import 'package:SnapLoop/mainModel.dart';
+import 'package:SnapLoop/MainViewModel.dart';
 import 'package:SnapLoop/services/Auth.dart';
 import 'package:SnapLoop/ui/views/NavBar/NavBarView.dart';
 import 'package:SnapLoop/ui/views/Auth/AuthView.dart';
@@ -14,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
+import 'app/router.gr.dart';
 import 'ui/splashScreen.dart';
 import 'Socket.io/socketService.dart';
 
@@ -37,7 +37,7 @@ class SnapLoop extends StatelessWidget {
     var _auth = locator<Auth>();
 
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => MainModel(),
+      viewModelBuilder: () => MainViewModel(),
       builder: (context, model, child) {
         return MultiProvider(
             providers: [
@@ -76,7 +76,7 @@ class SnapLoop extends StatelessWidget {
               // ),
               // home: AuthScreen(),
               home: model.isAuth
-                  ? NavBar()
+                  ? NavBarView()
                   : FutureBuilder(
                       future: model.tryAutoLogin(),
                       builder: (context, authResultsnapshot) {

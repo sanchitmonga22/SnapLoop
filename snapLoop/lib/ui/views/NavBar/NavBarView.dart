@@ -13,15 +13,15 @@ import 'package:stacked/stacked.dart';
 import '../../../Widget/FloatingActionButton/FloatingActionButton.dart';
 
 /// author:@sanchitmonga22
-class NavBar extends StatefulWidget {
-  NavBar({Key key}) : super(key: key);
+class NavBarView extends StatefulWidget {
+  NavBarView({Key key}) : super(key: key);
 
   @override
-  _NavBarState createState() => _NavBarState();
+  _NavBarViewState createState() => _NavBarViewState();
 }
 
-class _NavBarState extends State<NavBar>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<NavBar> {
+class _NavBarViewState extends State<NavBarView>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<NavBarView> {
   TabController _tabController;
   Animation<double> _floatingBubbleAnimation;
   AnimationController _floatingBubbleAnimationController;
