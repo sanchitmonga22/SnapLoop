@@ -1,16 +1,17 @@
 import 'dart:ui';
 
 import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Provider/UserDataProvider.dart';
+import 'package:SnapLoop/app/locator.dart';
+import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../constants.dart';
 
 class ContactsViewModel extends BaseViewModel {
+  final _userData = locator<UserDataService>();
   SearchBarController _controller = SearchBarController();
   SearchBarController get controller => _controller;
 
@@ -33,12 +34,11 @@ class ContactsViewModel extends BaseViewModel {
   int get requestSentIndex => _requestSentIndex;
 
   String getNumberOfRequestsReceived(BuildContext context) {
-    return Provider.of<UserDataProvider>(context).requests.length.toString();
+    return _userData.requests.length.toString();
   }
 
   Future<List<dynamic>> getUsersByEmail(String email, BuildContext context) {
-    return Provider.of<UserDataProvider>(context, listen: false)
-        .searchByEmail(email);
+    return _userData.searchByEmail(email);
   }
 
   List<FriendsData> getMutualFriendsData(
@@ -57,8 +57,7 @@ class ContactsViewModel extends BaseViewModel {
   void sendRequest(int index, BuildContext context, userData) async {
     _activeIndex = index;
     notifyListeners();
-    await Provider.of<UserDataProvider>(context, listen: false)
-        .sendFriendRequest(userData.userID);
+    await _userData.sendFriendRequest(userData.userID);
     _activeIndex = -1;
     _requestSentIndex = index;
     notifyListeners();

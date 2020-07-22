@@ -1,11 +1,11 @@
-import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/Widget/ErrorDialog.dart';
+import 'package:SnapLoop/Widget/FloatingActionButtonModel.dart';
 import 'package:SnapLoop/Widget/createLoopDialog.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:stacked/stacked.dart';
 
 import '../constants.dart';
 
@@ -29,88 +29,91 @@ class FloatingActionButtonData extends StatefulWidget {
 class _FloatingActionButtonDataState extends State<FloatingActionButtonData> {
   @override
   Widget build(BuildContext context) {
-    int numberOfloops =
-        Provider.of<UserDataProvider>(context).user.numberOfLoopsRemaining;
-
     final changes = Provider.of<FloatingActionButtonDataChanges>(context);
-    return FloatingActionBubble(
-        circleAvatar: {
-          0: CircleAvatar(
-            backgroundColor: kSystemPrimaryColor,
-            child: Text(
-              numberOfloops.toString(),
-              style:
-                  kTextFormFieldStyle.copyWith(fontWeight: FontWeight.normal),
-            ),
-            radius: 15,
-          ),
-        },
-        backGroundColor: Colors.black,
-        items: <Bubble>[
-          Bubble(
-              title: "+",
-              iconColor: Colors.white,
-              bubbleColor: Colors.black,
-              icon: CupertinoIcons.loop_thick,
-              titleStyle: kTextStyleHomeScreen.copyWith(
-                  fontSize: 20, fontWeight: FontWeight.w900),
-              onPress: () {
-                changes.toggleIsTapped();
-                widget._animationController.reverse();
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  useSafeArea: true,
-                  builder: (context) {
-                    if (numberOfloops > 0) {
-                      return CreateALoopDialog();
-                    } else {
-                      return ErrorDialog(
-                          message:
-                              "You have used the maximum number of loops available for the day. It resets after every ");
-                    }
-                  },
-                );
-              }),
-          Bubble(
-            title: "+",
-            iconColor: Colors.white,
-            bubbleColor: Colors.black,
-            icon: CupertinoIcons.person_solid,
-            titleStyle: kTextStyleHomeScreen.copyWith(
-                fontSize: 20, fontWeight: FontWeight.w900),
-            onPress: () {
-              changes.toggleIsTapped();
-              widget._animationController.reverse();
-              //TODO: To add a new friend
+    return ViewModelBuilder.reactive(
+      viewModelBuilder: () => FloatingActionButtonModel(),
+      builder: (context, model, child) {
+        return FloatingActionBubble(
+            circleAvatar: {
+              0: CircleAvatar(
+                backgroundColor: kSystemPrimaryColor,
+                child: Text(
+                  model.numberOfLoops.toString(),
+                  style: kTextFormFieldStyle.copyWith(
+                      fontWeight: FontWeight.normal),
+                ),
+                radius: 15,
+              ),
             },
-          ),
-        ],
-        animation: widget._animation,
-        onPress: () async {
-          // Avoiding the double tap, when the user double taps this, the blur screen will still be updated!
-          // FIXME: There still exists an issue if you tap is 4 times very fast, then it breaks!!!
-          if (widget._animationController.isCompleted) {
-            try {
-              changes.toggleIsTapped();
-              await widget._animationController.reverse().orCancel;
-            } on TickerCanceled {
-              changes.toggleIsTapped();
-            }
-          } else {
-            try {
-              changes.toggleIsTapped();
-              await widget._animationController.forward().orCancel;
-            } on TickerCanceled {
-              changes.toggleIsTapped();
-            }
-          }
-        },
-        iconColor: Colors.white,
-        animatedIconData: AnimatedIcons.menu_home);
+            backGroundColor: Colors.black,
+            items: <Bubble>[
+              Bubble(
+                  title: "+",
+                  iconColor: Colors.white,
+                  bubbleColor: Colors.black,
+                  icon: CupertinoIcons.loop_thick,
+                  titleStyle: kTextStyleHomeScreen.copyWith(
+                      fontSize: 20, fontWeight: FontWeight.w900),
+                  onPress: () {
+                    changes.toggleIsTapped();
+                    widget._animationController.reverse();
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      useSafeArea: true,
+                      builder: (context) {
+                        if (model.numberOfLoops > 0) {
+                          return CreateALoopDialog();
+                        } else {
+                          return ErrorDialog(
+                              message:
+                                  "You have used the maximum number of loops available for the day. It resets after every ");
+                        }
+                      },
+                    );
+                  }),
+              Bubble(
+                title: "+",
+                iconColor: Colors.white,
+                bubbleColor: Colors.black,
+                icon: CupertinoIcons.person_solid,
+                titleStyle: kTextStyleHomeScreen.copyWith(
+                    fontSize: 20, fontWeight: FontWeight.w900),
+                onPress: () {
+                  changes.toggleIsTapped();
+                  widget._animationController.reverse();
+                  //TODO: To add a new friend
+                },
+              ),
+            ],
+            animation: widget._animation,
+            onPress: () async {
+              // Avoiding the double tap, when the user double taps this, the blur screen will still be updated!
+              // FIXME: There still exists an issue if you tap is 4 times very fast, then it breaks!!!
+              if (widget._animationController.isCompleted) {
+                try {
+                  changes.toggleIsTapped();
+                  await widget._animationController.reverse().orCancel;
+                } on TickerCanceled {
+                  changes.toggleIsTapped();
+                }
+              } else {
+                try {
+                  changes.toggleIsTapped();
+                  await widget._animationController.forward().orCancel;
+                } on TickerCanceled {
+                  changes.toggleIsTapped();
+                }
+              }
+            },
+            iconColor: Colors.white,
+            animatedIconData: AnimatedIcons.menu_home);
+      },
+    );
   }
 }
 
+//TODO convert this into a service
 class FloatingActionButtonDataChanges with ChangeNotifier {
   bool isTapped = false;
 

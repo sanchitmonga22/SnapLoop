@@ -4,13 +4,17 @@ import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
+import 'package:SnapLoop/app/locator.dart';
+import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:SnapLoop/ui/views/chat/LoopDetailsScreen.dart';
+import 'package:SnapLoop/ui/views/chat/NewLoopChatViewModel.dart';
 import 'package:SnapLoop/ui/views/chat/messages.dart';
 import 'package:SnapLoop/ui/views/chat/newMessage.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stacked/stacked.dart';
 
 /// author: @sanchitmonga22
 
@@ -24,6 +28,7 @@ class NewLoopChatScreen extends StatefulWidget {
 }
 
 class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
+  final _userData = locator<UserDataService>();
   double radius = 0;
   Loop loop;
   LoopWidget loopWidget;
@@ -36,7 +41,7 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
   String loopId = "";
 
   Future<bool> initializeScreen() async {
-    myId = Provider.of<UserDataProvider>(context).user.userID;
+    myId = _userData.userId;
     images = await Provider.of<LoopsProvider>(context).getRandomAvatarURL(2);
     loop = new Loop(
         currentUserId: widget.userData.userID,
@@ -75,8 +80,7 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
       Provider.of<LoopsProvider>(context, listen: false).addNewLoop(loop);
       await Provider.of<ChatProvider>(context, listen: false)
           .initializeChatByIdFromNetwork(loop.chatID);
-      await Provider.of<UserDataProvider>(context, listen: false)
-          .updateUserData();
+      await _userData.updateUserData();
       Provider.of<LoopsProvider>(context, listen: false)
           .initializeLoopsFromUserData();
       // rebuilding the widget once the chat has been saved in the chats array in the chat provider
@@ -117,23 +121,28 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
   Widget build(BuildContext context) {
     radius = MediaQuery.of(context).size.width * 0.25 * kfixedRadiusFactor[2];
     Color backgroundColor = determineLoopColor(LoopType.EXISTING_LOOP);
-    return FutureBuilder(
-        future: future,
-        builder: (context, snapshot) {
-          return snapshot.connectionState == ConnectionState.waiting
-              ? Material(
-                  child: Center(
-                  child: Container(
-                    height: 30,
-                    width: 30,
-                    child: CircularProgressIndicator(),
-                  ),
-                ))
-              : LoopsDetailsScreen(
-                  backgroundColor: backgroundColor,
-                  chatWidget: getChatWidget(backgroundColor),
-                  loopWidget: loopWidget,
-                );
-        });
+    return ViewModelBuilder.reactive(
+      viewModelBuilder: () => NewLoopChatViewModel(),
+      builder: (context, model, child) {
+        return FutureBuilder(
+            future: future,
+            builder: (context, snapshot) {
+              return snapshot.connectionState == ConnectionState.waiting
+                  ? Material(
+                      child: Center(
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        child: CircularProgressIndicator(),
+                      ),
+                    ))
+                  : LoopsDetailsScreen(
+                      backgroundColor: backgroundColor,
+                      chatWidget: getChatWidget(backgroundColor),
+                      loopWidget: loopWidget,
+                    );
+            });
+      },
+    );
   }
 }

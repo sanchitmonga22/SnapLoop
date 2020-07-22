@@ -1,6 +1,4 @@
 import 'package:SnapLoop/Helper/customRoute.dart';
-import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Provider/UserDataProvider.dart';
@@ -50,13 +48,6 @@ class SnapLoop extends StatelessWidget {
                   _auth.user,
                 );
               }),
-              ChangeNotifierProvider<UserDataProvider>(create: (context) {
-                return UserDataProvider(
-                  _auth.user,
-                  _auth.userId,
-                  _auth.token,
-                );
-              }),
               ChangeNotifierProvider<ChatProvider>(
                 create: (context) {
                   return ChatProvider(_auth.token, _auth.userId);
@@ -102,3 +93,5 @@ class SnapLoop extends StatelessWidget {
     );
   }
 }
+
+// use navigation service isntead of directly navigating in the app

@@ -1,10 +1,6 @@
-import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Provider/Auth.dart';
-import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/ui/views/Profile/UserProfileViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 ///author: @sanchitmonga22
@@ -23,7 +19,6 @@ class _UserProfileState extends State<UserProfile>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    User user = Provider.of<UserDataProvider>(context).user;
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => UserProfileViewModel(),
       builder: (context, model, child) {
@@ -39,35 +34,35 @@ class _UserProfileState extends State<UserProfile>
           ListTile(
             contentPadding: EdgeInsets.symmetric(horizontal: 10),
             title: Text(
-              "Username: ${user.username}",
+              "Username: ${model.user.username}",
               textAlign: TextAlign.left,
             ),
           ),
           ListTile(
             contentPadding: EdgeInsets.symmetric(horizontal: 10),
             title: Text(
-              "Email address: ${user.email}",
+              "Email address: ${model.user.email}",
               textAlign: TextAlign.left,
             ),
           ),
           ListTile(
             contentPadding: EdgeInsets.symmetric(horizontal: 10),
             title: Text(
-              "DisplayName: ${user.displayName}",
+              "DisplayName: ${model.user.displayName}",
               textAlign: TextAlign.left,
             ),
           ),
           ListTile(
             contentPadding: EdgeInsets.symmetric(horizontal: 10),
             title: Text(
-              "Score: ${user.score}",
+              "Score: ${model.user.score}",
               textAlign: TextAlign.left,
             ),
           ),
           ListTile(
             contentPadding: EdgeInsets.symmetric(horizontal: 10),
             title: Text(
-              "UserID: ${user.userID}",
+              "UserID: ${model.user.userID}",
               textAlign: TextAlign.left,
             ),
           ),
