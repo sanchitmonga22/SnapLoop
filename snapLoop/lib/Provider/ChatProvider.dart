@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Model/chat.dart';
-import 'package:SnapLoop/Provider/responseParsingHelper.dart';
+import 'package:SnapLoop/Model/responseParsingHelper.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,7 +15,7 @@ class ChatProvider with ChangeNotifier {
   final String authToken;
   final String userId;
 
-  ChatProvider(this.authToken, this.userId, this._chats);
+  ChatProvider(this.authToken, this.userId);
 
   List<Chat> get chats {
     return [..._chats];

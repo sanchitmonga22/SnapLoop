@@ -7,12 +7,16 @@ import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/Socket.io/appInitializer.dart';
 import 'package:SnapLoop/Socket.io/dependencyInjection.dart';
 import 'package:SnapLoop/Widget/FloatingActionButton.dart';
+import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/app/router.gr.dart';
+import 'package:SnapLoop/mainModel.dart';
+import 'package:SnapLoop/services/Auth.dart';
 import 'package:SnapLoop/ui/views/NavBar/NavBar.dart';
 import 'package:SnapLoop/ui/views/Auth/AuthView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:provider/provider.dart';
+import 'package:stacked/stacked.dart';
 import 'ui/splashScreen.dart';
 import 'Socket.io/socketService.dart';
 
@@ -20,6 +24,7 @@ Injector injector;
 
 /// author: @sanchitmonga22
 void main() async {
+  setupLocator();
   DependencyInjection().initialise(Injector.getInjector());
   injector = Injector.getInjector();
   await AppInitializer().initialise(injector);
@@ -32,111 +37,68 @@ class SnapLoop extends StatelessWidget {
   Widget build(BuildContext context) {
     final SocketService socketService = injector.get<SocketService>();
     socketService.createSocketConnection();
+    var _auth = locator<Auth>();
 
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => Auth(),
-          ),
-          ChangeNotifierProxyProvider<Auth, LoopsProvider>(create: (context) {
-            return LoopsProvider(
-                "",
-                [],
-                User(
-                    numberOfLoopsRemaining: 5,
-                    loopsData: [],
-                    contacts: [],
-                    userID: "",
-                    username: "",
-                    displayName: "",
-                    email: "",
-                    score: 0,
-                    friendsIds: [],
-                    requestsSent: [],
-                    requestsReceived: []));
-          }, update: (context, auth, previousLoopsProvider) {
-            return LoopsProvider(
-                auth.token,
-                previousLoopsProvider.loops == null
-                    ? []
-                    : previousLoopsProvider.loops,
-                auth.user);
-          }),
-          ChangeNotifierProxyProvider<Auth, UserDataProvider>(
-              create: (context) {
-            return UserDataProvider(
-              User(
-                  numberOfLoopsRemaining: 5,
-                  loopsData: [],
-                  contacts: [],
-                  userID: "",
-                  username: "",
-                  displayName: "",
-                  email: "",
-                  score: 0,
-                  friendsIds: [],
-                  requestsSent: [],
-                  requestsReceived: []),
-              "",
-              "",
-            );
-          }, update: (context, auth, previousUserDataProvider) {
-            return UserDataProvider(
-              auth.user,
-              auth.userId,
-              auth.token,
-            );
-          }),
-          ChangeNotifierProxyProvider<Auth, ChatProvider>(
-            create: (context) {
-              return ChatProvider("", "", []);
-            },
-            update: (context, auth, previousChatProvider) {
-              return ChatProvider(
-                  auth.token,
-                  auth.userId,
-                  previousChatProvider.chats == null
-                      ? []
-                      : previousChatProvider.chats);
-            },
-          ),
-          ChangeNotifierProvider(
-            create: (context) => FloatingActionButtonDataChanges(),
-          ),
-        ],
-        child: Consumer<Auth>(builder: (context, authData, child) {
-          return MaterialApp(
-            title: 'SnapLoop',
-            theme: ThemeData(
-                fontFamily: 'Open Sans',
-                // appBarTheme:
-                //     AppBarTheme(color: Color.fromRGBO(74, 20, 140, 0.7)),
-                // primarySwatch: Colors.deepPurple,
-                // accentColor: Colors.grey.shade600,
-                // textTheme:
-                //     TextTheme(button: TextStyle(color: Colors.white70)),
-                visualDensity: VisualDensity.adaptivePlatformDensity,
-                pageTransitionsTheme: PageTransitionsTheme(builders: {
-                  TargetPlatform.android: CustomPageTransitionBuilder(),
-                  TargetPlatform.iOS: CustomPageTransitionBuilder()
-                })),
-            // darkTheme: ThemeData(
-            //   brightness: Brightness.dark,
-            // ),
-            // home: AuthScreen(),
-            home: authData.isAuth
-                ? NavBar()
-                : FutureBuilder(
-                    future: authData.tryAutoLogin(),
-                    builder: (context, authResultsnapshot) {
-                      return authResultsnapshot.connectionState ==
-                              ConnectionState.waiting
-                          ? SplashScreen()
-                          : AuthScreen();
-                    },
-                  ),
-            onGenerateRoute: Router(),
-          );
-        }));
+    return ViewModelBuilder.reactive(
+      viewModelBuilder: () => MainModel(),
+      builder: (context, model, child) {
+        return MultiProvider(
+            providers: [
+              ChangeNotifierProvider<LoopsProvider>(create: (context) {
+                return LoopsProvider(
+                  _auth.token,
+                  _auth.user,
+                );
+              }),
+              ChangeNotifierProvider<UserDataProvider>(create: (context) {
+                return UserDataProvider(
+                  _auth.user,
+                  _auth.userId,
+                  _auth.token,
+                );
+              }),
+              ChangeNotifierProvider<ChatProvider>(
+                create: (context) {
+                  return ChatProvider(_auth.token, _auth.userId);
+                },
+              ),
+              ChangeNotifierProvider(
+                create: (context) => FloatingActionButtonDataChanges(),
+              ),
+            ],
+            child: MaterialApp(
+              title: 'SnapLoop',
+              theme: ThemeData(
+                  fontFamily: 'Open Sans',
+                  // appBarTheme:
+                  //     AppBarTheme(color: Color.fromRGBO(74, 20, 140, 0.7)),
+                  // primarySwatch: Colors.deepPurple,
+                  // accentColor: Colors.grey.shade600,
+                  // textTheme:
+                  //     TextTheme(button: TextStyle(color: Colors.white70)),
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                  pageTransitionsTheme: PageTransitionsTheme(builders: {
+                    TargetPlatform.android: CustomPageTransitionBuilder(),
+                    TargetPlatform.iOS: CustomPageTransitionBuilder()
+                  })),
+              // darkTheme: ThemeData(
+              //   brightness: Brightness.dark,
+              // ),
+              // home: AuthScreen(),
+              home: model.isAuth
+                  ? NavBar()
+                  : FutureBuilder(
+                      future: model.tryAutoLogin(),
+                      builder: (context, authResultsnapshot) {
+                        return authResultsnapshot.connectionState ==
+                                ConnectionState.waiting
+                            ? SplashScreen()
+                            : AuthScreen();
+                      },
+                    ),
+              onGenerateRoute: Router(),
+            ));
+      },
+    );
   }
 }

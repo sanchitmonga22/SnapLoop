@@ -1,13 +1,15 @@
-import 'package:SnapLoop/Provider/Auth.dart';
 import 'package:SnapLoop/Widget/ErrorDialog.dart';
+import 'package:SnapLoop/app/locator.dart';
+import 'package:SnapLoop/services/Auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 enum AuthMode { Signup, Login }
 
 class AuthViewModel extends BaseViewModel {
+  final _auth = locator<Auth>();
+
   final TextEditingController _controller = TextEditingController();
   TextEditingController get controller => _controller;
 
@@ -46,14 +48,11 @@ class AuthViewModel extends BaseViewModel {
     _formKey.currentState.save();
     try {
       if (_authMode == AuthMode.Login) {
-        await Provider.of<Auth>(context, listen: false)
-            .attemptLogIn(_authData['email'], _authData['password']);
+        print("uess");
+        await _auth.attemptLogIn(_authData['email'], _authData['password']);
       } else {
-        await Provider.of<Auth>(context, listen: false).attemptSignUp(
-            _authData['username'],
-            _authData['password'],
-            _authData["phoneNumber"],
-            _authData["email"]);
+        await _auth.attemptSignUp(_authData['username'], _authData['password'],
+            _authData["phoneNumber"], _authData["email"]);
       }
       notifyListeners();
     } catch (error) {

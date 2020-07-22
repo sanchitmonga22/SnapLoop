@@ -12,7 +12,7 @@ class LoopsProvider with ChangeNotifier {
   List<Loop> _loops = [];
   User _user;
 
-  LoopsProvider(this._authToken, this._loops, this._user);
+  LoopsProvider(this._authToken, this._user);
 
   List<Loop> get loops {
     return [..._loops];

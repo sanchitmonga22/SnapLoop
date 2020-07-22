@@ -63,13 +63,13 @@ class _HomeScreenState extends State<HomeScreen>
     final existingLoops = model.getLoopsType(LoopType.EXISTING_LOOP);
     final newLoops = model.getLoopsType(LoopType.NEW_LOOP);
     // adding all the loops into the list
-    final loopsies = [];
+    final loopsies = List<Loop>();
     loopsies.addAll(loopsWithNewNotifications);
     loopsies.addAll(existingLoops);
     loopsies.addAll(newLoops);
 
     // getting the radiis for all the different types of loops
-    final radiies = [];
+    final radiies = List<double>();
     radiies.addAll(model.radiiLoop(maxRadius, loopsWithNewNotifications));
     radiies.addAll(model.radiiLoop(maxRadius, newLoops));
     radiies.addAll(model.radiiLoop(maxRadius, existingLoops));
@@ -86,11 +86,11 @@ class _HomeScreenState extends State<HomeScreen>
         model.getLoopsType(LoopType.INACTIVE_LOOP_FAILED);
 
     // adding all the loops into the list
-    final loopsies = [];
+    final loopsies = List<Loop>();
     loopsies.addAll(inactiveLoopsFailed);
     loopsies.addAll(inactiveLoopsSuccessful);
     // getting the radiis for all the different types of loops
-    final radiies = [];
+    final radiies = List<double>();
     radiies.addAll(model.radiiLoop(maxRadius, inactiveLoopsSuccessful));
     radiies.addAll(model.radiiLoop(maxRadius, inactiveLoopsFailed));
 

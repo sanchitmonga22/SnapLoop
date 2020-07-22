@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Provider/responseParsingHelper.dart';
+import 'package:SnapLoop/Model/responseParsingHelper.dart';
 import 'package:SnapLoop/constants.dart';
 
 /// author: @sanchitmonga22

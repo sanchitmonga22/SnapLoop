@@ -359,6 +359,7 @@ class _AuthScreenState extends State<AuthScreen>
                                                 style: kTextFormFieldStyle),
                                             padding:
                                                 EdgeInsets.only(right: 185),
+                                            // TODO: change password implementation
                                             onPressed: () {},
                                           ),
 

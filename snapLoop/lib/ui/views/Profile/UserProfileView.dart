@@ -74,10 +74,10 @@ class _UserProfileState extends State<UserProfile>
           ListTile(
             contentPadding: EdgeInsets.all(10),
             leading: Icon(Icons.exit_to_app),
-            onTap: () {
+            onTap: () async {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed('/');
-              return Provider.of<Auth>(context, listen: false).logOut();
+              model.logout();
             },
             title: Text("Logout"),
           )
