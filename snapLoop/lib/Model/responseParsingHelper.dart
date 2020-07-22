@@ -1,7 +1,7 @@
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Widget/time/timezones.dart';
+import 'package:SnapLoop/ui/Widget/time/timezones.dart';
 
 class ResponseParsingHelper {
   static Future<Chat> parseChat(dynamic response) async {

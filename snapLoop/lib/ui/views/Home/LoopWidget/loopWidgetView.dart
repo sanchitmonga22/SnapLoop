@@ -1,5 +1,5 @@
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/Widget/time/timer.dart';
+import 'package:SnapLoop/ui/Widget/time/timer.dart';
 import 'package:SnapLoop/ui/views/Chat/ExistingLoopChat/ExistingLoopChatView.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';

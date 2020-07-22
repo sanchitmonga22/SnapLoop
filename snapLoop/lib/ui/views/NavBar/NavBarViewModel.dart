@@ -3,7 +3,7 @@ import 'package:SnapLoop/services/FABTapped.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:stacked/stacked.dart';
 
-class NavBarViewModel extends BaseViewModel {
+class NavBarViewModel extends ReactiveViewModel {
   var _userData = locator<UserDataService>();
   var _fabTapped = locator<FABTapped>();
 
@@ -19,4 +19,7 @@ class NavBarViewModel extends BaseViewModel {
     _fabTapped.toggleIsTapped();
     notifyListeners();
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_fabTapped];
 }

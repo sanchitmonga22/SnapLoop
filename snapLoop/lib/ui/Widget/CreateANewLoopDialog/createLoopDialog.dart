@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Widget/AnimatingFlatButton/AnimatingFlatButton.dart';
+import 'package:SnapLoop/ui/Widget/AnimatingFlatButton/AnimatingFlatButton.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/constants.dart';

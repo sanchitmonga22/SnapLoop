@@ -1,4 +1,4 @@
-import 'package:SnapLoop/Widget/ErrorDialog/ErrorDialog.dart';
+import 'package:SnapLoop/ui/Widget/ErrorDialog/ErrorDialog.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/Auth.dart';
 import 'package:flutter/material.dart';

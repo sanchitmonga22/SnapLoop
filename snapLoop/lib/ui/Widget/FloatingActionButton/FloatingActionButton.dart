@@ -1,12 +1,12 @@
-import 'package:SnapLoop/Widget/ErrorDialog/ErrorDialog.dart';
-import 'package:SnapLoop/Widget/FloatingActionButton/FloatingActionButtonModel.dart';
-import 'package:SnapLoop/Widget/CreateANewLoopDialog/createLoopDialog.dart';
+import 'package:SnapLoop/ui/Widget/ErrorDialog/ErrorDialog.dart';
+import 'package:SnapLoop/ui/Widget/FloatingActionButton/FloatingActionButtonModel.dart';
+import 'package:SnapLoop/ui/Widget/CreateANewLoopDialog/createLoopDialog.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../constants.dart';
+import '../../../constants.dart';
 
 class FloatingActionButtonView extends StatefulWidget {
   const FloatingActionButtonView({

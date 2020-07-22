@@ -1,10 +1,16 @@
 import 'package:injectable/injectable.dart';
+import 'package:observable_ish/value/value.dart';
+import 'package:stacked/stacked.dart';
 
 @lazySingleton
-class FABTapped {
-  bool isTapped = false;
+class FABTapped with ReactiveServiceMixin {
+  FABTapped() {
+    listenToReactiveValues([_isTapped]);
+  }
+  RxValue<bool> _isTapped = RxValue<bool>(initial: false);
+  bool get isTapped => _isTapped.value;
 
   void toggleIsTapped() {
-    isTapped = !isTapped;
+    _isTapped.value = !_isTapped.value;
   }
 }

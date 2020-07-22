@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:stacked/stacked.dart';
-import '../../../Widget/FloatingActionButton/FloatingActionButton.dart';
+import '../../Widget/FloatingActionButton/FloatingActionButton.dart';
 
 /// author:@sanchitmonga22
 class NavBarView extends StatefulWidget {
@@ -102,6 +102,7 @@ class _NavBarViewState extends State<NavBarView>
   Widget build(BuildContext context) {
     super.build(context);
     return ViewModelBuilder.reactive(
+        fireOnModelReadyOnce: true,
         viewModelBuilder: () => NavBarViewModel(),
         builder: (context, model, child) {
           print(model.isTapped);

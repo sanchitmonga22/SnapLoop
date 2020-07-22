@@ -1,4 +1,3 @@
-import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -46,9 +45,7 @@ class MessageBubbleView extends StatelessWidget {
                           child: Container(
                         decoration: BoxDecoration(
                           boxShadow: [
-                            BoxShadow(
-                                blurRadius: 5,
-                                color: determineLoopColor(LoopType.NEW_LOOP))
+                            BoxShadow(blurRadius: 5, color: Colors.white)
                           ],
                           shape: BoxShape.circle,
                           image: DecorationImage(

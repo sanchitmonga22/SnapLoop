@@ -1,6 +1,6 @@
 import 'package:SnapLoop/Model/loop.dart';
 
-import 'package:SnapLoop/Widget/time/timer.dart';
+import 'package:SnapLoop/ui/Widget/time/timer.dart';
 import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';

@@ -1,4 +1,4 @@
-import 'package:SnapLoop/Widget/AnimatingFlatButton/AnimatingFlatButton.dart';
+import 'package:SnapLoop/ui/Widget/AnimatingFlatButton/AnimatingFlatButton.dart';
 import 'package:SnapLoop/ui/views/Auth/AuthViewModel.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';

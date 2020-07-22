@@ -3,14 +3,17 @@ import 'package:SnapLoop/services/FABTapped.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:stacked/stacked.dart';
 
-class FloatingActionButtonModel extends BaseViewModel {
+class FloatingActionButtonModel extends ReactiveViewModel {
   var _userData = locator<UserDataService>();
-  var fabTapped = locator<FABTapped>();
+  var _fabTapped = locator<FABTapped>();
 
   int get numberOfLoops => _userData.user.numberOfLoopsRemaining;
 
   void toggleIsTapped() {
-    fabTapped.toggleIsTapped();
+    _fabTapped.toggleIsTapped();
     notifyListeners();
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_fabTapped];
 }

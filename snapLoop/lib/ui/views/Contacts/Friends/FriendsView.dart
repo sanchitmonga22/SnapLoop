@@ -4,7 +4,7 @@ import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/ui/views/Chat/ExistingLoopChat/ExistingLoopChatView.dart';
 import 'package:SnapLoop/ui/views/Contacts/ContactsDialog/ContactsDialogView.dart';
 import 'package:SnapLoop/ui/views/Contacts/FriendsRequestDialog/FriendRequestDialog.dart';
-import 'package:SnapLoop/Widget/CreateANewLoopDialog/createLoopDialog.dart';
+import 'package:SnapLoop/ui/Widget/CreateANewLoopDialog/createLoopDialog.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/Contacts/Friends/FriendsViewModel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
