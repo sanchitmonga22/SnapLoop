@@ -2,7 +2,6 @@ import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
-import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:SnapLoop/ui/views/chat/MessagesViewModel.dart';

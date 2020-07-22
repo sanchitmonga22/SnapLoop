@@ -1,7 +1,6 @@
 import 'package:SnapLoop/Helper/customRoute.dart';
 import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
-import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/Socket.io/appInitializer.dart';
 import 'package:SnapLoop/Socket.io/dependencyInjection.dart';
 import 'package:SnapLoop/Widget/FloatingActionButton.dart';

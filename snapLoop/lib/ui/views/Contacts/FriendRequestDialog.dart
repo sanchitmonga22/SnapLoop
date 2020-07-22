@@ -1,9 +1,6 @@
-import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:SnapLoop/ui/views/Contacts/FriendRequestDialogModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../constants.dart';

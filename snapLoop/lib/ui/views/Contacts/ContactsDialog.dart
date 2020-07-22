@@ -1,11 +1,9 @@
 import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/Provider/UserDataProvider.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 import '../../../constants.dart';
 
 /// author: @sanchitmonga22
