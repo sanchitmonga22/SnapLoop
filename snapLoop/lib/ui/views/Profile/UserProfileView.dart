@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 ///author: @sanchitmonga22
-class UserProfile extends StatefulWidget {
-  const UserProfile({Key key}) : super(key: key);
+class UserProfileView extends StatefulWidget {
+  const UserProfileView({Key key}) : super(key: key);
 
   @override
-  _UserProfileState createState() => _UserProfileState();
+  _UserProfileViewState createState() => _UserProfileViewState();
 }
 
-class _UserProfileState extends State<UserProfile>
-    with AutomaticKeepAliveClientMixin<UserProfile> {
+class _UserProfileViewState extends State<UserProfileView>
+    with AutomaticKeepAliveClientMixin<UserProfileView> {
   @override
   bool get wantKeepAlive => true;
 

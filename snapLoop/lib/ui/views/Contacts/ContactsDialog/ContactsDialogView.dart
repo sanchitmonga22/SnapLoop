@@ -4,20 +4,20 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../../constants.dart';
+import '../../../../constants.dart';
 
 /// author: @sanchitmonga22
 
 //TODO: Send contacts to the server and sync them all
-class ContactsDialog extends StatefulWidget {
-  const ContactsDialog({Key key}) : super(key: key);
+class ContactsDialogView extends StatefulWidget {
+  const ContactsDialogView({Key key}) : super(key: key);
 
   @override
-  _ContactsDialogState createState() => _ContactsDialogState();
+  _ContactsDialogViewState createState() => _ContactsDialogViewState();
 }
 
-class _ContactsDialogState extends State<ContactsDialog>
-    with AutomaticKeepAliveClientMixin<ContactsDialog> {
+class _ContactsDialogViewState extends State<ContactsDialogView>
+    with AutomaticKeepAliveClientMixin<ContactsDialogView> {
   List<Contact> _contacts = [];
   List<PublicUserData> users = [];
   int activeIndex;

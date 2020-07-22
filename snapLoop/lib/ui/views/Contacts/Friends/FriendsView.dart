@@ -4,12 +4,12 @@ import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
-import 'package:SnapLoop/ui/views/chat/ExistingLoopChatScreen.dart';
-import 'package:SnapLoop/ui/views/Contacts/ContactsDialog.dart';
-import 'package:SnapLoop/ui/views/Contacts/FriendRequestDialog.dart';
-import 'package:SnapLoop/Widget/createLoopDialog.dart';
+import 'package:SnapLoop/ui/views/chat/ExistingLoopChat/ExistingLoopChatView.dart';
+import 'package:SnapLoop/ui/views/Contacts/ContactsDialog/ContactsDialogView.dart';
+import 'package:SnapLoop/ui/views/Contacts/FriendsRequestDialog/FriendRequestDialog.dart';
+import 'package:SnapLoop/Widget/CreateANewLoopDialog/createLoopDialog.dart';
 import 'package:SnapLoop/constants.dart';
-import 'package:SnapLoop/ui/views/Contacts/ContactsViewModel.dart';
+import 'package:SnapLoop/ui/views/Contacts/Contacts/ContactsViewModel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
@@ -19,18 +19,18 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
-class FriendsScreen extends StatefulWidget {
+class FriendsView extends StatefulWidget {
   final String loopName;
   final bool loopForwarding;
-  FriendsScreen({Key key, this.loopName = "", this.loopForwarding = false})
+  FriendsView({Key key, this.loopName = "", this.loopForwarding = false})
       : super(key: key);
 
   @override
-  _FriendsScreenState createState() => _FriendsScreenState();
+  _FriendsViewState createState() => _FriendsViewState();
 }
 
-class _FriendsScreenState extends State<FriendsScreen>
-    with AutomaticKeepAliveClientMixin<FriendsScreen> {
+class _FriendsViewState extends State<FriendsView>
+    with AutomaticKeepAliveClientMixin<FriendsView> {
   @override
   bool get wantKeepAlive => true;
 
@@ -114,7 +114,7 @@ class _FriendsScreenState extends State<FriendsScreen>
                               : GestureDetector(
                                   onTap: () {
                                     model.createADialog(
-                                        context, ContactsDialog());
+                                        context, ContactsDialogView());
                                   },
                                   child: Container(
                                     padding: EdgeInsets.only(right: 10),
@@ -398,7 +398,7 @@ class _FriendsScreenState extends State<FriendsScreen>
                                                                                         Navigator.pushReplacement(
                                                                                             context,
                                                                                             new MaterialPageRoute(
-                                                                                                builder: (context) => ExistingLoopChatScreen(
+                                                                                                builder: (context) => ExistingLoopChatView(
                                                                                                       key: ValueKey(index),
                                                                                                       loop: friendsLoops[index],
                                                                                                       radius: kradiusCalculator(friendsLoops[index].numberOfMembers, MediaQuery.of(context).size.width * 0.25),
@@ -438,7 +438,7 @@ class _FriendsScreenState extends State<FriendsScreen>
                                                                                 ),
                                                                                 trailing: GestureDetector(
                                                                                   onTap: () {
-                                                                                    model.createADialog(context, ContactsDialog());
+                                                                                    model.createADialog(context, ContactsDialogView());
                                                                                   },
                                                                                   child: Row(
                                                                                     mainAxisSize: MainAxisSize.min,

@@ -5,32 +5,32 @@ import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
-import 'package:SnapLoop/ui/views/chat/LoopDetailsScreen.dart';
-import 'package:SnapLoop/ui/views/chat/NewLoopChatViewModel.dart';
-import 'package:SnapLoop/ui/views/chat/messages.dart';
-import 'package:SnapLoop/ui/views/chat/newMessage.dart';
-import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
+import 'package:SnapLoop/ui/views/chat/LoopDetailsWidget/LoopDetailsView.dart';
+import 'package:SnapLoop/ui/views/chat/NewLoopChat/NewLoopChatViewModel.dart';
+import 'package:SnapLoop/ui/views/chat/Messages/messagesView.dart';
+import 'package:SnapLoop/ui/views/chat/NewMessage/newMessageView.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 /// author: @sanchitmonga22
 
-class NewLoopChatScreen extends StatefulWidget {
+class NewLoopChatView extends StatefulWidget {
   final String loopName;
   final FriendsData userData;
-  NewLoopChatScreen({Key key, @required this.loopName, @required this.userData})
+  NewLoopChatView({Key key, @required this.loopName, @required this.userData})
       : super(key: key);
   @override
-  _NewLoopChatScreenState createState() => _NewLoopChatScreenState();
+  _NewLoopChatViewState createState() => _NewLoopChatViewState();
 }
 
-class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
+class _NewLoopChatViewState extends State<NewLoopChatView> {
   final _userData = locator<UserDataService>();
   double radius = 0;
   Loop loop;
-  LoopWidget loopWidget;
+  LoopWidgetView loopWidget;
   Chat chat;
   String myId;
 
@@ -53,7 +53,7 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
         type: LoopType.NEW_LOOP,
         userIDs: [myId, widget.userData.userID]);
     chat = new Chat(chatID: "", chat: []);
-    loopWidget = LoopWidget(
+    loopWidget = LoopWidgetView(
       isTappable: false,
       radius: radius,
       flipOnTouch: false,
@@ -96,11 +96,11 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
       decoration: BoxDecoration(color: backgroundColor),
       child: Column(
         children: [
-          Messages(
+          MessagesView(
             loopId: loopId,
             newLoop: true,
           ),
-          NewMessage(sendMessage: sendMessage),
+          NewMessageView(sendMessage: sendMessage),
         ],
       ),
     );
@@ -135,7 +135,7 @@ class _NewLoopChatScreenState extends State<NewLoopChatScreen> {
                         child: CircularProgressIndicator(),
                       ),
                     ))
-                  : LoopsDetailsScreen(
+                  : LoopsDetailsView(
                       backgroundColor: backgroundColor,
                       chatWidget: getChatWidget(backgroundColor),
                       loopWidget: loopWidget,

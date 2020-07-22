@@ -1,4 +1,4 @@
-import 'package:SnapLoop/Widget/AnimatingFlatButton.dart';
+import 'package:SnapLoop/Widget/AnimatingFlatButton/AnimatingFlatButton.dart';
 import 'package:SnapLoop/ui/views/Auth/AuthViewModel.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,14 +7,14 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:stacked/stacked.dart';
 import '../../../constants.dart';
 
-class AuthScreen extends StatefulWidget {
-  AuthScreen({Key key}) : super(key: key);
+class AuthView extends StatefulWidget {
+  AuthView({Key key}) : super(key: key);
 
   @override
   _AuthScreenState createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen>
+class _AuthScreenState extends State<AuthView>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<Offset> slideAnimation;

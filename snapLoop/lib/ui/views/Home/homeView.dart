@@ -1,25 +1,26 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/constants.dart';
-import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
 import 'package:SnapLoop/ui/views/Home/homeViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
+import 'LoopWidget/loopWidgetView.dart';
+
 /// author: @sanchitmonga22
-class HomeScreen extends StatefulWidget {
+class HomeView extends StatefulWidget {
   final bool completedLoopsScreen;
 
-  const HomeScreen({Key key, this.completedLoopsScreen = false})
+  const HomeView({Key key, this.completedLoopsScreen = false})
       : super(key: key);
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeViewState createState() => _HomeViewState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<HomeScreen> {
+class _HomeViewState extends State<HomeView>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<HomeView> {
   @override
   bool get wantKeepAlive => true;
 
@@ -32,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen>
     while (radiis.isNotEmpty) {
       for (int i = 0; i < radiis.length; i++) {
         if (currentWidth + ((radiis[i] + kAllLoopsPadding) * 2) < deviceWidth) {
-          widgetsInEachRow.add(LoopWidget(
+          widgetsInEachRow.add(LoopWidgetView(
             radius: radiis[i],
             loop: loopTypes[i],
             isTappable: true,

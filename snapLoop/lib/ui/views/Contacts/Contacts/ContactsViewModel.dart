@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../constants.dart';
+import '../../../../constants.dart';
 
 class ContactsViewModel extends BaseViewModel {
   final _userData = locator<UserDataService>();

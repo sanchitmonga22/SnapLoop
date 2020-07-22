@@ -3,12 +3,12 @@ import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/Socket.io/appInitializer.dart';
 import 'package:SnapLoop/Socket.io/dependencyInjection.dart';
-import 'package:SnapLoop/Widget/FloatingActionButton.dart';
+import 'package:SnapLoop/Widget/FloatingActionButton/FloatingActionButton.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/mainModel.dart';
 import 'package:SnapLoop/services/Auth.dart';
-import 'package:SnapLoop/ui/views/NavBar/NavBar.dart';
+import 'package:SnapLoop/ui/views/NavBar/NavBarView.dart';
 import 'package:SnapLoop/ui/views/Auth/AuthView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
@@ -83,7 +83,7 @@ class SnapLoop extends StatelessWidget {
                         return authResultsnapshot.connectionState ==
                                 ConnectionState.waiting
                             ? SplashScreen()
-                            : AuthScreen();
+                            : AuthView();
                       },
                     ),
               onGenerateRoute: Router(),

@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 /// author: @sanchitmonga22
 
-class MessageBubble extends StatelessWidget {
+class MessageBubbleView extends StatelessWidget {
   final String message;
   final bool isMe;
   final Key key;
@@ -14,7 +14,7 @@ class MessageBubble extends StatelessWidget {
   // will create a check later whether the loop has been successfully completed or not
   final String username;
 
-  const MessageBubble({
+  const MessageBubbleView({
     this.sent,
     this.message,
     this.isMe = false,

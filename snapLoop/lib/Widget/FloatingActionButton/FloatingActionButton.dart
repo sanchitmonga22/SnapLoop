@@ -1,16 +1,16 @@
-import 'package:SnapLoop/Widget/ErrorDialog.dart';
-import 'package:SnapLoop/Widget/FloatingActionButtonModel.dart';
-import 'package:SnapLoop/Widget/createLoopDialog.dart';
+import 'package:SnapLoop/Widget/ErrorDialog/ErrorDialog.dart';
+import 'package:SnapLoop/Widget/FloatingActionButton/FloatingActionButtonModel.dart';
+import 'package:SnapLoop/Widget/CreateANewLoopDialog/createLoopDialog.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
 
-class FloatingActionButtonData extends StatefulWidget {
-  const FloatingActionButtonData({
+class FloatingActionButtonView extends StatefulWidget {
+  const FloatingActionButtonView({
     Key key,
     @required AnimationController animationController,
     @required Animation<double> animation,
@@ -22,11 +22,11 @@ class FloatingActionButtonData extends StatefulWidget {
   final Animation<double> _animation;
 
   @override
-  _FloatingActionButtonDataState createState() =>
-      _FloatingActionButtonDataState();
+  _FloatingActionButtonViewState createState() =>
+      _FloatingActionButtonViewState();
 }
 
-class _FloatingActionButtonDataState extends State<FloatingActionButtonData> {
+class _FloatingActionButtonViewState extends State<FloatingActionButtonView> {
   @override
   Widget build(BuildContext context) {
     final changes = Provider.of<FloatingActionButtonDataChanges>(context);

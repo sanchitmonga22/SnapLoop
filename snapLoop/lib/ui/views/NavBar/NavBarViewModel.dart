@@ -2,7 +2,7 @@ import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:stacked/stacked.dart';
 
-class AppBarModel extends BaseViewModel {
+class NavBarViewModel extends BaseViewModel {
   var _userData = locator<UserDataService>();
 
   int get userScore => _userData.user.score;

@@ -4,24 +4,24 @@ import 'package:SnapLoop/Provider/ChatProvider.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
-import 'package:SnapLoop/ui/views/chat/MessagesViewModel.dart';
-import 'package:SnapLoop/ui/views/chat/messageBubble.dart';
+import 'package:SnapLoop/ui/views/chat/Messages/MessagesViewModel.dart';
+import 'package:SnapLoop/ui/views/chat/MessageBubble/messageBubbleView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 /// author: @sanchitmonga22
-class Messages extends StatefulWidget {
+class MessagesView extends StatefulWidget {
   final String loopId;
   final bool newLoop;
-  const Messages({Key key, @required this.loopId, this.newLoop = false})
+  const MessagesView({Key key, @required this.loopId, this.newLoop = false})
       : super(key: key);
 
   @override
-  _MessagesState createState() => _MessagesState();
+  _MessagesViewState createState() => _MessagesViewState();
 }
 
-class _MessagesState extends State<Messages> {
+class _MessagesViewState extends State<MessagesView> {
   Loop loop;
   Chat chat;
   String myId;
@@ -44,7 +44,7 @@ class _MessagesState extends State<Messages> {
               : ListView.builder(
                   itemBuilder: (context, index) {
                     ChatInfo message = chat.chat[index];
-                    return MessageBubble(
+                    return MessageBubbleView(
                       isMe: message.senderID == myId,
                       message: message.content,
                       sent: message.time,

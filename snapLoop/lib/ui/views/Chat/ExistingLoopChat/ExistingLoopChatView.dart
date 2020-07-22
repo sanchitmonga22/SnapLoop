@@ -5,20 +5,20 @@ import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
-import 'package:SnapLoop/ui/views/chat/ExistingLoopChatModel.dart';
-import 'package:SnapLoop/ui/views/chat/LoopDetailsScreen.dart';
-import 'package:SnapLoop/ui/views/chat/messages.dart';
-import 'package:SnapLoop/ui/views/chat/newMessage.dart';
-import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
+import 'package:SnapLoop/ui/views/chat/ExistingLoopChat/ExistingLoopChatViewModel.dart';
+import 'package:SnapLoop/ui/views/chat/LoopDetailsWidget/LoopDetailsView.dart';
+import 'package:SnapLoop/ui/views/chat/Messages/messagesView.dart';
+import 'package:SnapLoop/ui/views/chat/NewMessage/newMessageView.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 /// author: @sanchitmonga22
 
-class ExistingLoopChatScreen extends StatefulWidget {
-  ExistingLoopChatScreen({
+class ExistingLoopChatView extends StatefulWidget {
+  ExistingLoopChatView({
     Key key,
     this.radius,
     this.loop,
@@ -28,11 +28,11 @@ class ExistingLoopChatScreen extends StatefulWidget {
   final double radius;
 
   @override
-  _ExistingLoopChatScreenState createState() => _ExistingLoopChatScreenState();
+  _ExistingLoopChatViewState createState() => _ExistingLoopChatViewState();
 }
 
-class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
-    with AutomaticKeepAliveClientMixin<ExistingLoopChatScreen> {
+class _ExistingLoopChatViewState extends State<ExistingLoopChatView>
+    with AutomaticKeepAliveClientMixin<ExistingLoopChatView> {
   @override
   bool get wantKeepAlive => true;
 
@@ -93,13 +93,13 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
           children: [
             Column(
               children: [
-                Messages(
+                MessagesView(
                   loopId: loopId,
                   newLoop: false,
                 ),
                 if (loopType == LoopType.INACTIVE_LOOP_SUCCESSFUL ||
                     loopType == LoopType.NEW_LOOP)
-                  NewMessage(
+                  NewMessageView(
                     sendMessage: sendMessage,
                   )
               ],
@@ -112,7 +112,7 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
   Widget build(BuildContext context) {
     loopType = widget.loop.type;
     Color backgroundColor = determineLoopColor(widget.loop.type);
-    LoopWidget loopWidget = LoopWidget(
+    LoopWidgetView loopWidget = LoopWidgetView(
       isTappable: false,
       loop: widget.loop,
       radius: widget.radius,
@@ -133,7 +133,7 @@ class _ExistingLoopChatScreenState extends State<ExistingLoopChatScreen>
                       child: CircularProgressIndicator(),
                     ),
                   ))
-                : LoopsDetailsScreen(
+                : LoopsDetailsView(
                     loop: widget.loop,
                     backgroundColor: backgroundColor,
                     chatWidget: getChatWidget(backgroundColor),

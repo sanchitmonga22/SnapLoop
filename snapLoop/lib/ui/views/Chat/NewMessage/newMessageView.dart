@@ -2,16 +2,16 @@ import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
 
 /// author: @sanchitmonga22
-class NewMessage extends StatefulWidget {
+class NewMessageView extends StatefulWidget {
   final Function sendMessage;
 
-  const NewMessage({Key key, this.sendMessage}) : super(key: key);
+  const NewMessageView({Key key, this.sendMessage}) : super(key: key);
 
   @override
-  _NewMessageState createState() => _NewMessageState();
+  _NewMessageViewState createState() => _NewMessageViewState();
 }
 
-class _NewMessageState extends State<NewMessage> {
+class _NewMessageViewState extends State<NewMessageView> {
   var enteredMessage = "";
   final controller = new TextEditingController();
   // void sendMessage() async {

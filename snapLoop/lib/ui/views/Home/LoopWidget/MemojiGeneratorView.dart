@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:http/http.dart' as http;
 

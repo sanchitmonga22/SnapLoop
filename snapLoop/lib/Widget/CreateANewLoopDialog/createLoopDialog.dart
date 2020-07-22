@@ -1,13 +1,9 @@
 import 'dart:ui';
-
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Provider/LoopsProvider.dart';
 import 'package:SnapLoop/app/router.gr.dart';
-import 'package:SnapLoop/ui/views/chat/newLoopChatScreen.dart';
-
-import 'package:SnapLoop/Widget/AnimatingFlatButton.dart';
+import 'package:SnapLoop/Widget/AnimatingFlatButton/AnimatingFlatButton.dart';
 import 'package:SnapLoop/constants.dart';
-import 'package:SnapLoop/ui/views/Contacts/FriendsView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

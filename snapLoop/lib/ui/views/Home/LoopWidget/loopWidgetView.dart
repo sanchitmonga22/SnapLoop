@@ -1,9 +1,7 @@
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/ui/views/chat/ExistingLoopChatScreen.dart';
+import 'package:SnapLoop/ui/views/chat/ExistingLoopChat/ExistingLoopChatView.dart';
 import 'package:SnapLoop/Widget/time/timer.dart';
 import 'package:SnapLoop/constants.dart';
-import 'package:SnapLoop/ui/views/Home/LoopWidget/MemojiGeneratorView.dart';
-import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetViewModel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,15 +9,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:stacked/stacked.dart';
 
+import 'MemojiGeneratorView.dart';
+import 'loopWidgetViewModel.dart';
+
 ///author: @sanchitmonga22
 /// Will add the loop ID to this to differentiate between the loops
-class LoopWidget extends StatefulWidget {
+class LoopWidgetView extends StatefulWidget {
   final double radius;
   final bool isTappable;
   final bool flipOnTouch;
   final Loop loop;
 
-  const LoopWidget(
+  const LoopWidgetView(
       {Key key,
       this.radius,
       this.loop,
@@ -28,11 +29,11 @@ class LoopWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  _LoopWidgetState createState() => _LoopWidgetState();
+  _LoopWidgetViewState createState() => _LoopWidgetViewState();
 }
 
-class _LoopWidgetState extends State<LoopWidget>
-    with AutomaticKeepAliveClientMixin<LoopWidget> {
+class _LoopWidgetViewState extends State<LoopWidgetView>
+    with AutomaticKeepAliveClientMixin<LoopWidgetView> {
   @override
   bool get wantKeepAlive => true;
 
@@ -83,7 +84,7 @@ class _LoopWidgetState extends State<LoopWidget>
                       Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (context) => ExistingLoopChatScreen(
+                              builder: (context) => ExistingLoopChatView(
                                     key: widget.key,
                                     loop: widget.loop,
                                     radius: widget.radius,

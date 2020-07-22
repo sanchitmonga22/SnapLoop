@@ -12,12 +12,12 @@ import 'package:flutter/cupertino.dart';
 import '../Model/loop.dart';
 import '../Model/user.dart';
 import '../ui/views/Auth/AuthView.dart';
-import '../ui/views/Contacts/FriendsView.dart';
+import '../ui/views/Contacts/Friends/FriendsView.dart';
 import '../ui/views/Home/homeView.dart';
-import '../ui/views/NavBar/NavBar.dart';
+import '../ui/views/NavBar/NavBarView.dart';
 import '../ui/views/Profile/UserProfileView.dart';
-import '../ui/views/chat/ExistingLoopChatScreen.dart';
-import '../ui/views/chat/newLoopChatScreen.dart';
+import '../ui/views/chat/ExistingLoopChat/ExistingLoopChatView.dart';
+import '../ui/views/chat/NewLoopChat/newLoopChatView.dart';
 
 class Routes {
   static const String navBar = '/';
@@ -43,12 +43,12 @@ class Router extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.navBar, page: NavBar),
-    RouteDef(Routes.homeScreen, page: HomeScreen),
-    RouteDef(Routes.friendsScreen, page: FriendsScreen),
-    RouteDef(Routes.existingLoopChatScreen, page: ExistingLoopChatScreen),
-    RouteDef(Routes.authScreen, page: AuthScreen),
-    RouteDef(Routes.newLoopChatScreen, page: NewLoopChatScreen),
-    RouteDef(Routes.userProfile, page: UserProfile),
+    RouteDef(Routes.homeScreen, page: HomeView),
+    RouteDef(Routes.friendsScreen, page: FriendsView),
+    RouteDef(Routes.existingLoopChatScreen, page: ExistingLoopChatView),
+    RouteDef(Routes.authScreen, page: AuthView),
+    RouteDef(Routes.newLoopChatScreen, page: NewLoopChatView),
+    RouteDef(Routes.userProfile, page: UserProfileView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -62,12 +62,12 @@ class Router extends RouterBase {
         settings: data,
       );
     },
-    HomeScreen: (data) {
+    HomeView: (data) {
       var args = data.getArgs<HomeScreenArguments>(
         orElse: () => HomeScreenArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => HomeScreen(
+        builder: (context) => HomeView(
           key: args.key,
           completedLoopsScreen: args.completedLoopsScreen,
         ),
@@ -75,12 +75,12 @@ class Router extends RouterBase {
         cupertinoTitle: 'Home',
       );
     },
-    FriendsScreen: (data) {
+    FriendsView: (data) {
       var args = data.getArgs<FriendsScreenArguments>(
         orElse: () => FriendsScreenArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => FriendsScreen(
+        builder: (context) => FriendsView(
           key: args.key,
           loopName: args.loopName,
           loopForwarding: args.loopForwarding,
@@ -89,12 +89,12 @@ class Router extends RouterBase {
         cupertinoTitle: 'friends',
       );
     },
-    ExistingLoopChatScreen: (data) {
+    ExistingLoopChatView: (data) {
       var args = data.getArgs<ExistingLoopChatScreenArguments>(
         orElse: () => ExistingLoopChatScreenArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => ExistingLoopChatScreen(
+        builder: (context) => ExistingLoopChatView(
           key: args.key,
           radius: args.radius,
           loop: args.loop,
@@ -103,20 +103,20 @@ class Router extends RouterBase {
         cupertinoTitle: 'Chat',
       );
     },
-    AuthScreen: (data) {
+    AuthView: (data) {
       var args = data.getArgs<AuthScreenArguments>(
         orElse: () => AuthScreenArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => AuthScreen(key: args.key),
+        builder: (context) => AuthView(key: args.key),
         settings: data,
         cupertinoTitle: 'Login/SignUp',
       );
     },
-    NewLoopChatScreen: (data) {
+    NewLoopChatView: (data) {
       var args = data.getArgs<NewLoopChatScreenArguments>(nullOk: false);
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => NewLoopChatScreen(
+        builder: (context) => NewLoopChatView(
           key: args.key,
           loopName: args.loopName,
           userData: args.userData,
@@ -125,9 +125,9 @@ class Router extends RouterBase {
         cupertinoTitle: 'Chat',
       );
     },
-    UserProfile: (data) {
+    UserProfileView: (data) {
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => const UserProfile(),
+        builder: (context) => const UserProfileView(),
         settings: data,
         cupertinoTitle: 'Profile',
       );

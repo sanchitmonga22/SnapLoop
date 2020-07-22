@@ -1,6 +1,5 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/app/router.gr.dart';
-import 'package:SnapLoop/ui/views/NavBar/NavBar.dart';
 import 'package:SnapLoop/Widget/time/timer.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
@@ -8,24 +7,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// author: @sanchitmonga22
-class LoopsDetailsScreen extends StatefulWidget {
-  LoopsDetailsScreen(
+class LoopsDetailsView extends StatefulWidget {
+  LoopsDetailsView(
       {Key key,
       this.loop,
       this.loopWidget,
       this.backgroundColor,
       this.chatWidget})
       : super(key: key);
-  final LoopWidget loopWidget;
+  final LoopWidgetView loopWidget;
   final Loop loop;
   final Color backgroundColor;
   final Widget chatWidget;
 
   @override
-  _LoopsDetailsScreenState createState() => _LoopsDetailsScreenState();
+  _LoopsDetailsViewState createState() => _LoopsDetailsViewState();
 }
 
-class _LoopsDetailsScreenState extends State<LoopsDetailsScreen> {
+class _LoopsDetailsViewState extends State<LoopsDetailsView> {
   bool details = false;
   @override
   Widget build(BuildContext context) {
