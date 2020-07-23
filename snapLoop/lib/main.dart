@@ -1,26 +1,16 @@
 import 'package:SnapLoop/Helper/customRoute.dart';
-import 'package:SnapLoop/Socket.io/appInitializer.dart';
-import 'package:SnapLoop/Socket.io/dependencyInjection.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/MainViewModel.dart';
-import 'package:SnapLoop/services/Auth.dart';
 import 'package:SnapLoop/ui/views/NavBar/NavBarView.dart';
 import 'package:SnapLoop/ui/views/Auth/AuthView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:stacked/stacked.dart';
 import 'app/router.gr.dart';
 import 'ui/splashScreen.dart';
-import 'Socket.io/socketService.dart';
-
-Injector injector;
 
 /// author: @sanchitmonga22
 void main() async {
   setupLocator();
-  DependencyInjection().initialise(Injector.getInjector());
-  injector = Injector.getInjector();
-  await AppInitializer().initialise(injector);
   // device preview
   runApp(SnapLoop());
 }
@@ -28,10 +18,6 @@ void main() async {
 class SnapLoop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final SocketService socketService = injector.get<SocketService>();
-    socketService.createSocketConnection();
-    var _auth = locator<Auth>();
-
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => MainViewModel(),
       builder: (context, model, child) {
@@ -71,5 +57,3 @@ class SnapLoop extends StatelessWidget {
     );
   }
 }
-
-// use navigation service isntead of directly navigating in the app

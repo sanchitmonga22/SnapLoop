@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:SnapLoop/app/locator.dart';
@@ -17,8 +18,10 @@ import 'package:injectable/injectable.dart';
 class UserDataService {
   final _auth = locator<Auth>();
   List<Contact> _contacts = [];
-  List<PublicUserData> _requests = [];
-  List<FriendsData> _friends = [];
+  Set<PublicUserData> _requests = LinkedHashSet<PublicUserData>(
+      equals: (e1, e2) => e1.userID.toString() == e2.userID.toString());
+  Set<FriendsData> _friends = LinkedHashSet<FriendsData>(
+      equals: (e1, e2) => e1.userID.toString() == e2.userID.toString());
 
   int get userScore {
     return _auth.user.score;
@@ -137,6 +140,7 @@ class UserDataService {
     }
   }
 
+// FIXME: weird async behavior,calls api twice and adds the requests twice
   Future<bool> updateRequests() async {
     try {
       // checking for new users
@@ -153,6 +157,7 @@ class UserDataService {
         for (int i = 0; i < newUsers.length; i++) {
           _requests.add(await getUserDataById(newUsers[i]));
         }
+        _requests = _requests.toSet();
         return true;
       }
     } catch (err) {
@@ -160,6 +165,7 @@ class UserDataService {
     }
   }
 
+// FIXME: weird async behavior,calls api twice and adds the friends twice
   Future<bool> updateFriends() async {
     try {
       // checking for new friends (comparing the data)
@@ -176,6 +182,7 @@ class UserDataService {
         for (int i = 0; i < newFriends.length; i++) {
           _friends.add(await getFriendsDataById(newFriends[i]));
         }
+        _friends = _friends.toSet();
         return true;
       }
     } catch (err) {

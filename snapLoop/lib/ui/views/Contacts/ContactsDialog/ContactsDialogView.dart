@@ -9,6 +9,7 @@ import '../../../../constants.dart';
 /// author: @sanchitmonga22
 
 //TODO: Send contacts to the server and sync them all
+// TODO Create a service to fetch the contacts from the user and then sync them and provide it throughout the app
 class ContactsDialogView extends StatefulWidget {
   const ContactsDialogView({Key key}) : super(key: key);
 

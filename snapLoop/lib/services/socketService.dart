@@ -1,6 +1,8 @@
 import 'package:SnapLoop/constants.dart';
+import 'package:injectable/injectable.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+@lazySingleton
 class SocketService {
   IO.Socket socket;
 
