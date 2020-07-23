@@ -58,7 +58,10 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
           return "Please choose a different name, a loop with this name already exists";
         } else if (value.isEmpty) {
           return "Empty field!";
+        } else {
+          return 'error';
         }
+
         // storing the name of the loop to pass it onto the next screen
       },
       onChanged: (value) {

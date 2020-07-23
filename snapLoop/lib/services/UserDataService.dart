@@ -70,6 +70,8 @@ class UserDataService {
       if (res.statusCode == 200) {
         final response = json.decode(res.body);
         return ResponseParsingHelper.parseFriend(response);
+      } else {
+        throw new HttpException('Friend from id not found!');
       }
     } catch (err) {
       throw new HttpException(err);

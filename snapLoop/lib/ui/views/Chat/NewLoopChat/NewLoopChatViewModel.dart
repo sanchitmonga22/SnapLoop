@@ -74,6 +74,7 @@ class NewLoopChatViewModel extends BaseViewModel {
   Future<void> sendMessage(String enteredMessage) async {
     var result = await _loopDataService.createLoop(
         _loopName, _friend.userID, enteredMessage, _images[1], _images[0]);
+    notifyListeners();
 
     if (result != null) {
       _loop.chatID = result["chatId"];
