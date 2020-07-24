@@ -12,7 +12,7 @@ import 'package:stacked/stacked.dart';
 
 import '../../../../constants.dart';
 
-class FriendsViewModel extends BaseViewModel {
+class FriendsViewModel extends ReactiveViewModel {
   final _userData = locator<UserDataService>();
   final _loopData = locator<LoopsDataService>();
   SearchBarController _controller = SearchBarController();
@@ -37,15 +37,14 @@ class FriendsViewModel extends BaseViewModel {
   List<FriendsData> _friends = [];
   List<FriendsData> get friends => _friends;
 
-  void initialize(String loopName, bool loopForwarding) {
+  void initialize(String loopName, bool loopForwarding) async {
     _loopName = loopName;
     _loopForwarding = loopForwarding;
-  }
-
-  Future<void> initializeScreen() async {
+    setBusy(true);
     await _userData.updateFriends();
     await _userData.updateRequests();
     _friends = _userData.friends;
+    setBusy(false);
   }
 
   int _activeIndex;
@@ -54,11 +53,11 @@ class FriendsViewModel extends BaseViewModel {
   int _requestSentIndex;
   int get requestSentIndex => _requestSentIndex;
 
-  String getNumberOfRequestsReceived(BuildContext context) {
+  String getNumberOfRequestsReceived() {
     return _userData.requests.length.toString();
   }
 
-  Future<List<dynamic>> getUsersByEmail(String email, BuildContext context) {
+  Future<List<dynamic>> getUsersByEmail(String email) {
     return _userData.searchByEmail(email);
   }
 
@@ -74,7 +73,7 @@ class FriendsViewModel extends BaseViewModel {
     return mutualFriendsData;
   }
 
-  void sendRequest(int index, BuildContext context, userData) async {
+  void sendRequest(int index, userData) async {
     _activeIndex = index;
     notifyListeners();
     await _userData.sendFriendRequest(userData.userID);
@@ -107,4 +106,7 @@ class FriendsViewModel extends BaseViewModel {
       },
     );
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_userData];
 }

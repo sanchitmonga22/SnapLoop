@@ -11,11 +11,15 @@ import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Model/responseParsingHelper.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:injectable/injectable.dart';
+import 'package:stacked/stacked.dart';
 
 /// author: @sanchitmonga22
 
 @lazySingleton
-class UserDataService {
+class UserDataService with ReactiveServiceMixin {
+  UserDataService() {
+    listenToReactiveValues([_contacts, _requests, _friends]);
+  }
   final _auth = locator<Auth>();
   List<Contact> _contacts = [];
   Set<PublicUserData> _requests = LinkedHashSet<PublicUserData>(

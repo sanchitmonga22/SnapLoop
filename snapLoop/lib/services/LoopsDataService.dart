@@ -6,10 +6,14 @@ import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/services/Auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
+import 'package:stacked/stacked.dart';
 
 ///author: @sanchitmonga22
 @lazySingleton
-class LoopsDataService {
+class LoopsDataService with ReactiveServiceMixin {
+  LoopsDataService() {
+    listenToReactiveValues([]);
+  }
   final _auth = locator<Auth>();
   List<Loop> _loops = [];
 

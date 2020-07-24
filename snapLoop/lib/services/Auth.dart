@@ -15,7 +15,7 @@ import '../constants.dart';
 @lazySingleton
 class Auth with ReactiveServiceMixin {
   Auth() {
-    listenToReactiveValues([_isAuth]);
+    listenToReactiveValues([_isAuth, user, _token]);
   }
   final storage = FlutterSecureStorage();
   String _token;

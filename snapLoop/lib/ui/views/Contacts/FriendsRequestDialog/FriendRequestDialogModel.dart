@@ -4,7 +4,7 @@ import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:stacked/stacked.dart';
 
-class FriendRequestDialogModel extends BaseViewModel {
+class FriendRequestDialogModel extends ReactiveViewModel {
   final _userData = locator<UserDataService>();
 
   List<PublicUserData> _requests = [];
@@ -14,16 +14,19 @@ class FriendRequestDialogModel extends BaseViewModel {
 
   List<PublicUserData> get requests => _requests;
 
-  void onDismissed(actionType, int index) {
+  void onDismissed(actionType, int index) async {
     String userID = _requests[index].userID;
 
     _requests.removeAt(index);
     notifyListeners();
 
     if (actionType == SlideActionType.primary) {
-      _userData.acceptRequest(userID);
+      await _userData.acceptRequest(userID);
     } else if (actionType == SlideActionType.secondary) {
-      _userData.removeRequest(userID);
+      await _userData.removeRequest(userID);
     }
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_userData];
 }

@@ -41,8 +41,9 @@ class _FriendRequestsDialogState extends State<FriendRequestsDialog> {
               ],
               dismissal: SlidableDismissal(
                   child: SlidableDrawerDismissal(),
-                  onDismissed: (actionType) =>
-                      model.onDismissed(actionType, index)),
+                  onDismissed: (actionType) async {
+                    await model.onDismissed(actionType, index);
+                  }),
               child: ListTile(
                 subtitle: Text(
                   model.requests[index].email,

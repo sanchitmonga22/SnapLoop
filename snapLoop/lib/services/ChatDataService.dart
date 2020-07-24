@@ -7,13 +7,17 @@ import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/Auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
+import 'package:stacked/stacked.dart';
 
 import '../constants.dart';
 
 /// author: @sanchitmonga22
 
 @lazySingleton
-class ChatDataService {
+class ChatDataService with ReactiveServiceMixin {
+  ChatDataService() {
+    listenToReactiveValues([_chats]);
+  }
   final _auth = locator<Auth>();
   List<Chat> _chats = [];
 

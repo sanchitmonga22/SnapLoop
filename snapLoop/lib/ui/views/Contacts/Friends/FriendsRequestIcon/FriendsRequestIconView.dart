@@ -34,7 +34,7 @@ class FriendsRequestIconView extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 11,
                       // add the number of current requests received
-                      child: Text(model.getNumberOfRequestsReceived(context)),
+                      child: Text(model.getNumberOfRequestsReceived()),
                     ),
                   )
                 ],

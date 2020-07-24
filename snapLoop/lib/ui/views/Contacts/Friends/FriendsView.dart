@@ -37,131 +37,117 @@ class _FriendsViewState extends State<FriendsView>
             model.initialize(widget.loopName, widget.loopForwarding),
         builder: (context, model, child) {
           return Material(
-              child: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 5),
-                  child: Stack(
-                    children: [
-                      model.newLoop
-                          ? Container()
-                          // FriendsRequest Icon
-                          : FriendsRequestIconView(),
-                      // Search Bar
-                      SearchBar(
-                          minimumChars: 3,
-                          searchBarPadding: model.newLoop
-                              ? EdgeInsets.only(top: 50)
-                              : EdgeInsets.only(right: 35),
-                          suffix: model.newLoop
-                              ? Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                )
-                              : GestureDetector(
-                                  onTap: () {
-                                    model.createADialog(
-                                        context, ContactsDialogView());
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.only(right: 10),
-                                    child: Row(
+              child: model.isBusy
+                  ? Container(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(right: 10.0, left: 5),
+                      child: Stack(
+                        children: [
+                          model.newLoop
+                              ? Container()
+                              // FriendsRequest Icon
+                              : FriendsRequestIconView(),
+                          // Search Bar
+                          SearchBar(
+                              minimumChars: 3,
+                              searchBarPadding: model.newLoop
+                                  ? EdgeInsets.only(top: 50)
+                                  : EdgeInsets.only(right: 35),
+                              suffix: model.newLoop
+                                  ? Row(
                                       mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Icon(
-                                          Icons.add,
-                                          color: Colors.white,
-                                        ),
-                                        Icon(
-                                          Icons.people,
-                                          color: Colors.white,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                          cursorColor: Colors.white,
-                          searchBarStyle: SearchBarStyle(
-                            padding: EdgeInsets.only(left: 25),
-                            backgroundColor: kSystemPrimaryColor,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          icon: Icon(Icons.search),
-                          hintStyle: kTextFormFieldStyle.copyWith(
-                              color: Colors.white70),
-                          textStyle: kTextFormFieldStyle,
-                          searchBarController: model.controller,
-                          //searchBarPadding: EdgeInsets.all(10),
-                          hintText: "Enter here",
-                          iconActiveColor: Colors.white,
-                          // check this
-                          buildSuggestion: (item, index) {
-                            return Container(
-                              color: Colors.blue,
-                              child: ListTile(
-                                key: ValueKey(index),
-                                title: item.username,
-                              ),
-                            );
-                          },
-                          onItemFound: (userData, int index) {
-                            return Container(
-                                color: Colors.blue,
-                                child: ContactWidget(
-                                    c: userData,
-                                    isLoading: model.activeIndex == index,
-                                    // FIXME: requestSentIndex causes to show the request sent at the same index
-                                    requestSent:
-                                        model.requestSentIndex == index,
-                                    key: ValueKey(index),
-                                    onPressed: () async => model.sendRequest(
-                                        index, context, userData)));
-                          },
-                          loader: Center(
-                              child: Container(
-                                  height: 30,
-                                  width: 30,
-                                  child: CircularProgressIndicator())),
-                          emptyWidget: Text(
-                              "No items found, Please try searching with a different name"),
-                          onError: (error) {
-                            return Text("Error");
-                          },
-                          onSearch: (String email) =>
-                              model.getUsersByEmail(email, context),
-                          placeHolder:
-                              // All the current Friends
-                              FutureBuilder(
-                                  future: model.initializeScreen(),
-                                  builder: (context, snapshot) {
-                                    return snapshot.connectionState ==
-                                            ConnectionState.waiting
-                                        ? Material(
-                                            child: Center(
-                                              child: Container(
-                                                height: 30,
-                                                width: 30,
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              ),
+                                    )
+                                  : GestureDetector(
+                                      onTap: () {
+                                        model.createADialog(
+                                            context, ContactsDialogView());
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.only(right: 10),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Icon(
+                                              Icons.add,
+                                              color: Colors.white,
                                             ),
-                                          )
-                                        : model.friends.length == 0
-                                            ? Padding(
-                                                padding:
-                                                    const EdgeInsets.all(20.0),
-                                                child: Center(
-                                                  child: Text(
-                                                    "You don't currently have any friends! please search users above to add them as friend",
-                                                    style: kTextFormFieldStyle
-                                                        .copyWith(
-                                                            color:
-                                                                Colors.black),
-                                                  ),
-                                                ),
-                                              )
-                                            : FriendsListView();
-                                  })),
-                    ],
-                  )));
+                                            Icon(
+                                              Icons.people,
+                                              color: Colors.white,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                              cursorColor: Colors.white,
+                              searchBarStyle: SearchBarStyle(
+                                padding: EdgeInsets.only(left: 25),
+                                backgroundColor: kSystemPrimaryColor,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              icon: Icon(Icons.search),
+                              hintStyle: kTextFormFieldStyle.copyWith(
+                                  color: Colors.white70),
+                              textStyle: kTextFormFieldStyle,
+                              searchBarController: model.controller,
+                              //searchBarPadding: EdgeInsets.all(10),
+                              hintText: "Enter here",
+                              iconActiveColor: Colors.white,
+                              // check this
+                              buildSuggestion: (item, index) {
+                                return Container(
+                                  color: Colors.blue,
+                                  child: ListTile(
+                                    key: ValueKey(index),
+                                    title: item.username,
+                                  ),
+                                );
+                              },
+                              onItemFound: (userData, int index) {
+                                return Container(
+                                    color: Colors.blue,
+                                    child: ContactWidget(
+                                        c: userData,
+                                        isLoading: model.activeIndex == index,
+                                        // FIXME: requestSentIndex causes to show the request sent at the same index
+                                        requestSent:
+                                            model.requestSentIndex == index,
+                                        key: ValueKey(index),
+                                        onPressed: () async => model
+                                            .sendRequest(index, userData)));
+                              },
+                              loader: Center(
+                                  child: Container(
+                                      height: 30,
+                                      width: 30,
+                                      child: CircularProgressIndicator())),
+                              emptyWidget: Text(
+                                  "No items found, Please try searching with a different name"),
+                              onError: (error) {
+                                return Text("Error");
+                              },
+                              onSearch: (String email) =>
+                                  model.getUsersByEmail(email),
+                              placeHolder: model.friends.length == 0
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Center(
+                                        child: Text(
+                                          "You don't currently have any friends! please search users above to add them as friend",
+                                          style: kTextFormFieldStyle.copyWith(
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                    )
+                                  : FriendsListView()),
+                        ],
+                      )));
         });
   }
 }
