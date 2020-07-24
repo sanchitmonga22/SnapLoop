@@ -1,4 +1,4 @@
-import 'package:SnapLoop/Helper/customRoute.dart';
+import 'package:SnapLoop/app/customRoute.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/MainViewModel.dart';
 import 'package:SnapLoop/ui/views/NavBar/NavBarView.dart';
@@ -18,8 +18,14 @@ void main() async {
 class SnapLoop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => MainViewModel(),
+      createNewModelOnInsert: true,
+      onModelReady: (model) {
+        if (!model.isAuth) {
+          model.tryAutoLogin();
+        }
+      },
       builder: (context, model, child) {
         return MaterialApp(
           title: 'SnapLoop',
@@ -42,15 +48,7 @@ class SnapLoop extends StatelessWidget {
           // home: AuthScreen(),
           home: model.isAuth
               ? NavBarView()
-              : FutureBuilder(
-                  future: model.tryAutoLogin(),
-                  builder: (context, authResultsnapshot) {
-                    return authResultsnapshot.connectionState ==
-                            ConnectionState.waiting
-                        ? SplashScreen()
-                        : AuthView();
-                  },
-                ),
+              : model.isBusy ? SplashScreen() : AuthView(),
           onGenerateRoute: Router(),
         );
       },

@@ -7,7 +7,7 @@ import 'package:stacked/stacked.dart';
 
 enum AuthMode { Signup, Login }
 
-class AuthViewModel extends BaseViewModel {
+class AuthViewModel extends ReactiveViewModel {
   final _auth = locator<Auth>();
 
   final TextEditingController _controller = TextEditingController();
@@ -44,16 +44,18 @@ class AuthViewModel extends BaseViewModel {
 
   void submit(BuildContext context) async {
     //_isLoading to false
-    _isLoading = false;
+    _isLoading = true;
+    notifyListeners();
     _formKey.currentState.save();
     try {
       if (_authMode == AuthMode.Login) {
-        print("uess");
+        print('yess');
         await _auth.attemptLogIn(_authData['email'], _authData['password']);
       } else {
         await _auth.attemptSignUp(_authData['username'], _authData['password'],
             _authData["phoneNumber"], _authData["email"]);
       }
+      _isLoading = false;
       notifyListeners();
     } catch (error) {
       const errorMessage = "Could not authenticate you, Please try again later";
@@ -81,4 +83,7 @@ class AuthViewModel extends BaseViewModel {
     }
     notifyListeners();
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_auth];
 }

@@ -105,7 +105,6 @@ class _NavBarViewState extends State<NavBarView>
         fireOnModelReadyOnce: true,
         viewModelBuilder: () => NavBarViewModel(),
         builder: (context, model, child) {
-          print(model.isTapped);
           return SafeArea(
               child: Scaffold(
                   resizeToAvoidBottomPadding:

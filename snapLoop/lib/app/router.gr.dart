@@ -7,10 +7,11 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../Model/loop.dart';
 import '../Model/user.dart';
+import '../main.dart';
 import '../ui/views/Auth/AuthView.dart';
 import '../ui/views/Chat/ExistingLoopChat/ExistingLoopChatView.dart';
 import '../ui/views/Chat/NewLoopChat/newLoopChatView.dart';
@@ -20,7 +21,8 @@ import '../ui/views/NavBar/NavBarView.dart';
 import '../ui/views/Profile/UserProfileView.dart';
 
 class Routes {
-  static const String navBarView = '/';
+  static const String snapLoop = '/';
+  static const String navBarView = '/nav-bar-view';
   static const String homeView = '/home-view';
   static const String friendsView = '/friends-view';
   static const String existingLoopChatView = '/existing-loop-chat-view';
@@ -28,6 +30,7 @@ class Routes {
   static const String newLoopChatView = '/new-loop-chat-view';
   static const String userProfileView = '/user-profile-view';
   static const all = <String>{
+    snapLoop,
     navBarView,
     homeView,
     friendsView,
@@ -42,6 +45,7 @@ class Router extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
+    RouteDef(Routes.snapLoop, page: SnapLoop),
     RouteDef(Routes.navBarView, page: NavBarView),
     RouteDef(Routes.homeView, page: HomeView),
     RouteDef(Routes.friendsView, page: FriendsView),
@@ -53,6 +57,12 @@ class Router extends RouterBase {
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, AutoRouteFactory>{
+    SnapLoop: (data) {
+      return buildAdaptivePageRoute<dynamic>(
+        builder: (context) => SnapLoop(),
+        settings: data,
+      );
+    },
     NavBarView: (data) {
       var args = data.getArgs<NavBarViewArguments>(
         orElse: () => NavBarViewArguments(),
@@ -60,6 +70,7 @@ class Router extends RouterBase {
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => NavBarView(key: args.key),
         settings: data,
+        cupertinoTitle: 'navBar',
       );
     },
     HomeView: (data) {

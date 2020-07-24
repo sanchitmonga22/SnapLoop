@@ -93,7 +93,7 @@ class NewLoopChatViewModel extends BaseViewModel {
       _loopId = result['_id'];
       notifyListeners();
     } else {
-      print("result not found and loop not created");
+      throw new Exception("result not found and loop not created");
     }
   }
 }

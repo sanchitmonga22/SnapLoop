@@ -11,7 +11,6 @@ class FloatingActionButtonModel extends ReactiveViewModel {
 
   void toggleIsTapped() {
     _fabTapped.toggleIsTapped();
-    notifyListeners();
   }
 
   @override

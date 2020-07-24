@@ -1,4 +1,5 @@
 import 'package:SnapLoop/Model/loop.dart';
+import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/ui/Widget/time/timer.dart';
 import 'package:SnapLoop/ui/views/Chat/ExistingLoopChat/ExistingLoopChatView.dart';
 import 'package:SnapLoop/constants.dart';
@@ -81,14 +82,12 @@ class _LoopWidgetViewState extends State<LoopWidgetView>
                   flipOnTouch: widget.flipOnTouch,
                   onTapNavigator: () {
                     if (widget.isTappable)
-                      Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => ExistingLoopChatView(
-                                    key: widget.key,
-                                    loop: widget.loop,
-                                    radius: widget.radius,
-                                  )));
+                      Navigator.pushNamed(context, Routes.existingLoopChatView,
+                          arguments: ExistingLoopChatViewArguments(
+                            key: widget.key,
+                            loop: widget.loop,
+                            radius: widget.radius,
+                          ));
                   },
                   front: MemojiGenerator(
                     loop: widget.loop,

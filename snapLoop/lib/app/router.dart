@@ -1,3 +1,4 @@
+import 'package:SnapLoop/main.dart';
 import 'package:SnapLoop/ui/views/Auth/AuthView.dart';
 import 'package:SnapLoop/ui/views/Chat/ExistingLoopChat/ExistingLoopChatView.dart';
 import 'package:SnapLoop/ui/views/Chat/NewLoopChat/newLoopChatView.dart';
@@ -8,7 +9,8 @@ import 'package:SnapLoop/ui/views/Profile/UserProfileView.dart';
 import 'package:auto_route/auto_route_annotations.dart';
 
 @MaterialAutoRouter(routes: <AutoRoute>[
-  AdaptiveRoute(page: NavBarView, initial: true),
+  AdaptiveRoute(page: SnapLoop, initial: true),
+  AdaptiveRoute(page: NavBarView, cupertinoPageTitle: 'navBar'),
   AdaptiveRoute(page: HomeView, cupertinoPageTitle: "Home"),
   AdaptiveRoute(page: FriendsView, cupertinoPageTitle: "friends"),
   AdaptiveRoute(page: ExistingLoopChatView, cupertinoPageTitle: "Chat"),

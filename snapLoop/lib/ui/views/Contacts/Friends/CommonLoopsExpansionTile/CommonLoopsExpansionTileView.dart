@@ -1,5 +1,6 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
+import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/ui/Widget/CreateANewLoopDialog/createLoopDialog.dart';
 import 'package:SnapLoop/ui/views/Chat/ExistingLoopChat/ExistingLoopChatView.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -78,17 +79,15 @@ class CommonLoopsExpansionTileView extends StatelessWidget {
                             .withOpacity(0.7)),
                     child: ListTile(
                         onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => ExistingLoopChatView(
-                                        key: ValueKey(index),
-                                        loop: friendsLoops[index],
-                                        radius: kradiusCalculator(
-                                            friendsLoops[index].numberOfMembers,
-                                            MediaQuery.of(context).size.width *
-                                                0.25),
-                                      )));
+                          Navigator.pushReplacementNamed(
+                              context, Routes.existingLoopChatView,
+                              arguments: ExistingLoopChatViewArguments(
+                                key: ValueKey(index),
+                                loop: friendsLoops[index],
+                                radius: kradiusCalculator(
+                                    friendsLoops[index].numberOfMembers,
+                                    MediaQuery.of(context).size.width * 0.25),
+                              ));
                         },
                         dense: true,
                         title: Text(friendsLoops[index].name,

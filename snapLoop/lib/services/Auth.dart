@@ -1,34 +1,33 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Model/responseParsingHelper.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
+import 'package:observable_ish/value/value.dart';
+import 'package:stacked/stacked.dart';
 
 import '../constants.dart';
 
 /// author: @sanchitmonga22
 @lazySingleton
-class Auth {
-  //String _url = "";
+class Auth with ReactiveServiceMixin {
+  Auth() {
+    listenToReactiveValues([_isAuth]);
+  }
   final storage = FlutterSecureStorage();
   String _token;
   var user;
   String _userId;
+  RxValue<bool> _isAuth = RxValue<bool>(initial: false);
 
-  bool get isAuth {
-    return token != null;
-  }
+  bool get isAuth => _isAuth.value;
 
-  String get token {
-    if (_token == null) return null;
-    return _token;
-  }
+  String get token => _token;
 
-  String get userId {
-    return _userId;
-  }
+  String get userId => _userId;
 
   Future<void> attemptLogIn(String email, String password) async {
     http.Response res = await http.post('$SERVER_IP/users/login',
@@ -40,6 +39,7 @@ class Auth {
       if (jwt != null) {
         _token = jwt;
         _userId = response['userId'] as String;
+        _isAuth.value = true;
         user = ResponseParsingHelper.parseUser(response, email, _userId);
         await storage.write(key: "jwt", value: jwt);
         await storage.write(key: "userId", value: response['userId']);
@@ -73,22 +73,30 @@ class Auth {
           score: 0,
           friendsIds: [],
           loopsData: []);
+      _isAuth.value = true;
       await storage.write(key: "jwt", value: response['token']);
       await storage.write(key: "userId", value: response['userId']);
+    } else {
+      _isAuth.value = false;
     }
   }
 
   Future<void> logOut() async {
-    http.Response res = await http.post(
-      "$SERVER_IP/users/logout",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      },
-    );
-    if (res.statusCode == 200) {
-      _token = null;
-      await storage.delete(key: "jwt");
+    try {
+      http.Response res = await http.post(
+        "$SERVER_IP/users/logout",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        },
+      );
+      if (res.statusCode == 200) {
+        _token = null;
+        _isAuth.value = false;
+        await storage.delete(key: "jwt");
+      }
+    } catch (err) {
+      throw new HttpException("Could not logout, an error occured");
     }
   }
 
@@ -98,6 +106,7 @@ class Auth {
     final userId1 = await storage.read(key: "userId");
 
     if (token1 == null) {
+      _isAuth.value = false;
       return false;
     }
     _token = token1;
@@ -113,6 +122,7 @@ class Auth {
     final response = json.decode(res.body);
     if (res.statusCode == 200) {
       user = ResponseParsingHelper.parseUser(response, "", userId);
+      _isAuth.value = true;
       return true;
     }
     return false;

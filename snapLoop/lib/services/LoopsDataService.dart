@@ -22,7 +22,6 @@ class LoopsDataService {
     if (_loops == null) {
       _loops = [];
     }
-    //notifyListeners();
   }
 
   void addNewLoop(Loop loop) {

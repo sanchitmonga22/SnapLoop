@@ -17,7 +17,6 @@ class NavBarViewModel extends ReactiveViewModel {
 
   void toggleIsTapped() {
     _fabTapped.toggleIsTapped();
-    notifyListeners();
   }
 
   @override
