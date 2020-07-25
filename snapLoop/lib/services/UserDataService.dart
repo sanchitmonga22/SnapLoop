@@ -59,6 +59,11 @@ class UserDataService with ReactiveServiceMixin {
     return user.displayName;
   }
 
+  void addRequests(PublicUserData user) {
+    _requests.add(user);
+    notifyListeners();
+  }
+
   bool canStartANewLoop() {
     return _auth.user.numberOfLoopsRemaining > 0;
   }

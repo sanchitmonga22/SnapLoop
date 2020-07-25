@@ -11,7 +11,6 @@ class MainViewModel extends ReactiveViewModel {
 
   void createSocketConnection() {
     _socket.createSocketConnection();
-    _socket.onConnection();
   }
 
   bool get isAuth => _auth.isAuth;

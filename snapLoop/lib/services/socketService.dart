@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:SnapLoop/Model/responseParsingHelper.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/services/Auth.dart';
@@ -16,18 +19,15 @@ class SocketService with ReactiveServiceMixin {
   final _loopsDataService = locator<LoopsDataService>();
   final _chatDataService = locator<ChatDataService>();
 
-  SocketService() {
-    listenToReactiveValues([]);
-  }
   IO.Socket _socket;
 
   void createSocketConnection() {
+    print('created');
     _socket = IO.io("$SERVER_IP", <String, dynamic>{
       'transports': ['websocket'],
       'query': {"token": 'Bearer ${_auth.token}'}
     });
-    // this.socket.on("connect", (_) => print('Connected'));
-    // this.socket.on("disconnect", (_) => print('Disconnected'));
+    onConnection();
   }
 
   void onConnection() {
@@ -35,6 +35,12 @@ class SocketService with ReactiveServiceMixin {
 
     _socket.on('well', (data) {
       print(data);
+    });
+
+    _socket.on("requestReceived", (data) {
+      var user = ResponseParsingHelper.parsePublicUserData(data);
+      print(user.userID);
+      _userDataService.addRequests(user);
     });
 
     _socket.on("requestAccepted", (data) {
