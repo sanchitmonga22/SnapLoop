@@ -1,4 +1,5 @@
 import 'package:SnapLoop/Model/user.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/chat/LoopDetailsWidget/LoopDetailsView.dart';
 import 'package:SnapLoop/ui/views/chat/NewLoopChat/NewLoopChatViewModel.dart';
 import 'package:SnapLoop/ui/views/chat/Messages/messagesView.dart';
@@ -38,8 +39,8 @@ class _NewLoopChatViewState extends State<NewLoopChatView> {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => NewLoopChatViewModel(),
       createNewModelOnInsert: true,
-      onModelReady: (model) =>
-          model.initialize(context, widget.loopName, widget.friend),
+      onModelReady: (model) => model.initialize(widget.loopName, widget.friend,
+          kradiusCalculator(2, MediaQuery.of(context).size.width / 4)),
       builder: (context, model, child) {
         return FutureBuilder(
             future: model.initializeScreen(),

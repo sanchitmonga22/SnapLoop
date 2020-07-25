@@ -42,7 +42,7 @@ class FriendsViewModel extends ReactiveViewModel {
     _loopForwarding = loopForwarding;
     setBusy(true);
     await _userData.updateFriends();
-    await _userData.updateRequests();
+    if (!newLoop) await _userData.updateRequests();
     _friends = _userData.friends;
     setBusy(false);
   }

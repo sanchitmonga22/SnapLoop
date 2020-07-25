@@ -129,7 +129,7 @@ class LoopsDataService with ReactiveServiceMixin {
 
   bool loopExistsWithName(String name) {
     bool exists = false;
-    loops.forEach((loop) {
+    _loops.value.forEach((loop) {
       if (loop.name.toLowerCase() == name.trim().toLowerCase()) {
         exists = true;
       }

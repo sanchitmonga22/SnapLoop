@@ -55,7 +55,7 @@ class _HomeViewState extends State<HomeView>
   }
 
   // width is 4*maxRadius of the device
-  List<Widget> loopBuilder(double maxRadius, model) {
+  List<Widget> loopBuilder(double maxRadius, HomeViewModel model) {
     // getting loops of different types
     final loopsWithNewNotifications =
         model.getLoopsType(LoopType.NEW_NOTIFICATION);

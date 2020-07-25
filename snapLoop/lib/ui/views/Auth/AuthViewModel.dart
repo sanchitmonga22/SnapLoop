@@ -49,7 +49,6 @@ class AuthViewModel extends ReactiveViewModel {
     _formKey.currentState.save();
     try {
       if (_authMode == AuthMode.Login) {
-        print('yess');
         await _auth.attemptLogIn(_authData['email'], _authData['password']);
       } else {
         await _auth.attemptSignUp(_authData['username'], _authData['password'],

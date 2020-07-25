@@ -22,21 +22,22 @@ class FriendsListView extends HookViewModelWidget<FriendsViewModel> {
           return Slidable(
             actionPane: SlidableDrawerActionPane(),
             actions: <Widget>[
-              IconSlideAction(
-                caption: 'Start new',
-                color: Colors.black,
-                icon: CupertinoIcons.loop,
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) {
-                        return CreateALoopDialog(
-                          friend: friend,
-                        );
-                      });
-                },
-              ),
+              if (!model.newLoop)
+                IconSlideAction(
+                  caption: 'Start new',
+                  color: Colors.black,
+                  icon: CupertinoIcons.loop,
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) {
+                          return CreateALoopDialog(
+                            friend: friend,
+                          );
+                        });
+                  },
+                ),
             ],
             child: ExpansionTile(
               onExpansionChanged: (value) {

@@ -19,6 +19,7 @@ class NewLoopChatViewModel extends BaseViewModel {
   double _radius;
 
   Loop _loop;
+  Loop get loop => _loop;
 
   LoopWidgetView _loopWidget;
   LoopWidgetView get loopWidget => _loopWidget;
@@ -40,10 +41,10 @@ class NewLoopChatViewModel extends BaseViewModel {
   String _loopName;
   String get loopName => _loopName;
 
-  void initialize(BuildContext context, String loopName, FriendsData friend) {
+  void initialize(String loopName, FriendsData friend, double radius) {
     _loopName = loopName;
     _friend = friend;
-    //_radius=
+    _radius = radius;
   }
 
   Future<bool> initializeScreen() async {
@@ -66,7 +67,7 @@ class NewLoopChatViewModel extends BaseViewModel {
       isTappable: false,
       radius: _radius,
       flipOnTouch: false,
-      loop: _loop,
+      loop: loop,
     );
     return true;
   }
@@ -86,9 +87,9 @@ class NewLoopChatViewModel extends BaseViewModel {
           time:
               DateTime.fromMicrosecondsSinceEpoch(result["sentTime"] as int)));
       _loopDataService.addNewLoop(_loop);
-      await _chatDataService.initializeChatByIdFromNetwork(_loop.chatID);
+      //await _chatDataService.initializeChatByIdFromNetwork(_loop.chatID);
       await _userDataService.updateUserData();
-      _loopDataService.initializeLoopsFromUserData();
+      //_loopDataService.initializeLoopsFromUserData();
       // rebuilding the widget once the chat has been saved in the chats array in the chat provider
       _loopId = result['_id'];
       notifyListeners();

@@ -25,7 +25,6 @@ class ResponseParsingHelper {
   }
 
   static FriendsData parseFriend(dynamic response) {
-    print(response['username']);
     return FriendsData(
         username: response['username'],
         displayName: (response['displayName'] ?? "") == ""
