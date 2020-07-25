@@ -25,6 +25,7 @@ class ResponseParsingHelper {
   }
 
   static FriendsData parseFriend(dynamic response) {
+    print(response['username']);
     return FriendsData(
         username: response['username'],
         displayName: (response['displayName'] ?? "") == ""
@@ -34,9 +35,9 @@ class ResponseParsingHelper {
         userID: response['_id'],
         score: response['score'] as int,
         status: response['status'],
-        commonLoops: (response['commonLoops'] as List).cast<String>().toList(),
+        commonLoops: response['commonLoops'].cast<String>().toList() ?? [],
         mutualFriendsIDs:
-            (response['mutualFriends'] as List).cast<String>().toList());
+            response['mutualFriends'].cast<String>().toList() ?? []);
   }
 
   static PublicUserData parsePublicUserData(dynamic response) {
@@ -49,7 +50,7 @@ class ResponseParsingHelper {
   static User parseUser(dynamic response, String email, String userId) {
     return User(
         numberOfLoopsRemaining: response['numberOfLoopsRemaining'],
-        contacts: (response["contacts"] as List).cast<String>().toList(),
+        contacts: response["contacts"].cast<String>().toList(),
         userID: userId,
         username: response['username'] as String ?? "",
         displayName: response['displayName'] == ""
@@ -59,7 +60,7 @@ class ResponseParsingHelper {
         loopsData:
             ResponseParsingHelper.getLoopsFromResponse(response['loopsData']),
         score: response['score'] as int,
-        friendsIds: (response['friendsIds'] as List).cast<String>().toList(),
+        friendsIds: response['friendsIds'].cast<String>().toList(),
         requestsSent: response['requests']['sent'].cast<String>().toList(),
         requestsReceived:
             response['requests']['received'].cast<String>().toList());

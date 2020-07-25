@@ -1,5 +1,4 @@
 import 'package:SnapLoop/app/router.gr.dart';
-import 'package:SnapLoop/main.dart';
 import 'package:SnapLoop/ui/views/Profile/UserProfileViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

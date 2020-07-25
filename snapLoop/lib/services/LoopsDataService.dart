@@ -23,8 +23,8 @@ class LoopsDataService with ReactiveServiceMixin {
   }
 
   void initializeLoopsFromUserData() {
-    _loops = _auth.user.loopsData;
-    if (_loops == null) {
+    _loops.value = _auth.user.loopsData;
+    if (_loops.value == null) {
       _loops.value = [];
     }
   }

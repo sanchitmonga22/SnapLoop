@@ -19,7 +19,7 @@ class Auth with ReactiveServiceMixin {
   }
   final storage = FlutterSecureStorage();
   String _token;
-  var user;
+  User user;
   String _userId;
   RxValue<bool> _isAuth = RxValue<bool>(initial: false);
 

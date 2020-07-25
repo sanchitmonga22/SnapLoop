@@ -30,19 +30,14 @@ class SocketService with ReactiveServiceMixin {
 
   void onConnection() {
     _socket.on("connect", (data) => print("connected!!"));
-    _socket.on('well', (data) {
-      print(data);
-    });
 
     _socket.on("requestReceived", (data) {
       var user = ResponseParsingHelper.parsePublicUserData(data);
-      print(user.userID);
       _userDataService.addRequests(user);
     });
 
     _socket.on("requestAccepted", (data) {
-      print(data);
-      var friend = ResponseParsingHelper.parseFriend(data);
+      var friend = ResponseParsingHelper.parseFriend(data['data']);
       _userDataService.addFriend(friend);
     });
 

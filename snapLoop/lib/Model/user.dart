@@ -70,10 +70,10 @@ class FriendsData {
     // if(other == null) {
     //   return false;
     // }
-    if (other is! PublicUserData) {
+    if (other is! FriendsData) {
       return false;
     }
-    return userID == (other as PublicUserData).userID;
+    return userID == (other as FriendsData).userID;
   }
 
   int _hashCode;

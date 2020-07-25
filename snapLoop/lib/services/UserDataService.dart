@@ -24,39 +24,40 @@ class UserDataService with ReactiveServiceMixin {
   final _auth = locator<Auth>();
   RxValue<List<Contact>> _contacts = RxValue<List<Contact>>(initial: []);
 
-  RxValue<Set<PublicUserData>> _requests =
+  RxValue<LinkedHashSet<PublicUserData>> _requests =
       RxValue<LinkedHashSet<PublicUserData>>(
-          initial: [] as LinkedHashSet<PublicUserData>);
+          initial: LinkedHashSet<PublicUserData>());
 
-  RxValue<Set<FriendsData>> _friends = RxValue<LinkedHashSet<FriendsData>>(
-      initial: [] as LinkedHashSet<FriendsData>);
+  RxValue<LinkedHashSet<FriendsData>> _friends =
+      RxValue<LinkedHashSet<FriendsData>>(
+          initial: LinkedHashSet<FriendsData>());
 
   int get userScore {
     return _auth.user.score;
   }
 
   List<PublicUserData> get requests {
-    return [..._requests.value];
+    return [..._requests.value.toList()];
   }
 
   List<Contact> get contacts {
-    return [..._contacts.value];
+    return [..._contacts.value.toList()];
   }
 
   List<FriendsData> get friends {
-    return [..._friends.value];
-  }
-
-  String get userId {
-    return _auth.userId;
+    return [..._friends.value.toList()];
   }
 
   User get user {
     return _auth.user;
   }
 
+  String get userId {
+    return user.userID;
+  }
+
   String get username {
-    return _auth.user.username;
+    return user.username;
   }
 
   String get displayName {
@@ -65,10 +66,12 @@ class UserDataService with ReactiveServiceMixin {
 
   void addRequests(PublicUserData user) {
     _requests.value.add(user);
+    notifyListeners();
   }
 
   void addFriend(FriendsData friend) {
     _friends.value.add(friend);
+    notifyListeners();
   }
 
   bool canStartANewLoop() {

@@ -14,5 +14,5 @@ class FloatingActionButtonModel extends ReactiveViewModel {
   }
 
   @override
-  List<ReactiveServiceMixin> get reactiveServices => [_fabTapped];
+  List<ReactiveServiceMixin> get reactiveServices => [_fabTapped, _userData];
 }
