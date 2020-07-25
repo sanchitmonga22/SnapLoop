@@ -10,14 +10,18 @@ class ResponseParsingHelper {
     List<dynamic> res = response['messages'];
     for (int i = 0; i < res.length; i++) {
       var message = res[i];
-      messages.add(ChatInfo(
-        content: message['content'],
-        senderID: message['sender'],
-        time: await TimeHelperService.convertToLocal(
-            DateTime.parse(message['sentTime'])),
-      ));
+      messages.add(await (parseChatInfo(message)));
     }
     return Chat(chat: messages, chatID: chatId);
+  }
+
+  static Future<ChatInfo> parseChatInfo(dynamic message) async {
+    return ChatInfo(
+      content: message['content'],
+      senderID: message['sender'],
+      time: await TimeHelperService.convertToLocal(
+          DateTime.parse(message['sentTime'])),
+    );
   }
 
   static FriendsData parseFriend(dynamic response) {

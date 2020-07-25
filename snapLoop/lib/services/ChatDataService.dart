@@ -7,6 +7,7 @@ import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/Auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
+import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
 
 import '../constants.dart';
@@ -19,20 +20,27 @@ class ChatDataService with ReactiveServiceMixin {
     listenToReactiveValues([_chats]);
   }
   final _auth = locator<Auth>();
-  List<Chat> _chats = [];
+  RxValue<List<Chat>> _chats = RxValue<List<Chat>>(initial: []);
 
   List<Chat> get chats {
-    return [..._chats];
+    return [..._chats.value];
   }
 
   void addNewChat(Chat chat) {
-    _chats.add(chat);
+    _chats.value.add(chat);
   }
 
   Chat getChatById(String chatId) {
-    return _chats.firstWhere((element) {
+    return _chats.value.firstWhere((element) {
       return element.chatID == chatId;
     });
+  }
+
+  void addNewMessage(String chatId, ChatInfo info) {
+    _chats.value
+        .firstWhere((element) => chatId == element.chatID)
+        .chat
+        .add(info);
   }
 
   Future<void> initializeChatByIdFromNetwork(String chatId) async {
@@ -47,11 +55,11 @@ class ChatDataService with ReactiveServiceMixin {
       );
       final response = json.decode(res.body);
       if (res.statusCode == 200) {
-        if (_chats.isNotEmpty) {
-          _chats.removeWhere(
+        if (_chats.value.isNotEmpty) {
+          _chats.value.removeWhere(
               (element) => element.chatID == response['chatId'] as String);
         }
-        _chats.add(await ResponseParsingHelper.parseChat(response));
+        _chats.value.add(await ResponseParsingHelper.parseChat(response));
       } else {
         throw new HttpException("Could not get the chat from the server");
       }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:SnapLoop/Model/responseParsingHelper.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/constants.dart';
@@ -31,8 +29,7 @@ class SocketService with ReactiveServiceMixin {
   }
 
   void onConnection() {
-    _socket.on("connection", (data) => print("connected!!"));
-
+    _socket.on("connect", (data) => print("connected!!"));
     _socket.on('well', (data) {
       print(data);
     });
@@ -45,16 +42,27 @@ class SocketService with ReactiveServiceMixin {
 
     _socket.on("requestAccepted", (data) {
       print(data);
-      // update the friends
+      var friend = ResponseParsingHelper.parseFriend(data);
+      _userDataService.addFriend(friend);
     });
 
-    _socket.on("newMessage", (data) {
-      print(data);
+    _socket.on("newMessage", (data) async {
+      // data[loopID, chatID, loopType, ChatINFO, ]
+      // String chatId = data['_id'];
+      // _chatDataService.addNewMessage(
+      //     chatId, await ResponseParsingHelper.parseChatInfo(data));
+      //_loopsDataService.updateLoop(
+      // number of members, timer, loopType,
+      // new member addition,
+      // new avatars,
+      //
+      //);
       // update the messages in the existing loop
     });
 
     _socket.on("newLoop", (data) {
       print(data);
+      //_loopsDataService.addNewLoop();
       // update all the loops
     });
 

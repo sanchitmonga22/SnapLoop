@@ -63,6 +63,27 @@ class FriendsData {
       @required this.commonLoops,
       this.phone,
       @required this.mutualFriendsIDs});
+
+  @override
+  bool operator ==(other) {
+    // Dart ensures that operator== isn't called with null
+    // if(other == null) {
+    //   return false;
+    // }
+    if (other is! PublicUserData) {
+      return false;
+    }
+    return userID == (other as PublicUserData).userID;
+  }
+
+  int _hashCode;
+  @override
+  int get hashCode {
+    if (_hashCode == null) {
+      _hashCode = userID.hashCode;
+    }
+    return _hashCode;
+  }
 }
 
 class PublicUserData {
@@ -78,4 +99,25 @@ class PublicUserData {
     @required this.userID,
     //@required this.score
   });
+
+  @override
+  bool operator ==(other) {
+    // Dart ensures that operator== isn't called with null
+    // if(other == null) {
+    //   return false;
+    // }
+    if (other is! PublicUserData) {
+      return false;
+    }
+    return userID == (other as PublicUserData).userID;
+  }
+
+  int _hashCode;
+  @override
+  int get hashCode {
+    if (_hashCode == null) {
+      _hashCode = userID.hashCode;
+    }
+    return _hashCode;
+  }
 }

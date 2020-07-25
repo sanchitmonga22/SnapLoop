@@ -6,6 +6,7 @@ import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/services/Auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
+import 'package:observable_ish/value/value.dart';
 import 'package:stacked/stacked.dart';
 
 ///author: @sanchitmonga22
@@ -15,25 +16,25 @@ class LoopsDataService with ReactiveServiceMixin {
     listenToReactiveValues([]);
   }
   final _auth = locator<Auth>();
-  List<Loop> _loops = [];
+  RxValue<List<Loop>> _loops = RxValue<List<Loop>>(initial: []);
 
   List<Loop> get loops {
-    return [..._loops];
+    return [..._loops.value];
   }
 
   void initializeLoopsFromUserData() {
     _loops = _auth.user.loopsData;
     if (_loops == null) {
-      _loops = [];
+      _loops.value = [];
     }
   }
 
   void addNewLoop(Loop loop) {
-    _loops.add(loop);
+    _loops.value.add(loop);
   }
 
   int get loopCount {
-    return _loops.length;
+    return _loops.value.length;
   }
 
   Future<List<dynamic>> getRandomAvatarURL(int count) async {
@@ -107,17 +108,17 @@ class LoopsDataService with ReactiveServiceMixin {
   }
 
   Loop findByName(String name) {
-    return _loops.firstWhere((loop) => loop.name == name);
+    return _loops.value.firstWhere((loop) => loop.name == name);
   }
 
   Loop findById(String id) {
-    return _loops.firstWhere((element) => element.id == id);
+    return _loops.value.firstWhere((element) => element.id == id);
   }
 
   List<Loop> getLoopInforByIds(List<String> id) {
     List<Loop> friendsLoops = [];
     id.forEach((e) {
-      _loops.forEach((element) {
+      _loops.value.forEach((element) {
         if (e == element.id) {
           friendsLoops.add(element);
         }
