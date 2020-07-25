@@ -12,9 +12,10 @@ Columbus was a pioneer in exploring, just like Einstein was in the field of phys
 
 Our venture helps people socialize and connect to other people in a fun and interesting way. SnapLoop was inspired by the idea of breaking a social media stereotype which has been existing in society for a very long time. Unlike the current era of social media which aims to make benefit out of people’s social status satisfaction, SnapLoop desires to make the social media a much more engaging platform.
 
-# Development
+# Development (Work in Progress)
 
 The app is currently being developed in Flutter and the server is being developed in Node.js.
+Feel free to contact me to learn more about it or if you want to contribute in the project!
 
 ## Exploring new technologies
 
@@ -25,7 +26,3 @@ I had always heard that the cross-platform can never be as good as the native an
 After I was done with Node.js, I started looking into the back-end alternatives like AWS and firebase, so I started learning about AWS and learned the basics of some services like Lambda, dynamoDB and website hosting services.
 
 Then I saw a lot of videos online where people were figuring out the best cross-platform solution for developing an app in 2020 and comparing all of them, so in the end, I stuck with flutter. I am not going to debate on that but I feel it was the best choice for my app:) .
-
-## Flutter
-
-I took 2 online courses on udemy to learn more about flutter and I started building my app. Initially,
