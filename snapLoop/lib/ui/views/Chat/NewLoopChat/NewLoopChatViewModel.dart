@@ -5,13 +5,14 @@ import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/ChatDataService.dart';
 import 'package:SnapLoop/services/LoopsDataService.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
+import 'package:SnapLoop/ui/Widget/time/timezones.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../constants.dart';
 
-class NewLoopChatViewModel extends BaseViewModel {
+class NewLoopChatViewModel extends ReactiveViewModel {
   final _userDataService = locator<UserDataService>();
   final _loopDataService = locator<LoopsDataService>();
   final _chatDataService = locator<ChatDataService>();
@@ -25,7 +26,7 @@ class NewLoopChatViewModel extends BaseViewModel {
   LoopWidgetView get loopWidget => _loopWidget;
 
   Chat _chat;
-  Chat get chat => _chat;
+  // Chat get chat => _chat;
 
   FriendsData _friend;
 
@@ -41,13 +42,22 @@ class NewLoopChatViewModel extends BaseViewModel {
   String _loopName;
   String get loopName => _loopName;
 
+  bool first = true;
+  bool _messageSent = false;
+  bool get messageSent => _messageSent;
+
+  Future _future;
+  Future get future => _future;
+
   void initialize(String loopName, FriendsData friend, double radius) {
     _loopName = loopName;
     _friend = friend;
     _radius = radius;
+    _future = initializeScreen();
   }
 
-  Future<bool> initializeScreen() async {
+  Future<void> initializeScreen() async {
+    if (!first) return;
     _images = await _loopDataService.getRandomAvatarURL(2);
     _loop = new Loop(
         currentUserId: _friend.userID,
@@ -69,14 +79,12 @@ class NewLoopChatViewModel extends BaseViewModel {
       flipOnTouch: false,
       loop: loop,
     );
-    return true;
+    return;
   }
 
   Future<void> sendMessage(String enteredMessage) async {
     var result = await _loopDataService.createLoop(
         _loopName, _friend.userID, enteredMessage, _images[1], _images[0]);
-    notifyListeners();
-
     if (result != null) {
       _loop.chatID = result["chatId"];
       _loop.id = result['_id'];
@@ -84,17 +92,22 @@ class NewLoopChatViewModel extends BaseViewModel {
       _chat.chat.add(ChatInfo(
           senderID: _userDataService.userId,
           content: enteredMessage,
-          time:
-              DateTime.fromMicrosecondsSinceEpoch(result["sentTime"] as int)));
+          time: await TimeHelperService.convertToLocal(
+              DateTime.fromMillisecondsSinceEpoch(result["sentTime"]))));
+
+      _loop.atTimeEnding =
+          DateTime.fromMillisecondsSinceEpoch(result['sentTime'])
+              .add(Duration(days: 1));
+
+      _chatDataService.addNewChat(_chat);
       _loopDataService.addNewLoop(_loop);
-      //await _chatDataService.initializeChatByIdFromNetwork(_loop.chatID);
-      await _userDataService.updateUserData();
-      //_loopDataService.initializeLoopsFromUserData();
-      // rebuilding the widget once the chat has been saved in the chats array in the chat provider
       _loopId = result['_id'];
-      notifyListeners();
+      _messageSent = true;
     } else {
       throw new Exception("result not found and loop not created");
     }
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_chatDataService];
 }

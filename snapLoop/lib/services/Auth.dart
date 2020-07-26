@@ -18,14 +18,14 @@ class Auth with ReactiveServiceMixin {
     listenToReactiveValues([_isAuth, user, _token]);
   }
   final storage = FlutterSecureStorage();
-  String _token;
-  User user;
+  RxValue<String> _token = RxValue();
+  RxValue<User> user = RxValue();
   String _userId;
   RxValue<bool> _isAuth = RxValue<bool>(initial: false);
 
   bool get isAuth => _isAuth.value;
 
-  String get token => _token;
+  String get token => _token.value;
 
   String get userId => _userId;
 
@@ -40,7 +40,7 @@ class Auth with ReactiveServiceMixin {
         _token = jwt;
         _userId = response['userId'] as String;
         _isAuth.value = true;
-        user = ResponseParsingHelper.parseUser(response, email, _userId);
+        user.value = ResponseParsingHelper.parseUser(response, email, _userId);
         await storage.write(key: "jwt", value: jwt);
         await storage.write(key: "userId", value: response['userId']);
       }
@@ -61,7 +61,7 @@ class Auth with ReactiveServiceMixin {
     if (res.statusCode == 201) {
       _token = response['token'];
       _userId = response['userId'];
-      user = new User(
+      user.value = new User(
           numberOfLoopsRemaining: 5,
           contacts: [],
           requestsSent: [],
@@ -109,7 +109,7 @@ class Auth with ReactiveServiceMixin {
       _isAuth.value = false;
       return false;
     }
-    _token = token1;
+    _token.value = token1;
     _userId = userId1;
     // getting the userData from the server using the _token, add the API to the server
     http.Response res = await http.get(
@@ -121,7 +121,7 @@ class Auth with ReactiveServiceMixin {
     );
     final response = json.decode(res.body);
     if (res.statusCode == 200) {
-      user = ResponseParsingHelper.parseUser(response, "", userId);
+      user.value = ResponseParsingHelper.parseUser(response, "", userId);
       _isAuth.value = true;
       return true;
     }

@@ -32,20 +32,20 @@ class SocketService with ReactiveServiceMixin {
     _socket.on("connect", (data) => print("connected!!"));
 
     _socket.on("requestReceived", (data) {
+      print(data);
       var user = ResponseParsingHelper.parsePublicUserData(data);
       _userDataService.addRequests(user);
     });
 
     _socket.on("requestAccepted", (data) {
+      print(data);
       var friend = ResponseParsingHelper.parseFriend(data['data']);
       _userDataService.addFriend(friend);
     });
 
     _socket.on("newMessage", (data) async {
-      // data[loopID, chatID, loopType, ChatINFO, ]
-      // String chatId = data['_id'];
-      // _chatDataService.addNewMessage(
-      //     chatId, await ResponseParsingHelper.parseChatInfo(data));
+      print(data);
+      // the message contains, first decide, whether it is a new loop or not
       //_loopsDataService.updateLoop(
       // number of members, timer, loopType,
       // new member addition,

@@ -33,7 +33,7 @@ class UserDataService with ReactiveServiceMixin {
           initial: LinkedHashSet<FriendsData>());
 
   int get userScore {
-    return _auth.user.score;
+    return _auth.user.value.score;
   }
 
   List<PublicUserData> get requests {
@@ -49,7 +49,7 @@ class UserDataService with ReactiveServiceMixin {
   }
 
   User get user {
-    return _auth.user;
+    return _auth.user.value;
   }
 
   String get userId {
@@ -75,7 +75,7 @@ class UserDataService with ReactiveServiceMixin {
   }
 
   bool canStartANewLoop() {
-    return _auth.user.numberOfLoopsRemaining > 0;
+    return _auth.user.value.numberOfLoopsRemaining > 0;
   }
 
   Future<FriendsData> getFriendsDataById(String userId) async {
@@ -152,7 +152,8 @@ class UserDataService with ReactiveServiceMixin {
       );
       final response = json.decode(res.body);
       if (res.statusCode == 200) {
-        _auth.user = ResponseParsingHelper.parseUser(response, "", userId);
+        _auth.user.value =
+            ResponseParsingHelper.parseUser(response, "", userId);
         return true;
       }
       return false;

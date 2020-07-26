@@ -6,7 +6,7 @@ import 'package:SnapLoop/services/LoopsDataService.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:stacked/stacked.dart';
 
-class MessagesViewModel extends BaseViewModel {
+class MessagesViewModel extends ReactiveViewModel {
   final _chatDataService = locator<ChatDataService>();
   final _loopDataService = locator<LoopsDataService>();
   final _userDataService = locator<UserDataService>();
@@ -27,4 +27,7 @@ class MessagesViewModel extends BaseViewModel {
       _chat = _chatDataService.getChatById(_loop.chatID);
     }
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [_chatDataService];
 }

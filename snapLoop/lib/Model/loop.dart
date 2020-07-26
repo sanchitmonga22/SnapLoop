@@ -23,7 +23,6 @@ class Loop {
   final String name;
   final String creatorId;
   String currentUserId;
-  DateTime timeSent;
   int numberOfMembers;
   LoopType type;
   final List<String> userIDs; // will store the userIDs for all the loops
@@ -34,7 +33,6 @@ class Loop {
 
   Loop(
       {@required this.id,
-      this.timeSent,
       this.atTimeEnding,
       @required this.currentUserId,
       @required this.chatID,

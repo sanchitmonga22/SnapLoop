@@ -37,7 +37,6 @@ class _ExistingLoopChatViewState extends State<ExistingLoopChatView>
               children: [
                 MessagesView(
                   loopId: model.loop.id,
-                  newLoop: false,
                 ),
                 if (model.loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL ||
                     model.loop.type == LoopType.NEW_LOOP)

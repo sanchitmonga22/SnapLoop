@@ -41,6 +41,7 @@ class ChatDataService with ReactiveServiceMixin {
         .firstWhere((element) => chatId == element.chatID)
         .chat
         .add(info);
+    notifyListeners();
   }
 
   Future<void> initializeChatByIdFromNetwork(String chatId) async {

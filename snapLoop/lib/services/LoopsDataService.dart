@@ -13,7 +13,7 @@ import 'package:stacked/stacked.dart';
 @lazySingleton
 class LoopsDataService with ReactiveServiceMixin {
   LoopsDataService() {
-    listenToReactiveValues([]);
+    listenToReactiveValues([_loops]);
   }
   final _auth = locator<Auth>();
   RxValue<List<Loop>> _loops = RxValue<List<Loop>>(initial: []);
@@ -23,7 +23,7 @@ class LoopsDataService with ReactiveServiceMixin {
   }
 
   void initializeLoopsFromUserData() {
-    _loops.value = _auth.user.loopsData;
+    _loops.value = _auth.user.value.loopsData;
     if (_loops.value == null) {
       _loops.value = [];
     }
@@ -35,6 +35,12 @@ class LoopsDataService with ReactiveServiceMixin {
 
   int get loopCount {
     return _loops.value.length;
+  }
+
+  void updateLoopEndTimer(String loopId, DateTime atTimeEnding) {
+    _loops.value.firstWhere((element) => element.id == loopId).atTimeEnding =
+        atTimeEnding;
+    notifyListeners();
   }
 
   Future<List<dynamic>> getRandomAvatarURL(int count) async {

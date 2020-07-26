@@ -14,6 +14,7 @@ class NewLoopChatView extends StatefulWidget {
   final FriendsData friend;
   NewLoopChatView({Key key, @required this.loopName, @required this.friend})
       : super(key: key);
+
   @override
   _NewLoopChatViewState createState() => _NewLoopChatViewState();
 }
@@ -26,9 +27,12 @@ class _NewLoopChatViewState extends State<NewLoopChatView> {
         children: [
           MessagesView(
             loopId: model.loopId,
-            newLoop: true,
           ),
-          NewMessageView(sendMessage: model.sendMessage),
+          if (!model.messageSent)
+            NewMessageView(sendMessage: (String enteredMessage) async {
+              await model.sendMessage(enteredMessage);
+              setState(() {});
+            }),
         ],
       ),
     );
@@ -38,12 +42,12 @@ class _NewLoopChatViewState extends State<NewLoopChatView> {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => NewLoopChatViewModel(),
-      createNewModelOnInsert: true,
+      disposeViewModel: true,
       onModelReady: (model) => model.initialize(widget.loopName, widget.friend,
           kradiusCalculator(2, MediaQuery.of(context).size.width / 4)),
       builder: (context, model, child) {
         return FutureBuilder(
-            future: model.initializeScreen(),
+            future: model.future,
             builder: (context, snapshot) {
               return snapshot.connectionState == ConnectionState.waiting
                   ? Material(
@@ -55,6 +59,7 @@ class _NewLoopChatViewState extends State<NewLoopChatView> {
                       ),
                     ))
                   : LoopsDetailsView(
+                      loop: model.loop,
                       backgroundColor: model.backgroundColor,
                       chatWidget: getChatWidget(model),
                       loopWidget: model.loopWidget,
