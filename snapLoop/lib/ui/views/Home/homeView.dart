@@ -106,7 +106,6 @@ class _HomeViewState extends State<HomeView>
       viewModelBuilder: () => HomeViewModel(),
       onModelReady: (model) => model.initializeLoops(),
       builder: (context, model, child) {
-        model.setLoops(context);
         return Container(
             decoration: kHomeScreenBoxDecoration,
             child: model.loops == null || model.loops.length == 0

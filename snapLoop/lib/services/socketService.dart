@@ -1,3 +1,4 @@
+import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/responseParsingHelper.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/constants.dart';
@@ -39,7 +40,7 @@ class SocketService with ReactiveServiceMixin {
 
     _socket.on("requestAccepted", (data) {
       print(data);
-      var friend = ResponseParsingHelper.parseFriend(data['data']);
+      var friend = ResponseParsingHelper.parseFriend(data);
       _userDataService.addFriend(friend);
     });
 
@@ -54,11 +55,13 @@ class SocketService with ReactiveServiceMixin {
       //);
       // update the messages in the existing loop
     });
-
-    _socket.on("newLoop", (data) {
+    _socket.on("newLoop", (data) async {
       print(data);
-      //_loopsDataService.addNewLoop();
-      // update all the loops
+      _chatDataService
+          .addNewChat(await ResponseParsingHelper.parseChat(data['chat']));
+      Loop loop = ResponseParsingHelper.parseLoop(data['loop']);
+      loop.type = LoopType.NEW_LOOP;
+      _loopsDataService.addNewLoop(loop);
     });
 
     _socket.on("loopComplete", (data) {
