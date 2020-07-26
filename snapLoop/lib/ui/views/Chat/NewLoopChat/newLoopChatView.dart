@@ -9,17 +9,12 @@ import 'package:stacked/stacked.dart';
 
 /// author: @sanchitmonga22
 
-class NewLoopChatView extends StatefulWidget {
+class NewLoopChatView extends StatelessWidget {
   final String loopName;
   final FriendsData friend;
   NewLoopChatView({Key key, @required this.loopName, @required this.friend})
       : super(key: key);
 
-  @override
-  _NewLoopChatViewState createState() => _NewLoopChatViewState();
-}
-
-class _NewLoopChatViewState extends State<NewLoopChatView> {
   Widget getChatWidget(model) {
     return Container(
       decoration: BoxDecoration(color: model.backgroundColor),
@@ -31,7 +26,7 @@ class _NewLoopChatViewState extends State<NewLoopChatView> {
           if (!model.messageSent)
             NewMessageView(sendMessage: (String enteredMessage) async {
               await model.sendMessage(enteredMessage);
-              setState(() {});
+              //setState(() {});
             }),
         ],
       ),
@@ -43,7 +38,7 @@ class _NewLoopChatViewState extends State<NewLoopChatView> {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => NewLoopChatViewModel(),
       disposeViewModel: true,
-      onModelReady: (model) => model.initialize(widget.loopName, widget.friend,
+      onModelReady: (model) => model.initialize(loopName, friend,
           kradiusCalculator(2, MediaQuery.of(context).size.width / 4)),
       builder: (context, model, child) {
         return FutureBuilder(

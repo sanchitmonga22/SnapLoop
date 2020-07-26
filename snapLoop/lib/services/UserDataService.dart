@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:convert';
 
 import 'package:SnapLoop/app/locator.dart';
@@ -11,7 +10,8 @@ import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Model/responseParsingHelper.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:injectable/injectable.dart';
-import 'package:observable_ish/value/value.dart';
+import 'package:observable_ish/list/list.dart';
+import 'package:observable_ish/set/set.dart';
 import 'package:stacked/stacked.dart';
 
 /// author: @sanchitmonga22
@@ -22,30 +22,26 @@ class UserDataService with ReactiveServiceMixin {
     listenToReactiveValues([_contacts, _requests, _friends]);
   }
   final _auth = locator<Auth>();
-  RxValue<List<Contact>> _contacts = RxValue<List<Contact>>(initial: []);
+  RxList<Contact> _contacts = RxList<Contact>();
 
-  RxValue<LinkedHashSet<PublicUserData>> _requests =
-      RxValue<LinkedHashSet<PublicUserData>>(
-          initial: LinkedHashSet<PublicUserData>());
+  RxSet<PublicUserData> _requests = RxSet<PublicUserData>();
 
-  RxValue<LinkedHashSet<FriendsData>> _friends =
-      RxValue<LinkedHashSet<FriendsData>>(
-          initial: LinkedHashSet<FriendsData>());
+  RxSet<FriendsData> _friends = RxSet<FriendsData>();
 
   int get userScore {
     return _auth.user.value.score;
   }
 
   List<PublicUserData> get requests {
-    return [..._requests.value.toList()];
+    return [..._requests.toList()];
   }
 
   List<Contact> get contacts {
-    return [..._contacts.value.toList()];
+    return [..._contacts.toList()];
   }
 
   List<FriendsData> get friends {
-    return [..._friends.value.toList()];
+    return [..._friends.toList()];
   }
 
   User get user {
@@ -65,12 +61,12 @@ class UserDataService with ReactiveServiceMixin {
   }
 
   void addRequests(PublicUserData user) {
-    _requests.value.add(user);
+    _requests.add(user);
     notifyListeners();
   }
 
   void addFriend(FriendsData friend) {
-    _friends.value.add(friend);
+    _friends.add(friend);
     notifyListeners();
   }
 
@@ -168,7 +164,7 @@ class UserDataService with ReactiveServiceMixin {
       // checking for new users
       List<String> newUsers = [];
       newUsers.addAll(user.requestsReceived);
-      _requests.value.forEach((element) {
+      _requests.forEach((element) {
         if (newUsers.contains(element.userID)) {
           newUsers.remove(element.userID);
         }
@@ -177,9 +173,9 @@ class UserDataService with ReactiveServiceMixin {
         return true;
       } else {
         for (int i = 0; i < newUsers.length; i++) {
-          _requests.value.add(await getUserDataById(newUsers[i]));
+          _requests.add(await getUserDataById(newUsers[i]));
         }
-        _requests.value = _requests.value.toSet();
+        _requests = _requests.toSet();
         return true;
       }
     } catch (err) {
@@ -193,7 +189,7 @@ class UserDataService with ReactiveServiceMixin {
       // checking for new friends (comparing the data)
       List<String> newFriends = [];
       newFriends.addAll(user.friendsIds);
-      _friends.value.forEach((element) {
+      _friends.forEach((element) {
         if (newFriends.contains(element.userID)) {
           newFriends.remove(element.userID);
         }
@@ -202,9 +198,9 @@ class UserDataService with ReactiveServiceMixin {
         return true;
       } else {
         for (int i = 0; i < newFriends.length; i++) {
-          _friends.value.add(await getFriendsDataById(newFriends[i]));
+          _friends.add(await getFriendsDataById(newFriends[i]));
         }
-        _friends.value = _friends.value.toSet();
+        _friends.toSet();
         return true;
       }
     } catch (err) {
@@ -234,7 +230,7 @@ class UserDataService with ReactiveServiceMixin {
 
   Future<void> acceptRequest(String userID) async {
     PublicUserData req;
-    _requests.value.removeWhere((element) {
+    _requests.removeWhere((element) {
       if (element.userID == userID) {
         req = element;
         return true;
@@ -254,7 +250,7 @@ class UserDataService with ReactiveServiceMixin {
         return;
       } else {
         // if request not send add the request back to the list
-        _requests.value.add(req);
+        _requests.add(req);
         throw new HttpException("Request not sent");
       }
     } catch (err) {

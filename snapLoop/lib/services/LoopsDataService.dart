@@ -6,7 +6,7 @@ import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/services/Auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
-import 'package:observable_ish/value/value.dart';
+import 'package:observable_ish/list/list.dart';
 import 'package:stacked/stacked.dart';
 
 ///author: @sanchitmonga22
@@ -16,29 +16,29 @@ class LoopsDataService with ReactiveServiceMixin {
     listenToReactiveValues([_loops]);
   }
   final _auth = locator<Auth>();
-  RxValue<List<Loop>> _loops = RxValue<List<Loop>>(initial: []);
+  RxList<Loop> _loops = RxList<Loop>();
 
   List<Loop> get loops {
-    return [..._loops.value];
+    return [..._loops];
   }
 
   void initializeLoopsFromUserData() {
-    _loops.value = _auth.user.value.loopsData;
-    if (_loops.value == null) {
-      _loops.value = [];
+    _loops.addAll(_auth.user.value.loopsData);
+    if (_loops == null) {
+      _loops = RxList<Loop>();
     }
   }
 
   void addNewLoop(Loop loop) {
-    _loops.value.add(loop);
+    _loops.add(loop);
   }
 
   int get loopCount {
-    return _loops.value.length;
+    return _loops.length;
   }
 
   void updateLoopEndTimer(String loopId, DateTime atTimeEnding) {
-    _loops.value.firstWhere((element) => element.id == loopId).atTimeEnding =
+    _loops.firstWhere((element) => element.id == loopId).atTimeEnding =
         atTimeEnding;
     notifyListeners();
   }
@@ -114,17 +114,17 @@ class LoopsDataService with ReactiveServiceMixin {
   }
 
   Loop findByName(String name) {
-    return _loops.value.firstWhere((loop) => loop.name == name);
+    return _loops.firstWhere((loop) => loop.name == name);
   }
 
   Loop findById(String id) {
-    return _loops.value.firstWhere((element) => element.id == id);
+    return _loops.firstWhere((element) => element.id == id);
   }
 
   List<Loop> getLoopInforByIds(List<String> id) {
     List<Loop> friendsLoops = [];
     id.forEach((e) {
-      _loops.value.forEach((element) {
+      _loops.forEach((element) {
         if (e == element.id) {
           friendsLoops.add(element);
         }
@@ -135,7 +135,7 @@ class LoopsDataService with ReactiveServiceMixin {
 
   bool loopExistsWithName(String name) {
     bool exists = false;
-    _loops.value.forEach((loop) {
+    _loops.forEach((loop) {
       if (loop.name.toLowerCase() == name.trim().toLowerCase()) {
         exists = true;
       }

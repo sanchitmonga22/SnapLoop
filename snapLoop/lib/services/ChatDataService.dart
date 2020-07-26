@@ -20,27 +20,25 @@ class ChatDataService with ReactiveServiceMixin {
     listenToReactiveValues([_chats]);
   }
   final _auth = locator<Auth>();
-  RxValue<List<Chat>> _chats = RxValue<List<Chat>>(initial: []);
+
+  RxList<Chat> _chats = RxList<Chat>();
 
   List<Chat> get chats {
-    return [..._chats.value];
+    return [..._chats];
   }
 
   void addNewChat(Chat chat) {
-    _chats.value.add(chat);
+    _chats.add(chat);
   }
 
   Chat getChatById(String chatId) {
-    return _chats.value.firstWhere((element) {
+    return _chats.firstWhere((element) {
       return element.chatID == chatId;
     });
   }
 
   void addNewMessage(String chatId, ChatInfo info) {
-    _chats.value
-        .firstWhere((element) => chatId == element.chatID)
-        .chat
-        .add(info);
+    _chats.firstWhere((element) => chatId == element.chatID).chat.add(info);
     notifyListeners();
   }
 
@@ -56,11 +54,11 @@ class ChatDataService with ReactiveServiceMixin {
       );
       final response = json.decode(res.body);
       if (res.statusCode == 200) {
-        if (_chats.value.isNotEmpty) {
-          _chats.value.removeWhere(
+        if (_chats.isNotEmpty) {
+          _chats.removeWhere(
               (element) => element.chatID == response['chatId'] as String);
         }
-        _chats.value.add(await ResponseParsingHelper.parseChat(response));
+        _chats.add(await ResponseParsingHelper.parseChat(response));
       } else {
         throw new HttpException("Could not get the chat from the server");
       }
