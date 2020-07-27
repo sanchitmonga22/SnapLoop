@@ -24,6 +24,7 @@ class _NewMessageViewState extends State<NewMessageView> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Container(
       // height: 50,
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
@@ -68,7 +69,7 @@ class _NewMessageViewState extends State<NewMessageView> {
             ),
           ),
           Align(
-            alignment: Alignment(1.15, 0),
+            alignment: width > 500 ? Alignment(1.05, 0) : Alignment(1.15, 0),
             child: controller.value.text != ""
                 ? RaisedButton(
                     shape: CircleBorder(),

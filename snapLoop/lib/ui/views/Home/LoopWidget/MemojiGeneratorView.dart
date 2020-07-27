@@ -1,9 +1,12 @@
 import 'dart:math';
 
 import 'package:SnapLoop/Model/loop.dart';
+import 'package:SnapLoop/app/locator.dart';
+import 'package:SnapLoop/services/LoopsDataService.dart';
 import 'package:flutter/material.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:validators/validators.dart';
 
 ///author: @sanchitmonga22
 class MemojiGenerator extends StatefulWidget {
@@ -34,6 +37,7 @@ class _MemojiGeneratorState extends State<MemojiGenerator> {
   @override
   Widget build(BuildContext context) {
     List<String> images = widget.loop.avatars.values.toList();
+    List<String> userIds = widget.loop.avatars.keys.toList();
     int i = 0;
     return Stack(children: [
       if (widget.loop.numberOfMembers < 13)
@@ -43,6 +47,8 @@ class _MemojiGeneratorState extends State<MemojiGenerator> {
             imageUrl: images[i - 1],
             loopType: widget.loopType,
             position: position,
+            userId: userIds[i - 1],
+            loopId: widget.loop.id,
           );
         }).toList()
       else
@@ -52,10 +58,18 @@ class _MemojiGeneratorState extends State<MemojiGenerator> {
 }
 
 class Memoji extends StatefulWidget {
+  final String userId;
   final String imageUrl;
   final Position position;
-  final loopType;
-  const Memoji({this.loopType, Key key, this.position, this.imageUrl})
+  final LoopType loopType;
+  final String loopId;
+  const Memoji(
+      {this.loopId,
+      this.loopType,
+      Key key,
+      this.position,
+      this.imageUrl,
+      this.userId})
       : super(key: key);
 
   @override
@@ -65,6 +79,7 @@ class Memoji extends StatefulWidget {
 class _MemojiState extends State<Memoji> {
   Future future;
   DecorationImage image;
+
   @override
   void initState() {
     super.initState();
@@ -72,16 +87,28 @@ class _MemojiState extends State<Memoji> {
   }
 
   // checking whether the image throws an error
-  Future<bool> getImage() async {
+  Future<void> getImage() async {
+    // if the image is already numeric
+    if (isNumeric(widget.imageUrl)) {
+      image = DecorationImage(
+          fit: BoxFit.fitHeight,
+          image: AssetImage("assets/memojis/m${widget.imageUrl}.jpg"));
+      return;
+    }
+
     http.Response res = await http.get(widget.imageUrl);
     if (res.statusCode >= 400) {
+      int rand = kgetRandomImageNumber(17);
+      final _loopDataService = locator<LoopsDataService>();
+      _loopDataService.updateImageUrlToNumber(
+          widget.loopId, widget.userId, rand);
       image = DecorationImage(
-          fit: BoxFit.fitHeight, image: AssetImage("assets/memojis/m10.jpg"));
+          fit: BoxFit.fitHeight,
+          image: AssetImage("assets/memojis/m$rand.jpg"));
     } else {
       image = DecorationImage(
           fit: BoxFit.fitHeight, image: NetworkImage(widget.imageUrl));
     }
-    return true;
   }
 
   @override

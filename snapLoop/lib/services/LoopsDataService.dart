@@ -67,6 +67,13 @@ class LoopsDataService with ReactiveServiceMixin {
     }
   }
 
+  // updating the imageUrl to a number to get it from the assets
+  void updateImageUrlToNumber(String loopId, String userId, int number) {
+    _loops.firstWhere((element) => element.id == loopId).avatars[userId] =
+        number.toString();
+    // TODO: make an api call and tell the number to the network and update the image
+  }
+
   Future<dynamic> forwardLoop(
       String friendId, String content, String chatId, String loopId) async {
     try {

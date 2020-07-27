@@ -19,9 +19,10 @@ class LoopWidgetView extends StatefulWidget {
   final bool isTappable;
   final bool flipOnTouch;
   final Loop loop;
+  final Key key;
 
   const LoopWidgetView(
-      {Key key,
+      {this.key,
       this.radius,
       this.loop,
       this.isTappable,

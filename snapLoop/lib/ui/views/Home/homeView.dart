@@ -25,6 +25,7 @@ class _HomeViewState extends State<HomeView>
   List<Widget> loopBuilderHelper(
       List<Loop> loops, double maxRadius, List<double> radiis) {
     double deviceWidth = maxRadius * 4;
+    List<Loop> deleted = [...loops];
     List<Widget> widgetsInEachRow = [];
     double currentWidth = 0;
     List<Widget> rows = [];
@@ -32,13 +33,15 @@ class _HomeViewState extends State<HomeView>
       for (int i = 0; i < radiis.length; i++) {
         if (currentWidth + ((radiis[i] + kAllLoopsPadding) * 2) < deviceWidth) {
           widgetsInEachRow.add(LoopWidgetView(
+            key: UniqueKey(),
             radius: radiis[i],
-            loop: loops[i],
+            loop: deleted[i],
             isTappable: true,
             flipOnTouch: true,
           ));
           currentWidth += (radiis[i] + kAllLoopsPadding) * 2;
           radiis.removeAt(i);
+          deleted.removeAt(i);
           if (radiis.isNotEmpty) {
             i = i - 1;
           }
@@ -77,7 +80,7 @@ class _HomeViewState extends State<HomeView>
     return loopBuilderHelper(loopsies, maxRadius, radiies);
   }
 
-  List<Widget> completedLoopBuilder(double maxRadius, model) {
+  List<Widget> completedLoopBuilder(double maxRadius, HomeViewModel model) {
     // getting loops of different types
     final inactiveLoopsSuccessful =
         model.getLoopsType(LoopType.INACTIVE_LOOP_SUCCESSFUL);

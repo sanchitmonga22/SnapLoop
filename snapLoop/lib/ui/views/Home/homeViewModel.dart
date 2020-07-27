@@ -7,7 +7,6 @@ import '../../../constants.dart';
 class HomeViewModel extends ReactiveViewModel {
   final _loopDataService = locator<LoopsDataService>();
 
-  // List<Loop> _loops = [];
   List<Loop> get loops => _loopDataService.loops;
 
   void initializeLoops() {

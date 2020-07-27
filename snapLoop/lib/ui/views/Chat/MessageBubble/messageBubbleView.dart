@@ -1,6 +1,7 @@
 import 'package:SnapLoop/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:validators/validators.dart';
 
 /// author: @sanchitmonga22
 
@@ -22,6 +23,17 @@ class MessageBubbleView extends StatelessWidget {
     this.userRandomMemoji = "",
   });
 
+  DecorationImage getImage() {
+    if (isNumeric(userRandomMemoji)) {
+      return DecorationImage(
+          fit: BoxFit.fitHeight,
+          image: AssetImage("assets/memojis/m$userRandomMemoji.jpg"));
+    } else {
+      return DecorationImage(
+          fit: BoxFit.fitHeight, image: NetworkImage(userRandomMemoji));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -42,17 +54,16 @@ class MessageBubbleView extends StatelessWidget {
                           ? const EdgeInsets.only(left: 10)
                           : const EdgeInsets.only(right: 10),
                       child: CircleAvatar(
-                          child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(blurRadius: 5, color: Colors.white)
-                          ],
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.fitHeight,
-                              image: NetworkImage(userRandomMemoji)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(blurRadius: 5, color: Colors.white)
+                            ],
+                            shape: BoxShape.circle,
+                            image: getImage(),
+                          ),
                         ),
-                      )),
+                      ),
                     ),
                     Container(
                       padding:

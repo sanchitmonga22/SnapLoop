@@ -27,6 +27,7 @@ class _FriendsViewState extends State<FriendsView>
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     super.build(context);
 
     return ViewModelBuilder.reactive(
@@ -44,7 +45,9 @@ class _FriendsViewState extends State<FriendsView>
                       ),
                     )
                   : Padding(
-                      padding: const EdgeInsets.only(right: 10.0, left: 5),
+                      padding: width > 500
+                          ? const EdgeInsets.only(right: 30, left: 15)
+                          : const EdgeInsets.only(right: 10.0, left: 5),
                       child: Stack(
                         children: [
                           model.newLoop

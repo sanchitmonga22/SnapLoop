@@ -1240,7 +1240,7 @@ packages:
     source: hosted
     version: "2.2.0"
   validators:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: validators
       url: "https://pub.dartlang.org"

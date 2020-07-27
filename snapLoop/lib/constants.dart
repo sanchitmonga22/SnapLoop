@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/MemojiGeneratorView.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +15,8 @@ final kSwipeConstant = 5;
 const double ksigmaX = 5.0; // from 0-10
 const double ksigmaY = 5.0; // from 0-10
 const double kopacity = 0.1;
+// TODO update the loops to use this
+const double kMaxRadius = 103;
 const kTextFieldCursorColor = kSystemPrimaryColor;
 
 double kradiusCalculator(int numberOfMember, double maxRadius) {
@@ -20,6 +24,10 @@ double kradiusCalculator(int numberOfMember, double maxRadius) {
     return maxRadius * kfixedRadiusFactor[numberOfMember];
   }
   return maxRadius * kfixedRadiusFactor["MAX"];
+}
+
+int kgetRandomImageNumber(int max) {
+  return Random().nextInt(max - 1);
 }
 
 //SECTION: AUTH SCREEN
