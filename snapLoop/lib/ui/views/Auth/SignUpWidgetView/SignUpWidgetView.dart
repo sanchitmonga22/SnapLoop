@@ -48,8 +48,6 @@ class SignUpWidgetView extends HookViewModelWidget<AuthViewModel> {
                       ? (value) {
                           if (value != model.passwordController.text) {
                             return 'Passwords do not match!';
-                          } else {
-                            return "error";
                           }
                         }
                       : null,

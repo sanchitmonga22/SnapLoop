@@ -8,7 +8,7 @@ import 'package:SnapLoop/services/Auth.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
-import 'package:observable_ish/list/list.dart';
+import 'package:observable_ish/set/set.dart';
 import 'package:stacked/stacked.dart';
 
 ///author: @sanchitmonga22
@@ -19,16 +19,18 @@ class LoopsDataService with ReactiveServiceMixin {
   }
   final _auth = locator<Auth>();
   final _userDataService = locator<UserDataService>();
-  RxList<Loop> _loops = RxList<Loop>();
+  RxSet<Loop> _loops = RxSet<Loop>();
 
   List<Loop> get loops {
-    return [..._loops];
+    return [..._loops.toList()];
   }
 
+// TODO: FIXME: weird behavior (maybe)
   void initializeLoopsFromUserData() {
     _loops.addAll(_auth.user.value.loopsData);
+    _loops.toSet();
     if (_loops == null) {
-      _loops = RxList<Loop>();
+      _loops = RxSet<Loop>();
     }
   }
 
@@ -87,7 +89,7 @@ class LoopsDataService with ReactiveServiceMixin {
         throw new HttpException(res.body);
       }
     } catch (err) {
-      throw new HttpException(err.toString());
+      throw new HttpException(err);
     }
   }
 
@@ -95,26 +97,36 @@ class LoopsDataService with ReactiveServiceMixin {
       dynamic result, String loopId, String friendId) async {
     Loop loop = _loops.firstWhere((element) => element.id == loopId);
     loop.type = ResponseParsingHelper.getLoopsType(result['loopType']);
-    loop.atTimeEnding = DateTime.fromMillisecondsSinceEpoch(result['sentTime'])
-        .add(Duration(days: 1));
-    loop.avatars[friendId] = result['imageUrl'];
-    loop.numberOfMembers++;
-    loop.userIDs.add(friendId);
     loop.currentUserId = friendId;
+    if (loop.type != LoopType.INACTIVE_LOOP_SUCCESSFUL) {
+      loop.atTimeEnding =
+          DateTime.fromMillisecondsSinceEpoch(result['sentTime'])
+              .add(Duration(days: 1));
+      // adding the memoji for the new user added to the loop
+      loop.avatars[friendId] = result['memoji'];
+      loop.numberOfMembers++;
+      loop.userIDs.add(friendId);
+    }
   }
 
   void updateExistingLoop(dynamic result) {
-    Loop loop = _loops.firstWhere((element) => element.id == result['loopId']);
-    loop.atTimeEnding =
-        DateTime.fromMillisecondsSinceEpoch(result['atTimeEnding']);
-    loop.type = ResponseParsingHelper.getLoopsType(result['loopType']);
-    loop.userIDs.add(result['newUser']['user']);
-    loop.avatars[result['newUser']['user']] = result['newUser']['avatarLink'];
-    loop.currentUserId = result['newUser']['user'];
-    loop.numberOfMembers++;
-    if (loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
-      // do a lot of stuff
-    }
+    _loops.forEach((loop) {
+      if (loop.id == result['loopId']) {
+        loop.atTimeEnding =
+            DateTime.fromMillisecondsSinceEpoch(result['atTimeEnding']);
+        loop.type = ResponseParsingHelper.getLoopsType(result['loopType']);
+        String newUserId = result['newUser']['user'];
+        loop.userIDs.add(newUserId);
+        loop.avatars[newUserId] = result['newUser']['avatarLink'];
+        loop.currentUserId = newUserId;
+        loop.numberOfMembers++;
+        if (loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
+          //TODO:
+          // do a lot of stuff
+        }
+      }
+    });
+    notifyListeners();
   }
 
   Future<Map<String, dynamic>> createLoop(String name, String friendId,

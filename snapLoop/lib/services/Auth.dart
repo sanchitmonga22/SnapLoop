@@ -18,14 +18,14 @@ class Auth with ReactiveServiceMixin {
     listenToReactiveValues([_isAuth, user, _token]);
   }
   final storage = FlutterSecureStorage();
-  RxValue<String> _token = RxValue();
+  String _token;
   RxValue<User> user = RxValue();
   String _userId;
   RxValue<bool> _isAuth = RxValue<bool>(initial: false);
 
   bool get isAuth => _isAuth.value;
 
-  String get token => _token.value;
+  String get token => _token;
 
   String get userId => _userId;
 
@@ -49,35 +49,39 @@ class Auth with ReactiveServiceMixin {
 
   Future<void> attemptSignUp(String username, String password,
       String phoneNumber, String email) async {
-    http.Response res = await http.post('$SERVER_IP/users/signup',
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "username": username,
-          "password": password,
-          "email": email,
-          //"phoneNumber": phoneNumber
-        }));
-    final response = json.decode(res.body);
-    if (res.statusCode == 201) {
-      _token = response['token'];
-      _userId = response['userId'];
-      user.value = new User(
-          numberOfLoopsRemaining: 5,
-          contacts: [],
-          requestsSent: [],
-          requestsReceived: [],
-          userID: _userId,
-          username: username,
-          displayName: username,
-          email: email,
-          score: 0,
-          friendsIds: [],
-          loopsData: []);
-      _isAuth.value = true;
-      await storage.write(key: "jwt", value: response['token']);
-      await storage.write(key: "userId", value: response['userId']);
-    } else {
-      _isAuth.value = false;
+    try {
+      http.Response res = await http.post('$SERVER_IP/users/signup',
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({
+            "username": username,
+            "password": password,
+            "email": email,
+            //"phoneNumber": phoneNumber
+          }));
+      final response = json.decode(res.body);
+      if (res.statusCode == 201) {
+        _token = response['token'];
+        _userId = response['userId'];
+        user.value = new User(
+            numberOfLoopsRemaining: 5,
+            contacts: [],
+            requestsSent: [],
+            requestsReceived: [],
+            userID: _userId,
+            username: username,
+            displayName: username,
+            email: email,
+            score: 0,
+            friendsIds: [],
+            loopsData: []);
+        _isAuth.value = true;
+        await storage.write(key: "jwt", value: response['token']);
+        await storage.write(key: "userId", value: response['userId']);
+      } else {
+        _isAuth.value = false;
+      }
+    } catch (err) {
+      throw new HttpException('could not sign up:' + err);
     }
   }
 
@@ -109,7 +113,7 @@ class Auth with ReactiveServiceMixin {
       _isAuth.value = false;
       return false;
     }
-    _token.value = token1;
+    _token = token1;
     _userId = userId1;
     // getting the userData from the server using the _token, add the API to the server
     http.Response res = await http.get(

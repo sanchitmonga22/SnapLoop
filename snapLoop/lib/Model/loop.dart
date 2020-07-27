@@ -42,4 +42,25 @@ class Loop {
       @required this.type,
       this.avatars,
       @required this.userIDs});
+
+  @override
+  bool operator ==(other) {
+    // Dart ensures that operator== isn't called with null
+    // if(other == null) {
+    //   return false;
+    // }
+    if (other is! Loop) {
+      return false;
+    }
+    return id == (other as Loop).id;
+  }
+
+  int _hashCode;
+  @override
+  int get hashCode {
+    if (_hashCode == null) {
+      _hashCode = id.hashCode;
+    }
+    return _hashCode;
+  }
 }

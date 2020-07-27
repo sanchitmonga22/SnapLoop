@@ -250,7 +250,10 @@ class UserDataService with ReactiveServiceMixin {
           "senderId": userID,
         },
       );
+      final response = json.decode(res.body);
       if (res.statusCode == 200) {
+        // adding the new friend in the list after accepting the request
+        _friends.add(ResponseParsingHelper.parseFriend(response));
         return;
       } else {
         // if request not send add the request back to the list

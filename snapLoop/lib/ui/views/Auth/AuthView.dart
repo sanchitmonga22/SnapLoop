@@ -184,10 +184,7 @@ class _AuthScreenState extends State<AuthView>
                                                       color: Colors.white,
                                                     ),
                                               onTap: () {
-                                                setState(() {
-                                                  model.showPassword =
-                                                      !model.showPassword;
-                                                });
+                                                model.toggleShowPassword();
                                               },
                                             ),
                                           ),
@@ -230,7 +227,6 @@ class _AuthScreenState extends State<AuthView>
                                                 model.authMode == AuthMode.Login
                                                     ? 'LOGIN'
                                                     : 'SIGN UP',
-                                            onClicked: () {},
                                           )
                                         else
                                           getButton(model),

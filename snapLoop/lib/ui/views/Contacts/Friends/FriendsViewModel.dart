@@ -34,8 +34,7 @@ class FriendsViewModel extends ReactiveViewModel {
     return true;
   }
 
-  List<FriendsData> _friends = [];
-  List<FriendsData> get friends => _friends;
+  List<FriendsData> get friends => _userData.friends;
 
   void initialize(String loopName, bool loopForwarding) async {
     _loopName = loopName;
@@ -43,7 +42,6 @@ class FriendsViewModel extends ReactiveViewModel {
     setBusy(true);
     await _userData.updateFriends();
     if (!newLoop) await _userData.updateRequests();
-    _friends = _userData.friends;
     setBusy(false);
   }
 
@@ -64,7 +62,7 @@ class FriendsViewModel extends ReactiveViewModel {
   List<FriendsData> getMutualFriendsData(List<String> mutualFriendsIDs) {
     List<FriendsData> mutualFriendsData = [];
     mutualFriendsIDs.forEach((e) {
-      _friends.forEach((element) {
+      friends.forEach((element) {
         if (element.userID == e) {
           mutualFriendsData.add(element);
         }

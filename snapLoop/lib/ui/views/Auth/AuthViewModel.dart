@@ -1,3 +1,4 @@
+import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/ui/Widget/ErrorDialog/ErrorDialog.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/Auth.dart';
@@ -39,6 +40,11 @@ class AuthViewModel extends ReactiveViewModel {
   var _showPassword = false;
   bool get showPassword => _showPassword;
 
+  void toggleShowPassword() {
+    _showPassword = !_showPassword;
+    notifyListeners();
+  }
+
   final _passwordController = TextEditingController();
   TextEditingController get passwordController => _passwordController;
 
@@ -59,6 +65,7 @@ class AuthViewModel extends ReactiveViewModel {
     } catch (error) {
       const errorMessage = "Could not authenticate you, Please try again later";
       _showErrorDialog(errorMessage, context);
+      throw new HttpException(error);
     }
   }
 

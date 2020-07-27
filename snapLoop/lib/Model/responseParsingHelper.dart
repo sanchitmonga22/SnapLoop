@@ -16,6 +16,17 @@ class ResponseParsingHelper {
     return Chat(chat: messages, chatID: chatId);
   }
 
+  static bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    try {
+      return double.parse(s) != null;
+    } catch (err) {
+      return false;
+    }
+  }
+
   static Future<ChatInfo> parseChatInfo(dynamic message) async {
     return ChatInfo(
       content: message['content'],
