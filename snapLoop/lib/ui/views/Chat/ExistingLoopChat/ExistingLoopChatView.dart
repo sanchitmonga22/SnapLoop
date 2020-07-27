@@ -56,7 +56,6 @@ class _ExistingLoopChatViewState extends State<ExistingLoopChatView>
     super.build(context);
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => ExistingLoopChatViewModel(),
-      createNewModelOnInsert: true,
       onModelReady: (model) => model.initialize(widget.loop, widget.radius),
       builder: (context, model, child) => FutureBuilder(
           future: model.initializeChat(),

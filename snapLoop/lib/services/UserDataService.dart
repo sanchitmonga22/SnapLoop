@@ -52,6 +52,10 @@ class UserDataService with ReactiveServiceMixin {
     return user.userID;
   }
 
+  void updateLoopsRemaining() {
+    user.numberOfLoopsRemaining--;
+  }
+
   String get username {
     return user.username;
   }

@@ -88,6 +88,7 @@ class NewLoopChatViewModel extends ReactiveViewModel {
     if (result != null) {
       _loop.chatID = result["chatId"];
       _loop.id = result['_id'];
+      _loop.type = LoopType.EXISTING_LOOP;
       _chat.chatID = result['chatId'];
       _chat.chat.add(ChatInfo(
           senderID: _userDataService.userId,

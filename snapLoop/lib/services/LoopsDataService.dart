@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Model/loop.dart';
+import 'package:SnapLoop/Model/responseParsingHelper.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/services/Auth.dart';
+import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:observable_ish/list/list.dart';
@@ -16,6 +18,7 @@ class LoopsDataService with ReactiveServiceMixin {
     listenToReactiveValues([_loops]);
   }
   final _auth = locator<Auth>();
+  final _userDataService = locator<UserDataService>();
   RxList<Loop> _loops = RxList<Loop>();
 
   List<Loop> get loops {
@@ -62,8 +65,8 @@ class LoopsDataService with ReactiveServiceMixin {
     }
   }
 
-  Future<void> forwardLoop(String friendId, String content, String friendAvatar,
-      String chatId, String loopId) async {
+  Future<dynamic> forwardLoop(
+      String friendId, String content, String chatId, String loopId) async {
     try {
       http.Response res = await http.post('$SERVER_IP/loops/forwardLoop',
           headers: {
@@ -73,17 +76,44 @@ class LoopsDataService with ReactiveServiceMixin {
           body: jsonEncode({
             "content": content,
             "forwardedToId": friendId,
-            "forwardedToAvatar": friendAvatar,
             "chatId": chatId,
             "loopId": loopId
           }));
+      final response = json.decode(res.body);
       if (res.statusCode == 200) {
-        return;
+        updateForwardedLoop(response, loopId, friendId);
+        return response;
       } else {
         throw new HttpException(res.body);
       }
     } catch (err) {
       throw new HttpException(err.toString());
+    }
+  }
+
+  void updateForwardedLoop(
+      dynamic result, String loopId, String friendId) async {
+    Loop loop = _loops.firstWhere((element) => element.id == loopId);
+    loop.type = ResponseParsingHelper.getLoopsType(result['loopType']);
+    loop.atTimeEnding = DateTime.fromMillisecondsSinceEpoch(result['sentTime'])
+        .add(Duration(days: 1));
+    loop.avatars[friendId] = result['imageUrl'];
+    loop.numberOfMembers++;
+    loop.userIDs.add(friendId);
+    loop.currentUserId = friendId;
+  }
+
+  void updateExistingLoop(dynamic result) {
+    Loop loop = _loops.firstWhere((element) => element.id == result['loopId']);
+    loop.atTimeEnding =
+        DateTime.fromMillisecondsSinceEpoch(result['atTimeEnding']);
+    loop.type = ResponseParsingHelper.getLoopsType(result['loopType']);
+    loop.userIDs.add(result['newUser']['user']);
+    loop.avatars[result['newUser']['user']] = result['newUser']['avatarLink'];
+    loop.currentUserId = result['newUser']['user'];
+    loop.numberOfMembers++;
+    if (loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
+      // do a lot of stuff
     }
   }
 
@@ -104,6 +134,7 @@ class LoopsDataService with ReactiveServiceMixin {
           }));
       final response = json.decode(res.body);
       if (res.statusCode == 200) {
+        _userDataService.updateLoopsRemaining();
         return response;
       } else {
         return null;

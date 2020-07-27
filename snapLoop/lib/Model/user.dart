@@ -11,7 +11,7 @@ class User {
   String displayName; // can be set to the same as username
   final String email;
   final int score;
-  final int numberOfLoopsRemaining;
+  int numberOfLoopsRemaining;
   List<String> friendsIds;
   // all the loops that the user is involved in
   List<Loop> loopsData;

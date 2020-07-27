@@ -23,7 +23,7 @@ class _HomeViewState extends State<HomeView>
   bool get wantKeepAlive => true;
 
   List<Widget> loopBuilderHelper(
-      List<Loop> loopTypes, double maxRadius, List<double> radiis) {
+      List<Loop> loops, double maxRadius, List<double> radiis) {
     double deviceWidth = maxRadius * 4;
     List<Widget> widgetsInEachRow = [];
     double currentWidth = 0;
@@ -33,7 +33,7 @@ class _HomeViewState extends State<HomeView>
         if (currentWidth + ((radiis[i] + kAllLoopsPadding) * 2) < deviceWidth) {
           widgetsInEachRow.add(LoopWidgetView(
             radius: radiis[i],
-            loop: loopTypes[i],
+            loop: loops[i],
             isTappable: true,
             flipOnTouch: true,
           ));

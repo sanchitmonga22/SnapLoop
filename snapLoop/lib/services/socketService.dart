@@ -46,17 +46,15 @@ class SocketService with ReactiveServiceMixin {
 
     _socket.on("newMessage", (data) async {
       print(data);
-      // the message contains, first decide, whether it is a new loop or not
-      //_loopsDataService.updateLoop(
-      // number of members, timer, loopType,
-      // new member addition,
-      // new avatars,
-      //
-      //);
-      // update the messages in the existing loop
+      _loopsDataService.updateExistingLoop(data);
+      _chatDataService.addNewMessage(
+          _loopsDataService.loops
+              .firstWhere((element) => element.id == data['loopId'])
+              .chatID,
+          await ResponseParsingHelper.parseChatInfo(data['newMessageData']));
     });
+
     _socket.on("newLoop", (data) async {
-      print(data);
       _chatDataService
           .addNewChat(await ResponseParsingHelper.parseChat(data['chat']));
       Loop loop = ResponseParsingHelper.parseLoop(data['loop']);
@@ -64,9 +62,14 @@ class SocketService with ReactiveServiceMixin {
       _loopsDataService.addNewLoop(loop);
     });
 
-    _socket.on("loopComplete", (data) {
+    _socket.on("loopComplete", (data) async {
       print(data);
-      // update the loop status to be completed
+      Loop loop = _loopsDataService.loops
+          .firstWhere((element) => element.id == data['loopId']);
+      loop.type = LoopType.INACTIVE_LOOP_SUCCESSFUL;
+      // assigning score to the user and do bunch of other stuff
+      _chatDataService.addNewMessage(loop.chatID,
+          await ResponseParsingHelper.parseChatInfo(data['newMessageData']));
     });
   }
 }
