@@ -51,14 +51,15 @@ class ExistingLoopChatViewModel extends BaseViewModel {
 
     var result = await _loopDataService.forwardLoop(
         friend.userID, enteredMessage, _loop.chatID, _loop.id);
+
     // updating the chat
-    _chatDataService.addNewMessage(
-        _loop.chatID,
-        ChatInfo(
-            senderID: _userDataService.userId,
-            content: enteredMessage,
-            time: await TimeHelperService.convertToLocal(
-                DateTime.fromMillisecondsSinceEpoch(result["sentTime"]))));
+    // _chatDataService.addNewMessage(
+    //     _loop.chatID,
+    //     ChatInfo(
+    //         senderID: _userDataService.userId,
+    //         content: enteredMessage,
+    //         time: await TimeHelperService.convertToLocal(
+    //             DateTime.fromMillisecondsSinceEpoch(result["sentTime"]))));
     _loop =
         _loopDataService.loops.firstWhere((element) => element.id == _loop.id);
     if (_loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
@@ -66,6 +67,7 @@ class ExistingLoopChatViewModel extends BaseViewModel {
       // update the score and everything receieved from the server
       // update the UI such that all the user's who are not friends public data is visible in the loopDetails view,
       // and along with the message bubble it should be reveiled who sent what
+      // remove the timer
       // TODO: SERVER: Convert this into a group chat
     }
     notifyListeners();

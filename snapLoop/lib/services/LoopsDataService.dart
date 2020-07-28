@@ -102,18 +102,21 @@ class LoopsDataService with ReactiveServiceMixin {
 
   void updateForwardedLoop(
       dynamic result, String loopId, String friendId) async {
-    Loop loop = _loops.firstWhere((element) => element.id == loopId);
-    loop.type = ResponseParsingHelper.getLoopsType(result['loopType']);
-    loop.currentUserId = friendId;
-    if (loop.type != LoopType.INACTIVE_LOOP_SUCCESSFUL) {
-      loop.atTimeEnding =
-          DateTime.fromMillisecondsSinceEpoch(result['sentTime'])
-              .add(Duration(days: 1));
-      // adding the memoji for the new user added to the loop
-      loop.avatars[friendId] = result['memoji'];
-      loop.numberOfMembers++;
-      loop.userIDs.add(friendId);
-    }
+    _loops.forEach((loop) {
+      if (loop.id == loopId) {
+        loop.type = ResponseParsingHelper.getLoopsType(result['loopType']);
+        loop.currentUserId = friendId;
+        if (loop.type != LoopType.INACTIVE_LOOP_SUCCESSFUL) {
+          loop.atTimeEnding =
+              DateTime.fromMillisecondsSinceEpoch(result['sentTime'])
+                  .add(Duration(days: 1));
+          // adding the memoji for the new user added to the loop
+          loop.avatars[friendId] = result['memoji'];
+          loop.numberOfMembers++;
+          loop.userIDs.add(friendId);
+        }
+      }
+    });
   }
 
   void updateExistingLoop(dynamic result) {

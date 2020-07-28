@@ -65,12 +65,18 @@ class SocketService with ReactiveServiceMixin {
 
     _socket.on("loopComplete", (data) async {
       print(data);
-      Loop loop = _loopsDataService.loops
-          .firstWhere((element) => element.id == data['loopId']);
-      loop.type = LoopType.INACTIVE_LOOP_SUCCESSFUL;
+
+      _loopsDataService.loops.forEach((loop) async {
+        if (loop.id == data['loopId']) {
+          loop.type = LoopType.INACTIVE_LOOP_SUCCESSFUL;
+          _chatDataService.addNewMessage(
+              loop.chatID,
+              await ResponseParsingHelper.parseChatInfo(
+                  data['newMessageData']));
+        }
+      });
+
       // assigning score to the user and do bunch of other stuff
-      _chatDataService.addNewMessage(loop.chatID,
-          await ResponseParsingHelper.parseChatInfo(data['newMessageData']));
     });
   }
 }
