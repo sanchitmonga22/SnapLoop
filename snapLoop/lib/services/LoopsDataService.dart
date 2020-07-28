@@ -42,6 +42,15 @@ class LoopsDataService with ReactiveServiceMixin {
     return _loops.length;
   }
 
+  void updateLoopType(String loopId, LoopType type) {
+    _loops.firstWhere((element) => element.id == loopId).type = type;
+    notifyListeners();
+  }
+
+  String getChatIdFromLoopId(String loopId) {
+    return _loops.firstWhere((element) => element.id == loopId).chatID;
+  }
+
   void updateLoopEndTimer(String loopId, DateTime atTimeEnding) {
     _loops.firstWhere((element) => element.id == loopId).atTimeEnding =
         atTimeEnding;
@@ -74,7 +83,7 @@ class LoopsDataService with ReactiveServiceMixin {
     // TODO: make an api call and tell the number to the network and update the image
   }
 
-  Future<dynamic> forwardLoop(
+  Future<void> forwardLoop(
       String friendId, String content, String chatId, String loopId) async {
     try {
       http.Response res = await http.post('$SERVER_IP/loops/forwardLoop',
@@ -91,7 +100,6 @@ class LoopsDataService with ReactiveServiceMixin {
       final response = json.decode(res.body);
       if (res.statusCode == 200) {
         updateForwardedLoop(response, loopId, friendId);
-        return response;
       } else {
         throw new HttpException(res.body);
       }

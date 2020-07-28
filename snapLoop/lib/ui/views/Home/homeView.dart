@@ -22,9 +22,8 @@ class _HomeViewState extends State<HomeView>
   @override
   bool get wantKeepAlive => true;
 
-  List<Widget> loopBuilderHelper(
-      List<Loop> loops, double maxRadius, List<double> radiis) {
-    double deviceWidth = maxRadius * 4;
+  List<Widget> loopBuilderHelper(List<Loop> loops, List<double> radiis) {
+    double deviceWidth = MediaQuery.of(context).size.width;
     List<Loop> deleted = [...loops];
     List<Widget> widgetsInEachRow = [];
     double currentWidth = 0;
@@ -58,7 +57,7 @@ class _HomeViewState extends State<HomeView>
   }
 
   // width is 4*maxRadius of the device
-  List<Widget> loopBuilder(double maxRadius, HomeViewModel model) {
+  List<Widget> loopBuilder(HomeViewModel model) {
     // getting loops of different types
     final loopsWithNewNotifications =
         model.getLoopsType(LoopType.NEW_NOTIFICATION);
@@ -72,37 +71,39 @@ class _HomeViewState extends State<HomeView>
 
     // getting the radiis for all the different types of loops
     final radiies = List<double>();
-    radiies.addAll(model.radiiLoop(maxRadius, loopsWithNewNotifications));
-    radiies.addAll(model.radiiLoop(maxRadius, newLoops));
-    radiies.addAll(model.radiiLoop(maxRadius, existingLoops));
+    radiies.addAll(model.radiiLoop(loopsWithNewNotifications));
+    radiies.addAll(model.radiiLoop(newLoops));
+    radiies.addAll(model.radiiLoop(existingLoops));
 
     // returning the final widgets
-    return loopBuilderHelper(loopsies, maxRadius, radiies);
+    return loopBuilderHelper(loopsies, radiies);
   }
 
-  List<Widget> completedLoopBuilder(double maxRadius, HomeViewModel model) {
+  List<Widget> completedLoopBuilder(HomeViewModel model) {
     // getting loops of different types
     final inactiveLoopsSuccessful =
         model.getLoopsType(LoopType.INACTIVE_LOOP_SUCCESSFUL);
     final inactiveLoopsFailed =
         model.getLoopsType(LoopType.INACTIVE_LOOP_FAILED);
+    final unidentified = model.getLoopsType(LoopType.UNIDENTIFIED);
 
     // adding all the loops into the list
     final loopsies = List<Loop>();
     loopsies.addAll(inactiveLoopsFailed);
     loopsies.addAll(inactiveLoopsSuccessful);
+    loopsies.addAll(unidentified);
     // getting the radiis for all the different types of loops
     final radiies = List<double>();
-    radiies.addAll(model.radiiLoop(maxRadius, inactiveLoopsSuccessful));
-    radiies.addAll(model.radiiLoop(maxRadius, inactiveLoopsFailed));
+    radiies.addAll(model.radiiLoop(inactiveLoopsSuccessful));
+    radiies.addAll(model.radiiLoop(inactiveLoopsFailed));
+    radiies.addAll(model.radiiLoop(unidentified));
 
     // returning all the rows returned
-    return loopBuilderHelper(loopsies, maxRadius, radiies);
+    return loopBuilderHelper(loopsies, radiies);
   }
 
   @override
   Widget build(BuildContext context) {
-    double maxR = MediaQuery.of(context).size.width * 0.25;
     super.build(context);
 
     return ViewModelBuilder.reactive(
@@ -111,24 +112,31 @@ class _HomeViewState extends State<HomeView>
       builder: (context, model, child) {
         return Container(
             decoration: kHomeScreenBoxDecoration,
-            child: model.loops == null || model.loops.length == 0
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text(
-                        widget.completedLoopsScreen
-                            ? "There are no inactive loops available yet, \n once you are part of a successfully completed loop it will show up here!"
-                            : "There are currently no active loops, Please start new loops to show up here!",
-                        style:
-                            kTextStyleHomeScreen.copyWith(color: Colors.black),
-                      ),
-                    ),
-                  )
-                : ListView(children: [
-                    ...widget.completedLoopsScreen
-                        ? completedLoopBuilder(maxR, model)
-                        : loopBuilder(maxR, model)
-                  ]));
+            child: widget.completedLoopsScreen
+                ? model.emptyCompletedLoopsScreen()
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                            "There are no inactive loops available yet, \n once you are part of a successfully completed loop it will show up here!",
+                            style: kTextStyleHomeScreen.copyWith(
+                                color: Colors.black),
+                          ),
+                        ),
+                      )
+                    : ListView(children: [...completedLoopBuilder(model)])
+                : model.emptyHomeScreen()
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                            "There are currently no active loops, Please start new loops to show up here!",
+                            style: kTextStyleHomeScreen.copyWith(
+                                color: Colors.black),
+                          ),
+                        ),
+                      )
+                    : ListView(children: [...loopBuilder(model)]));
       },
     );
   }

@@ -45,9 +45,7 @@ class _NavBarViewState extends State<NavBarView>
 
   List<Widget> getChildren() {
     return [
-      HomeView(
-        completedLoopsScreen: false,
-      ),
+      HomeView(),
       HomeView(
         completedLoopsScreen: true,
       ),

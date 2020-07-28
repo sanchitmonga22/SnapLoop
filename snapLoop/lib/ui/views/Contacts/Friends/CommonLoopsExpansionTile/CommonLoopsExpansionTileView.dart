@@ -2,7 +2,7 @@ import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/ui/Widget/CreateANewLoopDialog/createLoopDialog.dart';
-import 'package:SnapLoop/ui/views/Chat/ExistingLoopChat/ExistingLoopChatView.dart';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -85,8 +85,8 @@ class CommonLoopsExpansionTileView extends StatelessWidget {
                                 key: ValueKey(index),
                                 loop: friendsLoops[index],
                                 radius: kradiusCalculator(
-                                    friendsLoops[index].numberOfMembers,
-                                    MediaQuery.of(context).size.width * 0.25),
+                                  friendsLoops[index].numberOfMembers,
+                                ),
                               ));
                         },
                         dense: true,

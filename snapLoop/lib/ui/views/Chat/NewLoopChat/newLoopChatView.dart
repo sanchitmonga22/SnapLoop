@@ -38,8 +38,8 @@ class NewLoopChatView extends StatelessWidget {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => NewLoopChatViewModel(),
       disposeViewModel: true,
-      onModelReady: (model) => model.initialize(loopName, friend,
-          kradiusCalculator(2, MediaQuery.of(context).size.width / 4)),
+      onModelReady: (model) =>
+          model.initialize(loopName, friend, kradiusCalculator(2)),
       builder: (context, model, child) {
         return FutureBuilder(
             future: model.future,

@@ -19,11 +19,11 @@ const double kopacity = 0.1;
 const double kMaxRadius = 103;
 const kTextFieldCursorColor = kSystemPrimaryColor;
 
-double kradiusCalculator(int numberOfMember, double maxRadius) {
+double kradiusCalculator(int numberOfMember) {
   if (numberOfMember < 13) {
-    return maxRadius * kfixedRadiusFactor[numberOfMember];
+    return kMaxRadius * kfixedRadiusFactor[numberOfMember];
   }
-  return maxRadius * kfixedRadiusFactor["MAX"];
+  return kMaxRadius * kfixedRadiusFactor["MAX"];
 }
 
 int kgetRandomImageNumber(int max) {

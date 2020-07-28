@@ -129,10 +129,13 @@ class UserDataService with ReactiveServiceMixin {
       if (res.statusCode == 200) {
         final response = json.decode(res.body);
         response.forEach((element) {
-          users.add(PublicUserData(
-              email: element['email'],
-              userID: element['_id'],
-              username: element['username']));
+          // everyone except the user himself
+          if (userId != element['_id'].toString()) {
+            users.add(PublicUserData(
+                email: element['email'],
+                userID: element['_id'],
+                username: element['username']));
+          }
         });
       }
     } catch (err) {
