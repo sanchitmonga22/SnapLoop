@@ -63,6 +63,7 @@ class _LoopsDetailsViewState extends State<LoopsDetailsView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
@@ -344,17 +345,26 @@ class _UserDetailsInLoopDetailsViewState
                                   fontWeight: FontWeight.w400),
                             ),
                             trailing: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: RaisedButton(
-                                  color: Colors.black.withOpacity(0.5),
-                                  onPressed: () {},
-                                  child: Text(
-                                    "Add Friend",
-                                    style: kTextFormFieldStyle.copyWith(
-                                        fontWeight: FontWeight.w400),
-                                  )),
-                            ),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: users[index].sentRequest ==
+                                        RequestStatus.NOT_SENT
+                                    ? RaisedButton(
+                                        color: Colors.black.withOpacity(0.5),
+                                        onPressed: () {},
+                                        child: Text(
+                                          "Add Friend",
+                                          style: kTextFormFieldStyle.copyWith(
+                                              fontWeight: FontWeight.w400),
+                                        ))
+                                    : RaisedButton(
+                                        color: Colors.black.withOpacity(0.5),
+                                        onPressed: null,
+                                        child: Text(
+                                          "Request Sent",
+                                          style: kTextFormFieldStyle.copyWith(
+                                              fontWeight: FontWeight.w400),
+                                        ))),
                           );
                         },
                         itemCount: users.length),

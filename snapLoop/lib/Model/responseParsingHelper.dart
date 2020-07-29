@@ -1,6 +1,8 @@
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
+import 'package:SnapLoop/app/locator.dart';
+import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:SnapLoop/ui/Widget/time/timezones.dart';
 
 //1595734836562
@@ -52,7 +54,9 @@ class ResponseParsingHelper {
   }
 
   static PublicUserData parsePublicUserData(dynamic response) {
+    final _userDataService = locator<UserDataService>();
     return PublicUserData(
+        sentRequest: _userDataService.requestStatusById(response['_id']),
         email: response['email'],
         userID: response['_id'],
         username: response['username']);

@@ -19,8 +19,9 @@ class MessagesView extends StatelessWidget {
             child: loopId == "" || model.chat == null
                 ? Container()
                 : ListView.builder(
+                    reverse: true,
                     itemBuilder: (context, index) {
-                      ChatInfo message = model.chat.chat[index];
+                      ChatInfo message = model.chat[index];
                       return MessageBubbleView(
                         isMe: message.senderID == model.myId,
                         message: message.content,
@@ -30,7 +31,7 @@ class MessagesView extends StatelessWidget {
                         key: ValueKey(index),
                       );
                     },
-                    itemCount: model.chat.chat.length ?? 0,
+                    itemCount: model.chat.length ?? 0,
                   ));
       },
     );

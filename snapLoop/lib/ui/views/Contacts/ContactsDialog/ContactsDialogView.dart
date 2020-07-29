@@ -135,6 +135,7 @@ class ContactWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(c.sentRequest.toString());
     return ListTile(
       leading: CircleAvatar(
         radius: 20,
@@ -152,30 +153,36 @@ class ContactWidget extends StatelessWidget {
         padding: EdgeInsets.all(8),
         color: kSystemPrimaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        onPressed: onPressed,
+        onPressed: c.sentRequest == RequestStatus.FRIEND ? null : onPressed,
         child: isLoading
             ? CircularProgressIndicator()
-            : requestSent
+            : c.sentRequest == RequestStatus.SENT
                 ? Container(
-                    child: Text(
+                    child: AutoSizeText(
                       "Sent",
                       style: kTextFormFieldStyle.copyWith(fontSize: 14),
                     ),
                   )
-                : Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.add,
-                        color: Colors.white,
-                        size: 15,
-                      ),
-                      Text(
-                        "Add",
+                : c.sentRequest == RequestStatus.FRIEND
+                    ? Container(
+                        child: AutoSizeText(
+                        "Friend",
                         style: kTextFormFieldStyle.copyWith(fontSize: 14),
-                      )
-                    ],
-                  ),
+                      ))
+                    : Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 15,
+                          ),
+                          AutoSizeText(
+                            "Add",
+                            style: kTextFormFieldStyle.copyWith(fontSize: 14),
+                          )
+                        ],
+                      ),
       ),
     );
   }

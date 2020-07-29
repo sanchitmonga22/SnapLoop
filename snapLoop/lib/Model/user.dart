@@ -86,14 +86,18 @@ class FriendsData {
   }
 }
 
+enum RequestStatus { SENT, FRIEND, NOT_SENT }
+
 class PublicUserData {
   final String username;
   final String email;
   final String userID;
+  final RequestStatus sentRequest;
   // final int score;
   // final String status;
 
   PublicUserData({
+    @required this.sentRequest,
     @required this.username,
     @required this.email,
     @required this.userID,

@@ -48,8 +48,8 @@ class FriendsViewModel extends ReactiveViewModel {
   int _activeIndex;
   int get activeIndex => _activeIndex;
 
-  int _requestSentIndex;
-  int get requestSentIndex => _requestSentIndex;
+  // int _requestSentIndex;
+  // int get requestSentIndex => _requestSentIndex;
 
   String getNumberOfRequestsReceived() {
     return _userData.requests.length.toString();
@@ -76,7 +76,7 @@ class FriendsViewModel extends ReactiveViewModel {
     notifyListeners();
     await _userData.sendFriendRequest(userData.userID);
     _activeIndex = -1;
-    _requestSentIndex = index;
+    // _requestSentIndex = index;
     notifyListeners();
   }
 

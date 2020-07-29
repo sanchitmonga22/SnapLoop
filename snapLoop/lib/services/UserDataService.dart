@@ -74,6 +74,23 @@ class UserDataService with ReactiveServiceMixin {
     notifyListeners();
   }
 
+  RequestStatus requestStatusById(String id) {
+    RequestStatus requestStatus = RequestStatus.NOT_SENT;
+    _auth.user.value.requestsSent.forEach((user) {
+      if (id == id) {
+        requestStatus = RequestStatus.SENT;
+        return;
+      }
+    });
+    _friends.forEach((friend) {
+      if (friend.userID == id) {
+        requestStatus = RequestStatus.FRIEND;
+        return;
+      }
+    });
+    return requestStatus;
+  }
+
   FriendsData getFriendsData(String id) {
     FriendsData data;
     _friends.forEach((friend) {
@@ -142,6 +159,7 @@ class UserDataService with ReactiveServiceMixin {
           // everyone except the user himself
           if (userId != element['_id'].toString()) {
             users.add(PublicUserData(
+                sentRequest: requestStatusById(element['_id']),
                 email: element['email'],
                 userID: element['_id'],
                 username: element['username']));
@@ -236,6 +254,7 @@ class UserDataService with ReactiveServiceMixin {
         },
       );
       if (res.statusCode == 200) {
+        _auth.user.value.requestsSent.add(sendToId);
         return;
       } else {
         throw new HttpException("Request not sent");

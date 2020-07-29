@@ -119,11 +119,13 @@ class _FriendsViewState extends State<FriendsView>
                                         c: userData,
                                         isLoading: model.activeIndex == index,
                                         // FIXME: requestSentIndex causes to show the request sent at the same index
-                                        requestSent:
-                                            model.requestSentIndex == index,
+                                        // requestSent:
+                                        //     model.requestSentIndex == index,
                                         key: ValueKey(index),
-                                        onPressed: () async => model
-                                            .sendRequest(index, userData)));
+                                        onPressed: () async {
+                                          await model.sendRequest(
+                                              index, userData);
+                                        }));
                               },
                               loader: Center(
                                   child: Container(

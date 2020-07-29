@@ -17,14 +17,14 @@ class MessagesViewModel extends ReactiveViewModel {
   String _myId;
   String get myId => _myId;
 
-  Chat _chat;
-  Chat get chat => _chat;
+  List<ChatInfo> _chat;
+  List<ChatInfo> get chat => _chat;
 
   void initialize(String loopId) {
     if (loopId != "") {
       _loop = _loopDataService.findById(loopId);
       _myId = _userDataService.userId;
-      _chat = _chatDataService.getChatById(_loop.chatID);
+      _chat = _chatDataService.getChatById(_loop.chatID).chat.reversed.toList();
     }
   }
 
