@@ -153,7 +153,10 @@ class ContactWidget extends StatelessWidget {
         padding: EdgeInsets.all(8),
         color: kSystemPrimaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        onPressed: c.sentRequest == RequestStatus.FRIEND ? null : onPressed,
+        onPressed: c.sentRequest == RequestStatus.FRIEND ||
+                c.sentRequest == RequestStatus.SENT
+            ? null
+            : onPressed,
         child: isLoading
             ? CircularProgressIndicator()
             : c.sentRequest == RequestStatus.SENT

@@ -32,8 +32,6 @@ class _FriendsViewState extends State<FriendsView>
 
     return ViewModelBuilder.reactive(
         viewModelBuilder: () => FriendsViewModel(),
-        createNewModelOnInsert: true,
-        fireOnModelReadyOnce: true,
         onModelReady: (model) =>
             model.initialize(widget.loopName, widget.loopForwarding),
         builder: (context, model, child) {
@@ -56,6 +54,7 @@ class _FriendsViewState extends State<FriendsView>
                               : FriendsRequestIconView(),
                           // Search Bar
                           SearchBar(
+                              shrinkWrap: true,
                               minimumChars: 3,
                               searchBarPadding: model.newLoop
                                   ? EdgeInsets.only(top: 50)
