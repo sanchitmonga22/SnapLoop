@@ -20,7 +20,6 @@ class SnapLoop extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => MainViewModel(),
-      createNewModelOnInsert: true,
       onModelReady: (model) {
         if (!model.isAuth) {
           model.tryAutoLogin();

@@ -41,25 +41,21 @@ class NewLoopChatView extends StatelessWidget {
       onModelReady: (model) =>
           model.initialize(loopName, friend, kradiusCalculator(2)),
       builder: (context, model, child) {
-        return FutureBuilder(
-            future: model.future,
-            builder: (context, snapshot) {
-              return snapshot.connectionState == ConnectionState.waiting
-                  ? Material(
-                      child: Center(
-                      child: Container(
-                        height: 30,
-                        width: 30,
-                        child: CircularProgressIndicator(),
-                      ),
-                    ))
-                  : LoopsDetailsView(
-                      loop: model.loop,
-                      backgroundColor: model.backgroundColor,
-                      chatWidget: getChatWidget(model),
-                      loopWidget: model.loopWidget,
-                    );
-            });
+        return model.isBusy
+            ? Material(
+                child: Center(
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  child: CircularProgressIndicator(),
+                ),
+              ))
+            : LoopsDetailsView(
+                loop: model.loop,
+                backgroundColor: model.backgroundColor,
+                chatWidget: getChatWidget(model),
+                loopWidget: model.loopWidget,
+              );
       },
     );
   }

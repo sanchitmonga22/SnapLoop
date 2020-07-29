@@ -70,7 +70,6 @@ class SocketService with ReactiveServiceMixin {
       _chatDataService.addNewMessage(
           _loopsDataService.getChatIdFromLoopId(data['loopId']),
           await ResponseParsingHelper.parseChatInfo(data['newMessageData']));
-
       //TODO:
       // assigning score to the user and do bunch of other stuff
     });

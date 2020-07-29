@@ -72,7 +72,7 @@ class LoopsDataService with ReactiveServiceMixin {
         throw new HttpException("could not generate random emojies");
       }
     } catch (err) {
-      throw new HttpException(err);
+      throw new HttpException(err.toString());
     }
   }
 
@@ -104,7 +104,7 @@ class LoopsDataService with ReactiveServiceMixin {
         throw new HttpException(res.body);
       }
     } catch (err) {
-      throw new HttpException(err);
+      throw new HttpException(err.toString());
     }
   }
 
@@ -123,6 +123,7 @@ class LoopsDataService with ReactiveServiceMixin {
           loop.numberOfMembers++;
           loop.userIDs.add(friendId);
         }
+        return;
       }
     });
   }
@@ -142,6 +143,7 @@ class LoopsDataService with ReactiveServiceMixin {
           //TODO:
           // do a lot of stuff
         }
+        return;
       }
     });
     notifyListeners();
@@ -199,6 +201,7 @@ class LoopsDataService with ReactiveServiceMixin {
     _loops.forEach((loop) {
       if (loop.name.toLowerCase() == name.trim().toLowerCase()) {
         exists = true;
+        return;
       }
     });
     return exists;

@@ -74,6 +74,16 @@ class UserDataService with ReactiveServiceMixin {
     notifyListeners();
   }
 
+  FriendsData getFriendsData(String id) {
+    FriendsData data;
+    _friends.forEach((friend) {
+      if (friend.userID == id) {
+        data = friend;
+      }
+    });
+    return data;
+  }
+
   bool canStartANewLoop() {
     return _auth.user.value.numberOfLoopsRemaining > 0;
   }
@@ -93,7 +103,7 @@ class UserDataService with ReactiveServiceMixin {
         throw new HttpException('Friend from id not found!');
       }
     } catch (err) {
-      throw new HttpException(err);
+      throw new HttpException(err.toString());
     }
   }
 
@@ -112,7 +122,7 @@ class UserDataService with ReactiveServiceMixin {
         throw new HttpException("User not found with id:$userId");
       }
     } catch (err) {
-      throw new HttpException(err);
+      throw new HttpException(err.toString());
     }
   }
 
@@ -139,7 +149,7 @@ class UserDataService with ReactiveServiceMixin {
         });
       }
     } catch (err) {
-      throw new HttpException(err);
+      throw new HttpException(err.toString());
     }
     return users;
   }
@@ -161,7 +171,7 @@ class UserDataService with ReactiveServiceMixin {
       }
       return false;
     } catch (err) {
-      throw new HttpException(err);
+      throw new HttpException(err.toString());
     }
   }
 
@@ -182,11 +192,11 @@ class UserDataService with ReactiveServiceMixin {
         for (int i = 0; i < newUsers.length; i++) {
           _requests.add(await getUserDataById(newUsers[i]));
         }
-        _requests = _requests.toSet();
+        _requests.toSet();
         return true;
       }
     } catch (err) {
-      throw new HttpException(err);
+      throw new HttpException(err.toString());
     }
   }
 
@@ -211,7 +221,7 @@ class UserDataService with ReactiveServiceMixin {
         return true;
       }
     } catch (err) {
-      throw new HttpException(err);
+      throw new HttpException(err.toString());
     }
   }
 
@@ -231,7 +241,7 @@ class UserDataService with ReactiveServiceMixin {
         throw new HttpException("Request not sent");
       }
     } catch (err) {
-      throw new HttpException(err);
+      throw new HttpException(err.toString());
     }
   }
 
@@ -264,7 +274,7 @@ class UserDataService with ReactiveServiceMixin {
         throw new HttpException("Request not sent");
       }
     } catch (err) {
-      throw new HttpException(err);
+      throw new HttpException(err.toString());
     }
   }
 
@@ -284,7 +294,7 @@ class UserDataService with ReactiveServiceMixin {
         throw new HttpException("Request not removed");
       }
     } catch (err) {
-      throw new HttpException(err);
+      throw new HttpException(err.toString());
     }
   }
 

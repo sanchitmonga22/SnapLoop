@@ -11,15 +11,18 @@ import 'package:stacked/stacked.dart';
 
 import '../../../../constants.dart';
 
-class ExistingLoopChatViewModel extends BaseViewModel {
+class ExistingLoopChatViewModel extends ReactiveViewModel {
   final _chatDataService = locator<ChatDataService>();
   final _loopDataService = locator<LoopsDataService>();
   Loop _loop;
   double _radius;
 
-  Future<void> initialize(Loop loop, double radius) async {
+  void initialize(Loop loop, double radius) async {
     _loop = loop;
     _radius = radius;
+    setBusy(true);
+    await _chatDataService.initializeChatByIdFromNetwork(_loop.chatID);
+    setBusy(false);
   }
 
   LoopWidgetView get loopWidget => LoopWidgetView(
@@ -33,11 +36,6 @@ class ExistingLoopChatViewModel extends BaseViewModel {
 
   Color get backgroundColor => determineLoopColor(_loop.type);
 
-  Future<bool> initializeChat() async {
-    await _chatDataService.initializeChatByIdFromNetwork(_loop.chatID);
-    return true;
-  }
-
   Future<void> sendMessage(String enteredMessage, BuildContext context) async {
     var friend = await Navigator.of(context).pushNamed(
       Routes.friendsView,
@@ -47,6 +45,7 @@ class ExistingLoopChatViewModel extends BaseViewModel {
 
     await _loopDataService.forwardLoop(
         friend.userID, enteredMessage, _loop.chatID, _loop.id);
+
     _loop =
         _loopDataService.loops.firstWhere((element) => element.id == _loop.id);
 
@@ -60,4 +59,8 @@ class ExistingLoopChatViewModel extends BaseViewModel {
     }
     notifyListeners();
   }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices =>
+      [_loopDataService, _chatDataService];
 }

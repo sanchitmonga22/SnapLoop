@@ -81,7 +81,7 @@ class Auth with ReactiveServiceMixin {
         _isAuth.value = false;
       }
     } catch (err) {
-      throw new HttpException('could not sign up:' + err);
+      throw new HttpException('could not sign up:' + err.toString());
     }
   }
 
@@ -100,7 +100,8 @@ class Auth with ReactiveServiceMixin {
         await storage.delete(key: "jwt");
       }
     } catch (err) {
-      throw new HttpException("Could not logout, an error occured");
+      throw new HttpException(
+          "Could not logout, an error occured: " + err.toString());
     }
   }
 

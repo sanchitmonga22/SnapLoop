@@ -26,6 +26,12 @@ double kradiusCalculator(int numberOfMember) {
   return kMaxRadius * kfixedRadiusFactor["MAX"];
 }
 
+bool kloopComplete(LoopType type) {
+  return (type == LoopType.INACTIVE_LOOP_FAILED ||
+      type == LoopType.INACTIVE_LOOP_SUCCESSFUL ||
+      type == LoopType.UNIDENTIFIED);
+}
+
 int kgetRandomImageNumber(int max) {
   return Random().nextInt(max - 1);
 }

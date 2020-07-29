@@ -46,14 +46,13 @@ class NewLoopChatViewModel extends ReactiveViewModel {
   bool _messageSent = false;
   bool get messageSent => _messageSent;
 
-  Future _future;
-  Future get future => _future;
-
-  void initialize(String loopName, FriendsData friend, double radius) {
+  void initialize(String loopName, FriendsData friend, double radius) async {
     _loopName = loopName;
     _friend = friend;
     _radius = radius;
-    _future = initializeScreen();
+    setBusy(true);
+    await initializeScreen();
+    setBusy(false);
   }
 
   Future<void> initializeScreen() async {

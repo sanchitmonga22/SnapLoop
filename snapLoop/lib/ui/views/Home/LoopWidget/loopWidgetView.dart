@@ -48,7 +48,7 @@ class _LoopWidgetViewState extends State<LoopWidgetView>
           padding: EdgeInsets.all(kAllLoopsPadding),
           decoration: BoxDecoration(shape: BoxShape.circle),
           child: Hero(
-            tag: widget.loop.name,
+            tag: widget.loop.id,
             child: CircleAvatar(
                 //backgroundColor: kLoopContentBackgroundColor,
                 backgroundColor: determineLoopColor(widget.loop.type)
@@ -98,7 +98,8 @@ class _LoopWidgetViewState extends State<LoopWidgetView>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Expanded(
-                          child: widget.loop.atTimeEnding != null
+                          child: widget.loop.atTimeEnding != null &&
+                                  !kloopComplete(widget.loop.type)
                               ? LoopTimer(
                                   atTimeEnding: widget.loop.atTimeEnding,
                                 )

@@ -63,7 +63,7 @@ class ChatDataService with ReactiveServiceMixin {
         throw new HttpException("Could not get the chat from the server");
       }
     } catch (err) {
-      throw new HttpException(err);
+      throw new HttpException(err.toString());
     }
   }
 

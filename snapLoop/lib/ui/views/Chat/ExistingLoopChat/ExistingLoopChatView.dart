@@ -8,7 +8,7 @@ import 'package:stacked/stacked.dart';
 
 /// author: @sanchitmonga22
 
-class ExistingLoopChatView extends StatefulWidget {
+class ExistingLoopChatView extends StatelessWidget {
   ExistingLoopChatView({
     Key key,
     this.radius,
@@ -18,16 +18,7 @@ class ExistingLoopChatView extends StatefulWidget {
   final Loop loop;
   final double radius;
 
-  @override
-  _ExistingLoopChatViewState createState() => _ExistingLoopChatViewState();
-}
-
-class _ExistingLoopChatViewState extends State<ExistingLoopChatView>
-    with AutomaticKeepAliveClientMixin<ExistingLoopChatView> {
-  @override
-  bool get wantKeepAlive => true;
-
-  Widget getChatWidget(model) {
+  Widget getChatWidget(ExistingLoopChatViewModel model, BuildContext context) {
     return Container(
         decoration:
             BoxDecoration(color: model.backgroundColor.withOpacity(0.4)),
@@ -53,29 +44,25 @@ class _ExistingLoopChatViewState extends State<ExistingLoopChatView>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => ExistingLoopChatViewModel(),
-      onModelReady: (model) => model.initialize(widget.loop, widget.radius),
-      builder: (context, model, child) => FutureBuilder(
-          future: model.initializeChat(),
-          builder: (context, snapshot) {
-            return snapshot.connectionState == ConnectionState.waiting
-                ? Material(
-                    child: Center(
-                    child: Container(
-                      height: 30,
-                      width: 30,
-                      child: CircularProgressIndicator(),
-                    ),
-                  ))
-                : LoopsDetailsView(
-                    loop: widget.loop,
-                    backgroundColor: model.backgroundColor,
-                    chatWidget: getChatWidget(model),
-                    loopWidget: model.loopWidget,
-                  );
-          }),
-    );
+        viewModelBuilder: () => ExistingLoopChatViewModel(),
+        onModelReady: (model) => model.initialize(loop, radius),
+        builder: (context, model, child) {
+          return model.isBusy
+              ? Material(
+                  child: Center(
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    child: CircularProgressIndicator(),
+                  ),
+                ))
+              : LoopsDetailsView(
+                  loop: loop,
+                  backgroundColor: model.backgroundColor,
+                  chatWidget: getChatWidget(model, context),
+                  loopWidget: model.loopWidget,
+                );
+        });
   }
 }

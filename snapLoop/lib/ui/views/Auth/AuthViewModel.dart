@@ -65,7 +65,7 @@ class AuthViewModel extends ReactiveViewModel {
     } catch (error) {
       const errorMessage = "Could not authenticate you, Please try again later";
       _showErrorDialog(errorMessage, context);
-      throw new HttpException(error);
+      throw new HttpException(error.toString());
     }
   }
 
