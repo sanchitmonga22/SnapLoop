@@ -41,22 +41,35 @@ class ExistingLoopChatViewModel extends ReactiveViewModel {
   Color get backgroundColor => determineLoopColor(_loop.type);
 
   Future<void> sendMessage(String enteredMessage, BuildContext context) async {
-    var friend = await Navigator.of(context).pushNamed(
-      Routes.friendsView,
-      arguments:
-          FriendsViewArguments(loopName: _loop.name, loopForwarding: true),
-    ) as FriendsData;
+    // sending new group message
+    if (loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
+      final response = await _chatDataService.sendNewGroupMessage(
+          _loop.chatID, _loop.id, enteredMessage);
+      _chatDataService.addNewMessage(
+          _loop.chatID,
+          ChatInfo(
+              senderID: _userDataService.userId,
+              content: enteredMessage,
+              time: await TimeHelperService.convertToLocal(
+                  DateTime.fromMillisecondsSinceEpoch(response['sentTime']))));
+    } else {
+      // forwarding a message
+      var friend = await Navigator.of(context).pushNamed(
+        Routes.friendsView,
+        arguments:
+            FriendsViewArguments(loopName: _loop.name, loopForwarding: true),
+      ) as FriendsData;
 
-    final response = await _loopDataService.forwardLoop(
-        friend.userID, enteredMessage, _loop.chatID, _loop.id);
-    _chatDataService.addNewMessage(
-        _loopDataService.getChatIdFromLoopId(_loop.id),
-        ChatInfo(
-            senderID: _userDataService.userId,
-            content: enteredMessage,
-            time: await TimeHelperService.convertToLocal(
-                DateTime.fromMillisecondsSinceEpoch(response["sentTime"]))));
-
+      final response = await _loopDataService.forwardLoop(
+          friend.userID, enteredMessage, _loop.chatID, _loop.id);
+      _chatDataService.addNewMessage(
+          _loopDataService.getChatIdFromLoopId(_loop.id),
+          ChatInfo(
+              senderID: _userDataService.userId,
+              content: enteredMessage,
+              time: await TimeHelperService.convertToLocal(
+                  DateTime.fromMillisecondsSinceEpoch(response["sentTime"]))));
+    }
     notifyListeners();
   }
 

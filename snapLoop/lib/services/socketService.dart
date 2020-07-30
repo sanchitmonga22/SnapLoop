@@ -53,6 +53,11 @@ class SocketService with ReactiveServiceMixin {
           await ResponseParsingHelper.parseChatInfo(data['newMessageData']));
     });
 
+    _socket.on('newGroupMessage', (data) async {
+      _chatDataService.addNewMessage(data['chatId'],
+          await ResponseParsingHelper.parseChatInfo(data['newMessage']));
+    });
+
     _socket.on("newLoop", (data) async {
       print(data);
       _chatDataService
@@ -64,6 +69,7 @@ class SocketService with ReactiveServiceMixin {
 
     _socket.on("loopComplete", (data) async {
       print(data);
+      //_userDataService.addScore(data['score'] as int);
       _loopsDataService.updateLoopType(
           data['loopId'], LoopType.INACTIVE_LOOP_SUCCESSFUL);
       _chatDataService.addNewMessage(

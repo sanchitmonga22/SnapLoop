@@ -102,6 +102,7 @@ class NewLoopChatViewModel extends ReactiveViewModel {
       _chatDataService.addNewChat(_chat);
       _loopDataService.addNewLoop(_loop);
       _loopId = result['_id'];
+      _userDataService.addScore(result['score'] as int);
       _messageSent = true;
     } else {
       throw new Exception("result not found and loop not created");

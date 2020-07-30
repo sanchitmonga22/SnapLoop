@@ -42,6 +42,29 @@ class ChatDataService with ReactiveServiceMixin {
     notifyListeners();
   }
 
+  Future<dynamic> sendNewGroupMessage(
+      String chatId, String loopId, String message) async {
+    try {
+      http.Response res = await http.post(
+        '$SERVER_IP/chats/newGroupMessage',
+        headers: {
+          "Authorization": "Bearer " + _auth.token,
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode(
+            {"chatId": chatId, "content": message, 'loopId': loopId}),
+      );
+      final response = json.decode(res.body);
+      if (res.statusCode == 200) {
+        return response;
+      } else {
+        throw new HttpException("Could not get the chat from the server");
+      }
+    } catch (err) {
+      throw new HttpException(err.toString());
+    }
+  }
+
   Future<void> initializeChatByIdFromNetwork(String chatId) async {
     try {
       http.Response res = await http.get(

@@ -74,6 +74,10 @@ class UserDataService with ReactiveServiceMixin {
     notifyListeners();
   }
 
+  void addScore(int addition) {
+    _auth.user.value.score += addition;
+  }
+
   RequestStatus requestStatusById(String id) {
     RequestStatus requestStatus = RequestStatus.NOT_SENT;
     _auth.user.value.requestsSent.forEach((userid) {

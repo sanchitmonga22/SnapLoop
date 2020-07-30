@@ -10,7 +10,7 @@ class User {
   final String username;
   String displayName; // can be set to the same as username
   final String email;
-  final int score;
+  int score;
   int numberOfLoopsRemaining;
   List<String> friendsIds;
   // all the loops that the user is involved in
