@@ -70,11 +70,16 @@ class SocketService with ReactiveServiceMixin {
     _socket.on("loopComplete", (data) async {
       print(data);
       //_userDataService.addScore(data['score'] as int);
-      _loopsDataService.updateLoopType(
-          data['loopId'], LoopType.INACTIVE_LOOP_SUCCESSFUL);
+      LoopType type = ResponseParsingHelper.getLoopsType(data['loopType']);
+      _loopsDataService.updateLoopType(data['loopId'], type);
+      // adding score if the loop was succesful
+      if (type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
+        _userDataService.addScore(data['score'] as int);
+      }
       _chatDataService.addNewMessage(
           _loopsDataService.getChatIdFromLoopId(data['loopId']),
           await ResponseParsingHelper.parseChatInfo(data['newMessageData']));
+
       //TODO:
       // assigning score to the user and do bunch of other stuff
     });

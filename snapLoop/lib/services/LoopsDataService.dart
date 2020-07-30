@@ -125,12 +125,14 @@ class LoopsDataService with ReactiveServiceMixin {
           loop.userIDs.add(friendId);
         }
         if (loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
+          _userDataService.addScore(result['score'] as int);
           //TODO:::
           // update the score and everything receieved from the server
           // update the UI such that all the user's who are not friends public data is visible in the loopDetails view,
           // and along with the message bubble it should be reveiled who sent what
           // remove the timer
           // TODO: SERVER: Convert this into a group chat
+
         }
         return;
       }
