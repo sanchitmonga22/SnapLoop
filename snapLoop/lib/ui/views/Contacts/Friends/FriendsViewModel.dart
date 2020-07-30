@@ -24,8 +24,6 @@ class FriendsViewModel extends ReactiveViewModel {
   bool _loopForwarding;
   bool get loopForwarding => _loopForwarding;
 
-  String _email = "";
-
   bool _contactOpened = false;
   bool get contactOpened => _contactOpened;
 
@@ -39,7 +37,6 @@ class FriendsViewModel extends ReactiveViewModel {
   List<FriendsData> get friends => _userData.friends;
 
   void initialize(String loopName, bool loopForwarding) async {
-    print('callMe');
     _loopName = loopName;
     _loopForwarding = loopForwarding;
     setBusy(true);
@@ -51,15 +48,11 @@ class FriendsViewModel extends ReactiveViewModel {
   int _activeIndex;
   int get activeIndex => _activeIndex;
 
-  // int _requestSentIndex;
-  // int get requestSentIndex => _requestSentIndex;
-
   String getNumberOfRequestsReceived() {
     return _userData.requests.length.toString();
   }
 
   Future<List<dynamic>> getUsersByEmail(String email) {
-    _email = email;
     return _userData.searchByEmail(email);
   }
 
@@ -81,7 +74,6 @@ class FriendsViewModel extends ReactiveViewModel {
     await _userData.sendFriendRequest(userData.userID);
     _activeIndex = -1;
     _controller.replayLastSearch();
-    // _requestSentIndex = index;
     notifyListeners();
   }
 

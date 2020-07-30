@@ -1,4 +1,5 @@
 import 'package:SnapLoop/constants.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:validators/validators.dart';
@@ -30,7 +31,8 @@ class MessageBubbleView extends StatelessWidget {
           image: AssetImage("assets/memojis/m$userRandomMemoji.jpg"));
     } else {
       return DecorationImage(
-          fit: BoxFit.fitHeight, image: NetworkImage(userRandomMemoji));
+          fit: BoxFit.fitHeight,
+          image: CachedNetworkImageProvider(userRandomMemoji));
     }
   }
 

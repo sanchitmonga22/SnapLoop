@@ -9,6 +9,7 @@ import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -226,8 +227,8 @@ class _UserDetailsInLoopDetailsViewState
           fit: BoxFit.fitHeight,
           image: AssetImage("assets/memojis/m$rand.jpg"));
     } else {
-      image =
-          DecorationImage(fit: BoxFit.fitHeight, image: NetworkImage(imageUrl));
+      image = DecorationImage(
+          fit: BoxFit.fitHeight, image: CachedNetworkImageProvider(imageUrl));
     }
     return image;
   }
@@ -351,20 +352,41 @@ class _UserDetailsInLoopDetailsViewState
                                         RequestStatus.NOT_SENT
                                     ? RaisedButton(
                                         color: Colors.black.withOpacity(0.5),
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          await _userDataService
+                                              .sendFriendRequest(
+                                                  users[index].userID);
+                                          setState(() {});
+                                        },
                                         child: Text(
                                           "Add Friend",
                                           style: kTextFormFieldStyle.copyWith(
                                               fontWeight: FontWeight.w400),
                                         ))
-                                    : RaisedButton(
-                                        color: Colors.black.withOpacity(0.5),
-                                        onPressed: null,
-                                        child: Text(
-                                          "Request Sent",
-                                          style: kTextFormFieldStyle.copyWith(
-                                              fontWeight: FontWeight.w400),
-                                        ))),
+                                    : users[index].sentRequest ==
+                                            RequestStatus.REQUEST_RECEIVED
+                                        ? RaisedButton(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            onPressed: null,
+                                            child: Text(
+                                              "Request Received",
+                                              style:
+                                                  kTextFormFieldStyle.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                            ))
+                                        : RaisedButton(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            onPressed: null,
+                                            child: Text(
+                                              "Request Sent",
+                                              style:
+                                                  kTextFormFieldStyle.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                            ))),
                           );
                         },
                         itemCount: users.length),

@@ -27,7 +27,9 @@ class NewLoopChatView extends StatelessWidget {
             NewMessageView(sendMessage: (String enteredMessage) async {
               await model.sendMessage(enteredMessage);
               //setState(() {});
-            }),
+            })
+          else
+            Padding(padding: EdgeInsets.only(bottom: 50))
         ],
       ),
     );

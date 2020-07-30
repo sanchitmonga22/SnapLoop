@@ -117,13 +117,11 @@ class _FriendsViewState extends State<FriendsView>
                                     child: ContactWidget(
                                         c: userData,
                                         isLoading: model.activeIndex == index,
-                                        // FIXME: requestSentIndex causes to show the request sent at the same index
-                                        // requestSent:
-                                        //     model.requestSentIndex == index,
                                         key: ValueKey(index),
                                         onPressed: () async {
                                           await model.sendRequest(
                                               index, userData);
+                                          setState(() {});
                                         }));
                               },
                               loader: Center(

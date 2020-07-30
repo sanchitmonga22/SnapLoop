@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/LoopsDataService.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:http/http.dart' as http;
@@ -107,7 +108,8 @@ class _MemojiState extends State<Memoji> {
           image: AssetImage("assets/memojis/m$rand.jpg"));
     } else {
       image = DecorationImage(
-          fit: BoxFit.fitHeight, image: NetworkImage(widget.imageUrl));
+          fit: BoxFit.fitHeight,
+          image: CachedNetworkImageProvider(widget.imageUrl));
     }
   }
 

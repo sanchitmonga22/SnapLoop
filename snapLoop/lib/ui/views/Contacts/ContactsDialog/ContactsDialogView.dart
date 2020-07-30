@@ -135,7 +135,6 @@ class ContactWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(c.sentRequest.toString());
     return ListTile(
       leading: CircleAvatar(
         radius: 20,
@@ -153,8 +152,8 @@ class ContactWidget extends StatelessWidget {
         padding: EdgeInsets.all(8),
         color: kSystemPrimaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        onPressed: c.sentRequest == RequestStatus.FRIEND ||
-                c.sentRequest == RequestStatus.SENT
+        onPressed: (c.sentRequest == RequestStatus.FRIEND ||
+                c.sentRequest == RequestStatus.SENT)
             ? null
             : onPressed,
         child: isLoading

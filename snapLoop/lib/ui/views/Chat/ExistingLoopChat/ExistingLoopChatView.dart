@@ -36,6 +36,8 @@ class ExistingLoopChatView extends StatelessWidget {
                       return model.sendMessage(enteredMessage, context);
                     },
                   )
+                else
+                  Padding(padding: EdgeInsets.only(bottom: 50))
               ],
             )
           ],

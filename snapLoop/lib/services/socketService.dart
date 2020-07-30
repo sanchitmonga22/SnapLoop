@@ -21,7 +21,6 @@ class SocketService with ReactiveServiceMixin {
   IO.Socket _socket;
 
   void createSocketConnection() {
-    print('created');
     _socket = IO.io("$SERVER_IP", <String, dynamic>{
       'transports': ['websocket'],
       'query': {"token": 'Bearer ${_auth.token}'}
@@ -72,6 +71,12 @@ class SocketService with ReactiveServiceMixin {
           await ResponseParsingHelper.parseChatInfo(data['newMessageData']));
       //TODO:
       // assigning score to the user and do bunch of other stuff
+    });
+
+    _socket.on("loopFailed", (data) async {
+      print(data);
+      _loopsDataService.updateLoopType(
+          data['loopId'], LoopType.INACTIVE_LOOP_FAILED);
     });
   }
 }

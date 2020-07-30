@@ -86,7 +86,7 @@ class FriendsData {
   }
 }
 
-enum RequestStatus { SENT, FRIEND, NOT_SENT }
+enum RequestStatus { SENT, FRIEND, NOT_SENT, REQUEST_RECEIVED }
 
 class PublicUserData {
   final String username;

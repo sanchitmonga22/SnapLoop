@@ -83,7 +83,7 @@ class LoopsDataService with ReactiveServiceMixin {
     // TODO: make an api call and tell the number to the network and update the image
   }
 
-  Future<void> forwardLoop(
+  Future<dynamic> forwardLoop(
       String friendId, String content, String chatId, String loopId) async {
     try {
       http.Response res = await http.post('$SERVER_IP/loops/forwardLoop',
@@ -100,6 +100,7 @@ class LoopsDataService with ReactiveServiceMixin {
       final response = json.decode(res.body);
       if (res.statusCode == 200) {
         updateForwardedLoop(response, loopId, friendId);
+        return response;
       } else {
         throw new HttpException(res.body);
       }
@@ -122,6 +123,14 @@ class LoopsDataService with ReactiveServiceMixin {
           loop.avatars[friendId] = result['memoji'];
           loop.numberOfMembers++;
           loop.userIDs.add(friendId);
+        }
+        if (loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
+          //TODO:::
+          // update the score and everything receieved from the server
+          // update the UI such that all the user's who are not friends public data is visible in the loopDetails view,
+          // and along with the message bubble it should be reveiled who sent what
+          // remove the timer
+          // TODO: SERVER: Convert this into a group chat
         }
         return;
       }
