@@ -31,6 +31,9 @@ class ResponseParsingHelper {
 
   static FriendsData parseFriend(dynamic response) {
     return FriendsData(
+        avatar: response['myImage'] == "" || response['myImage'] == null
+            ? null
+            : base64Decode(response['myImage']),
         username: response['username'],
         displayName: (response['displayName'] ?? "") == ""
             ? response['username']
@@ -48,6 +51,9 @@ class ResponseParsingHelper {
     final _userDataService = locator<UserDataService>();
     return PublicUserData(
         sentRequest: _userDataService.requestStatusById(response['_id']),
+        avatar: response['myImage'] == "" || response['myImage'] == null
+            ? null
+            : base64Decode(response['myImage']),
         email: response['email'],
         userID: response['_id'],
         username: response['username']);
@@ -55,7 +61,9 @@ class ResponseParsingHelper {
 
   static User parseUser(dynamic response, String email, String userId) {
     return User(
-        myImage: base64Decode(response['myImage']),
+        myAvatar: response['myImage'] == "" || response['myImage'] == null
+            ? null
+            : base64Decode(response['myImage']),
         numberOfLoopsRemaining: response['numberOfLoopsRemaining'],
         contacts: response["contacts"].cast<String>().toList(),
         userID: userId,

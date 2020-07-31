@@ -33,49 +33,46 @@ class _UserProfileViewState extends State<UserProfileView>
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 10,
-                  ),
                   ListTile(
                     contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    title: model.user.myImage == null
-                        ? GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => ImagePicketDialog(),
-                              );
-                            },
-                            child: CircleAvatar(
-                              radius: 50,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  AutoSizeText(
-                                    model.user.username[0].toUpperCase(),
-                                    style: kTextFormFieldStyle.copyWith(
-                                        fontSize: 40),
-                                  )
-                                ],
-                              ),
+                    title: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => ImagePicketDialog(
+                              remove:
+                                  model.user.myAvatar == null ? false : true,
                             ),
-                          )
-                        : CircleAvatar(
-                            radius: 50,
-                            child: ClipOval(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.black,
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: MemoryImage(
-                                        model.user.myImage,
-                                      )),
-                                ),
-                              ),
-                            ),
-                          ),
+                          );
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                              radius: 60,
+                              backgroundColor: Colors.blue,
+                              child: model.user.myAvatar == null
+                                  ? AutoSizeText(
+                                      model.user.username[0].toUpperCase(),
+                                      style: kTextFormFieldStyle.copyWith(
+                                          fontSize: 40),
+                                    )
+                                  : ClipOval(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.black,
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: MemoryImage(
+                                                model.user.myAvatar,
+                                              )),
+                                        ),
+                                      ),
+                                    ),
+                            )
+                          ],
+                        )),
                   ),
                   SizedBox(height: 20),
                   ListTile(

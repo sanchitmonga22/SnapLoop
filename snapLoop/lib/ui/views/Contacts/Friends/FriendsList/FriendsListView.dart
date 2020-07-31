@@ -60,7 +60,22 @@ class FriendsListView extends HookViewModelWidget<FriendsViewModel> {
                     fontWeight: FontWeight.bold, color: kSystemPrimaryColor),
               ),
               leading: CircleAvatar(
-                child: friend.avatar ?? Icon(Icons.person),
+                child: friend.avatar == null
+                    ? AutoSizeText(
+                        friend.username[0].toUpperCase(),
+                        style: kTextFormFieldStyle,
+                      )
+                    : ClipOval(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: MemoryImage(
+                                  friend.avatar,
+                                )),
+                          ),
+                        ),
+                      ),
                 backgroundColor: kSystemPrimaryColor,
               ),
               trailing: Text(

@@ -57,7 +57,7 @@ class _NavBarViewState extends State<NavBarView>
     ];
   }
 
-  List<PersistentBottomNavBarItem> _navBarsItems() {
+  List<PersistentBottomNavBarItem> _navBarsItems(NavBarViewModel model) {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.loop_thick),
@@ -74,8 +74,11 @@ class _NavBarViewState extends State<NavBarView>
         inactiveColor: kInactiveNavBarIconColor,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.account_circle),
-        title: ("Profile"),
+        icon: model.myImage != null
+            ? CircleAvatar(
+                radius: 25, backgroundImage: MemoryImage(model.myImage))
+            : Icon(Icons.account_circle),
+        title: model.myImage != null ? null : "Profile",
         activeColor: kActiveNavBarIconColor,
         inactiveColor: kInactiveNavBarIconColor,
       ),
@@ -207,11 +210,13 @@ class _NavBarViewState extends State<NavBarView>
                         ],
                       )),
                   bottomNavigationBar: PersistentBottomNavBar(
+                    confineToSafeArea: true,
+                    itemAnimationProperties:
+                        ItemAnimationProperties(curve: Curves.bounceIn),
                     decoration: NavBarDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      //border: Border.all(width: 4, color: kSystemPrimaryColor)
+                      borderRadius: BorderRadius.circular(25),
                     ),
-                    items: _navBarsItems(),
+                    items: _navBarsItems(model),
                     onItemSelected: (value) {
                       if (value > 0) {
                         value++;
@@ -226,7 +231,7 @@ class _NavBarViewState extends State<NavBarView>
                     },
                     navBarHeight: 70,
                     navBarStyle: NavBarStyle.style2,
-                    iconSize: 26,
+                    iconSize: 30,
                     selectedIndex:
                         _tabController.index > 0 ? _tabController.index - 1 : 0,
                     backgroundColor: Colors.black,

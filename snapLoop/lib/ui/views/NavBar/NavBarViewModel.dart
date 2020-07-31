@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/FABTapped.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
@@ -10,6 +13,8 @@ class NavBarViewModel extends ReactiveViewModel {
   int get userScore => _userData.user.score;
 
   String get displayName => _userData.user.displayName;
+
+  Uint8List get myImage => _userData.user.myAvatar;
 
   bool get isTapped {
     return _fabTapped.isTapped;

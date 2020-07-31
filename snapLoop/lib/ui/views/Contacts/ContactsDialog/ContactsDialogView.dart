@@ -138,11 +138,22 @@ class ContactWidget extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(
         radius: 20,
-        child: Icon(
-          Icons.person,
-          color: Colors.white,
-          size: 20,
-        ),
+        child: c.avatar == null
+            ? AutoSizeText(
+                c.username[0].toUpperCase(),
+                style: kTextFormFieldStyle.copyWith(fontSize: 15),
+              )
+            : ClipOval(
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: MemoryImage(
+                          c.avatar,
+                        )),
+                  ),
+                ),
+              ),
       ),
       title: Text(
         c.username ?? "",

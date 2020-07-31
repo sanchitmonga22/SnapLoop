@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -14,7 +13,7 @@ class User {
   final String email;
   int score;
   int numberOfLoopsRemaining;
-  Uint8List myImage;
+  Uint8List myAvatar;
   List<String> friendsIds;
   // all the loops that the user is involved in
   List<Loop> loopsData;
@@ -25,7 +24,7 @@ class User {
   List<String> contacts;
 
   User({
-    this.myImage,
+    this.myAvatar,
     @required this.userID,
     @required this.numberOfLoopsRemaining,
     @required this.contacts,
@@ -51,7 +50,7 @@ class FriendsData {
   final String status;
   final List<String> commonLoops;
   final List<String> mutualFriendsIDs;
-  final Image avatar;
+  final Uint8List avatar;
   final String phone;
 
   FriendsData(
@@ -95,10 +94,12 @@ class PublicUserData {
   final String email;
   final String userID;
   final RequestStatus sentRequest;
+  final Uint8List avatar;
   // final int score;
   // final String status;
 
   PublicUserData({
+    this.avatar,
     @required this.sentRequest,
     @required this.username,
     @required this.email,

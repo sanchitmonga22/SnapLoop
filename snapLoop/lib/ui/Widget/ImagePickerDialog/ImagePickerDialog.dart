@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,7 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import '../../../constants.dart';
 
 class ImagePicketDialog extends StatefulWidget {
-  ImagePicketDialog({Key key}) : super(key: key);
+  ImagePicketDialog({Key key, @required this.remove}) : super(key: key);
+  final bool remove;
 
   @override
   _ImagePicketDialogState createState() => _ImagePicketDialogState();
@@ -17,9 +19,13 @@ class ImagePicketDialog extends StatefulWidget {
 
 class _ImagePicketDialogState extends State<ImagePicketDialog> {
   final _userDataService = locator<UserDataService>();
+  bool busy = false;
 
   var storedImage;
   Future<void> takePicture(bool camera) async {
+    setState(() {
+      busy = true;
+    });
     final imagePicker = new ImagePicker();
     final imageFile = await imagePicker.getImage(
         source: camera ? ImageSource.camera : ImageSource.gallery,
@@ -27,14 +33,18 @@ class _ImagePicketDialogState extends State<ImagePicketDialog> {
         maxHeight: 500,
         maxWidth: 500);
     if (imageFile == null) {
+      setState(() {
+        busy = false;
+      });
       return;
     }
     final bytes = await imageFile.readAsBytes();
     final img64 = base64Encode(bytes);
-    _userDataService.setMyImage(img64);
+    await _userDataService.setMyImage(img64);
 
     setState(() {
       storedImage = base64Decode(img64);
+      busy = false;
     });
   }
 
@@ -51,19 +61,28 @@ class _ImagePicketDialogState extends State<ImagePicketDialog> {
               CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.blue,
-                child: storedImage == null
-                    ? Container()
-                    : ClipOval(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: MemoryImage(
-                                  storedImage,
-                                )),
+                child: busy
+                    ? CircularProgressIndicator(
+                        backgroundColor: Colors.white,
+                      )
+                    : _userDataService.user.myAvatar == null
+                        ? Container(
+                            child: AutoSizeText(
+                              _userDataService.user.username[0].toUpperCase(),
+                              style: kTextFormFieldStyle.copyWith(fontSize: 30),
+                            ),
+                          )
+                        : ClipOval(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: MemoryImage(
+                                      _userDataService.user.myAvatar,
+                                    )),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
               ),
               Text(
                 "Choose a photo",
@@ -73,25 +92,43 @@ class _ImagePicketDialogState extends State<ImagePicketDialog> {
             ],
           ),
           content: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            if (widget.remove)
+              GestureDetector(
+                  onTap: () async {
+                    print("remove");
+                    setState(() {
+                      busy = true;
+                    });
+                    await _userDataService.removeMyImage();
+                    setState(() {
+                      busy = false;
+                    });
+                  },
+                  child: Icon(CupertinoIcons.delete_solid,
+                      color: Colors.white, size: 35)),
+            if (widget.remove)
+              SizedBox(
+                width: 30,
+              ),
             GestureDetector(
-                onTap: () {
+                onTap: () async {
                   print("camera");
-                  takePicture(true);
+                  await takePicture(true);
                 },
-                child: Icon(CupertinoIcons.photo_camera,
-                    color: Colors.white, size: 50)),
+                child: Icon(CupertinoIcons.photo_camera_solid,
+                    color: Colors.white, size: 35)),
             SizedBox(
               width: 30,
             ),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
                 print('gallery');
-                takePicture(false);
+                await takePicture(false);
               },
               child: Icon(
-                Icons.photo_size_select_large,
+                Icons.photo_library,
                 color: Colors.white,
-                size: 45,
+                size: 35,
               ),
             ),
           ]),

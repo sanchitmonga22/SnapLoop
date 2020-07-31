@@ -123,7 +123,29 @@ class UserDataService with ReactiveServiceMixin {
           },
           body: jsonEncode({"myImage": myImage}));
       if (res.statusCode == 200) {
-        _auth.user.value.myImage = base64Decode(myImage);
+        _auth.user.value.myAvatar = base64Decode(myImage);
+        notifyListeners();
+        return;
+      } else {
+        throw new HttpException("error occured while saving the image");
+      }
+    } catch (err) {
+      throw new HttpException(err.toString());
+    }
+  }
+
+  Future<void> removeMyImage() async {
+    try {
+      http.Response res = await http.post(
+        '$SERVER_IP/users/removeMyImage',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + _auth.token,
+        },
+      );
+      if (res.statusCode == 200) {
+        _auth.user.value.myAvatar = null;
+        notifyListeners();
         return;
       } else {
         throw new HttpException("error occured while saving the image");

@@ -1,4 +1,5 @@
 import 'package:SnapLoop/ui/views/Contacts/FriendsRequestDialog/FriendRequestDialogModel.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:stacked/stacked.dart';
@@ -52,11 +53,21 @@ class _FriendRequestsDialogState extends State<FriendRequestsDialog> {
                 ),
                 leading: CircleAvatar(
                   radius: 20,
-                  child: Icon(
-                    Icons.person,
-                    color: Colors.white,
-                    size: 20,
-                  ),
+                  child: model.requests[index].avatar == null
+                      ? AutoSizeText(
+                          model.requests[index].username[0].toUpperCase(),
+                          style: kTextFormFieldStyle,
+                        )
+                      : ClipOval(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: MemoryImage(
+                                      model.requests[index].avatar)),
+                            ),
+                          ),
+                        ),
                 ),
                 title: Text(
                   model.requests[index].username,
