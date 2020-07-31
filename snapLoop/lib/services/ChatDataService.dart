@@ -38,7 +38,12 @@ class ChatDataService with ReactiveServiceMixin {
   }
 
   void addNewMessage(String chatId, ChatInfo info) {
-    _chats.firstWhere((element) => chatId == element.chatID).chat.add(info);
+    _chats.forEach((element) {
+      if (chatId == element.chatID) {
+        element.chat.add(info);
+        return;
+      }
+    });
     notifyListeners();
   }
 

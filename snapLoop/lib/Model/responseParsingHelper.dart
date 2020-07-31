@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/user.dart';
@@ -16,17 +18,6 @@ class ResponseParsingHelper {
       messages.add(await (parseChatInfo(message)));
     }
     return Chat(chat: messages, chatID: chatId);
-  }
-
-  static bool isNumeric(String s) {
-    if (s == null) {
-      return false;
-    }
-    try {
-      return double.parse(s) != null;
-    } catch (err) {
-      return false;
-    }
   }
 
   static Future<ChatInfo> parseChatInfo(dynamic message) async {
@@ -64,6 +55,7 @@ class ResponseParsingHelper {
 
   static User parseUser(dynamic response, String email, String userId) {
     return User(
+        myImage: base64Decode(response['myImage']),
         numberOfLoopsRemaining: response['numberOfLoopsRemaining'],
         contacts: response["contacts"].cast<String>().toList(),
         userID: userId,

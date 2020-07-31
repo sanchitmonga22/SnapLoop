@@ -149,43 +149,41 @@ class ContactWidget extends StatelessWidget {
         style: kTextFormFieldStyle,
       ),
       trailing: RaisedButton(
-        padding: EdgeInsets.all(8),
-        color: kSystemPrimaryColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        onPressed: (c.sentRequest == RequestStatus.FRIEND ||
-                c.sentRequest == RequestStatus.SENT)
-            ? null
-            : onPressed,
-        child: isLoading
-            ? CircularProgressIndicator()
-            : c.sentRequest == RequestStatus.SENT
-                ? Container(
-                    child: AutoSizeText(
-                      "Sent",
-                      style: kTextFormFieldStyle.copyWith(fontSize: 14),
-                    ),
-                  )
-                : c.sentRequest == RequestStatus.FRIEND
-                    ? Container(
-                        child: AutoSizeText(
-                        "Friend",
+          padding: EdgeInsets.all(8),
+          color: kSystemPrimaryColor,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          onPressed: (c.sentRequest == RequestStatus.FRIEND ||
+                  c.sentRequest == RequestStatus.SENT)
+              ? null
+              : onPressed,
+          child: isLoading
+              ? CircularProgressIndicator()
+              : c.sentRequest == RequestStatus.NOT_SENT
+                  ? Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                        AutoSizeText(
+                          "Add",
+                          style: kTextFormFieldStyle.copyWith(fontSize: 14),
+                        )
+                      ],
+                    )
+                  : Container(
+                      child: AutoSizeText(
+                        c.sentRequest == RequestStatus.SENT
+                            ? "Sent"
+                            : c.sentRequest == RequestStatus.FRIEND
+                                ? 'Friend'
+                                : "Request Received",
                         style: kTextFormFieldStyle.copyWith(fontSize: 14),
-                      ))
-                    : Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                          AutoSizeText(
-                            "Add",
-                            style: kTextFormFieldStyle.copyWith(fontSize: 14),
-                          )
-                        ],
                       ),
-      ),
+                    )),
     );
   }
 }

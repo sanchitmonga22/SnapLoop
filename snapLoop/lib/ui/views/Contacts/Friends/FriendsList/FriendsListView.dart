@@ -30,7 +30,6 @@ class FriendsListView extends HookViewModelWidget<FriendsViewModel> {
                   onTap: () {
                     showDialog(
                         context: context,
-                        barrierDismissible: false,
                         builder: (context) {
                           return CreateALoopDialog(
                             friend: friend,

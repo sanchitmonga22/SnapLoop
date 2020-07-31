@@ -12,12 +12,16 @@ class MessageBubbleView extends StatelessWidget {
   final Key key;
   final String userRandomMemoji;
   final DateTime sent;
+  final bool repeat;
+  final bool showMemoji;
   // will create a check later whether the loop has been successfully completed or not
   final String username;
 
   const MessageBubbleView({
+    this.repeat = false,
     this.sent,
     this.message,
+    this.showMemoji = true,
     this.isMe = false,
     this.key,
     this.username,
@@ -42,7 +46,7 @@ class MessageBubbleView extends StatelessWidget {
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
-            padding: EdgeInsets.only(top: 10),
+            padding: EdgeInsets.only(top: repeat ? 3 : 10),
             constraints:
                 BoxConstraints(maxWidth: MediaQuery.of(context).size.width / 2),
             child: Stack(
@@ -51,22 +55,23 @@ class MessageBubbleView extends StatelessWidget {
                   crossAxisAlignment:
                       isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: isMe
-                          ? const EdgeInsets.only(left: 10)
-                          : const EdgeInsets.only(right: 10),
-                      child: CircleAvatar(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(blurRadius: 5, color: Colors.white)
-                            ],
-                            shape: BoxShape.circle,
-                            image: getImage(),
+                    if (repeat == false && showMemoji)
+                      Padding(
+                        padding: isMe
+                            ? const EdgeInsets.only(left: 10)
+                            : const EdgeInsets.only(right: 10),
+                        child: CircleAvatar(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(blurRadius: 5, color: Colors.white)
+                              ],
+                              shape: BoxShape.circle,
+                              image: getImage(),
+                            ),
                           ),
                         ),
                       ),
-                    ),
                     Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -75,15 +80,21 @@ class MessageBubbleView extends StatelessWidget {
                           color: isMe
                               ? kSystemPrimaryColor
                               : Colors.black.withOpacity(0.7),
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(15),
-                              topRight: Radius.circular(15),
-                              bottomLeft: !isMe
-                                  ? Radius.circular(0)
-                                  : Radius.circular(15),
-                              bottomRight: isMe
-                                  ? Radius.circular(0)
-                                  : Radius.circular(15))),
+                          borderRadius: isMe
+                              ? BorderRadius.only(
+                                  topRight: Radius.circular(15),
+                                  topLeft: Radius.circular(15),
+                                  bottomLeft: repeat
+                                      ? Radius.circular(0)
+                                      : Radius.circular(15),
+                                  bottomRight: Radius.circular(0))
+                              : BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  topRight: Radius.circular(15),
+                                  bottomRight: repeat
+                                      ? Radius.circular(0)
+                                      : Radius.circular(15),
+                                  bottomLeft: Radius.circular(0))),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [

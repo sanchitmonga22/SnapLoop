@@ -82,14 +82,27 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         backgroundColor: Colors.black45,
-        content: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-            height: 170,
-            padding: EdgeInsets.all(10),
+        content: Container(
+          height: 170,
+          // Align(
+          //   alignment: Alignment(1.22, 0),
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       print('pressed');
+          //       Navigator.of(context).pop();
+          //     },
+          //     child: Icon(
+          //       Icons.cancel,
+          //       color: Colors.red,
+          //       size: 40,
+          //     ),
+          //   ),
+          // ),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Form(
                     key: _formKey,

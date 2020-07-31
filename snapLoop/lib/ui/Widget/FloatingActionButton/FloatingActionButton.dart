@@ -57,7 +57,6 @@ class _FloatingActionButtonViewState extends State<FloatingActionButtonView> {
                     widget._animationController.reverse();
                     showDialog(
                       context: context,
-                      barrierDismissible: false,
                       useSafeArea: true,
                       builder: (context) {
                         if (model.numberOfLoops > 0) {

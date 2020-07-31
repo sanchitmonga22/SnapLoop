@@ -15,7 +15,6 @@ final kSwipeConstant = 5;
 const double ksigmaX = 5.0; // from 0-10
 const double ksigmaY = 5.0; // from 0-10
 const double kopacity = 0.1;
-// TODO update the loops to use this
 const double kMaxRadius = 103;
 const kTextFieldCursorColor = kSystemPrimaryColor;
 

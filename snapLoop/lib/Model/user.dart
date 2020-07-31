@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:SnapLoop/Model/loop.dart';
@@ -12,24 +14,24 @@ class User {
   final String email;
   int score;
   int numberOfLoopsRemaining;
+  Uint8List myImage;
   List<String> friendsIds;
   // all the loops that the user is involved in
   List<Loop> loopsData;
   final String phone;
-  final Image avatar;
   List<String> requestsSent;
   List<String> requestsReceived;
   // people who are in the user's contacts and are part of the snaploop
   List<String> contacts;
 
   User({
+    this.myImage,
     @required this.userID,
     @required this.numberOfLoopsRemaining,
     @required this.contacts,
     @required this.requestsSent,
     @required this.requestsReceived,
     @required this.loopsData,
-    this.avatar,
     @required this.username,
     @required this.displayName,
     @required this.email,

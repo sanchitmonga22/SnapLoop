@@ -1,5 +1,8 @@
 import 'package:SnapLoop/app/router.gr.dart';
+import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/ui/Widget/ImagePickerDialog/ImagePickerDialog.dart';
 import 'package:SnapLoop/ui/views/Profile/UserProfileViewModel.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -24,59 +27,104 @@ class _UserProfileViewState extends State<UserProfileView>
       viewModelBuilder: () => UserProfileViewModel(),
       builder: (context, model, child) {
         return Container(
-            child: ListView(children: [
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 10),
-            title: CircleAvatar(
-              radius: 40,
-              child: Icon(Icons.person, size: 50),
-            ),
+            child: Padding(
+          padding: const EdgeInsets.only(left: 15),
+          child: SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    title: model.user.myImage == null
+                        ? GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => ImagePicketDialog(),
+                              );
+                            },
+                            child: CircleAvatar(
+                              radius: 50,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  AutoSizeText(
+                                    model.user.username[0].toUpperCase(),
+                                    style: kTextFormFieldStyle.copyWith(
+                                        fontSize: 40),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        : CircleAvatar(
+                            radius: 50,
+                            child: ClipOval(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.black,
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: MemoryImage(
+                                        model.user.myImage,
+                                      )),
+                                ),
+                              ),
+                            ),
+                          ),
+                  ),
+                  SizedBox(height: 20),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    title: Text(
+                      "Username: ${model.user.username}",
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    title: Text(
+                      "Email address: ${model.user.email}",
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    title: Text(
+                      "DisplayName: ${model.user.displayName}",
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    title: Text(
+                      "Score: ${model.user.score}",
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    title: Text(
+                      "UserID: ${model.user.userID}",
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.all(10),
+                    leading: Icon(Icons.exit_to_app),
+                    onTap: () async {
+                      await model.logout();
+                      Navigator.pushReplacementNamed(context, Routes.snapLoop);
+                    },
+                    title: Text("Logout"),
+                  )
+                ]),
           ),
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 10),
-            title: Text(
-              "Username: ${model.user.username}",
-              textAlign: TextAlign.left,
-            ),
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 10),
-            title: Text(
-              "Email address: ${model.user.email}",
-              textAlign: TextAlign.left,
-            ),
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 10),
-            title: Text(
-              "DisplayName: ${model.user.displayName}",
-              textAlign: TextAlign.left,
-            ),
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 10),
-            title: Text(
-              "Score: ${model.user.score}",
-              textAlign: TextAlign.left,
-            ),
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 10),
-            title: Text(
-              "UserID: ${model.user.userID}",
-              textAlign: TextAlign.left,
-            ),
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.all(10),
-            leading: Icon(Icons.exit_to_app),
-            onTap: () async {
-              await model.logout();
-              Navigator.pushReplacementNamed(context, Routes.snapLoop);
-            },
-            title: Text("Logout"),
-          )
-        ]));
+        ));
       },
     );
   }

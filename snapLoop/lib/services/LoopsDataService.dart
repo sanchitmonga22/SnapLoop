@@ -48,7 +48,14 @@ class LoopsDataService with ReactiveServiceMixin {
   }
 
   String getChatIdFromLoopId(String loopId) {
-    return _loops.firstWhere((element) => element.id == loopId).chatID;
+    String chatId;
+    _loops.forEach((loop) {
+      if (loop.id == loopId.toString()) {
+        chatId = loop.chatID;
+        return;
+      }
+    });
+    return chatId;
   }
 
   void updateLoopEndTimer(String loopId, DateTime atTimeEnding) {
@@ -115,7 +122,7 @@ class LoopsDataService with ReactiveServiceMixin {
       if (loop.id == loopId) {
         loop.type = ResponseParsingHelper.getLoopsType(result['loopType']);
         loop.currentUserId = friendId;
-        if (loop.type != LoopType.INACTIVE_LOOP_SUCCESSFUL) {
+        if (!kloopComplete(loop.type)) {
           loop.atTimeEnding =
               DateTime.fromMillisecondsSinceEpoch(result['sentTime'])
                   .add(Duration(days: 1));

@@ -82,6 +82,7 @@ class NewLoopChatViewModel extends ReactiveViewModel {
   }
 
   Future<void> sendMessage(String enteredMessage) async {
+    enteredMessage = enteredMessage.trim();
     var result = await _loopDataService.createLoop(
         _loopName, _friend.userID, enteredMessage, _images[1], _images[0]);
     if (result != null) {

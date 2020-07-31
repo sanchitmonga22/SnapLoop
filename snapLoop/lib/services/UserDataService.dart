@@ -114,6 +114,25 @@ class UserDataService with ReactiveServiceMixin {
     return _auth.user.value.numberOfLoopsRemaining > 0;
   }
 
+  Future<void> setMyImage(String myImage) async {
+    try {
+      http.Response res = await http.post('$SERVER_IP/users/saveMyImage',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + _auth.token,
+          },
+          body: jsonEncode({"myImage": myImage}));
+      if (res.statusCode == 200) {
+        _auth.user.value.myImage = base64Decode(myImage);
+        return;
+      } else {
+        throw new HttpException("error occured while saving the image");
+      }
+    } catch (err) {
+      throw new HttpException(err.toString());
+    }
+  }
+
   Future<FriendsData> getFriendsDataById(String userId) async {
     try {
       http.Response res =

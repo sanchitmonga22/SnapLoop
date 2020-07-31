@@ -41,6 +41,7 @@ class ExistingLoopChatViewModel extends ReactiveViewModel {
   Color get backgroundColor => determineLoopColor(_loop.type);
 
   Future<void> sendMessage(String enteredMessage, BuildContext context) async {
+    enteredMessage = enteredMessage.trim();
     // sending new group message
     if (loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
       final response = await _chatDataService.sendNewGroupMessage(
