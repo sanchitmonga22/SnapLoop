@@ -93,7 +93,7 @@ class _NavBarViewState extends State<NavBarView>
   }
 
   void _toggleTab(int index) {
-    _tabController.animateTo(index);
+    _tabController.animateTo(index, curve: Curves.easeIn);
   }
 
   @override
@@ -214,7 +214,10 @@ class _NavBarViewState extends State<NavBarView>
                     itemAnimationProperties:
                         ItemAnimationProperties(curve: Curves.bounceIn),
                     decoration: NavBarDecoration(
-                      borderRadius: BorderRadius.circular(25),
+                      adjustScreenBottomPaddingOnCurve: true,
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(20),
+                          topLeft: Radius.circular(20)),
                     ),
                     items: _navBarsItems(model),
                     onItemSelected: (value) {

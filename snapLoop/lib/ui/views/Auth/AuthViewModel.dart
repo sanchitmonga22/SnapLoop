@@ -92,4 +92,10 @@ class AuthViewModel extends ReactiveViewModel {
 
   @override
   List<ReactiveServiceMixin> get reactiveServices => [_auth];
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
 }

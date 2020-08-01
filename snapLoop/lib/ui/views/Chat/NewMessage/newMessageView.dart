@@ -23,6 +23,13 @@ class _NewMessageViewState extends State<NewMessageView> {
   // }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Container(
