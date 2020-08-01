@@ -5,6 +5,8 @@ import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/responseParsingHelper.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/Auth.dart';
+import 'package:SnapLoop/services/ConnectionService.dart';
+import 'package:SnapLoop/services/StorageService.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:observable_ish/observable_ish.dart';
@@ -19,6 +21,9 @@ class ChatDataService with ReactiveServiceMixin {
   ChatDataService() {
     listenToReactiveValues([_chats]);
   }
+
+  final _connectionService = locator<ConnectionStatusService>();
+  final _storageSerice = locator<StorageService>();
   final _auth = locator<Auth>();
 
   RxList<Chat> _chats = RxList<Chat>();
@@ -71,6 +76,14 @@ class ChatDataService with ReactiveServiceMixin {
   }
 
   Future<void> initializeChatByIdFromNetwork(String chatId) async {
+    if (!_connectionService.connected) {
+      dynamic data = await _storageSerice.getValueFromKey(chatId);
+      if (_chats.isNotEmpty) {
+        _chats.removeWhere((element) => element.chatID == chatId);
+      }
+      _chats.add(await ResponseParsingHelper.parseChat(data));
+      return;
+    }
     try {
       http.Response res = await http.get(
         '$SERVER_IP/chats/getData',
@@ -86,6 +99,7 @@ class ChatDataService with ReactiveServiceMixin {
           _chats.removeWhere(
               (element) => element.chatID == response['chatId'] as String);
         }
+        await _storageSerice.addNewKeyValue(chatId, response);
         _chats.add(await ResponseParsingHelper.parseChat(response));
       } else {
         throw new HttpException("Could not get the chat from the server");

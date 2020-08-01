@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
@@ -11,7 +13,7 @@ class StorageService with ReactiveServiceMixin {
   }
 
   Future<void> addNewKeyValue(String key, dynamic value) async {
-    await prefs.setString(key, value);
+    await prefs.setString(key, jsonEncode(value));
   }
 
   Future<void> removeKeyValue(String key) async {
@@ -20,10 +22,14 @@ class StorageService with ReactiveServiceMixin {
 
   Future<void> updateValue(String key, dynamic value) async {
     await removeKeyValue(key);
-    await addNewKeyValue(key, value);
+    await addNewKeyValue(key, jsonEncode(value));
   }
 
   Future<dynamic> getValueFromKey(String key) async {
-    return await prefs.get(key);
+    return await json.decode(prefs.get(key));
+  }
+
+  Future<void> clearAll() async {
+    await prefs.clear();
   }
 }

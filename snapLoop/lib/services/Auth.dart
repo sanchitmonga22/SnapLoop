@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Model/responseParsingHelper.dart';
+import 'package:SnapLoop/app/locator.dart';
+import 'package:SnapLoop/services/ConnectionService.dart';
+import 'package:SnapLoop/services/StorageService.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
@@ -17,6 +20,11 @@ class Auth with ReactiveServiceMixin {
   Auth() {
     listenToReactiveValues([_isAuth, user, _token]);
   }
+
+  final _storageService = locator<StorageService>();
+  //final _userDataService = locator<UserDataService>();
+  final _connectionSerice = locator<ConnectionStatusService>();
+
   final storage = FlutterSecureStorage();
   String _token;
   RxValue<User> user = RxValue();
@@ -33,14 +41,16 @@ class Auth with ReactiveServiceMixin {
     http.Response res = await http.post('$SERVER_IP/users/login',
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"email": email, "password": password}));
-    final response = json.decode(res.body);
+    var response = json.decode(res.body);
     if (res.statusCode == 200) {
       final jwt = response['token'];
       if (jwt != null) {
         _token = jwt;
         _userId = response['userId'] as String;
         _isAuth.value = true;
-        user.value = ResponseParsingHelper.parseUser(response, email, _userId);
+        response['email'] = email;
+        user.value = ResponseParsingHelper.parseUser(response, _userId);
+        await _storageService.addNewKeyValue("userData", response);
         await storage.write(key: "jwt", value: jwt);
         await storage.write(key: "userId", value: response['userId']);
       }
@@ -77,6 +87,7 @@ class Auth with ReactiveServiceMixin {
         _isAuth.value = true;
         await storage.write(key: "jwt", value: response['token']);
         await storage.write(key: "userId", value: response['userId']);
+        //await _userDataService.updateUserData();
       } else {
         _isAuth.value = false;
       }
@@ -98,6 +109,7 @@ class Auth with ReactiveServiceMixin {
         _token = null;
         _isAuth.value = false;
         await storage.delete(key: "jwt");
+        await _storageService.clearAll();
       }
     } catch (err) {
       throw new HttpException(
@@ -116,6 +128,21 @@ class Auth with ReactiveServiceMixin {
     }
     _token = token1;
     _userId = userId1;
+    print(_connectionSerice.connected);
+
+    if (!_connectionSerice.connected) {
+      dynamic userData = await _storageService.getValueFromKey("userData");
+      print(userData);
+      if (userData != null) {
+        print('here');
+        user.value = ResponseParsingHelper.parseUser(userData, userId);
+        _isAuth.value = true;
+        return true;
+      }
+      _isAuth.value = false;
+      return false;
+    }
+
     // getting the userData from the server using the _token, add the API to the server
     http.Response res = await http.get(
       "$SERVER_IP/users/data",
@@ -126,10 +153,12 @@ class Auth with ReactiveServiceMixin {
     );
     final response = json.decode(res.body);
     if (res.statusCode == 200) {
-      user.value = ResponseParsingHelper.parseUser(response, "", userId);
+      user.value = ResponseParsingHelper.parseUser(response, userId);
       _isAuth.value = true;
+      await _storageService.addNewKeyValue("userData", response);
       return true;
     }
+    _isAuth.value = false;
     return false;
   }
 }

@@ -132,7 +132,6 @@ class _FriendsViewState extends State<FriendsView>
                               emptyWidget: Text(
                                   "No items found, Please try searching with a different name"),
                               onError: (error) {
-                                print('here');
                                 print(error.toString());
                                 return Text("Error");
                               },

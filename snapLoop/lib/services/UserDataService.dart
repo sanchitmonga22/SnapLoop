@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/Auth.dart';
+import 'package:SnapLoop/services/ConnectionService.dart';
+import 'package:SnapLoop/services/StorageService.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,6 +24,8 @@ class UserDataService with ReactiveServiceMixin {
     listenToReactiveValues([_contacts, _requests, _friends]);
   }
   final _auth = locator<Auth>();
+  final _storageService = locator<StorageService>();
+  final _connectionSerice = locator<ConnectionStatusService>();
   RxList<Contact> _contacts = RxList<Contact>();
 
   RxSet<PublicUserData> _requests = RxSet<PublicUserData>();
@@ -156,6 +160,13 @@ class UserDataService with ReactiveServiceMixin {
   }
 
   Future<FriendsData> getFriendsDataById(String userId) async {
+    if (!_connectionSerice.connected) {
+      dynamic data = await _storageService.getValueFromKey(userId);
+      if (data != null) {
+        return ResponseParsingHelper.parseFriend(data);
+      }
+      return null;
+    }
     try {
       http.Response res =
           await http.get('$SERVER_IP/users/friendsData', headers: {
@@ -165,6 +176,7 @@ class UserDataService with ReactiveServiceMixin {
       });
       if (res.statusCode == 200) {
         final response = json.decode(res.body);
+        await _storageService.addNewKeyValue(userId, response);
         return ResponseParsingHelper.parseFriend(response);
       } else {
         throw new HttpException('Friend from id not found!');
@@ -175,6 +187,13 @@ class UserDataService with ReactiveServiceMixin {
   }
 
   Future<PublicUserData> getUserDataById(String userId) async {
+    if (!_connectionSerice.connected) {
+      dynamic data = await _storageService.getValueFromKey(userId);
+      if (data != null) {
+        return ResponseParsingHelper.parsePublicUserData(data);
+      }
+      return null;
+    }
     try {
       http.Response res =
           await http.get('$SERVER_IP/users/getPublicDataById', headers: {
@@ -184,6 +203,7 @@ class UserDataService with ReactiveServiceMixin {
 
       if (res.statusCode == 200) {
         final response = json.decode(res.body);
+        await _storageService.addNewKeyValue(userId, response);
         return ResponseParsingHelper.parsePublicUserData(response);
       } else {
         throw new HttpException("User not found with id:$userId");
@@ -233,8 +253,8 @@ class UserDataService with ReactiveServiceMixin {
       );
       final response = json.decode(res.body);
       if (res.statusCode == 200) {
-        _auth.user.value =
-            ResponseParsingHelper.parseUser(response, "", userId);
+        await _storageService.addNewKeyValue("userData", response);
+        _auth.user.value = ResponseParsingHelper.parseUser(response, userId);
         return true;
       }
       return false;

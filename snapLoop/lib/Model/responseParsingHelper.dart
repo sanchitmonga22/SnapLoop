@@ -59,7 +59,7 @@ class ResponseParsingHelper {
         username: response['username']);
   }
 
-  static User parseUser(dynamic response, String email, String userId) {
+  static User parseUser(dynamic response, String userId) {
     return User(
         myAvatar: response['myImage'] == "" || response['myImage'] == null
             ? null
@@ -71,7 +71,7 @@ class ResponseParsingHelper {
         displayName: response['displayName'] == ""
             ? response['username']
             : response['displayName'],
-        email: email == "" ? response['email'] : email,
+        email: response['email'] ?? "",
         loopsData:
             ResponseParsingHelper.getLoopsFromResponse(response['loopsData']),
         score: response['score'] as int,

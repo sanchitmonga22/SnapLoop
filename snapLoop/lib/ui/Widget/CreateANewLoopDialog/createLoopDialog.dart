@@ -84,20 +84,6 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
         backgroundColor: Colors.black45,
         content: Container(
           height: 170,
-          // Align(
-          //   alignment: Alignment(1.22, 0),
-          //   child: GestureDetector(
-          //     onTap: () {
-          //       print('pressed');
-          //       Navigator.of(context).pop();
-          //     },
-          //     child: Icon(
-          //       Icons.cancel,
-          //       color: Colors.red,
-          //       size: 40,
-          //     ),
-          //   ),
-          // ),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(

@@ -95,7 +95,6 @@ class _ImagePicketDialogState extends State<ImagePicketDialog> {
             if (widget.remove)
               GestureDetector(
                   onTap: () async {
-                    print("remove");
                     setState(() {
                       busy = true;
                     });
@@ -112,7 +111,6 @@ class _ImagePicketDialogState extends State<ImagePicketDialog> {
               ),
             GestureDetector(
                 onTap: () async {
-                  print("camera");
                   await takePicture(true);
                 },
                 child: Icon(CupertinoIcons.photo_camera_solid,
@@ -122,7 +120,6 @@ class _ImagePicketDialogState extends State<ImagePicketDialog> {
             ),
             GestureDetector(
               onTap: () async {
-                print('gallery');
                 await takePicture(false);
               },
               child: Icon(
