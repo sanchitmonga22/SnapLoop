@@ -76,7 +76,7 @@ class _NavBarViewState extends State<NavBarView>
       PersistentBottomNavBarItem(
         icon: model.myImage != null
             ? CircleAvatar(
-                radius: 25, backgroundImage: MemoryImage(model.myImage))
+                radius: 20, backgroundImage: MemoryImage(model.myImage))
             : Icon(Icons.account_circle),
         title: model.myImage != null ? null : "Profile",
         activeColor: kActiveNavBarIconColor,
@@ -232,9 +232,9 @@ class _NavBarViewState extends State<NavBarView>
                         _toggleTab(value);
                       });
                     },
-                    navBarHeight: 70,
+                    navBarHeight: 60,
                     navBarStyle: NavBarStyle.style2,
-                    iconSize: 30,
+                    iconSize: 25,
                     selectedIndex:
                         _tabController.index > 0 ? _tabController.index - 1 : 0,
                     backgroundColor: Colors.black,

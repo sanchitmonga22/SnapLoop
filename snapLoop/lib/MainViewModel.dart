@@ -1,5 +1,3 @@
-import 'package:SnapLoop/Model/responseParsingHelper.dart';
-import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/services/Auth.dart';
 import 'package:SnapLoop/services/ChatDataService.dart';
 import 'package:SnapLoop/services/ConnectionService.dart';
@@ -8,20 +6,19 @@ import 'package:SnapLoop/services/StorageService.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:SnapLoop/services/socketService.dart';
 import 'package:stacked/stacked.dart';
-
 import 'Model/chat.dart';
+import 'Model/responseParsingHelper.dart';
+import 'Model/user.dart';
 import 'app/locator.dart';
 
 class MainViewModel extends ReactiveViewModel {
   final _auth = locator<Auth>();
   final _socket = locator<SocketService>();
-  final _loopDataService = locator<LoopsDataService>();
-  final _userDataService = locator<UserDataService>();
-  final _chatDataService = locator<ChatDataService>();
   final _connectionService = locator<ConnectionStatusService>();
-  StorageService _storageService = locator<StorageService>();
-
-  final firstTime = true;
+  final _loopDataService = locator<LoopsDataService>();
+  final _chatDataService = locator<ChatDataService>();
+  final _storageService = locator<StorageService>();
+  final _userDataService = locator<UserDataService>();
 
   void createSocketConnection() {
     _socket.createSocketConnection();
@@ -33,10 +30,12 @@ class MainViewModel extends ReactiveViewModel {
 
   Future<bool> tryAutoLogin() async {
     setBusy(true);
+    final _connectionService = locator<ConnectionStatusService>();
+    await _connectionService.initialize();
     bool login = await _auth.tryAutoLogin();
     if (login && _connectionService.connected) {
       createSocketConnection();
-    } else if (login && !_connectionService.connected) {
+    } else if (login && _connectionService.connected == false) {
       await initializeAppState();
     }
     notifyListeners();
@@ -47,7 +46,13 @@ class MainViewModel extends ReactiveViewModel {
   @override
   List<ReactiveServiceMixin> get reactiveServices => [_auth];
 
-  // save the app state before leaving,
+  @override
+  void dispose() async {
+    await saveAppState();
+    super.dispose();
+  }
+
+  // save the app state before closing the app
   Future<void> saveAppState() async {
     await _storageService.clearAll();
     await _storageService.addNewKeyValue(
@@ -66,41 +71,36 @@ class MainViewModel extends ReactiveViewModel {
     });
   }
 
+  // initializing the app state on startup
   Future<void> initializeAppState() async {
-    _auth.user.value = ResponseParsingHelper.parseUser(
-        await _storageService.getValueFromKey('userData'), _auth.userId);
+    dynamic userData = await _storageService.getValueFromKey('userData');
+    _auth.user.value = ResponseParsingHelper.parseUser(userData, _auth.userId);
     _loopDataService.initializeLoopsFromUserData();
 
-    List<String> chatIds = _loopDataService.getAllChatIds();
-    _chatDataService.setChats([]);
-    List<Chat> chats = [];
-    chatIds.forEach((element) async {
-      chats.add(await ResponseParsingHelper.parseChat(
-          _storageService.getValueFromKey(element)));
-    });
-    _chatDataService.setChats(chats);
-
-    List<String> frndIds = _auth.user.value.friendsIds;
+    // List<String> chatIds = _loopDataService.getAllChatIds();
+    // _chatDataService.setChats([]);
+    // List<Chat> chats = [];
+    // chatIds.forEach((element) async {
+    //   chats.add(await ResponseParsingHelper.parseChat(
+    //       _storageService.getValueFromKey(element)));
+    // });
+    // _chatDataService.setChats(chats);
+    List<String> frndIds = [];
+    frndIds = _auth.user.value.friendsIds;
     List<FriendsData> frnds = [];
-    frndIds.forEach((element) async {
-      frnds.add(ResponseParsingHelper.parseFriend(
-          await _storageService.getValueFromKey(element)));
-    });
+    for (int i = 0; i < frndIds.length; i++) {
+      dynamic v = await _storageService.getValueFromKey(frndIds[i]);
+      frnds.add(ResponseParsingHelper.parseFriend(v));
+    }
     _userDataService.setFriends(frnds);
 
-    List<String> reqsIds = _auth.user.value.requestsReceived;
+    List<String> reqsIds = [];
+    reqsIds = _auth.user.value.requestsReceived;
     List<PublicUserData> reqs = [];
     reqsIds.forEach((element) async {
       reqs.add(ResponseParsingHelper.parsePublicUserData(
           await _storageService.getValueFromKey(element)));
     });
     _userDataService.setRequests(reqs);
-  }
-
-  @override
-  void dispose() async {
-    // TODO: implement dispose
-    super.dispose();
-    await saveAppState();
   }
 }

@@ -23,7 +23,6 @@ class ChatDataService with ReactiveServiceMixin {
   }
 
   final _connectionService = locator<ConnectionStatusService>();
-  final _storageSerice = locator<StorageService>();
   final _auth = locator<Auth>();
 
   RxList<Chat> _chats = RxList<Chat>();
@@ -80,12 +79,7 @@ class ChatDataService with ReactiveServiceMixin {
   }
 
   Future<void> initializeChatByIdFromNetwork(String chatId) async {
-    if (!_connectionService.connected) {
-      dynamic data = await _storageSerice.getValueFromKey(chatId);
-      if (_chats.isNotEmpty) {
-        _chats.removeWhere((element) => element.chatID == chatId);
-      }
-      _chats.add(await ResponseParsingHelper.parseChat(data));
+    if (_connectionService.connected == false) {
       return;
     }
     try {
@@ -103,7 +97,6 @@ class ChatDataService with ReactiveServiceMixin {
           _chats.removeWhere(
               (element) => element.chatID == response['chatId'] as String);
         }
-        await _storageSerice.addNewKeyValue(chatId, response);
         _chats.add(await ResponseParsingHelper.parseChat(response));
       } else {
         throw new HttpException("Could not get the chat from the server");

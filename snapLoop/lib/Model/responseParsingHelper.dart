@@ -42,9 +42,12 @@ class ResponseParsingHelper {
         userID: response['_id'],
         score: response['score'] as int,
         status: response['status'],
-        commonLoops: response['commonLoops'].cast<String>().toList() ?? [],
-        mutualFriendsIDs:
-            response['mutualFriends'].cast<String>().toList() ?? []);
+        commonLoops: response['commonLoops'] == null
+            ? []
+            : response['commonLoops'].cast<String>().toList() ?? [],
+        mutualFriendsIDs: response['mutualFriends'] == null
+            ? []
+            : response['mutualFriends'].cast<String>().toList() ?? []);
   }
 
   static PublicUserData parsePublicUserData(dynamic response) {

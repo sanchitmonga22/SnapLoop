@@ -37,7 +37,7 @@ class _NewMessageViewState extends State<NewMessageView> {
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.black.withOpacity(0.4)),
+          color: Colors.white.withOpacity(0.2)),
       child: Stack(
         children: [
           Container(

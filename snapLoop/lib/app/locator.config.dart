@@ -22,11 +22,11 @@ import '../services/UserDataService.dart';
 void $initGetIt(GetIt g, {String environment}) {
   final gh = GetItHelper(g, environment);
   gh.lazySingleton<Auth>(() => Auth());
+  gh.lazySingleton<UserDataService>(() => UserDataService());
   gh.lazySingleton<ChatDataService>(() => ChatDataService());
   gh.lazySingleton<ConnectionStatusService>(() => ConnectionStatusService());
   gh.lazySingleton<FABTapped>(() => FABTapped());
   gh.lazySingleton<LoopsDataService>(() => LoopsDataService());
   gh.lazySingleton<SocketService>(() => SocketService());
   gh.lazySingleton<StorageService>(() => StorageService());
-  gh.lazySingleton<UserDataService>(() => UserDataService());
 }

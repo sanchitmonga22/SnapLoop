@@ -101,6 +101,7 @@ class _LoopWidgetViewState extends State<LoopWidgetView>
                           child: widget.loop.atTimeEnding != null &&
                                   !kloopComplete(widget.loop.type)
                               ? LoopTimer(
+                                  color: Colors.black,
                                   atTimeEnding: widget.loop.atTimeEnding,
                                 )
                               : Icon(

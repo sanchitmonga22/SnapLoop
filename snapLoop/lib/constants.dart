@@ -17,6 +17,8 @@ const double ksigmaY = 5.0; // from 0-10
 const double kopacity = 0.1;
 const double kMaxRadius = 103;
 const kTextFieldCursorColor = kSystemPrimaryColor;
+const kChatViewColor = Colors.black;
+final kChatViewDetailsColor = Colors.black.withOpacity(0.9);
 
 double kradiusCalculator(int numberOfMember) {
   if (numberOfMember < 13) {
@@ -260,7 +262,7 @@ const kalignmentMap = {
 
 Color determineLoopColor(type) {
   if (type == LoopType.NEW_LOOP) {
-    return Colors.redAccent[400];
+    return Colors.redAccent[700];
   }
   if (type == LoopType.NEW_NOTIFICATION) {
     return Colors.cyan[300];

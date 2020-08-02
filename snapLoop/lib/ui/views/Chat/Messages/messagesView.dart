@@ -1,4 +1,5 @@
 import 'package:SnapLoop/Model/chat.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/Chat/MessageBubble/messageBubbleView.dart';
 import 'package:SnapLoop/ui/views/chat/Messages/MessagesViewModel.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,9 @@ class MessagesView extends StatelessWidget {
                       bool nextUserExists = index + 2 <= model.chat.length;
                       if (nextUserExists)
                         nextID = model.chat[index + 1].senderID;
+                      print(model.loop.type);
                       final view = MessageBubbleView(
+                        messageColor: determineLoopColor(model.loop.type),
                         isMe: message.senderID == model.myId,
                         message: message.content,
                         repeat:

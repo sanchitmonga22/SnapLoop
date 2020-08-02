@@ -30,9 +30,6 @@ class NewLoopChatViewModel extends ReactiveViewModel {
 
   FriendsData _friend;
 
-  Color _backgroundColor = determineLoopColor(LoopType.EXISTING_LOOP);
-  Color get backgroundColor => _backgroundColor;
-
   List<dynamic> _images;
   List<dynamic> get image => _images;
 

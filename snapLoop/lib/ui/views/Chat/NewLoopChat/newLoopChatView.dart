@@ -17,7 +17,7 @@ class NewLoopChatView extends StatelessWidget {
 
   Widget getChatWidget(model) {
     return Container(
-      decoration: BoxDecoration(color: model.backgroundColor),
+      decoration: BoxDecoration(color: kChatViewColor),
       child: Column(
         children: [
           MessagesView(
@@ -26,7 +26,6 @@ class NewLoopChatView extends StatelessWidget {
           if (!model.messageSent)
             NewMessageView(sendMessage: (String enteredMessage) async {
               await model.sendMessage(enteredMessage);
-              //setState(() {});
             })
           else
             Padding(padding: EdgeInsets.only(bottom: 50))
@@ -54,7 +53,6 @@ class NewLoopChatView extends StatelessWidget {
               ))
             : LoopsDetailsView(
                 loop: model.loop,
-                backgroundColor: model.backgroundColor,
                 chatWidget: getChatWidget(model),
                 loopWidget: model.loopWidget,
               );

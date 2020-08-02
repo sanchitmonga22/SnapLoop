@@ -1,6 +1,7 @@
 import 'package:SnapLoop/app/customRoute.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/MainViewModel.dart';
+import 'package:SnapLoop/lifecycleHandler.dart';
 import 'package:SnapLoop/services/ConnectionService.dart';
 import 'package:SnapLoop/services/StorageService.dart';
 import 'package:SnapLoop/ui/views/NavBar/NavBarView.dart';
@@ -15,8 +16,6 @@ void main() async {
   setupLocator();
   // device preview
   runApp(SnapLoop());
-  final _connectionService = locator<ConnectionStatusService>();
-  await _connectionService.initialize();
   final _storageService = locator<StorageService>();
   await _storageService.intialize();
 }
@@ -24,10 +23,11 @@ void main() async {
 class SnapLoop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addObserver(LifeCycleEventHandler());
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => MainViewModel(),
       onModelReady: (model) {
-        if (!model.isAuth) {
+        if (model.isAuth == false) {
           model.tryAutoLogin();
         }
       },

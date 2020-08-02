@@ -102,8 +102,8 @@ class FriendsData {
       "score": this.score,
       '_id': this.userID,
       'status': this.status,
-      'commonLoops': this.commonLoops,
-      'mutualFriends': this.mutualFriendsIDs,
+      'commonLoops': this.commonLoops.toList(),
+      'mutualFriends': this.mutualFriendsIDs.toList(),
     };
   }
 

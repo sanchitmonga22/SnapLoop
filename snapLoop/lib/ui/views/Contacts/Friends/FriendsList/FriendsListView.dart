@@ -22,7 +22,7 @@ class FriendsListView extends HookViewModelWidget<FriendsViewModel> {
           return Slidable(
             actionPane: SlidableDrawerActionPane(),
             actions: <Widget>[
-              if (!model.newLoop)
+              if (model.newLoop == false)
                 IconSlideAction(
                   caption: 'Start new',
                   color: Colors.black,

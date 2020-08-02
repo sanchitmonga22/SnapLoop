@@ -9,16 +9,10 @@ import 'package:flutter/material.dart';
 
 /// author: @sanchitmonga22
 class LoopsDetailsView extends StatefulWidget {
-  LoopsDetailsView(
-      {Key key,
-      this.loop,
-      this.loopWidget,
-      this.backgroundColor,
-      this.chatWidget})
+  LoopsDetailsView({Key key, this.loop, this.loopWidget, this.chatWidget})
       : super(key: key);
   final LoopWidgetView loopWidget;
   final Loop loop;
-  final Color backgroundColor;
   final Widget chatWidget;
 
   @override
@@ -45,13 +39,12 @@ class _LoopsDetailsViewState extends State<LoopsDetailsView> {
         child: SafeArea(
           child: Scaffold(
             body: Stack(children: [
-              Container(
-                color: Colors.black.withOpacity(0.7),
-              ),
+              // Container(
+              //   color:s Colors.black.withOpacity(0.2),
+              // ),
               Container(
                   alignment: Alignment.topCenter,
-                  decoration: BoxDecoration(
-                      color: widget.backgroundColor.withOpacity(0.4)),
+                  decoration: BoxDecoration(color: kChatViewDetailsColor),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -109,10 +102,11 @@ class _LoopsDetailsViewState extends State<LoopsDetailsView> {
                             ),
                             if (widget.loop != null &&
                                 widget.loop.atTimeEnding != null &&
-                                !kloopComplete(widget.loop.type))
+                                kloopComplete(widget.loop.type) == false)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: LoopTimer(
+                                    color: Colors.white,
                                     atTimeEnding: widget.loop.atTimeEnding),
                               ),
                             Text(
@@ -136,7 +130,6 @@ class _LoopsDetailsViewState extends State<LoopsDetailsView> {
                 Container(
                     margin: EdgeInsets.only(
                         top: MediaQuery.of(context).size.width / 5),
-                    decoration: BoxDecoration(color: Colors.white),
                     child: widget.chatWidget)
             ]),
           ),

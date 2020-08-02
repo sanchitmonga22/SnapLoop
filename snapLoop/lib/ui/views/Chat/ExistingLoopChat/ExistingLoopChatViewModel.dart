@@ -12,8 +12,6 @@ import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../../constants.dart';
-
 class ExistingLoopChatViewModel extends ReactiveViewModel {
   final _chatDataService = locator<ChatDataService>();
   final _loopDataService = locator<LoopsDataService>();
@@ -38,8 +36,6 @@ class ExistingLoopChatViewModel extends ReactiveViewModel {
 
   Loop get loop => _loop;
 
-  Color get backgroundColor => determineLoopColor(_loop.type);
-
   Future<void> sendMessage(String enteredMessage, BuildContext context) async {
     enteredMessage = enteredMessage.trim();
     // sending new group message
@@ -61,15 +57,20 @@ class ExistingLoopChatViewModel extends ReactiveViewModel {
             FriendsViewArguments(loopName: _loop.name, loopForwarding: true),
       ) as FriendsData;
 
-      final response = await _loopDataService.forwardLoop(
-          friend.userID, enteredMessage, _loop.chatID, _loop.id);
-      _chatDataService.addNewMessage(
-          _loopDataService.getChatIdFromLoopId(_loop.id),
-          ChatInfo(
-              senderID: _userDataService.userId,
-              content: enteredMessage,
-              time: await TimeHelperService.convertToLocal(
-                  DateTime.fromMillisecondsSinceEpoch(response["sentTime"]))));
+      if (friend != null) {
+        final response = await _loopDataService.forwardLoop(
+            friend.userID, enteredMessage, _loop.chatID, _loop.id);
+        _chatDataService.addNewMessage(
+            _loopDataService.getChatIdFromLoopId(_loop.id),
+            ChatInfo(
+                senderID: _userDataService.userId,
+                content: enteredMessage,
+                time: await TimeHelperService.convertToLocal(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        response["sentTime"]))));
+      } else {
+        return;
+      }
     }
     notifyListeners();
   }

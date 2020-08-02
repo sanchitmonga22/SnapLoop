@@ -130,7 +130,7 @@ class LoopsDataService with ReactiveServiceMixin {
       if (loop.id == loopId) {
         loop.type = ResponseParsingHelper.getLoopsType(result['loopType']);
         loop.currentUserId = friendId;
-        if (!kloopComplete(loop.type)) {
+        if (kloopComplete(loop.type) == false) {
           loop.atTimeEnding =
               DateTime.fromMillisecondsSinceEpoch(result['sentTime'])
                   .add(Duration(days: 1));

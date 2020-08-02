@@ -7,7 +7,9 @@ import '../../../constants.dart';
 
 class LoopTimer extends StatefulWidget {
   final DateTime atTimeEnding;
-  LoopTimer({Key key, this.atTimeEnding}) : super(key: key);
+  final color;
+  LoopTimer({@required this.color, Key key, this.atTimeEnding})
+      : super(key: key);
 
   @override
   _LoopTimerState createState() => _LoopTimerState();
@@ -28,7 +30,8 @@ class _LoopTimerState extends State<LoopTimer> {
         return AutoSizeText(
           dateString,
           maxLines: 1,
-          style: kLoopDetailsTextStyle.copyWith(fontSize: 15),
+          style:
+              kLoopDetailsTextStyle.copyWith(fontSize: 15, color: widget.color),
           overflow: TextOverflow.ellipsis,
         );
       },

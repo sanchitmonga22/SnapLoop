@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:SnapLoop/Model/loop.dart';
+import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/chat/ExistingLoopChat/ExistingLoopChatViewModel.dart';
 import 'package:SnapLoop/ui/views/chat/LoopDetailsWidget/LoopDetailsView.dart';
 import 'package:SnapLoop/ui/views/chat/Messages/messagesView.dart';
@@ -20,8 +23,14 @@ class ExistingLoopChatView extends StatelessWidget {
 
   Widget getChatWidget(ExistingLoopChatViewModel model, BuildContext context) {
     return Container(
-        decoration:
-            BoxDecoration(color: model.backgroundColor.withOpacity(0.4)),
+        decoration: BoxDecoration(
+            // gradient: LinearGradient(colors: [
+            //   kChatViewColor.withOpacity(0.925),
+            //   kChatViewColor.withOpacity(0.95),
+            //   kChatViewColor.withOpacity(0.975),
+            //   kChatViewColor
+            // ]),
+            color: kChatViewColor),
         child: Stack(
           children: [
             Column(
@@ -61,7 +70,6 @@ class ExistingLoopChatView extends StatelessWidget {
                 ))
               : LoopsDetailsView(
                   loop: loop,
-                  backgroundColor: model.backgroundColor,
                   chatWidget: getChatWidget(model, context),
                   loopWidget: model.loopWidget,
                 );

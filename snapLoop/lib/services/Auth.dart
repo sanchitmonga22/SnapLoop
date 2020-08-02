@@ -130,7 +130,7 @@ class Auth with ReactiveServiceMixin {
     _token = token1;
     _userId = userId1;
 
-    if (!_connectionSerice.connected) {
+    if (_connectionSerice.connected == false) {
       dynamic userData = await _storageService.getValueFromKey("userData");
       if (userData != null) {
         user.value = ResponseParsingHelper.parseUser(userData, userId);
@@ -140,6 +140,8 @@ class Auth with ReactiveServiceMixin {
       _isAuth.value = false;
       return false;
     }
+
+    await _storageService.clearAll();
 
     // getting the userData from the server using the _token, add the API to the server
     http.Response res = await http.get(

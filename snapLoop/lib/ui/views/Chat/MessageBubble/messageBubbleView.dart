@@ -14,10 +14,12 @@ class MessageBubbleView extends StatelessWidget {
   final DateTime sent;
   final bool repeat;
   final bool showMemoji;
+  final Color messageColor;
   // will create a check later whether the loop has been successfully completed or not
   final String username;
 
   const MessageBubbleView({
+    this.messageColor,
     this.repeat = false,
     this.sent,
     this.message,
@@ -77,9 +79,7 @@ class MessageBubbleView extends StatelessWidget {
                           EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       margin: EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
-                          color: isMe
-                              ? kSystemPrimaryColor
-                              : Colors.black.withOpacity(0.7),
+                          color: isMe ? kSystemPrimaryColor : messageColor,
                           borderRadius: isMe
                               ? BorderRadius.only(
                                   topRight: Radius.circular(15),

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
@@ -7,7 +6,6 @@ import 'package:stacked/stacked.dart';
 @lazySingleton
 class StorageService with ReactiveServiceMixin {
   SharedPreferences prefs;
-
   Future<void> intialize() async {
     prefs = await SharedPreferences.getInstance();
   }
