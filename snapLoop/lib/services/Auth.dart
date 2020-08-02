@@ -73,6 +73,7 @@ class Auth with ReactiveServiceMixin {
         _token = response['token'];
         _userId = response['userId'];
         user.value = new User(
+            status: "I am new to SnapLoop!",
             numberOfLoopsRemaining: 5,
             contacts: [],
             requestsSent: [],
@@ -128,13 +129,10 @@ class Auth with ReactiveServiceMixin {
     }
     _token = token1;
     _userId = userId1;
-    print(_connectionSerice.connected);
 
     if (!_connectionSerice.connected) {
       dynamic userData = await _storageService.getValueFromKey("userData");
-      print(userData);
       if (userData != null) {
-        print('here');
         user.value = ResponseParsingHelper.parseUser(userData, userId);
         _isAuth.value = true;
         return true;

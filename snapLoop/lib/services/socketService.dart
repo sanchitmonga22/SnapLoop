@@ -62,8 +62,8 @@ class SocketService with ReactiveServiceMixin {
       print(data);
       _chatDataService
           .addNewChat(await ResponseParsingHelper.parseChat(data['chat']));
-      Loop loop = ResponseParsingHelper.parseLoop(data['loop']);
-      loop.type = LoopType.NEW_LOOP;
+      Loop loop =
+          ResponseParsingHelper.parseLoop(data['loop'], LoopType.NEW_LOOP);
       _loopsDataService.addNewLoop(loop);
     });
 

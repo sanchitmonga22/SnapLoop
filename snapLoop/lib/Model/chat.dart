@@ -7,6 +7,17 @@ class Chat {
   String chatID;
   final List<ChatInfo> chat;
   Chat({@required this.chatID, @required this.chat});
+
+  dynamic toJson() {
+    return {'_id': this.chatID, 'messages': getMessagesData()};
+  }
+
+  dynamic getMessagesData() {
+    var result = [];
+    for (int i = 0; i < chat.length; i++) {
+      result.add(chat[i].toJson());
+    }
+  }
 }
 
 class ChatInfo {
@@ -17,4 +28,12 @@ class ChatInfo {
 
   ChatInfo(
       {@required this.senderID, @required this.content, @required this.time});
+
+  dynamic toJson() {
+    return {
+      'content': content,
+      'sender': senderID,
+      'sentTime': time.toIso8601String()
+    };
+  }
 }

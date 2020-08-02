@@ -32,6 +32,10 @@ class ChatDataService with ReactiveServiceMixin {
     return [..._chats];
   }
 
+  void setChats(List<Chat> chts) {
+    _chats.addAll(chts);
+  }
+
   void addNewChat(Chat chat) {
     _chats.add(chat);
   }

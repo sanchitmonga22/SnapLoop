@@ -61,6 +61,7 @@ class ResponseParsingHelper {
 
   static User parseUser(dynamic response, String userId) {
     return User(
+        status: response['status'],
         myAvatar: response['myImage'] == "" || response['myImage'] == null
             ? null
             : base64Decode(response['myImage']),
@@ -85,20 +86,20 @@ class ResponseParsingHelper {
     List<Loop> newLoops = [];
     response = response as List<dynamic>;
     for (int i = 0; i < response.length; i++) {
-      Loop loop = parseLoop(response[i]['loop']);
-      loop.type = getLoopsType(response[i]['loopType']);
+      Loop loop =
+          parseLoop(response[i]['loop'], getLoopsType(response[i]['loopType']));
       newLoops.add(loop);
     }
     return newLoops;
   }
 
-  static Loop parseLoop(dynamic loop) {
+  static Loop parseLoop(dynamic loop, LoopType type) {
     List<dynamic> loopUsers = (loop['users'] as List).cast<dynamic>().toList();
     return Loop(
         atTimeEnding: DateTime.parse(loop['atTimeEnding']),
         currentUserId: loop['currentUserId'],
         name: loop['name'],
-        type: LoopType.UNIDENTIFIED,
+        type: type,
         numberOfMembers: loopUsers.length,
         avatars: getImagesMap(loopUsers),
         chatID: loop['chat'] as String,

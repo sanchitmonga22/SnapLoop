@@ -48,6 +48,16 @@ class UserDataService with ReactiveServiceMixin {
     return [..._friends.toList()];
   }
 
+  void setFriends(List<FriendsData> friends) {
+    _friends.addAll(friends);
+    _friends.toSet();
+  }
+
+  void setRequests(List<PublicUserData> reqs) {
+    _requests.addAll(reqs);
+    _requests.toSet();
+  }
+
   User get user {
     return _auth.user.value;
   }

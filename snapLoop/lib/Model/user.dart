@@ -1,6 +1,5 @@
+import 'dart:convert';
 import 'dart:typed_data';
-import 'dart:ui';
-
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:flutter/material.dart';
 
@@ -20,10 +19,12 @@ class User {
   final String phone;
   List<String> requestsSent;
   List<String> requestsReceived;
+  String status;
   // people who are in the user's contacts and are part of the snaploop
   List<String> contacts;
 
   User({
+    @required this.status,
     this.myAvatar,
     @required this.userID,
     @required this.numberOfLoopsRemaining,
@@ -38,6 +39,33 @@ class User {
     @required this.friendsIds,
     this.phone,
   });
+
+  dynamic toJson() {
+    return {
+      "status": this.status,
+      "username": this.username,
+      "myImage": base64Encode(this.myAvatar),
+      "numberOfLoopsRemaining": this.numberOfLoopsRemaining,
+      "contacts": this.contacts,
+      "displayName": this.displayName,
+      "email": this.email,
+      "score": this.score,
+      "friendsIds": friendsIds,
+      "requests": {
+        "sent": requestsSent,
+        "received": requestsReceived,
+      },
+      "loopsData": getLoopsData()
+    };
+  }
+
+  dynamic getLoopsData() {
+    var result = [];
+    for (int i = 0; i < loopsData.length; i++) {
+      result.add(loopsData[i].toJson());
+    }
+    return result;
+  }
 }
 
 class FriendsData {
@@ -64,6 +92,20 @@ class FriendsData {
       @required this.commonLoops,
       this.phone,
       @required this.mutualFriendsIDs});
+
+  dynamic toJson() {
+    return {
+      "username": this.username,
+      "myImage": base64Encode(this.avatar),
+      "displayName": this.displayName,
+      "email": this.email,
+      "score": this.score,
+      '_id': this.userID,
+      'status': this.status,
+      'commonLoops': this.commonLoops,
+      'mutualFriends': this.mutualFriendsIDs,
+    };
+  }
 
   @override
   bool operator ==(other) {
@@ -106,6 +148,15 @@ class PublicUserData {
     @required this.userID,
     //@required this.score
   });
+
+  dynamic toJson() {
+    return {
+      "myImage": this.avatar,
+      "email": this.email,
+      "_id": this.userID,
+      "username": this.username,
+    };
+  }
 
   @override
   bool operator ==(other) {

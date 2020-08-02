@@ -43,6 +43,29 @@ class Loop {
       this.avatars,
       @required this.userIDs});
 
+  dynamic toJson() {
+    return {
+      'loop': {
+        "atTimeEnding": this.atTimeEnding.toIso8601String(),
+        'name': this.name,
+        "chat": this.chatID,
+        'creatorId': this.creatorId,
+        '_id': this.id,
+        'currentUserId': this.currentUserId,
+        'users': loopUsersToJson()
+      },
+      'loopType': this.type
+    };
+  }
+
+  dynamic loopUsersToJson() {
+    var result = [];
+    for (int i = 0; i < userIDs.length; i++) {
+      result.add({'user': userIDs[i], 'avatarLink': avatars[userIDs[i]]});
+    }
+    return result;
+  }
+
   @override
   bool operator ==(other) {
     // Dart ensures that operator== isn't called with null

@@ -38,6 +38,14 @@ class LoopsDataService with ReactiveServiceMixin {
     _loops.add(loop);
   }
 
+  List<String> getAllChatIds() {
+    List<String> ids = [];
+    _loops.forEach((loop) {
+      ids.add(loop.chatID);
+    });
+    return ids;
+  }
+
   int get loopCount {
     return _loops.length;
   }

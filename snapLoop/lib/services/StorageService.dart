@@ -26,7 +26,7 @@ class StorageService with ReactiveServiceMixin {
   }
 
   Future<dynamic> getValueFromKey(String key) async {
-    return await json.decode(prefs.get(key));
+    return await json.decode(await prefs.get(key));
   }
 
   Future<void> clearAll() async {
