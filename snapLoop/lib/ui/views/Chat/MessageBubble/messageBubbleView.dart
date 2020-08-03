@@ -15,10 +15,12 @@ class MessageBubbleView extends StatelessWidget {
   final bool repeat;
   final bool showMemoji;
   final Color messageColor;
+  final String gifUrl;
   // will create a check later whether the loop has been successfully completed or not
   final String username;
 
   const MessageBubbleView({
+    this.gifUrl = "",
     this.messageColor,
     this.repeat = false,
     this.sent,
@@ -44,13 +46,13 @@ class MessageBubbleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Row(
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
             padding: EdgeInsets.only(top: repeat ? 3 : 10),
-            constraints:
-                BoxConstraints(maxWidth: MediaQuery.of(context).size.width / 2),
+            constraints: BoxConstraints(maxWidth: width / 2),
             child: Stack(
               children: [
                 Column(
@@ -74,6 +76,20 @@ class MessageBubbleView extends StatelessWidget {
                           ),
                         ),
                       ),
+                    if (gifUrl != "")
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.white,
+                                    style: BorderStyle.solid,
+                                    width: 2)),
+                            child: CachedNetworkImage(
+                              imageUrl: gifUrl,
+                              fit: BoxFit.contain,
+                            )),
+                      ),
                     Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -96,12 +112,13 @@ class MessageBubbleView extends StatelessWidget {
                                       : Radius.circular(15),
                                   bottomLeft: Radius.circular(0))),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            message,
-                            style: kTextFormFieldStyle,
-                          ),
+                          if (message != "")
+                            Text(
+                              message,
+                              style: kTextFormFieldStyle,
+                            ),
                           Text(
                             "${DateFormat('kk:mm').format(sent)}",
                             style: kTextFormFieldStyle.copyWith(fontSize: 10),

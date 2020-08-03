@@ -81,7 +81,7 @@ class _NewMessageViewState extends State<NewMessageView> {
               ),
             ),
           ),
-          if (controller.value.text != "")
+          if (controller.value.text != "" || widget.gifSelected)
             Align(
                 alignment:
                     width > 500 ? Alignment(1.05, 0) : Alignment(1.15, 0),
@@ -93,13 +93,14 @@ class _NewMessageViewState extends State<NewMessageView> {
                     size: 25,
                     color: Colors.white,
                   ),
-                  onPressed: enteredMessage.trim().isEmpty
-                      ? null
-                      : () async {
-                          FocusScope.of(context).unfocus();
-                          await widget.sendMessage(enteredMessage);
-                          controller.clear();
-                        },
+                  onPressed:
+                      enteredMessage.trim().isEmpty && !widget.gifSelected
+                          ? null
+                          : () async {
+                              FocusScope.of(context).unfocus();
+                              await widget.sendMessage(enteredMessage);
+                              controller.clear();
+                            },
                 ))
           else if (!widget.gifSelected)
             Padding(
@@ -142,7 +143,6 @@ class _NewMessageViewState extends State<NewMessageView> {
                         onTap: () {
                           widget.gifSelection(true);
                           FocusScope.of(context).unfocus();
-                          print('gif');
                         },
                         child: CircleAvatar(
                           child: Icon(

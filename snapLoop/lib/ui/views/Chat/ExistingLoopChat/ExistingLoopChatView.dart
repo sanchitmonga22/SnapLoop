@@ -25,7 +25,7 @@ class ExistingLoopChatView extends StatefulWidget {
 }
 
 class _ExistingLoopChatViewState extends State<ExistingLoopChatView> {
-  bool gifSelection = false;
+  bool gifSelection = false; // is the person currently selecting a gif
   Widget getChatWidget(ExistingLoopChatViewModel model, BuildContext context) {
     return Container(
         decoration: BoxDecoration(
@@ -51,7 +51,6 @@ class _ExistingLoopChatViewState extends State<ExistingLoopChatView> {
                       setState(() {
                         gifSelection = select;
                       });
-                      print(gifSelection);
                     },
                     sendMessage: (enteredMessage) {
                       return model.sendMessage(enteredMessage, context);
@@ -61,7 +60,21 @@ class _ExistingLoopChatViewState extends State<ExistingLoopChatView> {
                             LoopType.INACTIVE_LOOP_SUCCESSFUL ||
                         model.loop.type == LoopType.NEW_LOOP) &&
                     gifSelection))
-                  GIFSelection()
+                  GIFSelection(
+                    sendMessage: (String enteredMessage, String url) async {
+                      String finalMessage =
+                          url + kMesagesplitCode + enteredMessage;
+                      await model.sendMessage(finalMessage, context);
+                      setState(() {
+                        gifSelection = false;
+                      });
+                    },
+                    cancel: (bool cancel) {
+                      setState(() {
+                        gifSelection = !cancel;
+                      });
+                    },
+                  )
                 else
                   Padding(padding: EdgeInsets.only(bottom: 50)),
               ],

@@ -105,10 +105,11 @@ class ChatDataService with ReactiveServiceMixin {
     }
   }
 
-  Future<List<dynamic>> getGifs(String search) async {
+  Future<List<dynamic>> getGifs(String search, bool getSticker) async {
     try {
+      String searchType = getSticker ? 'stickers' : 'gifs';
       http.Response res = await http.get(
-          'https://api.giphy.com/v1/gifs/search?api_key=wSkieSvPYJ1G16q7rqsYGeQXaXI8B3nt&q=$search&limit=25');
+          'https://api.giphy.com/v1/$searchType/search?api_key=wSkieSvPYJ1G16q7rqsYGeQXaXI8B3nt&q=$search&limit=25');
       List<dynamic> urls = [];
       if (res.statusCode == 200) {
         final response = json.decode(res.body)['data'] as List<dynamic>;

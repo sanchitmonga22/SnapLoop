@@ -1,9 +1,11 @@
 import 'package:SnapLoop/Model/chat.dart';
+import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/constants.dart';
 import 'package:SnapLoop/ui/views/Chat/MessageBubble/messageBubbleView.dart';
 import 'package:SnapLoop/ui/views/chat/Messages/MessagesViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:validators/validators.dart';
 
 /// author: @sanchitmonga22
 class MessagesView extends StatelessWidget {
@@ -23,15 +25,27 @@ class MessagesView extends StatelessWidget {
                 : ListView.builder(
                     reverse: true,
                     itemBuilder: (context, index) {
+                      String gifURL = "";
                       ChatInfo message = model.chat[index];
+                      var split = message.content.split(kMesagesplitCode);
+
+                      if (isURL(split[0])) {
+                        gifURL = split[0];
+                      }
+
                       bool nextUserExists = index + 2 <= model.chat.length;
                       if (nextUserExists)
                         nextID = model.chat[index + 1].senderID;
-                      print(model.loop.type);
                       final view = MessageBubbleView(
-                        messageColor: determineLoopColor(model.loop.type),
+                        gifUrl: gifURL,
+                        messageColor:
+                            model.loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL
+                                ? Colors.white.withOpacity(0.2)
+                                : determineLoopColor(model.loop.type),
                         isMe: message.senderID == model.myId,
-                        message: message.content,
+                        message: gifURL != ""
+                            ? split.length == 2 ? split[1] : ""
+                            : message.content,
                         repeat:
                             index == // it is the last message, as seen from bottom to top since the list is reverse
                                     model.chat.length - 1

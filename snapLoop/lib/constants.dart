@@ -19,6 +19,7 @@ const double kMaxRadius = 103;
 const kTextFieldCursorColor = kSystemPrimaryColor;
 const kChatViewColor = Colors.black;
 final kChatViewDetailsColor = Colors.black.withOpacity(0.9);
+String kMesagesplitCode = ":\n\n";
 
 double kradiusCalculator(int numberOfMember) {
   if (numberOfMember < 13) {
