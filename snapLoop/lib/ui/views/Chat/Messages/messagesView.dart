@@ -22,48 +22,51 @@ class MessagesView extends StatelessWidget {
         return Expanded(
             child: loopId == "" || model.chat == null
                 ? Container()
-                : ListView.builder(
-                    reverse: true,
-                    itemBuilder: (context, index) {
-                      String gifURL = "";
-                      ChatInfo message = model.chat[index];
-                      var split = message.content.split(kMesagesplitCode);
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: ListView.builder(
+                      reverse: true,
+                      itemBuilder: (context, index) {
+                        String gifURL = "";
+                        ChatInfo message = model.chat[index];
+                        var split = message.content.split(kMesagesplitCode);
 
-                      if (isURL(split[0])) {
-                        gifURL = split[0];
-                      }
+                        if (isURL(split[0])) {
+                          gifURL = split[0];
+                        }
 
-                      bool nextUserExists = index + 2 <= model.chat.length;
-                      if (nextUserExists)
-                        nextID = model.chat[index + 1].senderID;
-                      final view = MessageBubbleView(
-                        gifUrl: gifURL,
-                        messageColor:
-                            model.loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL
-                                ? Colors.white.withOpacity(0.2)
-                                : determineLoopColor(model.loop.type),
-                        isMe: message.senderID == model.myId,
-                        message: gifURL != ""
-                            ? split.length == 2 ? split[1] : ""
-                            : message.content,
-                        repeat:
-                            index == // it is the last message, as seen from bottom to top since the list is reverse
-                                    model.chat.length - 1
-                                ? false
-                                : nextID == message.senderID,
-                        showMemoji:
-                            index == // it is the last message, as seen from bottom to top since the list is reverse
-                                    model.chat.length - 1
-                                ? true
-                                : nextID != message.senderID,
-                        sent: message.time,
-                        //TODO: fix the broken emojis
-                        userRandomMemoji: model.loop.avatars[message.senderID],
-                        key: ValueKey(index),
-                      );
-                      return view;
-                    },
-                    itemCount: model.chat.length ?? 0,
+                        bool nextUserExists = index + 2 <= model.chat.length;
+                        if (nextUserExists)
+                          nextID = model.chat[index + 1].senderID;
+                        return MessageBubbleView(
+                          gifUrl: gifURL,
+                          messageColor: model.loop.type ==
+                                  LoopType.INACTIVE_LOOP_SUCCESSFUL
+                              ? Colors.white.withOpacity(0.2)
+                              : determineLoopColor(model.loop.type),
+                          isMe: message.senderID == model.myId,
+                          message: gifURL != ""
+                              ? split.length == 2 ? split[1] : ""
+                              : message.content,
+                          repeat:
+                              index == // it is the last message, as seen from bottom to top since the list is reverse
+                                      model.chat.length - 1
+                                  ? false
+                                  : nextID == message.senderID,
+                          showMemoji:
+                              index == // it is the last message, as seen from bottom to top since the list is reverse
+                                      model.chat.length - 1
+                                  ? true
+                                  : nextID != message.senderID,
+                          sent: message.time,
+                          //TODO: fix the broken emojis
+                          userRandomMemoji:
+                              model.loop.avatars[message.senderID],
+                          key: ValueKey(index),
+                        );
+                      },
+                      itemCount: model.chat.length ?? 0,
+                    ),
                   ));
       },
     );

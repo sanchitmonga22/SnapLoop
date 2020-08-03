@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:SnapLoop/app/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -44,52 +46,98 @@ class MessageBubbleView extends StatelessWidget {
     }
   }
 
+  CachedNetworkImage getGif() {
+    return CachedNetworkImage(
+      progressIndicatorBuilder: (context, url, progress) {
+        return CircularProgressIndicator();
+      },
+      imageUrl: gifUrl,
+      fit: BoxFit.contain,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return Row(
-      mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
-        Container(
-            padding: EdgeInsets.only(top: repeat ? 3 : 10),
-            constraints: BoxConstraints(maxWidth: width / 2),
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment:
-                      isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
-                  children: [
-                    if (repeat == false && showMemoji)
-                      Padding(
-                        padding: isMe
-                            ? const EdgeInsets.only(left: 10)
-                            : const EdgeInsets.only(right: 10),
-                        child: CircleAvatar(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(blurRadius: 5, color: Colors.white)
-                              ],
-                              shape: BoxShape.circle,
-                              image: getImage(),
-                            ),
+    return GestureDetector(
+      onTap: () {
+        if (gifUrl != "") {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: ksigmaX, sigmaY: ksigmaY),
+                  child: AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                      backgroundColor: Colors.black45,
+                      content: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.white,
+                                  style: BorderStyle.solid,
+                                  width: 2)),
+                          child: getGif())));
+            },
+          );
+        }
+      },
+      child: Row(
+        mainAxisAlignment:
+            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          Container(
+              padding: EdgeInsets.only(top: repeat ? 3 : 10),
+              constraints: BoxConstraints(maxWidth: width / 2),
+              child: Column(
+                crossAxisAlignment:
+                    isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+                children: [
+                  if (repeat == false && showMemoji)
+                    Padding(
+                      padding: isMe
+                          ? const EdgeInsets.only(left: 10)
+                          : const EdgeInsets.only(right: 10),
+                      child: CircleAvatar(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(blurRadius: 5, color: Colors.white)
+                            ],
+                            shape: BoxShape.circle,
+                            image: getImage(),
                           ),
                         ),
                       ),
-                    if (gifUrl != "")
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.white,
-                                    style: BorderStyle.solid,
-                                    width: 2)),
-                            child: CachedNetworkImage(
-                              imageUrl: gifUrl,
-                              fit: BoxFit.contain,
-                            )),
+                    ),
+                  if (gifUrl != "")
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: Column(
+                        children: [
+                          Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: isMe
+                                          ? kSystemPrimaryColor
+                                          : messageColor,
+                                      style: BorderStyle.solid,
+                                      width: 1.5)),
+                              child: getGif()),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 5),
+                            color: isMe ? kSystemPrimaryColor : messageColor,
+                            width: double.infinity,
+                            child: Text(
+                              "${DateFormat('kk:mm').format(sent)}",
+                              style: kTextFormFieldStyle.copyWith(fontSize: 10),
+                            ),
+                          ),
+                        ],
                       ),
+                    ),
+                  if (message != "")
                     Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -112,13 +160,16 @@ class MessageBubbleView extends StatelessWidget {
                                       : Radius.circular(15),
                                   bottomLeft: Radius.circular(0))),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: gifUrl != ""
+                            ? CrossAxisAlignment.stretch
+                            : isMe
+                                ? CrossAxisAlignment.end
+                                : CrossAxisAlignment.start,
                         children: [
-                          if (message != "")
-                            Text(
-                              message,
-                              style: kTextFormFieldStyle,
-                            ),
+                          Text(
+                            message,
+                            style: kTextFormFieldStyle,
+                          ),
                           Text(
                             "${DateFormat('kk:mm').format(sent)}",
                             style: kTextFormFieldStyle.copyWith(fontSize: 10),
@@ -126,11 +177,10 @@ class MessageBubbleView extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ],
-            )),
-      ],
+                ],
+              )),
+        ],
+      ),
     );
   }
 }
