@@ -97,7 +97,7 @@ class _NewMessageViewState extends State<NewMessageView> {
                       enteredMessage.trim().isEmpty && !widget.gifSelected
                           ? null
                           : () async {
-                              FocusScope.of(context).unfocus();
+                              //FocusScope.of(context).unfocus();
                               await widget.sendMessage(enteredMessage);
                               controller.clear();
                             },

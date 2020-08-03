@@ -70,7 +70,7 @@ class MessageBubbleView extends StatelessWidget {
                   child: AlertDialog(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0)),
-                      backgroundColor: Colors.black45,
+                      backgroundColor: Colors.white.withOpacity(0.1),
                       content: Container(
                           decoration: BoxDecoration(
                               border: Border.all(

@@ -1,41 +1,44 @@
 import 'dart:ui';
-import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/ui/Widget/AnimatingFlatButton/AnimatingFlatButton.dart';
-import 'package:SnapLoop/app/locator.dart';
-import 'package:SnapLoop/app/router.gr.dart';
+
 import 'package:SnapLoop/app/constants.dart';
-import 'package:SnapLoop/services/LoopsDataService.dart';
+import 'package:SnapLoop/app/locator.dart';
+import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-/// author: @sanchitmonga22
+import 'AnimatingFlatButton/AnimatingFlatButton.dart';
+import 'CreateANewLoopDialog/createLoopDialog.dart';
 
-class CreateALoopDialog extends StatefulWidget {
-  final FriendsData friend;
+class ChangeItemValueDialog extends StatefulWidget {
+  final String initialText;
+  final String itemName;
 
-  const CreateALoopDialog({Key key, this.friend}) : super(key: key);
+  ChangeItemValueDialog({Key key, this.initialText, this.itemName})
+      : super(key: key);
+
   @override
-  _CreateALoopDialogState createState() => _CreateALoopDialogState();
+  _ChangeItemValueDialogState createState() => _ChangeItemValueDialogState();
 }
 
-class _CreateALoopDialogState extends State<CreateALoopDialog> {
+class _ChangeItemValueDialogState extends State<ChangeItemValueDialog> {
   TextEditingController _controller = TextEditingController();
   bool startAnimation = false;
   bool isSubmitted = false;
+  bool errorOccured = false;
   final _formKey = GlobalKey<FormState>();
-  String loopName = "";
+  String enteredValue = "";
+  final _userDataService = locator<UserDataService>();
 
   // The form field to enter the loop name
-  Widget getTextFormField(String loopName, BuildContext context) {
+  Widget getTextFormField(BuildContext context) {
     return TextFormField(
       textInputAction: TextInputAction.next,
-      controller: _controller,
+      controller: _controller..text = widget.initialText,
       cursorColor: kTextFieldCursorColor,
       focusNode: isSubmitted ? AlwaysDisabledFocusNode() : null,
       autofocus: true,
       decoration: !startAnimation
-          ? kgetDecoration("Loop name").copyWith(
-              hintText: "Enter here",
+          ? kgetDecoration(widget.itemName).copyWith(
               errorMaxLines: 3,
               hintStyle: kTextFormFieldStyle.copyWith(
                 fontSize: 15,
@@ -43,7 +46,6 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
               ),
             )
           : kgetDecoration("").copyWith(
-              hintText: "",
               hintStyle: kTextFormFieldStyle.copyWith(
                   fontSize: 15, fontWeight: FontWeight.w500),
             ),
@@ -51,27 +53,10 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
       autocorrect: false,
       textAlign: TextAlign.center,
       // validating whether the user uses the same name for the loop
-      validator: (value) {
-        // TODO: make a create a loop dialog VIEW MODEL AND MODEL
-        final _loopDataService = locator<LoopsDataService>();
-        if (_loopDataService.loopExistsWithName(value)) {
-          return "Please choose a different name, a loop with this name already exists";
-        } else if (value.isEmpty) {
-          return "Empty field!";
-        }
-
-        // storing the name of the loop to pass it onto the next screen
-      },
       onChanged: (value) {
-        loopName = value;
+        enteredValue = value;
       },
     );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -83,7 +68,6 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         backgroundColor: Colors.white.withOpacity(0.1),
         content: Container(
-          height: 170,
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
@@ -99,12 +83,21 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
                           width: double.infinity,
                           child: AnimatingFlatButton(
                             isAnimating: startAnimation,
-                            innerWidget: getTextFormField(loopName, context),
+                            innerWidget: getTextFormField(context),
                           ),
                         ))),
+                if (errorOccured)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${widget.itemName} is taken, please try with a different value",
+                      style: kTextFormFieldStyle.copyWith(
+                          fontSize: 10, color: Colors.red),
+                    ),
+                  ),
                 if (isSubmitted)
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                 SizedBox(
                     width: double.infinity,
@@ -112,40 +105,35 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
                     child: FlatButton(
                       disabledColor: kSystemPrimaryColor.withOpacity(0.5),
                       color: Colors.blueAccent[400],
-                      focusColor: CupertinoColors.systemOrange,
                       textTheme: ButtonTextTheme.primary,
                       onPressed: isSubmitted
                           ? null
-                          : () {
+                          : () async {
                               if (_formKey.currentState.validate()) {
                                 _formKey.currentState.save();
-                                loopName = _controller.text;
+                                enteredValue = _controller.text;
                                 // to remove the focus
                                 FocusScope.of(context)
                                     .requestFocus(new FocusNode());
                                 setState(() {
+                                  errorOccured = false;
                                   isSubmitted = true;
                                   startAnimation = !startAnimation;
                                 });
-                                if (widget.friend == null) {
-                                  // going to the contacts screen and then selecting a friend
-                                  Navigator.of(context).pushReplacementNamed(
-                                      Routes.friendsView,
-                                      arguments: FriendsViewArguments(
-                                          loopName: loopName,
-                                          loopForwarding: false));
-                                } else {
-                                  //going to the chat screen directly
-                                  Navigator.of(context).pushReplacementNamed(
-                                      Routes.newLoopChatView,
-                                      arguments: NewLoopChatViewArguments(
-                                          loopName: loopName,
-                                          friend: widget.friend));
-                                }
+                                bool result = await _userDataService.update(
+                                    widget.itemName, enteredValue);
+                                if (result)
+                                  Navigator.of(context).pop();
+                                else
+                                  setState(() {
+                                    errorOccured = true;
+                                    isSubmitted = false;
+                                    startAnimation = !startAnimation;
+                                  });
                               }
                             },
                       child: Text(
-                        "Create",
+                        "Change",
                         style: kTextFormFieldStyle,
                       ),
                     ))
@@ -156,9 +144,4 @@ class _CreateALoopDialogState extends State<CreateALoopDialog> {
       ),
     );
   }
-}
-
-class AlwaysDisabledFocusNode extends FocusNode {
-  @override
-  bool get hasFocus => false;
 }

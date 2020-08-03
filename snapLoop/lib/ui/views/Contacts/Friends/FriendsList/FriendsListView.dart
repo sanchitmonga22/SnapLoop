@@ -26,7 +26,8 @@ class FriendsListView extends HookViewModelWidget<FriendsViewModel> {
                 IconSlideAction(
                   caption: 'Start new',
                   color: Colors.black,
-                  icon: CupertinoIcons.loop,
+                  icon: CupertinoIcons.loop_thick,
+                  closeOnTap: true,
                   onTap: () {
                     showDialog(
                         context: context,
@@ -52,12 +53,11 @@ class FriendsListView extends HookViewModelWidget<FriendsViewModel> {
                     Navigator.of(context).pop(friend);
                 }
               },
-              backgroundColor: Colors.black,
               maintainState: true,
               title: Text(
                 friend.displayName,
-                style: kTextFormFieldStyle.copyWith(
-                    fontWeight: FontWeight.bold, color: kSystemPrimaryColor),
+                style:
+                    kTextFormFieldStyle.copyWith(fontWeight: FontWeight.bold),
               ),
               leading: CircleAvatar(
                 child: friend.avatar == null
@@ -80,11 +80,11 @@ class FriendsListView extends HookViewModelWidget<FriendsViewModel> {
               ),
               trailing: Text(
                 "Score: ${friend.score}",
-                style: kTextFormFieldStyle.copyWith(color: kSystemPrimaryColor),
+                style: kTextFormFieldStyle,
               ),
               subtitle: AutoSizeText(
                 friend.email,
-                style: kTextFormFieldStyle.copyWith(color: kSystemPrimaryColor),
+                style: kTextFormFieldStyle,
               ),
               children: [
                 model.newLoop

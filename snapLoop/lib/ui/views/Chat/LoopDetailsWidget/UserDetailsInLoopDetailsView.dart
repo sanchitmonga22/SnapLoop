@@ -102,18 +102,6 @@ class _UserDetailsInLoopDetailsViewState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AutoSizeText(
-                  widget.loop.name,
-                  style: kTextFormFieldStyle,
-                  textAlign: TextAlign.left,
-                  maxFontSize: 20,
-                  minFontSize: 16,
-                ),
-              ],
-            ),
             AutoSizeText(
               "Members",
               style: kTextFormFieldStyle,

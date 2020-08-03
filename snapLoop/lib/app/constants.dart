@@ -110,18 +110,18 @@ InputDecoration kgetDecoration(String labelText) {
 
 //SECTION: NAV BAR
 const kActiveNavBarIconColor = kSystemPrimaryColor;
-const kInactiveNavBarIconColor = CupertinoColors.systemGrey;
+const kInactiveNavBarIconColor = Colors.white;
 
 //SECTION: SIGNUP WIDGET:
 const double kminHeightSignUpWidget = 80;
 const double kmaxHeightSignUpWidget = 250;
 
 // SECTION: HOME SCREEN
-const kAppBarBackgroundColor = Colors.black;
+final kAppBarBackgroundColor = Colors.white.withOpacity(0.15);
 const kTextStyleHomeScreen =
     TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15);
 
-final kHomeScreenBoxDecoration = BoxDecoration(color: CupertinoColors.white);
+final kHomeScreenBoxDecoration = BoxDecoration(color: Colors.black);
 
 // SECTION: LOOP CONTENT
 // KEY: Number of Members, and Value Factor by which the maxRadius has to be reduced

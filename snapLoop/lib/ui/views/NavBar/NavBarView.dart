@@ -1,10 +1,13 @@
 import 'dart:ui';
 import 'package:SnapLoop/app/constants.dart';
+import 'package:SnapLoop/ui/Widget/ChangeUsernameDialog.dart';
+import 'package:SnapLoop/ui/Widget/ImagePickerDialog/ImagePickerDialog.dart';
 import 'package:SnapLoop/ui/views/Contacts/Friends/FriendsView.dart';
 import 'package:SnapLoop/ui/views/Home/homeView.dart';
 import 'package:SnapLoop/ui/views/NavBar/NavBarViewModel.dart';
 import 'package:SnapLoop/ui/views/Profile/UserProfileView.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -66,8 +69,6 @@ class _NavBarViewState extends State<NavBarView>
         inactiveColor: kInactiveNavBarIconColor,
       ),
       PersistentBottomNavBarItem(
-        //Icons.people
-        //.person_add
         icon: Icon(Icons.people),
         title: ("People"),
         activeColor: kActiveNavBarIconColor,
@@ -75,8 +76,23 @@ class _NavBarViewState extends State<NavBarView>
       ),
       PersistentBottomNavBarItem(
         icon: model.myImage != null
-            ? CircleAvatar(
-                radius: 20, backgroundImage: MemoryImage(model.myImage))
+            ? GestureDetector(
+                onLongPress: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => ImagePicketDialog(
+                      remove: true,
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: kSystemPrimaryColor, width: 2)),
+                  child: CircleAvatar(
+                      radius: 20, backgroundImage: MemoryImage(model.myImage)),
+                ),
+              )
             : Icon(Icons.account_circle),
         title: model.myImage != null ? null : "Profile",
         activeColor: kActiveNavBarIconColor,
@@ -108,13 +124,14 @@ class _NavBarViewState extends State<NavBarView>
         builder: (context, model, child) {
           return SafeArea(
               child: Scaffold(
+                  backgroundColor: Colors.black,
                   resizeToAvoidBottomPadding:
                       false, // IMPORTANT: to avoid bottom overflow for the create a loop dialog
                   appBar: AppBar(
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        AutoSizeText(
                           "Score: ${model.userScore.toString()}",
                           textAlign: TextAlign.left,
                           style: kTextStyleHomeScreen,
@@ -138,15 +155,24 @@ class _NavBarViewState extends State<NavBarView>
                             repeatForever: false,
                           ),
                         ),
-                        Container(
-                          foregroundDecoration: BoxDecoration(
-                              border: Border.all(style: BorderStyle.solid),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
+                        GestureDetector(
+                          onLongPress: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ChangeItemValueDialog(
+                                  initialText: model.displayName,
+                                  itemName: "displayName",
+                                );
+                              },
+                            );
+                          },
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(maxWidth: 70),
+                            child: AutoSizeText(
                               model.displayName,
                               style: kTextStyleHomeScreen,
+                              maxFontSize: 15,
                             ),
                           ),
                         ),
@@ -209,36 +235,44 @@ class _NavBarViewState extends State<NavBarView>
                                 )
                         ],
                       )),
-                  bottomNavigationBar: PersistentBottomNavBar(
-                    confineToSafeArea: true,
-                    itemAnimationProperties:
-                        ItemAnimationProperties(curve: Curves.bounceIn),
-                    decoration: NavBarDecoration(
-                      adjustScreenBottomPaddingOnCurve: true,
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          topLeft: Radius.circular(20)),
-                    ),
-                    items: _navBarsItems(model),
-                    onItemSelected: (value) {
-                      if (value > 0) {
-                        value++;
-                      }
-                      setState(() {
-                        if (_floatingBubbleAnimationController.isCompleted) {
-                          model.toggleIsTapped();
-                          _floatingBubbleAnimationController.reverse();
+                  bottomNavigationBar: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: PersistentBottomNavBar(
+                      confineToSafeArea: true,
+                      itemAnimationProperties:
+                          ItemAnimationProperties(curve: Curves.bounceIn),
+                      decoration: NavBarDecoration(
+                        adjustScreenBottomPaddingOnCurve: true,
+                        border: Border.fromBorderSide(BorderSide(
+                            style: BorderStyle.solid,
+                            color: Colors.black,
+                            width: 2)),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            topLeft: Radius.circular(20)),
+                      ),
+                      items: _navBarsItems(model),
+                      onItemSelected: (value) {
+                        if (value > 0) {
+                          value++;
                         }
-                        _toggleTab(value);
-                      });
-                    },
-                    navBarHeight: 60,
-                    navBarStyle: NavBarStyle.style2,
-                    iconSize: 25,
-                    selectedIndex:
-                        _tabController.index > 0 ? _tabController.index - 1 : 0,
-                    backgroundColor: Colors.black,
-                    popScreensOnTapOfSelectedTab: false,
+                        setState(() {
+                          if (_floatingBubbleAnimationController.isCompleted) {
+                            model.toggleIsTapped();
+                            _floatingBubbleAnimationController.reverse();
+                          }
+                          _toggleTab(value);
+                        });
+                      },
+                      navBarHeight: 60,
+                      navBarStyle: NavBarStyle.style2,
+                      iconSize: 25,
+                      selectedIndex: _tabController.index > 0
+                          ? _tabController.index - 1
+                          : 0,
+                      backgroundColor: Colors.white.withOpacity(0.07),
+                      popScreensOnTapOfSelectedTab: false,
+                    ),
                   )));
         });
   }

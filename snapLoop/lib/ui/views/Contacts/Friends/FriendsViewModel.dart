@@ -91,7 +91,7 @@ class FriendsViewModel extends ReactiveViewModel {
               child: AlertDialog(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
-                  backgroundColor: Colors.black45,
+                  backgroundColor: Colors.white.withOpacity(0.1),
                   content: Container(
                     height: MediaQuery.of(context).size.height * .65,
                     width: MediaQuery.of(context).size.width,

@@ -36,6 +36,7 @@ class _FriendsViewState extends State<FriendsView>
             model.initialize(widget.loopName, widget.loopForwarding),
         builder: (context, model, child) {
           return Material(
+              color: Colors.black,
               child: model.isBusy
                   ? Container(
                       child: Center(
@@ -111,6 +112,20 @@ class _FriendsViewState extends State<FriendsView>
                                   ),
                                 );
                               },
+                              cancellationWidget: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      width: 1,
+                                      color: Colors.white.withOpacity(0.5)),
+                                  color: Colors.white.withOpacity(0.1),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                child: Text(
+                                  'Cancel',
+                                  style: kTextFormFieldStyle,
+                                ),
+                              ),
                               onItemFound: (userData, int index) {
                                 return Container(
                                     color: Colors.blue,
@@ -130,7 +145,9 @@ class _FriendsViewState extends State<FriendsView>
                                       width: 30,
                                       child: CircularProgressIndicator())),
                               emptyWidget: Text(
-                                  "No items found, Please try searching with a different name"),
+                                "No items found, Please try searching with a different name",
+                                style: kTextFormFieldStyle,
+                              ),
                               onError: (error) {
                                 print(error.toString());
                                 return Text("Error");
@@ -144,7 +161,7 @@ class _FriendsViewState extends State<FriendsView>
                                         child: Text(
                                           "You don't currently have any friends! please search users above to add them as friend",
                                           style: kTextFormFieldStyle.copyWith(
-                                              color: Colors.black),
+                                              color: Colors.white),
                                         ),
                                       ),
                                     )

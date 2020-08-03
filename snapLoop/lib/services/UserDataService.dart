@@ -386,6 +386,26 @@ class UserDataService with ReactiveServiceMixin {
     }
   }
 
+  Future<bool> update(String itemName, String itemValue) async {
+    try {
+      http.Response res = await http.post('$SERVER_IP/users/update',
+          headers: {
+            "Authorization": "Bearer " + _auth.token,
+            "Content-Type": "application/json",
+          },
+          body: jsonEncode({"item": itemName, "itemValue": itemValue}));
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        throw new HttpException("Request not removed\n" + res.body);
+      }
+    } catch (err) {
+      //throw new HttpException(err.toString());
+      print(err.toString());
+      return false;
+    }
+  }
+
 // will use the PublicUserData
 
   // List<User> get contacts {

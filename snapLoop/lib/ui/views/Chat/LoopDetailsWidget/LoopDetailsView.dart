@@ -4,6 +4,7 @@ import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/app/constants.dart';
 import 'package:SnapLoop/ui/views/Chat/LoopDetailsWidget/UserDetailsInLoopDetailsView.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -39,9 +40,6 @@ class _LoopsDetailsViewState extends State<LoopsDetailsView> {
         child: SafeArea(
           child: Scaffold(
             body: Stack(children: [
-              // Container(
-              //   color:s Colors.black.withOpacity(0.2),
-              // ),
               Container(
                   alignment: Alignment.topCenter,
                   decoration: BoxDecoration(color: kChatViewDetailsColor),
@@ -109,12 +107,46 @@ class _LoopsDetailsViewState extends State<LoopsDetailsView> {
                                     color: Colors.white,
                                     atTimeEnding: widget.loop.atTimeEnding),
                               ),
-                            Text(
-                              "Number of Member: ${widget.loop.numberOfMembers} ",
-                              style: kTextFormFieldStyle,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.people,
+                                  color: Colors.blue[300],
+                                  size: 25,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  widget.loop.numberOfMembers.toString(),
+                                  style: kTextFormFieldStyle.copyWith(
+                                      fontSize: 15, color: Colors.white),
+                                ),
+                              ],
                             ),
                             SizedBox(
                               height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  CupertinoIcons.loop_thick,
+                                  color: Colors.blue[300],
+                                  size: 25,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                AutoSizeText(
+                                  widget.loop.name,
+                                  style: kTextFormFieldStyle,
+                                  textAlign: TextAlign.left,
+                                  maxFontSize: 20,
+                                  minFontSize: 16,
+                                ),
+                              ],
                             ),
                           ],
                         ),

@@ -165,7 +165,8 @@ class _GIFSelectionState extends State<GIFSelection> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(20.0)),
-                                        backgroundColor: Colors.black45,
+                                        backgroundColor:
+                                            Colors.white.withOpacity(0.1),
                                         content: SingleChildScrollView(
                                           child: Column(
                                             children: [

@@ -52,7 +52,8 @@ class _LoopWidgetViewState extends State<LoopWidgetView>
             child: CircleAvatar(
                 //backgroundColor: kLoopContentBackgroundColor,
                 backgroundColor: determineLoopColor(widget.loop.type)
-                    .withOpacity(widget.isTappable ? 0.5 : 1),
+                //.withOpacity(widget.isTappable ? 0.5 : 1),
+                ,
                 radius: widget.radius,
                 //NOTE: FlipCard() changed, Line 174 and 195 modified to include the open till pressed functionality
                 // Added a VoidCallBack function onTapNavigator to detect the tap, onTapNavigator
@@ -101,12 +102,12 @@ class _LoopWidgetViewState extends State<LoopWidgetView>
                           child: widget.loop.atTimeEnding != null &&
                                   !kloopComplete(widget.loop.type)
                               ? LoopTimer(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   atTimeEnding: widget.loop.atTimeEnding,
                                 )
                               : Icon(
-                                  CupertinoIcons.loop,
-                                  color: Colors.black,
+                                  CupertinoIcons.loop_thick,
+                                  color: Colors.white,
                                   size: widget.loop.numberOfMembers > 12
                                       ? kfixedRadiusFactor["MAX"] * 70
                                       : kfixedRadiusFactor[
@@ -117,14 +118,16 @@ class _LoopWidgetViewState extends State<LoopWidgetView>
                         AutoSizeText(
                           "${widget.loop.name}",
                           maxLines: 1,
-                          style: kLoopDetailsTextStyle.copyWith(fontSize: 15),
+                          style: kLoopDetailsTextStyle.copyWith(
+                              fontSize: 15, color: Colors.white),
                           overflow: TextOverflow.ellipsis,
                         ),
                         Expanded(
                           child: AutoSizeText(
                             "👥 ${widget.loop.numberOfMembers}",
                             maxLines: 1,
-                            style: kLoopDetailsTextStyle.copyWith(fontSize: 15),
+                            style: kLoopDetailsTextStyle.copyWith(
+                                fontSize: 15, color: Colors.white),
                             textAlign: TextAlign.start,
                           ),
                         ),

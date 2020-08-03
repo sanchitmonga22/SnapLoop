@@ -43,12 +43,12 @@ class _FloatingActionButtonViewState extends State<FloatingActionButtonView> {
                 radius: 15,
               ),
             },
-            backGroundColor: Colors.black,
+            backGroundColor: Colors.white.withOpacity(0.2),
             items: <Bubble>[
               Bubble(
                   title: "+",
                   iconColor: Colors.white,
-                  bubbleColor: Colors.black,
+                  bubbleColor: Colors.white.withOpacity(0.2),
                   icon: CupertinoIcons.loop_thick,
                   titleStyle: kTextStyleHomeScreen.copyWith(
                       fontSize: 20, fontWeight: FontWeight.w900),
@@ -72,7 +72,7 @@ class _FloatingActionButtonViewState extends State<FloatingActionButtonView> {
               Bubble(
                 title: "+",
                 iconColor: Colors.white,
-                bubbleColor: Colors.black,
+                bubbleColor: Colors.white.withOpacity(0.2),
                 icon: CupertinoIcons.person_solid,
                 titleStyle: kTextStyleHomeScreen.copyWith(
                     fontSize: 20, fontWeight: FontWeight.w900),
