@@ -1,6 +1,6 @@
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/constants.dart';
-import 'package:SnapLoop/ui/views/Chat/gifSelectionView.dart';
+import 'package:SnapLoop/app/constants.dart';
+import 'package:SnapLoop/ui/views/Chat/NewMessage/gifSelectionView.dart';
 import 'package:SnapLoop/ui/views/chat/ExistingLoopChat/ExistingLoopChatViewModel.dart';
 import 'package:SnapLoop/ui/views/chat/LoopDetailsWidget/LoopDetailsView.dart';
 import 'package:SnapLoop/ui/views/chat/Messages/messagesView.dart';

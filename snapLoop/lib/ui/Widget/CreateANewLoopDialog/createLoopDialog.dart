@@ -3,7 +3,7 @@ import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/ui/Widget/AnimatingFlatButton/AnimatingFlatButton.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/app/router.gr.dart';
-import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/app/constants.dart';
 import 'package:SnapLoop/services/LoopsDataService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

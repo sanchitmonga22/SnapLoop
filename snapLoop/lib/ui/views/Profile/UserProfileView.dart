@@ -1,5 +1,5 @@
 import 'package:SnapLoop/app/router.gr.dart';
-import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/app/constants.dart';
 import 'package:SnapLoop/ui/Widget/ImagePickerDialog/ImagePickerDialog.dart';
 import 'package:SnapLoop/ui/views/Profile/UserProfileViewModel.dart';
 import 'package:auto_size_text/auto_size_text.dart';

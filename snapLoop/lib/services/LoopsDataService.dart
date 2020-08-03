@@ -3,7 +3,7 @@ import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/Model/responseParsingHelper.dart';
 import 'package:SnapLoop/app/locator.dart';
-import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/app/constants.dart';
 import 'package:SnapLoop/services/Auth.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:http/http.dart' as http;

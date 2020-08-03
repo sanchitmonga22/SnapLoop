@@ -3,7 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../constants.dart';
+import '../../../app/constants.dart';
 
 class LoopTimer extends StatefulWidget {
   final DateTime atTimeEnding;

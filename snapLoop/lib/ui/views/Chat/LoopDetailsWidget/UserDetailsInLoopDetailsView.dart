@@ -8,7 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
 
-import '../../../../constants.dart';
+import '../../../../app/constants.dart';
 import 'package:http/http.dart' as http;
 
 class UserDetailsInLoopDetailsView extends StatefulWidget {

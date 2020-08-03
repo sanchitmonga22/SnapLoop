@@ -4,7 +4,7 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../constants.dart';
+import '../../../../app/constants.dart';
 
 class SignUpWidgetView extends HookViewModelWidget<AuthViewModel> {
   final Animation opacityAnimation;

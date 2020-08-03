@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/app/constants.dart';
 import 'package:SnapLoop/ui/views/Contacts/Friends/FriendsView.dart';
 import 'package:SnapLoop/ui/views/Home/homeView.dart';
 import 'package:SnapLoop/ui/views/NavBar/NavBarViewModel.dart';

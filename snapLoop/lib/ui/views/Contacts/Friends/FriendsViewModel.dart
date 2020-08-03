@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../../constants.dart';
+import '../../../../app/constants.dart';
 
 class FriendsViewModel extends ReactiveViewModel {
   final _userData = locator<UserDataService>();

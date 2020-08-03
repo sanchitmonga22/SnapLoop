@@ -11,7 +11,7 @@ import 'package:injectable/injectable.dart';
 import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
 
-import '../constants.dart';
+import '../app/constants.dart';
 
 /// author: @sanchitmonga22
 

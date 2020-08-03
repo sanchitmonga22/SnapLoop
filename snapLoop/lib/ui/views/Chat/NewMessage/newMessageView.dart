@@ -1,4 +1,4 @@
-import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/app/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,6 @@
 import 'package:SnapLoop/Model/chat.dart';
 import 'package:SnapLoop/Model/loop.dart';
-import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/app/constants.dart';
 import 'package:SnapLoop/ui/views/Chat/MessageBubble/messageBubbleView.dart';
 import 'package:SnapLoop/ui/views/chat/Messages/MessagesViewModel.dart';
 import 'package:flutter/material.dart';

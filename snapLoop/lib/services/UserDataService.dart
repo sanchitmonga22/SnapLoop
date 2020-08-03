@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:SnapLoop/Model/HttpException.dart';
 import 'package:SnapLoop/Model/user.dart';
 import 'package:SnapLoop/Model/responseParsingHelper.dart';
-import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/app/constants.dart';
 import 'package:injectable/injectable.dart';
 import 'package:observable_ish/list/list.dart';
 import 'package:observable_ish/set/set.dart';

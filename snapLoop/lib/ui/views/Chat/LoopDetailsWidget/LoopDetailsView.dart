@@ -1,7 +1,7 @@
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/ui/Widget/time/timer.dart';
 import 'package:SnapLoop/app/router.gr.dart';
-import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/app/constants.dart';
 import 'package:SnapLoop/ui/views/Chat/LoopDetailsWidget/UserDetailsInLoopDetailsView.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
 import 'package:flutter/cupertino.dart';

@@ -1,5 +1,5 @@
 import 'package:SnapLoop/ui/views/Contacts/ContactsDialog/ContactsDialogView.dart';
-import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/app/constants.dart';
 import 'package:SnapLoop/ui/views/Contacts/Friends/FriendsViewModel.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';

@@ -5,7 +5,7 @@ import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/LoopsDataService.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/app/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:validators/validators.dart';
 

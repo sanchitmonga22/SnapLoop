@@ -12,7 +12,7 @@ import 'package:injectable/injectable.dart';
 import 'package:observable_ish/value/value.dart';
 import 'package:stacked/stacked.dart';
 
-import '../constants.dart';
+import '../app/constants.dart';
 
 /// author: @sanchitmonga22
 @lazySingleton

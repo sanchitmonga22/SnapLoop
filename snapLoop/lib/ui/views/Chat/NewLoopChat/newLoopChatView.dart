@@ -1,5 +1,5 @@
 import 'package:SnapLoop/Model/user.dart';
-import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/app/constants.dart';
 import 'package:SnapLoop/ui/views/chat/LoopDetailsWidget/LoopDetailsView.dart';
 import 'package:SnapLoop/ui/views/chat/NewLoopChat/NewLoopChatViewModel.dart';
 import 'package:SnapLoop/ui/views/chat/Messages/messagesView.dart';

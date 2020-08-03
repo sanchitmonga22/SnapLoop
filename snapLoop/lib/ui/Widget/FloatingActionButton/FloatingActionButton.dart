@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../constants.dart';
+import '../../../app/constants.dart';
 
 class FloatingActionButtonView extends StatefulWidget {
   const FloatingActionButtonView({

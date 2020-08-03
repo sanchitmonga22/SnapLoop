@@ -7,10 +7,7 @@ import 'package:SnapLoop/services/LoopsDataService.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:SnapLoop/ui/Widget/time/timezones.dart';
 import 'package:SnapLoop/ui/views/Home/LoopWidget/loopWidgetView.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
-
-import '../../../../constants.dart';
 
 class NewLoopChatViewModel extends ReactiveViewModel {
   final _userDataService = locator<UserDataService>();

@@ -2,7 +2,7 @@ import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/LoopsDataService.dart';
 import 'package:stacked/stacked.dart';
-import '../../../constants.dart';
+import '../../../app/constants.dart';
 
 class HomeViewModel extends ReactiveViewModel {
   final _loopDataService = locator<LoopsDataService>();
