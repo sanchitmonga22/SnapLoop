@@ -1,8 +1,6 @@
 import 'package:SnapLoop/app/customRoute.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/MainViewModel.dart';
-import 'package:SnapLoop/lifecycleHandler.dart';
-import 'package:SnapLoop/services/ConnectionService.dart';
 import 'package:SnapLoop/services/StorageService.dart';
 import 'package:SnapLoop/ui/views/NavBar/NavBarView.dart';
 import 'package:SnapLoop/ui/views/Auth/AuthView.dart';
@@ -23,7 +21,6 @@ void main() async {
 class SnapLoop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addObserver(LifeCycleEventHandler());
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => MainViewModel(),
       onModelReady: (model) {

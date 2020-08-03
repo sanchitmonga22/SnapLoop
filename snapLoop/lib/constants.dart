@@ -265,16 +265,16 @@ Color determineLoopColor(type) {
     return Colors.redAccent[700];
   }
   if (type == LoopType.NEW_NOTIFICATION) {
-    return Colors.cyan[300];
+    return Colors.lightBlueAccent[700];
   }
   if (type == LoopType.EXISTING_LOOP) {
-    return Colors.greenAccent;
-  }
-  if (type == LoopType.INACTIVE_LOOP_FAILED) {
     return CupertinoColors.systemIndigo;
   }
+  if (type == LoopType.INACTIVE_LOOP_FAILED) {
+    return Colors.blueGrey;
+  }
   if (type == LoopType.INACTIVE_LOOP_SUCCESSFUL) {
-    return Colors.tealAccent[100];
+    return Colors.tealAccent[700];
   }
   return null;
 }

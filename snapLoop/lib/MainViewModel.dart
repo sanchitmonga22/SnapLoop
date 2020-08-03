@@ -5,13 +5,14 @@ import 'package:SnapLoop/services/LoopsDataService.dart';
 import 'package:SnapLoop/services/StorageService.dart';
 import 'package:SnapLoop/services/UserDataService.dart';
 import 'package:SnapLoop/services/socketService.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'Model/chat.dart';
 import 'Model/responseParsingHelper.dart';
 import 'Model/user.dart';
 import 'app/locator.dart';
 
-class MainViewModel extends ReactiveViewModel {
+class MainViewModel extends ReactiveViewModel with WidgetsBindingObserver {
   final _auth = locator<Auth>();
   final _socket = locator<SocketService>();
   final _connectionService = locator<ConnectionStatusService>();
@@ -30,6 +31,7 @@ class MainViewModel extends ReactiveViewModel {
 
   Future<bool> tryAutoLogin() async {
     setBusy(true);
+    WidgetsBinding.instance.addObserver(this);
     final _connectionService = locator<ConnectionStatusService>();
     await _connectionService.initialize();
     bool login = await _auth.tryAutoLogin();
@@ -47,14 +49,36 @@ class MainViewModel extends ReactiveViewModel {
   List<ReactiveServiceMixin> get reactiveServices => [_auth];
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.paused:
+        print(state);
+        await saveAppState();
+        break;
+      case AppLifecycleState.detached:
+        print(state);
+        await saveAppState();
+        break;
+      default:
+        break;
+    }
+  }
+
+  @override
   void dispose() async {
-    await saveAppState();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   // save the app state before closing the app
   Future<void> saveAppState() async {
     await _storageService.clearAll();
+
+    await _userDataService.updateUserData();
+    await _userDataService.updateFriends();
+    await _userDataService.updateRequests();
+    _loopDataService.initializeLoopsFromUserData();
+
     await _storageService.addNewKeyValue(
         "userData", _userDataService.user.toJson());
     List<FriendsData> _frnds = _userDataService.friends;
@@ -77,14 +101,15 @@ class MainViewModel extends ReactiveViewModel {
     _auth.user.value = ResponseParsingHelper.parseUser(userData, _auth.userId);
     _loopDataService.initializeLoopsFromUserData();
 
-    // List<String> chatIds = _loopDataService.getAllChatIds();
-    // _chatDataService.setChats([]);
-    // List<Chat> chats = [];
-    // chatIds.forEach((element) async {
-    //   chats.add(await ResponseParsingHelper.parseChat(
-    //       _storageService.getValueFromKey(element)));
-    // });
-    // _chatDataService.setChats(chats);
+    List<String> chatIds = _loopDataService.getAllChatIds();
+    _chatDataService.setChats([]);
+    List<Chat> chats = [];
+    chatIds.forEach((element) async {
+      chats.add(await ResponseParsingHelper.parseChat(
+          _storageService.getValueFromKey(element)));
+    });
+    _chatDataService.setChats(chats);
+
     List<String> frndIds = [];
     frndIds = _auth.user.value.friendsIds;
     List<FriendsData> frnds = [];

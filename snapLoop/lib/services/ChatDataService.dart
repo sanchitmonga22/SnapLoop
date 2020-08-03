@@ -6,7 +6,6 @@ import 'package:SnapLoop/Model/responseParsingHelper.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/services/Auth.dart';
 import 'package:SnapLoop/services/ConnectionService.dart';
-import 'package:SnapLoop/services/StorageService.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:observable_ish/observable_ish.dart';
@@ -106,5 +105,27 @@ class ChatDataService with ReactiveServiceMixin {
     }
   }
 
-  // either get the chat from the server or get the chat from the
+  Future<List<dynamic>> getGifs(String search) async {
+    try {
+      http.Response res = await http.get(
+          'https://api.giphy.com/v1/gifs/search?api_key=wSkieSvPYJ1G16q7rqsYGeQXaXI8B3nt&q=$search&limit=25');
+      List<dynamic> urls = [];
+      if (res.statusCode == 200) {
+        final response = json.decode(res.body)['data'] as List<dynamic>;
+        //print(response[0]['images']['original']['url']);, for the preview
+        for (int i = 0; i < response.length; i++) {
+          urls.add({
+            'url': response[i]['images']['preview_gif']['url'],
+            'id': response[i]['id'],
+            'original': response[i]['images']['original']['url']
+          });
+        }
+        return urls;
+      } else {
+        throw new HttpException("gifs not found");
+      }
+    } catch (err) {
+      throw new HttpException(err.toString());
+    }
+  }
 }

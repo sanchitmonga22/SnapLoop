@@ -54,7 +54,7 @@ class Loop {
         'currentUserId': this.currentUserId,
         'users': loopUsersToJson()
       },
-      'loopType': this.type
+      'loopType': this.type.toString()
     };
   }
 

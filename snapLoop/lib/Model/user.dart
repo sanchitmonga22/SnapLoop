@@ -96,7 +96,7 @@ class FriendsData {
   dynamic toJson() {
     return {
       "username": this.username,
-      "myImage": base64Encode(this.avatar),
+      "myImage": this.avatar == null ? "" : base64Encode(this.avatar),
       "displayName": this.displayName,
       "email": this.email,
       "score": this.score,

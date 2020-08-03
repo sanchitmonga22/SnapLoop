@@ -1,11 +1,16 @@
 import 'package:SnapLoop/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// author: @sanchitmonga22
 class NewMessageView extends StatefulWidget {
   final Function sendMessage;
+  final Function gifSelection;
+  final bool gifSelected;
 
-  const NewMessageView({Key key, this.sendMessage}) : super(key: key);
+  const NewMessageView(
+      {Key key, this.sendMessage, this.gifSelection, this.gifSelected = false})
+      : super(key: key);
 
   @override
   _NewMessageViewState createState() => _NewMessageViewState();
@@ -33,15 +38,16 @@ class _NewMessageViewState extends State<NewMessageView> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Container(
-      // height: 50,
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.white.withOpacity(0.2)),
+          border: Border.all(color: Colors.white.withOpacity(0.3), width: 2),
+          color: Colors.white.withOpacity(0.1)),
       child: Stack(
         children: [
           Container(
-            margin: EdgeInsets.only(right: 40, left: 10),
+            margin: EdgeInsets.only(
+                right: 40, left: controller.value.text != "" ? 10 : 45),
             child: ConstrainedBox(
               constraints: BoxConstraints(
                 maxHeight: 100.0,
@@ -75,30 +81,82 @@ class _NewMessageViewState extends State<NewMessageView> {
               ),
             ),
           ),
-          Align(
-            alignment: width > 500 ? Alignment(1.05, 0) : Alignment(1.15, 0),
-            child: controller.value.text != ""
-                ? RaisedButton(
-                    shape: CircleBorder(),
-                    color: kSystemPrimaryColor,
-                    child: Icon(
-                      Icons.arrow_upward,
-                      size: 25,
-                      color: Colors.white,
-                    ),
-                    onPressed: enteredMessage.trim().isEmpty
-                        ? null
-                        : () async {
-                            FocusScope.of(context).unfocus();
-                            widget.sendMessage(enteredMessage);
-                            controller.clear();
-                          },
-                  )
-                : Container(
-                    height: 0,
-                    width: 0,
+          if (controller.value.text != "")
+            Align(
+                alignment:
+                    width > 500 ? Alignment(1.05, 0) : Alignment(1.15, 0),
+                child: RaisedButton(
+                  shape: CircleBorder(),
+                  color: kSystemPrimaryColor,
+                  child: Icon(
+                    Icons.arrow_upward,
+                    size: 25,
+                    color: Colors.white,
                   ),
-          ),
+                  onPressed: enteredMessage.trim().isEmpty
+                      ? null
+                      : () async {
+                          FocusScope.of(context).unfocus();
+                          await widget.sendMessage(enteredMessage);
+                          controller.clear();
+                        },
+                ))
+          else if (!widget.gifSelected)
+            Padding(
+              padding: const EdgeInsets.only(top: 4, left: 2, right: 2),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      print('camera');
+                    },
+                    child: CircleAvatar(
+                      radius: 20,
+                      child: Icon(
+                        CupertinoIcons.photo_camera_solid,
+                        size: 25,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          print('photoLibrary');
+                        },
+                        child: CircleAvatar(
+                          child: Icon(
+                            Icons.photo_library,
+                            size: 25,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 2,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          widget.gifSelection(true);
+                          FocusScope.of(context).unfocus();
+                          print('gif');
+                        },
+                        child: CircleAvatar(
+                          child: Icon(
+                            Icons.gif,
+                            size: 25,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

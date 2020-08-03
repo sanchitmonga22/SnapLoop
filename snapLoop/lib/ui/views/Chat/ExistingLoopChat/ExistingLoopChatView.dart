@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:SnapLoop/Model/loop.dart';
 import 'package:SnapLoop/constants.dart';
+import 'package:SnapLoop/ui/views/Chat/gifSelectionView.dart';
 import 'package:SnapLoop/ui/views/chat/ExistingLoopChat/ExistingLoopChatViewModel.dart';
 import 'package:SnapLoop/ui/views/chat/LoopDetailsWidget/LoopDetailsView.dart';
 import 'package:SnapLoop/ui/views/chat/Messages/messagesView.dart';
@@ -11,7 +10,7 @@ import 'package:stacked/stacked.dart';
 
 /// author: @sanchitmonga22
 
-class ExistingLoopChatView extends StatelessWidget {
+class ExistingLoopChatView extends StatefulWidget {
   ExistingLoopChatView({
     Key key,
     this.radius,
@@ -21,6 +20,12 @@ class ExistingLoopChatView extends StatelessWidget {
   final Loop loop;
   final double radius;
 
+  @override
+  _ExistingLoopChatViewState createState() => _ExistingLoopChatViewState();
+}
+
+class _ExistingLoopChatViewState extends State<ExistingLoopChatView> {
+  bool gifSelection = false;
   Widget getChatWidget(ExistingLoopChatViewModel model, BuildContext context) {
     return Container(
         decoration: BoxDecoration(
@@ -38,15 +43,27 @@ class ExistingLoopChatView extends StatelessWidget {
                 MessagesView(
                   loopId: model.loop.id,
                 ),
-                if (model.loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL ||
-                    model.loop.type == LoopType.NEW_LOOP)
+                if ((model.loop.type == LoopType.INACTIVE_LOOP_SUCCESSFUL ||
+                        model.loop.type == LoopType.NEW_LOOP) &&
+                    !gifSelection)
                   NewMessageView(
+                    gifSelection: (bool select) {
+                      setState(() {
+                        gifSelection = select;
+                      });
+                      print(gifSelection);
+                    },
                     sendMessage: (enteredMessage) {
                       return model.sendMessage(enteredMessage, context);
                     },
                   )
+                else if (((model.loop.type ==
+                            LoopType.INACTIVE_LOOP_SUCCESSFUL ||
+                        model.loop.type == LoopType.NEW_LOOP) &&
+                    gifSelection))
+                  GIFSelection()
                 else
-                  Padding(padding: EdgeInsets.only(bottom: 50))
+                  Padding(padding: EdgeInsets.only(bottom: 50)),
               ],
             )
           ],
@@ -57,7 +74,7 @@ class ExistingLoopChatView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
         viewModelBuilder: () => ExistingLoopChatViewModel(),
-        onModelReady: (model) => model.initialize(loop, radius),
+        onModelReady: (model) => model.initialize(widget.loop, widget.radius),
         builder: (context, model, child) {
           return model.isBusy
               ? Material(
@@ -69,7 +86,7 @@ class ExistingLoopChatView extends StatelessWidget {
                   ),
                 ))
               : LoopsDetailsView(
-                  loop: loop,
+                  loop: widget.loop,
                   chatWidget: getChatWidget(model, context),
                   loopWidget: model.loopWidget,
                 );
