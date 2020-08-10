@@ -35,9 +35,6 @@ class ResponseParsingHelper {
             ? null
             : base64Decode(response['myImage']),
         username: response['username'],
-        displayName: (response['displayName'] ?? "") == ""
-            ? response['username']
-            : response['displayName'],
         email: response['email'],
         userID: response['_id'],
         score: response['score'] as int,
@@ -72,9 +69,6 @@ class ResponseParsingHelper {
         contacts: response["contacts"].cast<String>().toList(),
         userID: userId,
         username: response['username'] as String ?? "",
-        displayName: response['displayName'] == ""
-            ? response['username']
-            : response['displayName'],
         email: response['email'] ?? "",
         loopsData:
             ResponseParsingHelper.getLoopsFromResponse(response['loopsData']),

@@ -55,7 +55,7 @@ class FriendsListView extends HookViewModelWidget<FriendsViewModel> {
               },
               maintainState: true,
               title: Text(
-                friend.displayName,
+                friend.username,
                 style:
                     kTextFormFieldStyle.copyWith(fontWeight: FontWeight.bold),
               ),

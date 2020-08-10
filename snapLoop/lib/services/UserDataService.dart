@@ -75,10 +75,6 @@ class UserDataService with ReactiveServiceMixin {
     return user.username;
   }
 
-  String get displayName {
-    return user.displayName;
-  }
-
   void addRequests(PublicUserData user) {
     _requests.add(user);
     notifyListeners();
@@ -417,8 +413,6 @@ class UserDataService with ReactiveServiceMixin {
   //   });
   //   return friends;
   // }
-
-  // Future<bool> updateDisplayName(String value) async {}
 
   // Future<bool> resetPassword(String value) async {}
   // List<User> universalSearch(String value) {

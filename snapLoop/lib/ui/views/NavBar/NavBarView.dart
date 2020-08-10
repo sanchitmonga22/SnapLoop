@@ -161,8 +161,8 @@ class _NavBarViewState extends State<NavBarView>
                               context: context,
                               builder: (context) {
                                 return ChangeItemValueDialog(
-                                  initialText: model.displayName,
-                                  itemName: "displayName",
+                                  initialText: model.username,
+                                  itemName: "username",
                                 );
                               },
                             );
@@ -170,7 +170,7 @@ class _NavBarViewState extends State<NavBarView>
                           child: ConstrainedBox(
                             constraints: BoxConstraints(maxWidth: 70),
                             child: AutoSizeText(
-                              model.displayName,
+                              model.username,
                               style: kTextStyleHomeScreen,
                               maxFontSize: 15,
                             ),

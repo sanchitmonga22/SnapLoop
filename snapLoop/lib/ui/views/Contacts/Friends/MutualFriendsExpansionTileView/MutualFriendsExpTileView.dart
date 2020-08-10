@@ -67,7 +67,7 @@ class MutualFriendsExpView extends HookViewModelWidget<FriendsViewModel> {
                       model.getMutualFriendsData(friend.mutualFriendsIDs);
                   return ListTile(
                     dense: true,
-                    title: AutoSizeText(mutualFriends[index].displayName,
+                    title: AutoSizeText(mutualFriends[index].username,
                         style: kTextFormFieldStyle.copyWith(
                             fontSize: 15, fontWeight: FontWeight.normal)),
                     trailing: Text("Score ${mutualFriends[index].score}",

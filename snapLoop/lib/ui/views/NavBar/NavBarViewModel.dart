@@ -12,7 +12,7 @@ class NavBarViewModel extends ReactiveViewModel {
 
   int get userScore => _userData.user.score;
 
-  String get displayName => _userData.user.displayName;
+  String get username => _userData.user.username;
 
   Uint8List get myImage => _userData.user.myAvatar;
 

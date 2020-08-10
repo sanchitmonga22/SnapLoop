@@ -143,25 +143,6 @@ class _UserProfileViewState extends State<UserProfileView>
                         ),
                       ),
                       ListTile(
-                        onLongPress: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return ChangeItemValueDialog(
-                                initialText: model.user.displayName,
-                                itemName: "displayName",
-                              );
-                            },
-                          );
-                        },
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                        title: Text(
-                          "DisplayName: ${model.user.displayName}",
-                          textAlign: TextAlign.left,
-                          style: kTextFormFieldStyle,
-                        ),
-                      ),
-                      ListTile(
                         contentPadding: EdgeInsets.symmetric(horizontal: 10),
                         title: Text(
                           "Score: ${model.user.score}",

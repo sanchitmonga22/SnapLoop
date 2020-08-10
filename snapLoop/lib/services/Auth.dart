@@ -80,7 +80,6 @@ class Auth with ReactiveServiceMixin {
             requestsReceived: [],
             userID: _userId,
             username: username,
-            displayName: username,
             email: email,
             score: 0,
             friendsIds: [],

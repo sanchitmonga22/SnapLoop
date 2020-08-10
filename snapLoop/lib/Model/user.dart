@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 class User {
   final String userID;
   final String username;
-  String displayName; // can be set to the same as username
   final String email;
   int score;
   int numberOfLoopsRemaining;
@@ -33,7 +32,6 @@ class User {
     @required this.requestsReceived,
     @required this.loopsData,
     @required this.username,
-    @required this.displayName,
     @required this.email,
     @required this.score,
     @required this.friendsIds,
@@ -47,7 +45,6 @@ class User {
       "myImage": base64Encode(this.myAvatar),
       "numberOfLoopsRemaining": this.numberOfLoopsRemaining,
       "contacts": this.contacts,
-      "displayName": this.displayName,
       "email": this.email,
       "score": this.score,
       "friendsIds": friendsIds,
@@ -69,8 +66,6 @@ class User {
 }
 
 class FriendsData {
-  String displayName; // how you want to save your friends name,
-  //by default it will be same as that in the contacts or their username
   final String username;
   final String email;
   final String userID;
@@ -84,7 +79,6 @@ class FriendsData {
   FriendsData(
       {@required this.username,
       this.avatar,
-      @required this.displayName,
       @required this.email,
       @required this.userID,
       @required this.score,
@@ -97,7 +91,6 @@ class FriendsData {
     return {
       "username": this.username,
       "myImage": this.avatar == null ? "" : base64Encode(this.avatar),
-      "displayName": this.displayName,
       "email": this.email,
       "score": this.score,
       '_id': this.userID,

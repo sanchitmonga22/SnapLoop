@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "541069335433",
+    "firebase_url": "https://snaploop-3343e.firebaseio.com",
+    "project_id": "snaploop-3343e",
+    "storage_bucket": "snaploop-3343e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541069335433:android:3fc5eea7f6c9cf8eb6df58",
+        "android_client_info": {
+          "package_name": "com.example.SnapLoop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "541069335433-jd0j1gpc87pjgsu181uh7a9qb79jgsmo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpsFKUMEROxXR-a2ncfL7YFHIOpsqiMZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "541069335433-jd0j1gpc87pjgsu181uh7a9qb79jgsmo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
