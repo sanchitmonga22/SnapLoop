@@ -64,7 +64,7 @@ class Router extends RouterBase {
       );
     },
     NavBarView: (data) {
-      var args = data.getArgs<NavBarViewArguments>(
+      final args = data.getArgs<NavBarViewArguments>(
         orElse: () => NavBarViewArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
@@ -74,7 +74,7 @@ class Router extends RouterBase {
       );
     },
     HomeView: (data) {
-      var args = data.getArgs<HomeViewArguments>(
+      final args = data.getArgs<HomeViewArguments>(
         orElse: () => HomeViewArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
@@ -87,7 +87,7 @@ class Router extends RouterBase {
       );
     },
     FriendsView: (data) {
-      var args = data.getArgs<FriendsViewArguments>(
+      final args = data.getArgs<FriendsViewArguments>(
         orElse: () => FriendsViewArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
@@ -101,7 +101,7 @@ class Router extends RouterBase {
       );
     },
     ExistingLoopChatView: (data) {
-      var args = data.getArgs<ExistingLoopChatViewArguments>(
+      final args = data.getArgs<ExistingLoopChatViewArguments>(
         orElse: () => ExistingLoopChatViewArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
@@ -115,7 +115,7 @@ class Router extends RouterBase {
       );
     },
     AuthView: (data) {
-      var args = data.getArgs<AuthViewArguments>(
+      final args = data.getArgs<AuthViewArguments>(
         orElse: () => AuthViewArguments(),
       );
       return buildAdaptivePageRoute<dynamic>(
@@ -125,7 +125,7 @@ class Router extends RouterBase {
       );
     },
     NewLoopChatView: (data) {
-      var args = data.getArgs<NewLoopChatViewArguments>(nullOk: false);
+      final args = data.getArgs<NewLoopChatViewArguments>(nullOk: false);
       return buildAdaptivePageRoute<dynamic>(
         builder: (context) => NewLoopChatView(
           key: args.key,
