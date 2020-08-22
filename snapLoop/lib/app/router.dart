@@ -18,4 +18,4 @@ import 'package:auto_route/auto_route_annotations.dart';
   AdaptiveRoute(page: NewLoopChatView, cupertinoPageTitle: "Chat"),
   AdaptiveRoute(page: UserProfileView, cupertinoPageTitle: "Profile"),
 ])
-class $Router {}
+class $CustomRouter {}

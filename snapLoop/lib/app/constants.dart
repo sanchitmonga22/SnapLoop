@@ -9,7 +9,8 @@ import 'package:flutter/rendering.dart';
 ///author: @sanchitmonga22
 
 //SECTION: COMMON
-const SERVER_IP = "http://192.168.0.37:3000";
+const SERVER_IP = "http://192.168.1.8:3000";
+//const SERVER_IP = "http://192.168.43.163:3000";
 const kSystemPrimaryColor = CupertinoColors.activeBlue;
 final kSwipeConstant = 5;
 const double ksigmaX = 5.0; // from 0-10
@@ -140,7 +141,9 @@ const kfixedRadiusFactor = {
   12: 0.73,
   "MAX": 0.80
 };
+// maximum numbers of memebers that can be displayed once in a loop
 const kMaxMembersDisplayed = 23;
+// padding between each loop, in a row
 const double kAllLoopsPadding = 20;
 const kalignmentMap = {
   2: [Position(1, 1), Position(-1, -1)],

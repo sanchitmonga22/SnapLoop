@@ -1,12 +1,12 @@
 import 'package:SnapLoop/app/customRoute.dart';
 import 'package:SnapLoop/app/locator.dart';
 import 'package:SnapLoop/MainViewModel.dart';
+import 'package:SnapLoop/app/router.gr.dart';
 import 'package:SnapLoop/services/StorageService.dart';
 import 'package:SnapLoop/ui/views/NavBar/NavBarView.dart';
 import 'package:SnapLoop/ui/views/Auth/AuthView.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'app/router.gr.dart';
 import 'ui/splashScreen.dart';
 
 /// author: @sanchitmonga22
@@ -51,7 +51,7 @@ class SnapLoop extends StatelessWidget {
           home: model.isAuth
               ? NavBarView()
               : model.isBusy ? SplashScreen() : AuthView(),
-          onGenerateRoute: Router(),
+          onGenerateRoute: CustomRouter(),
         );
       },
     );
