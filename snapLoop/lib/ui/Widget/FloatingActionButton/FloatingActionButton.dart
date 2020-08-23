@@ -43,7 +43,7 @@ class _FloatingActionButtonViewState extends State<FloatingActionButtonView> {
                 radius: 15,
               ),
             },
-            backGroundColor: Colors.white.withOpacity(0.2),
+            backGroundColor: Colors.grey.withOpacity(0.4),
             items: <Bubble>[
               Bubble(
                   title: "+",

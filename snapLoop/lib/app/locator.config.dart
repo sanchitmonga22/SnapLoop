@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 
 import '../services/Auth.dart';
 import '../services/ChatDataService.dart';
+import '../services/CloudMessagingService.dart';
 import '../services/ConnectionService.dart';
 import '../services/FABTapped.dart';
 import '../services/LoopsDataService.dart';
@@ -27,6 +28,7 @@ GetIt $initGetIt(
   final gh = GetItHelper(get, environment, environmentFilter);
   gh.lazySingleton<Auth>(() => Auth());
   gh.lazySingleton<ChatDataService>(() => ChatDataService());
+  gh.lazySingleton<CloudMessagingService>(() => CloudMessagingService());
   gh.lazySingleton<ConnectionStatusService>(() => ConnectionStatusService());
   gh.lazySingleton<FABTapped>(() => FABTapped());
   gh.lazySingleton<LoopsDataService>(() => LoopsDataService());

@@ -1,5 +1,6 @@
 import 'package:SnapLoop/services/Auth.dart';
 import 'package:SnapLoop/services/ChatDataService.dart';
+import 'package:SnapLoop/services/CloudMessagingService.dart';
 import 'package:SnapLoop/services/ConnectionService.dart';
 import 'package:SnapLoop/services/LoopsDataService.dart';
 import 'package:SnapLoop/services/StorageService.dart';
@@ -15,17 +16,15 @@ import 'app/locator.dart';
 class MainViewModel extends ReactiveViewModel with WidgetsBindingObserver {
   final _auth = locator<Auth>();
   final _socket = locator<SocketService>();
-  final _connectionService = locator<ConnectionStatusService>();
   final _loopDataService = locator<LoopsDataService>();
   final _chatDataService = locator<ChatDataService>();
   final _storageService = locator<StorageService>();
   final _userDataService = locator<UserDataService>();
+  final _cloudMessagingService = locator<CloudMessagingService>();
 
   void createSocketConnection() {
     _socket.createSocketConnection();
   }
-
-  ConnectionStatusService get connectionService => _connectionService;
 
   bool get isAuth => _auth.isAuth;
 
@@ -37,6 +36,7 @@ class MainViewModel extends ReactiveViewModel with WidgetsBindingObserver {
     bool login = await _auth.tryAutoLogin();
     if (login && _connectionService.connected) {
       createSocketConnection();
+      await _cloudMessagingService.initialize();
     } else if (login && _connectionService.connected == false) {
       await initializeAppState();
     }

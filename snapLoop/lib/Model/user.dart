@@ -42,7 +42,7 @@ class User {
     return {
       "status": this.status,
       "username": this.username,
-      "myImage": base64Encode(this.myAvatar),
+      "myImage": this.myAvatar == null ? "" : base64Encode(this.myAvatar),
       "numberOfLoopsRemaining": this.numberOfLoopsRemaining,
       "contacts": this.contacts,
       "email": this.email,
@@ -144,7 +144,8 @@ class PublicUserData {
 
   dynamic toJson() {
     return {
-      "myImage": this.avatar,
+      "myImage": this.avatar == null ? "" : base64Encode(this.avatar),
+      "sentRequest": this.sentRequest,
       "email": this.email,
       "_id": this.userID,
       "username": this.username,
