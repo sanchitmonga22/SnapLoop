@@ -27,4 +27,4 @@ I was looking for alternatives and I started learning flutter, I watched a few v
 
 ## Completed Features
 
-![Snap∞Loop](snapLoop/documentation/gifs/gif1.gif)
+<img src="snapLoop/documentation/gifs/welcome.gif" width="300" height="650">
