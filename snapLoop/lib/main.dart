@@ -50,7 +50,9 @@ class SnapLoop extends StatelessWidget {
           // home: AuthScreen(),
           home: model.isAuth
               ? NavBarView()
-              : model.isBusy ? SplashScreen() : AuthView(),
+              : model.isBusy
+                  ? SplashScreen()
+                  : AuthView(),
           onGenerateRoute: CustomRouter(),
         );
       },

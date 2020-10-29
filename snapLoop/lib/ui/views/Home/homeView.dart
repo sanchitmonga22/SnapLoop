@@ -118,21 +118,22 @@ class _HomeViewState extends State<HomeView>
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Text(
-                            "There are no inactive loops available yet, \n once you are part of a successfully completed loop it will show up here!",
+                            "There are no inactive loops available yet, once you are part of a successfully completed loop, it will show up here!",
                             style: kTextStyleHomeScreen.copyWith(
-                                color: Colors.black),
+                                fontSize: 17, color: Colors.white),
                           ),
                         ),
                       )
                     : ListView(children: [...completedLoopBuilder(model)])
                 : model.emptyHomeScreen()
-                    ? Center(
+                    ? Align(
+                        alignment: Alignment.topCenter,
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Text(
-                            "There are currently no active loops, Please start new loops to show up here!",
+                            "                     Welcome to SnapLoop!\n\n\n\n\n\n\n\n\n\n\n\n\n\nThere are currently no active loops, Please start new loops to show up here!",
                             style: kTextStyleHomeScreen.copyWith(
-                                color: Colors.black),
+                                fontSize: 17, color: Colors.white),
                           ),
                         ),
                       )

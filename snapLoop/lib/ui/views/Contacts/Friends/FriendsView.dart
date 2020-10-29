@@ -159,7 +159,7 @@ class _FriendsViewState extends State<FriendsView>
                                       padding: const EdgeInsets.all(20.0),
                                       child: Center(
                                         child: Text(
-                                          "You don't currently have any friends! please search users above to add them as friend",
+                                          "Please search users above to add them as friend",
                                           style: kTextFormFieldStyle.copyWith(
                                               color: Colors.white),
                                         ),

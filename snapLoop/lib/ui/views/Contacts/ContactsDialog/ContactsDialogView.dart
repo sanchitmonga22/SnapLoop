@@ -104,7 +104,8 @@ class _ContactsDialogViewState extends State<ContactsDialogView>
               padding: EdgeInsets.all(10),
               child: AutoSizeText(
                 "There are currently no users available to add from the contacts, Hit the refresh button or try back again later",
-                style: kTextFormFieldStyle.copyWith(color: kSystemPrimaryColor),
+                style: kTextFormFieldStyle.copyWith(
+                    color: Colors.white, fontSize: 17),
               ),
             ),
           );

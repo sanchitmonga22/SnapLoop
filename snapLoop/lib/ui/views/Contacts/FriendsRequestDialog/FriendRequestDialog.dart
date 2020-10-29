@@ -20,63 +20,70 @@ class _FriendRequestsDialogState extends State<FriendRequestsDialog> {
       viewModelBuilder: () => FriendRequestDialogModel(),
       builder: (context, model, child) {
         model.setRequests();
-        return ListView.builder(
-          itemCount: model.requests.length,
-          itemBuilder: (context, index) {
-            return Slidable(
-              key: ValueKey(model.requests[index]),
-              actionPane: SlidableDrawerActionPane(),
-              actions: <Widget>[
-                IconSlideAction(
-                  caption: 'Accept',
-                  color: Colors.green,
-                  icon: Icons.add,
-                ),
-              ],
-              secondaryActions: <Widget>[
-                IconSlideAction(
-                  caption: 'Delete',
-                  color: Colors.red,
-                  icon: Icons.delete,
-                ),
-              ],
-              dismissal: SlidableDismissal(
-                  child: SlidableDrawerDismissal(),
-                  onDismissed: (actionType) async {
-                    await model.onDismissed(actionType, index);
-                  }),
-              child: ListTile(
-                subtitle: Text(
-                  model.requests[index].email,
-                  style: kTextFormFieldStyle.copyWith(
-                      color: Colors.white70, fontSize: 10),
-                ),
-                leading: CircleAvatar(
-                  radius: 20,
-                  child: model.requests[index].avatar == null
-                      ? AutoSizeText(
-                          model.requests[index].username[0].toUpperCase(),
-                          style: kTextFormFieldStyle,
-                        )
-                      : ClipOval(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: MemoryImage(
-                                      model.requests[index].avatar)),
-                            ),
-                          ),
-                        ),
-                ),
-                title: Text(
-                  model.requests[index].username,
-                  style: kTextFormFieldStyle.copyWith(fontSize: 15),
-                ),
-              ),
-            );
-          },
-        );
+        return model.requests.length == 0
+            ? Center(
+                child: Text(
+                "You do not have any pending friend requests.",
+                style: kTextFormFieldStyle.copyWith(
+                    color: Colors.white, fontSize: 17),
+              ))
+            : ListView.builder(
+                itemCount: model.requests.length,
+                itemBuilder: (context, index) {
+                  return Slidable(
+                    key: ValueKey(model.requests[index]),
+                    actionPane: SlidableDrawerActionPane(),
+                    actions: <Widget>[
+                      IconSlideAction(
+                        caption: 'Accept',
+                        color: Colors.green,
+                        icon: Icons.add,
+                      ),
+                    ],
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                        caption: 'Delete',
+                        color: Colors.red,
+                        icon: Icons.delete,
+                      ),
+                    ],
+                    dismissal: SlidableDismissal(
+                        child: SlidableDrawerDismissal(),
+                        onDismissed: (actionType) async {
+                          await model.onDismissed(actionType, index);
+                        }),
+                    child: ListTile(
+                      subtitle: Text(
+                        model.requests[index].email,
+                        style: kTextFormFieldStyle.copyWith(
+                            color: Colors.white70, fontSize: 10),
+                      ),
+                      leading: CircleAvatar(
+                        radius: 20,
+                        child: model.requests[index].avatar == null
+                            ? AutoSizeText(
+                                model.requests[index].username[0].toUpperCase(),
+                                style: kTextFormFieldStyle,
+                              )
+                            : ClipOval(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: MemoryImage(
+                                            model.requests[index].avatar)),
+                                  ),
+                                ),
+                              ),
+                      ),
+                      title: Text(
+                        model.requests[index].username,
+                        style: kTextFormFieldStyle.copyWith(fontSize: 15),
+                      ),
+                    ),
+                  );
+                },
+              );
       },
     );
   }

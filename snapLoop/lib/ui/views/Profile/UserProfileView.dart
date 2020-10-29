@@ -160,13 +160,18 @@ class _UserProfileViewState extends State<UserProfileView>
                       ),
                       ListTile(
                         contentPadding: EdgeInsets.all(10),
-                        leading: Icon(Icons.exit_to_app),
+                        leading: Icon(
+                          Icons.exit_to_app,
+                          color: Colors.white,
+                        ),
                         onTap: () async {
                           await model.logout();
                           Navigator.pushReplacementNamed(
                               context, Routes.snapLoop);
                         },
-                        title: Text("Logout"),
+                        title: Text("Logout",
+                            style: kTextFormFieldStyle.copyWith(
+                                color: Colors.white)),
                       )
                     ]),
               ),
