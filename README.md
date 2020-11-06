@@ -43,7 +43,7 @@ I was looking for alternatives and I started learning flutter, I watched a few v
 
 ### Welcome to Snap∞Loop!
 
-<img src="snapLoop/documentation/gifs/welcome.gif" width="300" height="650">
+<img src="snapLoop/documentation/gifs/welcome.gif" width="300" height="650>
 
 <br/>
 <br/>
