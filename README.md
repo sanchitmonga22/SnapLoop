@@ -58,19 +58,33 @@ I was looking for alternatives and I started learning flutter, I watched a few v
 | :---------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
 | <img src="snapLoop/documentation/gifs/contacts/searching_user_and_sending_request.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/contacts/acceptRequest.gif" width="300" height="650"/> |
 
-### Adding a Profile Image
-
-<img src="snapLoop/documentation/gifs/profile/profile_image.jpg" width="300" height="650"/>
-
 <br/>
 
-|                                     Creating a Loop                                      |                                     Forwarding a Loop                                      |
+### Concept
+
+-   A person can start limited number of loops(5 loops) in a day.
+-   Let's consider the following case:
+    -   We have 4 people:
+        -   sanchitmonga
+        -   alex
+        -   sheldonCooper
+        -   leonardLazy
+    -   Each one of them are friends with following people:
+        -   sanchitmonga: alex, leonardLazy
+        -   alex: sanchitmonga, sheldonCooper
+        -   sheldonCooper: alex, leonardLazy
+        -   leonardLazy: sanchitmonga, sheldonCooper
+    -   Following is the sequence of messages being sent and received and thus forming a loop between four people:
+        -   sanchitmonga->alex->sheldonCooper->leonardLazy->sanchitmonga
+    -   Everyone gets a score after the loop is complete which is dependent on the number of participants in the loop.
+
+|                           Creating a Loop(user: sanchitmonga)                            |                               Forwarding a Loop(user: alex)                                |
 | :--------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: |
 | <img src="snapLoop/documentation/gifs/Loop/Create_a_loop.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Loop/loop_forwarding.gif" width="300" height="650"/> |
 
 <br/>
 
-|                                      Gif searching and sharing                                       |                                        Loop Completion                                         |
+|                            Gif searching and sharing(user:sheldonCooper)                             |                               Loop Completion(user:leonardLazy)                                |
 | :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
 | <img src="snapLoop/documentation/gifs/Loop/gif_searching_and_sharing.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Loop/loop_complete_part0.gif" width="300" height="650"/> |
 
@@ -91,5 +105,11 @@ I was looking for alternatives and I started learning flutter, I watched a few v
 |                                         Completed Loop                                         |                          Completed Loop turned into a new group chat                           |
 | :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
 | <img src="snapLoop/documentation/gifs/Loop/loop_Complete_part1.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Loop/loop_complete_part2.gif" width="300" height="650"/> |
+
+<br/>
+
+|                                 Add a profile picture View                                  |                                        Loop Detailed View                                         |                                       Messages View                                       |
+| :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| <img src="snapLoop/documentation/gifs/profile/profile_image.jpg" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Loop/detailed_profile_view.jpeg" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Loop/messages_view.jpeg" width="300" height="650"/> |
 
 <br/>
