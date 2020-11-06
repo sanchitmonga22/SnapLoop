@@ -9,7 +9,7 @@ import 'package:flutter/rendering.dart';
 ///author: @sanchitmonga22
 
 //SECTION: COMMON
-const SERVER_IP = "http://192.168.1.12:3000";
+const SERVER_IP = "http://192.168.1.4:3000";
 //const SERVER_IP = "http://192.168.43.163:3000";
 const kSystemPrimaryColor = CupertinoColors.activeBlue;
 final kSwipeConstant = 5;

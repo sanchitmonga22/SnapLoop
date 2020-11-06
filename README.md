@@ -30,38 +30,66 @@ I was looking for alternatives and I started learning flutter, I watched a few v
 
 ### Following are some of the screen recording snippets that I took while developing my first app and which show the evolution of the UI of the application.
 
-|                                   HomePage Part 1                                   |                                   HomePage Part 2                                   |                                   HomePage Part 3                                   |
-| :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
-| <img src="snapLoop/documentation/gifs/homepagePart1.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/homePagePart2.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/homepagePart3.gif" width="300" height="650"/> |
+|                                       HomePage Part 1                                        |                                       HomePage Part 2                                        |                                       HomePage Part 3                                        |
+| :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="snapLoop/documentation/gifs/Homepage/homepagePart1.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Homepage/homePagePart2.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Homepage/homepagePart3.gif" width="300" height="650"/> |
 
-|                                   HomePage Part 4                                   |                                   HomePage Part 5                                   |                                   HomePage Part 6                                   |
-| :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
-| <img src="snapLoop/documentation/gifs/HomePagePart4.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/HomepagePart5.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/homePagePart6.gif" width="300" height="650"/> |
+|                                       HomePage Part 4                                        |                                       HomePage Part 5                                        |                                       HomePage Part 6                                        |
+| :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="snapLoop/documentation/gifs/Homepage/homePagePart4.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Homepage/HomepagePart5.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Homepage/homepagePart6.gif" width="300" height="650"/> |
 
 <br/>
 
 ## Completed Features
 
-### Login
-
-<img src="snapLoop/documentation/gifs/LoginPage.gif" width="300" height="650"/>
+|                                       SignUp                                       |                                         Login                                         |
+| :--------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: |
+| <img src="snapLoop/documentation/gifs/login/signup.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/login/LoginPage.gif" width="300" height="650"/> |
 
 <br/>
 
 ### Welcome to Snap∞Loop!
 
-<img src="snapLoop/documentation/gifs/welcome.gif" width="300" height="650"/>
+<img src="snapLoop/documentation/gifs/HomePage/welcome.gif" width="300" height="650"/>
 
 <br/>
 
-### Accepting Request
-
-<img src="snapLoop/documentation/gifs/acceptRequest.gif" width="300" height="650"/>
-
-<br/>
+|                                         Search for user and send request                                          |                                      Accepting Request                                       |
+| :---------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="snapLoop/documentation/gifs/contacts/searching_user_and_sending_request.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/contacts/acceptRequest.gif" width="300" height="650"/> |
 
 ### Adding a Profile Image
 
-<img src="snapLoop/documentation/gifs/profile_image.jpg" width="300" height="650"/>
+<img src="snapLoop/documentation/gifs/profile/profile_image.jpg" width="300" height="650"/>
+
+<br/>
+
+|                                     Creating a Loop                                      |                                     Forwarding a Loop                                      |
+| :--------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: |
+| <img src="snapLoop/documentation/gifs/Loop/Create_a_loop.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Loop/loop_forwarding.gif" width="300" height="650"/> |
+
+<br/>
+
+|                                      Gif searching and sharing                                       |                                        Loop Completion                                         |
+| :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
+| <img src="snapLoop/documentation/gifs/Loop/gif_searching_and_sharing.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Loop/loop_complete_part0.gif" width="300" height="650"/> |
+
+<br/>
+
+|                                        Loop Starting                                         |                                         Loop Failure                                         |
+| :------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="snapLoop/documentation/gifs/Loop/loop_failed_part1.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Loop/loop_failed_part2.gif" width="300" height="650"/> |
+
+<br/>
+
+|                                      Contact Details View Loop                                       |                                         Profile photo added                                          |
+| :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: |
+| <img src="snapLoop/documentation/gifs/contacts/contact_details_page1.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/contacts/contacts_home_profile.gif" width="300" height="650"/> |
+
+<br/>
+
+|                                         Completed Loop                                         |                          Completed Loop turned into a new group chat                           |
+| :--------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------: |
+| <img src="snapLoop/documentation/gifs/Loop/loop_Complete_part1.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/Loop/loop_complete_part2.gif" width="300" height="650"/> |
 
 <br/>
