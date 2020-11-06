@@ -24,7 +24,6 @@ During the summer of 2020, I started learning different technologies to bring my
 I started looking into different solutions like React Native, Ionic, and Flutter. I first started learning react.js and then learned the basics of react-native, which to be honest was hard coming from java background even though I knew basics of Javascript. After some time I realized that there was no way around and I had to learn advanced javascript as I will be developing my server in Node.js, so I started learning some advance concepts and took an online course on Udemy for learning Node.js. Some of the cool apps like Instagram that I use on a daily basis are created in React Native, and I was convinced to create my application in React Native. As I started laying out the plan, I figured there were too many complex features, which were difficult to implement and I might have to write native code for both Android and iOS for some of the native features like camera.
 
 I was looking for alternatives and I started learning flutter, I watched a few videos on youtube discussing how flutter is a great cross application development framework. Flutter was an emerging technology and I thought it would be cool to learn more about it, so I took a course on Udemy. First I was introduced to Dart, which is the language used for flutter and it was an object oriented language and had syntax similar to Java. Since it was object oriented, it was easy for me break down the app into small features and continue working on it. I started working on the app and created a bunch of screens, brainstormed ideas with my friends, and thus improved the UI over time. Checkout the features that I created below.
-
 <br/>
 
 ## Journey of SnapLoop
@@ -39,11 +38,25 @@ I was looking for alternatives and I started learning flutter, I watched a few v
 | :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
 | <img src="snapLoop/documentation/gifs/HomePagePart4.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/HomepagePart5.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/homePagePart6.gif" width="300" height="650"/> |
 
+<br/>
+
 ## Completed Features
+
+### Login
+
+<img src="snapLoop/documentation/gifs/LoginPage.gif" width="300" height="650"/>
+
+<br/>
 
 ### Welcome to Snap∞Loop!
 
 <img src="snapLoop/documentation/gifs/welcome.gif" width="300" height="650"/>
+
+<br/>
+
+### Accepting Request
+
+<img src="snapLoop/documentation/gifs/acceptRequest.gif" width="300" height="650"/>
 
 <br/>
 
@@ -52,5 +65,3 @@ I was looking for alternatives and I started learning flutter, I watched a few v
 <img src="snapLoop/documentation/gifs/profile_image.jpg" width="300" height="650"/>
 
 <br/>
-
-### Login
