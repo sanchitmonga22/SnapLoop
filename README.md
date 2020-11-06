@@ -31,21 +31,26 @@ I was looking for alternatives and I started learning flutter, I watched a few v
 
 ### Following are some of the screen recording snippets that I took while developing my first app and which show the evolution of the UI of the application.
 
-|                                  HomePage Part 1                                   |                                  HomePage Part 2                                   |                                  HomePage Part 3                                   |
-| :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
-| <img src="snapLoop/documentation/gifs/homepagePart1.gif" width="300" height="650"> | <img src="snapLoop/documentation/gifs/homePagePart2.gif" width="300" height="650"> | <img src="snapLoop/documentation/gifs/homepagePart3.gif" width="300" height="650"> |
+|                                   HomePage Part 1                                   |                                   HomePage Part 2                                   |                                   HomePage Part 3                                   |
+| :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
+| <img src="snapLoop/documentation/gifs/homepagePart1.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/homePagePart2.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/homepagePart3.gif" width="300" height="650"/> |
 
-|                                  HomePage Part 4                                   |                                  HomePage Part 5                                   |                                  HomePage Part 6                                   |
-| :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
-| <img src="snapLoop/documentation/gifs/HomePagePart4.gif" width="300" height="650"> | <img src="snapLoop/documentation/gifs/HomepagePart5.gif" width="300" height="650"> | <img src="snapLoop/documentation/gifs/homePagePart6.gif" width="300" height="650"> |
+|                                   HomePage Part 4                                   |                                   HomePage Part 5                                   |                                   HomePage Part 6                                   |
+| :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
+| <img src="snapLoop/documentation/gifs/HomePagePart4.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/HomepagePart5.gif" width="300" height="650"/> | <img src="snapLoop/documentation/gifs/homePagePart6.gif" width="300" height="650"/> |
 
 ## Completed Features
 
 ### Welcome to Snap∞Loop!
 
-<img src="snapLoop/documentation/gifs/welcome.gif" width="300" height="650>
+<img src="snapLoop/documentation/gifs/welcome.gif" width="300" height="650"/>
 
 <br/>
+
+### Adding a Profile Image
+
+<img src="snapLoop/documentation/gifs/profile_image.jpg" width="300" height="650"/>
+
 <br/>
 
 ### Login
