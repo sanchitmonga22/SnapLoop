@@ -6,7 +6,7 @@ import 'package:SnapLoop/ui/views/Contacts/Friends/FriendsView.dart';
 import 'package:SnapLoop/ui/views/Home/homeView.dart';
 import 'package:SnapLoop/ui/views/NavBar/NavBarView.dart';
 import 'package:SnapLoop/ui/views/Profile/UserProfileView.dart';
-import 'package:auto_route/auto_route_annotations.dart';
+import 'package:auto_route/annotations.dart';
 
 @MaterialAutoRouter(routes: <AutoRoute>[
   AdaptiveRoute(page: SnapLoop, initial: true),

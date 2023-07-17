@@ -58,7 +58,7 @@ class ChatDataService with ReactiveServiceMixin {
       String chatId, String loopId, String message) async {
     try {
       http.Response res = await http.post(
-        '$SERVER_IP/chats/newGroupMessage',
+        '$SERVER_IP/chats/newGroupMessage' as Uri,
         headers: {
           "Authorization": "Bearer " + _auth.token,
           "Content-Type": "application/json",
@@ -83,7 +83,7 @@ class ChatDataService with ReactiveServiceMixin {
     }
     try {
       http.Response res = await http.get(
-        '$SERVER_IP/chats/getData',
+        '$SERVER_IP/chats/getData' as Uri,
         headers: {
           "Authorization": "Bearer " + _auth.token,
           "Content-Type": "application/json",
@@ -109,7 +109,7 @@ class ChatDataService with ReactiveServiceMixin {
     try {
       String searchType = getSticker ? 'stickers' : 'gifs';
       http.Response res = await http.get(
-          'https://api.giphy.com/v1/$searchType/search?api_key=wSkieSvPYJ1G16q7rqsYGeQXaXI8B3nt&q=$search&limit=25');
+          'https://api.giphy.com/v1/$searchType/search?api_key=wSkieSvPYJ1G16q7rqsYGeQXaXI8B3nt&q=$search&limit=25' as Uri);
       List<dynamic> urls = [];
       if (res.statusCode == 200) {
         final response = json.decode(res.body)['data'] as List<dynamic>;

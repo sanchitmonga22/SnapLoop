@@ -7,7 +7,7 @@ class FABTapped with ReactiveServiceMixin {
   FABTapped() {
     listenToReactiveValues([_isTapped]);
   }
-  RxValue<bool> _isTapped = RxValue<bool>(initial: false);
+  RxValue<bool> _isTapped = RxValue<bool>(false);
   bool get isTapped => _isTapped.value;
 
   void toggleIsTapped() {

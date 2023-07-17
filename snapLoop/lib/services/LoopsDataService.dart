@@ -75,7 +75,7 @@ class LoopsDataService with ReactiveServiceMixin {
   Future<List<dynamic>> getRandomAvatarURL(int count) async {
     try {
       http.Response res =
-          await http.get('$SERVER_IP/loops/getRandomUrls', headers: {
+          await http.get('$SERVER_IP/loops/getRandomUrls' as Uri, headers: {
         "Authorization": "Bearer " + _auth.token,
         "Content-Type": "application/json",
         "count": count.toString(),
@@ -101,7 +101,7 @@ class LoopsDataService with ReactiveServiceMixin {
   Future<dynamic> forwardLoop(
       String friendId, String content, String chatId, String loopId) async {
     try {
-      http.Response res = await http.post('$SERVER_IP/loops/forwardLoop',
+      http.Response res = await http.post('$SERVER_IP/loops/forwardLoop' as Uri,
           headers: {
             "Authorization": "Bearer " + _auth.token,
             "Content-Type": "application/json",
@@ -178,7 +178,7 @@ class LoopsDataService with ReactiveServiceMixin {
   Future<Map<String, dynamic>> createLoop(String name, String friendId,
       String content, String friendAvatar, String myAvatar) async {
     try {
-      http.Response res = await http.post('$SERVER_IP/loops/create',
+      http.Response res = await http.post('$SERVER_IP/loops/create' as Uri,
           headers: {
             "Authorization": "Bearer " + _auth.token,
             "Content-Type": "application/json",

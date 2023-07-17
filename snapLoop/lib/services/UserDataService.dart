@@ -127,7 +127,7 @@ class UserDataService with ReactiveServiceMixin {
 
   Future<void> setMyImage(String myImage) async {
     try {
-      http.Response res = await http.post('$SERVER_IP/users/saveMyImage',
+      http.Response res = await http.post('$SERVER_IP/users/saveMyImage' as Uri,
           headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + _auth.token,
@@ -148,7 +148,7 @@ class UserDataService with ReactiveServiceMixin {
   Future<void> removeMyImage() async {
     try {
       http.Response res = await http.post(
-        '$SERVER_IP/users/removeMyImage',
+        '$SERVER_IP/users/removeMyImage' as Uri,
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer " + _auth.token,
@@ -172,7 +172,7 @@ class UserDataService with ReactiveServiceMixin {
     }
     try {
       http.Response res =
-          await http.get('$SERVER_IP/users/friendsData', headers: {
+          await http.get('$SERVER_IP/users/friendsData' as Uri, headers: {
         "Authorization": "Bearer " + _auth.token,
         "Content-Type": "application/json",
         'friendId': userId,
@@ -191,7 +191,7 @@ class UserDataService with ReactiveServiceMixin {
   Future<PublicUserData> getUserDataById(String userId) async {
     try {
       http.Response res =
-          await http.get('$SERVER_IP/users/getPublicDataById', headers: {
+          await http.get('$SERVER_IP/users/getPublicDataById' as Uri, headers: {
         "Content-Type": "application/json",
         'userId': userId,
       });
@@ -211,7 +211,7 @@ class UserDataService with ReactiveServiceMixin {
     List<PublicUserData> users = [];
     try {
       http.Response res = await http.get(
-        '$SERVER_IP/users/getPublicData',
+        '$SERVER_IP/users/getPublicData' as Uri,
         headers: {
           "Content-Type": "application/json",
           'email': email.trim().toLowerCase(),
@@ -239,7 +239,7 @@ class UserDataService with ReactiveServiceMixin {
   Future<bool> updateUserData() async {
     try {
       http.Response res = await http.get(
-        "$SERVER_IP/users/data",
+        "$SERVER_IP/users/data" as Uri,
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer " + _auth.token,
@@ -310,7 +310,7 @@ class UserDataService with ReactiveServiceMixin {
   Future<void> sendFriendRequest(String sendToId) async {
     try {
       http.Response res = await http.put(
-        '$SERVER_IP/users/sendRequest',
+        '$SERVER_IP/users/sendRequest' as Uri,
         headers: {
           "Authorization": "Bearer " + _auth.token,
           "Content-Type": "application/json",
@@ -340,7 +340,7 @@ class UserDataService with ReactiveServiceMixin {
     });
     try {
       http.Response res = await http.post(
-        '$SERVER_IP/users/acceptRequest',
+        '$SERVER_IP/users/acceptRequest' as Uri,
         headers: {
           "Authorization": "Bearer " + _auth.token,
           "Content-Type": "application/json",
@@ -365,7 +365,7 @@ class UserDataService with ReactiveServiceMixin {
   Future<void> removeRequest(String userID) async {
     try {
       http.Response res = await http.post(
-        '$SERVER_IP/users/deleteRequest',
+        '$SERVER_IP/users/deleteRequest' as Uri,
         headers: {
           "Authorization": "Bearer " + _auth.token,
           "Content-Type": "application/json",
@@ -384,7 +384,7 @@ class UserDataService with ReactiveServiceMixin {
 
   Future<bool> update(String itemName, String itemValue) async {
     try {
-      http.Response res = await http.post('$SERVER_IP/users/update',
+      http.Response res = await http.post('$SERVER_IP/users/update' as Uri,
           headers: {
             "Authorization": "Bearer " + _auth.token,
             "Content-Type": "application/json",

@@ -29,7 +29,7 @@ class Auth with ReactiveServiceMixin {
   String _token;
   RxValue<User> user = RxValue();
   String _userId;
-  RxValue<bool> _isAuth = RxValue<bool>(initial: false);
+  RxValue<bool> _isAuth = RxValue<bool>(false);
 
   bool get isAuth => _isAuth.value;
 
@@ -38,7 +38,7 @@ class Auth with ReactiveServiceMixin {
   String get userId => _userId;
 
   Future<void> attemptLogIn(String email, String password) async {
-    http.Response res = await http.post('$SERVER_IP/users/login',
+    http.Response res = await http.post('$SERVER_IP/users/login' as Uri,
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"email": email, "password": password}));
     var response = json.decode(res.body);
@@ -60,7 +60,7 @@ class Auth with ReactiveServiceMixin {
   Future<void> attemptSignUp(String username, String password,
       String phoneNumber, String email) async {
     try {
-      http.Response res = await http.post('$SERVER_IP/users/signup',
+      http.Response res = await http.post('$SERVER_IP/users/signup' as Uri,
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({
             "username": username,
@@ -99,7 +99,7 @@ class Auth with ReactiveServiceMixin {
   Future<void> logOut() async {
     try {
       http.Response res = await http.post(
-        "$SERVER_IP/users/logout",
+        "$SERVER_IP/users/logout" as Uri,
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token"
@@ -144,7 +144,7 @@ class Auth with ReactiveServiceMixin {
 
     // getting the userData from the server using the _token, add the API to the server
     http.Response res = await http.get(
-      "$SERVER_IP/users/data",
+      "$SERVER_IP/users/data" as Uri,
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + token,

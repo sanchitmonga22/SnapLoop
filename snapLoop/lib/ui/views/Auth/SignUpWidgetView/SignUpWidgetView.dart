@@ -34,7 +34,7 @@ class SignUpWidgetView extends HookViewModelWidget<AuthViewModel> {
                 TextFormField(
                   cursorColor: kTextFieldCursorColor,
                   scrollPadding: EdgeInsets.all(1),
-                  autovalidate: true,
+                  // autovalidate: true,
                   style: kTextFormFieldStyle,
                   enabled: model.authMode == AuthMode.Signup,
                   decoration: kgetDecoration('Confirm Password').copyWith(
@@ -91,7 +91,7 @@ class SignUpWidgetView extends HookViewModelWidget<AuthViewModel> {
                   onInputValidated: (bool value) {},
                   ignoreBlank: false,
                   selectorTextStyle: kTextFormFieldStyle,
-                  selectorType: PhoneInputSelectorType.DIALOG,
+                  // selectorType: PhoneInputSelectorType.DIALOG,
                   isEnabled: true,
                   searchBoxDecoration: kgetDecoration(""),
                   countrySelectorScrollControlled: true,
