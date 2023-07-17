@@ -25,7 +25,7 @@ import '../ui/views/NavBar/NavBarView.dart' as _i2;
 import '../ui/views/Profile/UserProfileView.dart' as _i8;
 
 class CustomRouter extends _i9.RootStackRouter {
-  CustomRouter([_i10.GlobalKey<_i10.NavigatorState> navigatorKey])
+  CustomRouter([_i10.GlobalKey<_i10.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override

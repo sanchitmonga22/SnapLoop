@@ -24,9 +24,9 @@ String kMesagesplitCode = ":\n\n";
 
 double kradiusCalculator(int numberOfMember) {
   if (numberOfMember < 13) {
-    return kMaxRadius * kfixedRadiusFactor[numberOfMember];
+    return kMaxRadius * kfixedRadiusFactor[numberOfMember]!;
   }
-  return kMaxRadius * kfixedRadiusFactor["MAX"];
+  return kMaxRadius * kfixedRadiusFactor["MAX"]!;
 }
 
 bool kloopComplete(LoopType type) {
@@ -264,7 +264,7 @@ const kalignmentMap = {
   ],
 };
 
-Color determineLoopColor(type) {
+Color? determineLoopColor(type) {
   if (type == LoopType.NEW_LOOP) {
     return Colors.redAccent[700];
   }

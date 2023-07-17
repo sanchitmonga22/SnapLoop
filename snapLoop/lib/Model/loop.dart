@@ -32,16 +32,16 @@ class Loop {
       avatars; // user id with their randomly generated avatar which is stored in the server
 
   Loop(
-      {@required this.id,
-      this.atTimeEnding,
-      @required this.currentUserId,
-      @required this.chatID,
-      @required this.creatorId,
-      @required this.name,
-      @required this.numberOfMembers,
-      @required this.type,
-      this.avatars,
-      @required this.userIDs});
+      {required this.id,
+      required this.atTimeEnding,
+      required this.currentUserId,
+      required this.chatID,
+      required this.creatorId,
+      required this.name,
+      required this.numberOfMembers,
+      required this.type,
+      required this.avatars,
+      required this.userIDs});
 
   dynamic toJson() {
     return {
@@ -75,15 +75,13 @@ class Loop {
     if (other is! Loop) {
       return false;
     }
-    return id == (other as Loop).id;
+    return id == (other).id;
   }
 
-  int _hashCode;
+  int _hashCode = 0;
+
   @override
   int get hashCode {
-    if (_hashCode == null) {
-      _hashCode = id.hashCode;
-    }
     return _hashCode;
   }
 }
